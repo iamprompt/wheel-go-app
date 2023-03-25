@@ -11,5 +11,15 @@ export const allPlaces = graphql(/* GraphQL */ `
         geolocation
       }
     }
+
+    Facilities (limit: 100, where: {type: {in: [curbCut, transportation]}}) {
+      docs {
+        id
+        type
+        detailTH
+        detailEN
+        geolocation
+      }
+    }
   }
 `)

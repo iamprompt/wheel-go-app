@@ -44,6 +44,7 @@ export default function App() {
           followsUserLocation={true}
           customMapStyle={MapStyle}
           rotateEnabled={false}
+          pitchEnabled={false}
           initialCamera={{
             center: {
               latitude: 13.7952296,
@@ -67,6 +68,30 @@ export default function App() {
                   longitude: place?.geolocation[0],
                 }}
                 image={PinIcon[place.category] || undefined}
+              />
+            )
+          })}
+          {data?.Facilities?.docs?.map((facility) => {
+            if (!facility || !facility.geolocation) {
+              return null
+            }
+
+            const type =
+              facility.type === 'curbCut'
+                ? 'curbcut'
+                : facility.type === 'transportation'
+                ? 'bus-stop'
+                : facility.type
+
+            return (
+              <Marker
+                key={facility.id}
+                coordinate={{
+                  latitude: facility?.geolocation[1],
+                  longitude: facility?.geolocation[0],
+                }}
+                anchor={type === 'curbcut' ? { x: 0.5, y: 0.5 } : undefined}
+                image={PinIcon[type] || undefined}
               />
             )
           })}
