@@ -1,10 +1,13 @@
-import { Stack } from 'expo-router'
+import { Stack, useNavigation } from 'expo-router'
+import { Drawer } from 'expo-router/drawer'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-import { MapStyle, PinIcon } from '../../const/map'
-import { allPlaces } from '../../graphql/query/places'
-import { useGraphQL } from '../../utils/useGraphql'
+import { Ionicons } from '@expo/vector-icons'
+import { DrawerActions } from '@react-navigation/routers'
+import { MapStyle, PinIcon } from '../../../const/map'
+import { allPlaces } from '../../../graphql/query/places'
+import { useGraphQL } from '../../../utils/useGraphql'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +28,8 @@ const styles = StyleSheet.create({
 export default function App() {
   const { data } = useGraphQL(allPlaces)
 
+  const navigation = useNavigation()
+
   // console.log(JSON.stringify(data, null, 2))
 
   return (
@@ -32,8 +37,40 @@ export default function App() {
       <Stack.Screen
         options={{
           title: 'Home',
+          headerTitle: () => {
+            return (
+              <View>
+                <Image
+                  style={{ width: 105, height: 24 }}
+                  source={require('../../../assets/wordmark-dark.png')}
+                />
+              </View>
+            )
+          },
+          headerLeft: () => {
+            return (
+              <View style={{ marginLeft: 16 }}>
+                <Ionicons
+                  name="menu"
+                  size={24}
+                  onPress={() =>
+                    navigation.dispatch(DrawerActions.openDrawer())
+                  }
+                />
+              </View>
+            )
+          },
         }}
       />
+
+      <Drawer>
+        <Drawer.Screen
+          name="settings"
+          options={{
+            title: 'Settings',
+          }}
+        />
+      </Drawer>
 
       <StatusBar style="auto" />
       <View style={styles.mapContainer}>
