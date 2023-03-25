@@ -38,5 +38,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     },
   },
+  extra: {
+    WHEELGO_CMS_API: process.env.WHEELGO_CMS_API,
+  },
   scheme: 'wheelgo',
 })
