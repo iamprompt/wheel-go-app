@@ -1,3 +1,4 @@
+import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -13,6 +14,12 @@ const styles = StyleSheet.create({
 export default function App() {
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: 'Records',
+        }}
+      />
+
       <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
