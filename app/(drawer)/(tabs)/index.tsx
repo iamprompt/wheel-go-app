@@ -60,6 +60,13 @@ export default function App() {
               </View>
             )
           },
+          headerRight: () => {
+            return (
+              <View style={{ marginRight: 16 }}>
+                <Ionicons name="search" size={24} onPress={() => {}} />
+              </View>
+            )
+          },
         }}
       />
 
