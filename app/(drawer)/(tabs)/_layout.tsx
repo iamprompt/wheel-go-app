@@ -7,6 +7,11 @@ const HomeLayout = () => {
     <>
       <Tabs
         screenOptions={({ route }) => ({
+          headerTitleStyle: {
+            fontFamily: 'LINESeedSansTH-Bold',
+            fontWeight: '700',
+            fontSize: 20,
+          },
           tabBarIcon: ({ focused, color, size }) => {
             let iconName: any = ''
 

@@ -17,6 +17,7 @@ export default function App() {
       <Stack.Screen
         options={{
           title: 'Settings',
+          headerShown: true,
         }}
       />
 
