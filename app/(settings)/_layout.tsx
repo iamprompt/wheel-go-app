@@ -1,6 +1,6 @@
 import { Stack, useNavigation } from 'expo-router'
 import { View } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { MaterialIcons } from '../../utils/icons/MaterialIcons'
 
 const SettingsLayout = () => {
   const navigation = useNavigation()
@@ -16,8 +16,8 @@ const SettingsLayout = () => {
         headerLeft: (_props) => {
           return (
             <View>
-              <Ionicons
-                name="ios-chevron-back"
+              <MaterialIcons
+                name="chevron_left"
                 size={24}
                 onPress={(_e) => {
                   navigation.canGoBack() && navigation.goBack()

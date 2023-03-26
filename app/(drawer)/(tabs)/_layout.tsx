@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router'
 
-import { Ionicons } from '@expo/vector-icons'
+import type { ComponentProps } from 'react'
+import { MaterialIcons } from '../../../utils/icons/MaterialIcons'
 
 const HomeLayout = () => {
   return (
@@ -13,18 +14,19 @@ const HomeLayout = () => {
             fontSize: 20,
           },
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName: any = ''
+            let iconName: ComponentProps<typeof MaterialIcons>['name'] =
+              'question_mark'
 
             if (route.name === 'index') {
-              iconName = focused ? 'ios-compass' : 'ios-compass-outline'
+              iconName = focused ? 'explore' : 'explore'
             } else if (route.name === 'records') {
-              iconName = focused ? 'ios-document' : 'ios-document-outline'
+              iconName = focused ? 'insert_drive_file' : 'insert_drive_file'
             } else if (route.name === 'profile') {
-              iconName = focused ? 'ios-person' : 'ios-person-outline'
+              iconName = focused ? 'person' : 'person_outline'
             }
 
             // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />
+            return <MaterialIcons name={iconName} size={size} color={color} />
           },
           tabBarLabelStyle: {
             fontWeight: '700',

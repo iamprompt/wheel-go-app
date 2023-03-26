@@ -2,11 +2,11 @@ import { Stack, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-import { Ionicons } from '@expo/vector-icons'
 import { DrawerActions } from '@react-navigation/routers'
 import { MapStyle, PinIcon } from '../../../const/map'
 import { allPlaces } from '../../../graphql/query/places'
 import { useGraphQL } from '../../../utils/useGraphQL'
+import { MaterialIcons } from '../../../utils/icons/MaterialIcons'
 
 const styles = StyleSheet.create({
   container: {
@@ -49,7 +49,7 @@ export default function App() {
           headerLeft: () => {
             return (
               <View style={{ marginLeft: 16 }}>
-                <Ionicons
+                <MaterialIcons
                   name="menu"
                   size={24}
                   onPress={() =>
@@ -62,7 +62,7 @@ export default function App() {
           headerRight: () => {
             return (
               <View style={{ marginRight: 16 }}>
-                <Ionicons name="search" size={24} onPress={() => {}} />
+                <MaterialIcons name="search" size={24} onPress={() => {}} />
               </View>
             )
           },

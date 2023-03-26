@@ -3,9 +3,9 @@ import { Drawer } from 'expo-router/drawer'
 import type { FC } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { DrawerItems } from '../../const/drawer'
+import { MaterialIcons } from '../../utils/icons/MaterialIcons'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
@@ -26,8 +26,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
       >
         {DrawerItems.map((item) => {
           const IconElement = item.icon ? (
-            <Ionicons
-              // @ts-expect-error Name of icon
+            <MaterialIcons
               name={item.icon}
               size={20}
               style={{ marginHorizontal: 8 }}
