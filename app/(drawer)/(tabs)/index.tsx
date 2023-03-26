@@ -1,5 +1,4 @@
 import { Stack, useNavigation } from 'expo-router'
-import { Drawer } from 'expo-router/drawer'
 import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
@@ -7,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { DrawerActions } from '@react-navigation/routers'
 import { MapStyle, PinIcon } from '../../../const/map'
 import { allPlaces } from '../../../graphql/query/places'
-import { useGraphQL } from '../../../utils/useGraphql'
+import { useGraphQL } from '../../../utils/useGraphQL'
 
 const styles = StyleSheet.create({
   container: {
@@ -26,9 +25,9 @@ const styles = StyleSheet.create({
 })
 
 export default function App() {
-  const { data } = useGraphQL(allPlaces)
-
   const navigation = useNavigation()
+
+  const { data } = useGraphQL(allPlaces)
 
   // console.log(JSON.stringify(data, null, 2))
 
@@ -69,15 +68,6 @@ export default function App() {
           },
         }}
       />
-
-      <Drawer>
-        <Drawer.Screen
-          name="settings"
-          options={{
-            title: 'Settings',
-          }}
-        />
-      </Drawer>
 
       <StatusBar style="auto" />
       <View style={styles.mapContainer}>

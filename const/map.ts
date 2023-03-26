@@ -61,6 +61,7 @@ export const MapStyle = [
 
 export const PinIcon: Record<string, number> = {
   building: require('../assets/places/building-pin.png'),
+  sport: require('../assets/places/building-pin.png'),
   cafe: require('../assets/places/cafe-pin.png'),
   food: require('../assets/places/food-pin.png'),
   'bus-stop': require('../assets/places/bus-stop-pin.png'),

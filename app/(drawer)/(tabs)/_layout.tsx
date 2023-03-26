@@ -23,6 +23,7 @@ const HomeLayout = () => {
           },
           tabBarLabelStyle: {
             fontWeight: '700',
+            fontFamily: 'LINESeedSansTH-Bold',
           },
           tabBarActiveTintColor: '#1B052F',
           tabBarInactiveTintColor: '#D4D4D4',

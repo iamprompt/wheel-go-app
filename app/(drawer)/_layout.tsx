@@ -6,6 +6,7 @@ const DrawerLayout = () => {
       screenOptions={{
         headerShown: false,
         drawerType: 'front',
+        swipeEnabled: false,
       }}
     />
   )
