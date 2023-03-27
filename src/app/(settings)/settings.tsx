@@ -1,7 +1,7 @@
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
-import { Pressable, ScrollView, Text, View } from 'react-native'
+import { Image, Pressable, ScrollView, Text, View } from 'react-native'
 import * as Linking from 'expo-linking'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -173,6 +173,49 @@ export default function App() {
           </View>
         )
       })}
+
+      <View
+        style={{
+          marginTop: 12,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: FONTS.LSTH_BOLD,
+            paddingHorizontal: 16,
+            paddingVertical: 12,
+            color: COLORS['french-vanilla'][500],
+          }}
+        >
+          Supported Division Organizations
+        </Text>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+              borderColor: COLORS.soap[100],
+              borderBottomWidth: 1,
+              borderTopWidth: 1,
+            }}
+          >
+            <Image
+              source={require('~/assets/logo/faculty-of-ict.png')}
+              style={{ height: 24, width: 127.5, marginHorizontal: 12 }}
+            />
+            <Image
+              source={require('~/assets/logo/physical-system.png')}
+              style={{ height: 24, width: 90, marginHorizontal: 12 }}
+            />
+            <Image
+              source={require('~/assets/logo/dss-mahidol.png')}
+              style={{ height: 24, width: 24, marginHorizontal: 12 }}
+            />
+          </View>
+        </View>
+      </View>
     </ScrollView>
   )
 }
