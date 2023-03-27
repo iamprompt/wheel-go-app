@@ -1,20 +1,16 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import { useEffect } from 'react'
 
 import * as SplashScreen from 'expo-splash-screen'
 
 import '~/utils/network'
+import FONTS, { loadFonts } from '~/styles/fonts'
 
 SplashScreen.preventAutoHideAsync()
 
 const RootLayout = () => {
-  const [fontsLoaded] = useFonts({
-    'LINESeedSansTH-Bold': require('~/assets/fonts/LINESeedSansTH_A_Bd.otf'),
-    'LINESeedSansTH-Regular': require('~/assets/fonts/LINESeedSansTH_A_Rg.otf'),
-    'LINESeedSansTH-Thin': require('~/assets/fonts/LINESeedSansTH_A_Th.otf'),
-  })
+  const [fontsLoaded] = loadFonts()
 
   useEffect(() => {
     const hideSplashScreen = async () => {
@@ -36,7 +32,7 @@ const RootLayout = () => {
         screenOptions={{
           headerShown: false,
           headerTitleStyle: {
-            fontFamily: 'LINESeedSansTH-Bold',
+            fontFamily: FONTS.LSTH_BOLD,
             fontSize: 20,
           },
         }}

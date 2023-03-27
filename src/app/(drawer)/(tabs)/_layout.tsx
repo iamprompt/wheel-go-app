@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router'
 
 import type { ComponentProps } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const HomeLayout = () => {
@@ -12,7 +13,7 @@ const HomeLayout = () => {
       <Tabs
         screenOptions={({ route }) => ({
           headerTitleStyle: {
-            fontFamily: 'LINESeedSansTH-Bold',
+            fontFamily: FONTS.LSTH_BOLD,
             fontSize: 20,
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -31,7 +32,7 @@ const HomeLayout = () => {
             return <MaterialIcons name={iconName} size={size} color={color} />
           },
           tabBarLabelStyle: {
-            fontFamily: 'LINESeedSansTH-Bold',
+            fontFamily: FONTS.LSTH_BOLD,
           },
           tabBarActiveTintColor: '#1B052F',
           tabBarInactiveTintColor: '#D4D4D4',

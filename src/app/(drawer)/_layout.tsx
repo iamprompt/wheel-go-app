@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
 import { DrawerItems } from '~/const/drawer'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import FONTS from '~/styles/fonts'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
@@ -50,7 +51,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
             >
               <Text
                 style={{
-                  fontFamily: 'LINESeedSansTH-Bold',
+                  fontFamily: FONTS.LSTH_BOLD,
                   fontSize: 16,
                 }}
               >

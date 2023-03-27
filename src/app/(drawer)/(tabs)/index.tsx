@@ -1,6 +1,6 @@
 import { Stack, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { MapStyle, PinIcon } from '~/const/map'
@@ -9,23 +9,13 @@ import { useGraphQL } from '~/utils/useGraphQL'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
 
-const styles = StyleSheet.create({
-  mapContainer: {
-    height: '100%',
-    width: '100%',
-  },
-  map: {
-    flex: 1,
-  },
-})
-
 export default function App() {
   const navigation = useNavigation()
 
   const { data } = useGraphQL(allPlaces)
 
   return (
-    <View style={GlobalStyle.container}>
+    <View style={[GlobalStyle.container]}>
       <Stack.Screen
         options={{
           title: 'Home',
@@ -63,9 +53,16 @@ export default function App() {
       />
 
       <StatusBar style="auto" />
-      <View style={styles.mapContainer}>
+      <View
+        style={{
+          height: '100%',
+          width: '100%',
+        }}
+      >
         <MapView
-          style={styles.map}
+          style={{
+            flex: 1,
+          }}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           followsUserLocation={true}

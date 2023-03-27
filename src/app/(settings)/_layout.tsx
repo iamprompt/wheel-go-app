@@ -1,5 +1,6 @@
 import { Stack, useNavigation } from 'expo-router'
 import { View } from 'react-native'
+import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const SettingsLayout = () => {
@@ -9,7 +10,7 @@ const SettingsLayout = () => {
     <Stack
       screenOptions={({ route: _route }) => ({
         headerTitleStyle: {
-          fontFamily: 'LINESeedSansTH-Bold',
+          fontFamily: FONTS.LSTH_BOLD,
           fontSize: 20,
         },
         headerLeft: (_props) => {

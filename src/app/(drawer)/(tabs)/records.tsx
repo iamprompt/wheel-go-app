@@ -3,17 +3,14 @@ import { StatusBar } from 'expo-status-bar'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { RecordListItems } from '~/const/records'
+import { GlobalStyle } from '~/styles'
+import FONTS from '~/styles/fonts'
 
 export default function App() {
   const router = useRouter()
 
   return (
-    <ScrollView
-      style={{
-        backgroundColor: '#ffffff',
-        flex: 1,
-      }}
-    >
+    <ScrollView style={[GlobalStyle.container]}>
       <Stack.Screen
         options={{
           title: 'Records',
@@ -31,7 +28,7 @@ export default function App() {
       >
         <Text
           style={{
-            fontFamily: 'LINESeedSansTH-Bold',
+            fontFamily: FONTS.LSTH_BOLD,
             fontSize: 16,
           }}
         >
@@ -75,7 +72,7 @@ export default function App() {
                 <View>
                   <Text
                     style={{
-                      fontFamily: 'LINESeedSansTH-Bold',
+                      fontFamily: FONTS.LSTH_BOLD,
                       fontSize: 14,
                       marginBottom: 4,
                     }}
@@ -84,7 +81,7 @@ export default function App() {
                   </Text>
                   <Text
                     style={{
-                      fontFamily: 'LINESeedSansTH-Regular',
+                      fontFamily: FONTS.LSTH_REGULAR,
                       fontSize: 12,
                       color: '#A6A6A6',
                     }}
