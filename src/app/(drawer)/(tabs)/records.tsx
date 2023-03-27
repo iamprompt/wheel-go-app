@@ -5,6 +5,7 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { RecordListItems } from '~/const/records'
 import { GlobalStyle } from '~/styles'
 import FONTS from '~/styles/fonts'
+import COLORS from '~/styles/colors'
 
 export default function App() {
   const router = useRouter()
@@ -43,7 +44,7 @@ export default function App() {
               style={({ pressed: _pressed }) => ({
                 paddingHorizontal: 16,
                 paddingVertical: 12,
-                borderColor: '#F6F7F8',
+                borderColor: COLORS.soap[100],
                 borderTopWidth: index === 0 ? 1 : 0,
                 borderBottomWidth: 1,
                 justifyContent: 'space-between',
@@ -83,7 +84,7 @@ export default function App() {
                     style={{
                       fontFamily: FONTS.LSTH_REGULAR,
                       fontSize: 12,
-                      color: '#A6A6A6',
+                      color: COLORS['french-vanilla'][500],
                     }}
                   >
                     3 {item.unit.plural}
@@ -94,7 +95,7 @@ export default function App() {
                 name="chevron_right"
                 size={24}
                 style={{
-                  color: '#D4D4D4',
+                  color: COLORS['french-vanilla'][300],
                 }}
               />
             </Pressable>

@@ -35,6 +35,10 @@ const RootLayout = () => {
             fontFamily: FONTS.LSTH_BOLD,
             fontSize: 20,
           },
+          headerBackTitleStyle: {
+            fontFamily: FONTS.LSTH_BOLD,
+          },
+          headerBackTitleVisible: false,
         }}
       />
     </QueryClientProvider>

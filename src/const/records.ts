@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+import COLORS from '~/styles/colors'
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface RecordListItem {
@@ -16,7 +17,7 @@ export const RecordListItems = [
   {
     label: 'Favorite Places',
     icon: 'favorite_border',
-    iconColor: '#FF5C9A',
+    iconColor: COLORS.pomegranate[300],
     unit: {
       singular: 'place',
       plural: 'places',
@@ -26,7 +27,7 @@ export const RecordListItems = [
   {
     label: 'Place Reviews',
     icon: 'star_border',
-    iconColor: '#FFC629',
+    iconColor: COLORS.warning[400],
     unit: {
       singular: 'review',
       plural: 'reviews',
@@ -36,7 +37,7 @@ export const RecordListItems = [
   {
     label: 'Contributed Routes',
     icon: 'route',
-    iconColor: '#43C463',
+    iconColor: COLORS.success[400],
     unit: {
       singular: 'route',
       plural: 'routes',

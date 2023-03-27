@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+import COLORS from '~/styles/colors'
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface DrawerItem {
@@ -14,7 +15,7 @@ export const DrawerItems = [
     label: 'Announcements',
     icon: 'campaign',
     iconPosition: 'right',
-    iconColor: '#DE2E21',
+    iconColor: COLORS.error[500],
     href: '/announcements',
   },
   {

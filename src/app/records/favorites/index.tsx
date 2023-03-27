@@ -1,10 +1,10 @@
 import { Stack } from 'expo-router'
-import { Text, View } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 import { GlobalStyle } from '~/styles'
 
 export default function Page() {
   return (
-    <View style={[GlobalStyle.container]}>
+    <ScrollView style={[GlobalStyle.container]}>
       <Stack.Screen
         options={{
           title: 'Favorite Places',
@@ -13,6 +13,6 @@ export default function Page() {
       />
 
       <Text>Favorites</Text>
-    </View>
+    </ScrollView>
   )
 }

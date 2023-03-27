@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router'
 
 import type { ComponentProps } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
@@ -34,8 +35,8 @@ const HomeLayout = () => {
           tabBarLabelStyle: {
             fontFamily: FONTS.LSTH_BOLD,
           },
-          tabBarActiveTintColor: '#1B052F',
-          tabBarInactiveTintColor: '#D4D4D4',
+          tabBarActiveTintColor: COLORS.magenta[600],
+          tabBarInactiveTintColor: COLORS['french-vanilla'][300],
           tabBarStyle: {
             height: insets.bottom + 64,
           },
