@@ -10,7 +10,6 @@ const SettingsLayout = () => {
       screenOptions={({ route: _route }) => ({
         headerTitleStyle: {
           fontFamily: 'LINESeedSansTH-Bold',
-          fontWeight: '700',
           fontSize: 20,
         },
         headerLeft: (_props) => {

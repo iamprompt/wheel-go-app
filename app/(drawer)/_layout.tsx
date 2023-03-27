@@ -41,7 +41,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
                 router.push(item.href)
               }}
               style={{
-                paddingHorizontal: 32,
+                paddingHorizontal: 20,
                 paddingVertical: 16,
                 marginBottom: 12,
                 flexDirection: 'row',

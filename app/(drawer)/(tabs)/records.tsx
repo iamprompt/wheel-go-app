@@ -1,12 +1,14 @@
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, ScrollView, Text, View } from 'react-native'
 import { MaterialIcons } from '../../../utils/icons/MaterialIcons'
 import { RecordListItems } from '../../../const/records'
 
 export default function App() {
+  const router = useRouter()
+
   return (
-    <View
+    <ScrollView
       style={{
         backgroundColor: '#ffffff',
         flex: 1,
@@ -30,7 +32,6 @@ export default function App() {
         <Text
           style={{
             fontFamily: 'LINESeedSansTH-Bold',
-            fontWeight: '700',
             fontSize: 16,
           }}
         >
@@ -54,6 +55,7 @@ export default function App() {
               })}
               onPress={() => {
                 console.log(`Pressed! ${item.label}`)
+                router.push(item.href)
               }}
             >
               <View
@@ -74,7 +76,6 @@ export default function App() {
                   <Text
                     style={{
                       fontFamily: 'LINESeedSansTH-Bold',
-                      fontWeight: '700',
                       fontSize: 14,
                       marginBottom: 4,
                     }}
@@ -84,7 +85,6 @@ export default function App() {
                   <Text
                     style={{
                       fontFamily: 'LINESeedSansTH-Regular',
-                      fontWeight: '400',
                       fontSize: 12,
                       color: '#A6A6A6',
                     }}
@@ -104,6 +104,6 @@ export default function App() {
           )
         })}
       </View>
-    </View>
+    </ScrollView>
   )
 }

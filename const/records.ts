@@ -21,7 +21,7 @@ export const RecordListItems = [
       singular: 'place',
       plural: 'places',
     },
-    href: '/favorites',
+    href: '/records/favorites',
   },
   {
     label: 'Place Reviews',
@@ -31,7 +31,7 @@ export const RecordListItems = [
       singular: 'review',
       plural: 'reviews',
     },
-    href: '/reviews',
+    href: '/records/reviews',
   },
   {
     label: 'Contributed Routes',
@@ -41,6 +41,6 @@ export const RecordListItems = [
       singular: 'route',
       plural: 'routes',
     },
-    href: '/routes',
+    href: '/records/routes',
   },
 ] satisfies RecordListItem[]

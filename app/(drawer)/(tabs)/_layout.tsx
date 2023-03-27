@@ -1,16 +1,18 @@
 import { Tabs } from 'expo-router'
 
 import type { ComponentProps } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { MaterialIcons } from '../../../utils/icons/MaterialIcons'
 
 const HomeLayout = () => {
+  const insets = useSafeAreaInsets()
+
   return (
     <>
       <Tabs
         screenOptions={({ route }) => ({
           headerTitleStyle: {
             fontFamily: 'LINESeedSansTH-Bold',
-            fontWeight: '700',
             fontSize: 20,
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -29,16 +31,15 @@ const HomeLayout = () => {
             return <MaterialIcons name={iconName} size={size} color={color} />
           },
           tabBarLabelStyle: {
-            fontWeight: '700',
             fontFamily: 'LINESeedSansTH-Bold',
           },
           tabBarActiveTintColor: '#1B052F',
           tabBarInactiveTintColor: '#D4D4D4',
           tabBarStyle: {
-            height: 92,
+            height: insets.bottom + 64,
           },
           tabBarItemStyle: {
-            paddingVertical: 5,
+            paddingVertical: 4,
           },
         })}
       >
