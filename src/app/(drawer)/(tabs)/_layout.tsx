@@ -2,7 +2,7 @@ import { Tabs } from 'expo-router'
 
 import type { ComponentProps } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { MaterialIcons } from '../../../utils/icons/MaterialIcons'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const HomeLayout = () => {
   const insets = useSafeAreaInsets()

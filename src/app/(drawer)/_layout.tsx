@@ -4,8 +4,8 @@ import type { FC } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import { DrawerItems } from '../../const/drawer'
-import { MaterialIcons } from '../../utils/icons/MaterialIcons'
+import { DrawerItems } from '~/const/drawer'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
@@ -15,7 +15,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
       <View style={{ justifyContent: 'flex-end', flexDirection: 'row' }}>
         <Image
           style={{ width: 140, height: 32 }}
-          source={require('../../assets/wordmark-dark.png')}
+          source={require('~/assets/wordmark-dark.png')}
         />
       </View>
       <View

@@ -1,6 +1,6 @@
 import { Stack, useNavigation } from 'expo-router'
 import { View } from 'react-native'
-import { MaterialIcons } from '../../utils/icons/MaterialIcons'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const SettingsLayout = () => {
   const navigation = useNavigation()

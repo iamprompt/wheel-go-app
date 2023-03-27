@@ -8,10 +8,6 @@ export default function Page() {
         options={{
           title: 'Favorite Places',
           headerShown: true,
-          headerTitleStyle: {
-            fontFamily: 'LINESeedSansTH-Bold',
-            fontSize: 20,
-          },
         }}
       />
 

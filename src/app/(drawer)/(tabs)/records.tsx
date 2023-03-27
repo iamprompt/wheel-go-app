@@ -1,8 +1,8 @@
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Pressable, ScrollView, Text, View } from 'react-native'
-import { MaterialIcons } from '../../../utils/icons/MaterialIcons'
-import { RecordListItems } from '../../../const/records'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { RecordListItems } from '~/const/records'
 
 export default function App() {
   const router = useRouter()

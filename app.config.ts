@@ -12,10 +12,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: 'wheel-go-rn',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './assets/icon.png',
+  icon: './src/assets/icon.png',
   userInterfaceStyle: 'light',
   splash: {
-    image: './assets/splash.png',
+    image: './src/assets/splash.png',
     resizeMode: 'cover',
     backgroundColor: '#ffffff',
   },
@@ -29,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './assets/adaptive-icon.png',
+      foregroundImage: './src/assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
     config: {

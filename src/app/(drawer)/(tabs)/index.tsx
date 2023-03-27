@@ -3,18 +3,13 @@ import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
-import { MapStyle, PinIcon } from '../../../const/map'
-import { allPlaces } from '../../../graphql/query/places'
-import { useGraphQL } from '../../../utils/useGraphQL'
-import { MaterialIcons } from '../../../utils/icons/MaterialIcons'
+import { MapStyle, PinIcon } from '~/const/map'
+import { allPlaces } from '~/graphql/query/places'
+import { useGraphQL } from '~/utils/useGraphQL'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { GlobalStyle } from '~/styles'
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   mapContainer: {
     height: '100%',
     width: '100%',
@@ -29,10 +24,8 @@ export default function App() {
 
   const { data } = useGraphQL(allPlaces)
 
-  // console.log(JSON.stringify(data, null, 2))
-
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyle.container}>
       <Stack.Screen
         options={{
           title: 'Home',
@@ -41,7 +34,7 @@ export default function App() {
               <View>
                 <Image
                   style={{ width: 105, height: 24 }}
-                  source={require('../../../assets/wordmark-dark.png')}
+                  source={require('~/assets/wordmark-dark.png')}
                 />
               </View>
             )

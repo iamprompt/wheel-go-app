@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react'
-import type { MaterialIcons } from '../utils/icons/MaterialIcons'
+import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface DrawerItem {
   label: string

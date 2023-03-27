@@ -1,7 +1,7 @@
 {
   "name": "wheel-go-rn",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.tsx",
   "scripts": {
     "start": "expo start -c",
     "android": "expo start --android -c",
@@ -38,6 +38,7 @@
     "@graphql-codegen/cli": "^3.2.2",
     "@graphql-codegen/client-preset": "^2.1.1",
     "@types/react": "~18.0.14",
+    "babel-plugin-tsconfig-paths-module-resolver": "^1.0.4",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
