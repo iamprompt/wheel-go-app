@@ -42,4 +42,5 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     WHEELGO_CMS_API: process.env.WHEELGO_CMS_API,
   },
   scheme: 'wheelgo',
+  plugins: ['expo-localization'],
 })

@@ -19,6 +19,7 @@ specifiers:
   expo-constants: ~14.2.1
   expo-font: ~11.1.1
   expo-linking: ~4.0.1
+  expo-localization: ~14.1.1
   expo-router: ^1.3.0
   expo-splash-screen: ~0.18.1
   expo-status-bar: ~1.4.4
@@ -45,6 +46,7 @@ dependencies:
   expo-constants: 14.2.1_expo@48.0.9
   expo-font: 11.1.1_expo@48.0.9
   expo-linking: 4.0.1_expo@48.0.9
+  expo-localization: 14.1.1_expo@48.0.9
   expo-router: 1.3.0_mqe3iyggiloz74fgbke2qecnlu
   expo-splash-screen: 0.18.1_expo@48.0.9
   expo-status-bar: 1.4.4
@@ -5479,6 +5481,15 @@ packages:
       - supports-color
     dev: false
 
+  /expo-localization/14.1.1_expo@48.0.9:
+    resolution: {integrity: sha512-wmozyF82i6muCBWTX+atzqQv9JUjSbEQ0QKYg1Th4QX/qcVd+ajVjFUytSMzg/ME1vGUP1s+LN+SiZ98YokWWw==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 48.0.9_@babel+core@7.21.3
+      rtl-detect: 1.0.4
+    dev: false
+
   /expo-modules-autolinking/1.1.2:
     resolution: {integrity: sha512-oOlkAccVnHwwR5ccvF/F/x4Omj9HWzSimMUlIVz0SVGdNBEqTPyn0L/d4uIufhyQbEWvrarqL8o5Yz11wEI0SQ==}
     hasBin: true
@@ -9234,6 +9245,10 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+
+  /rtl-detect/1.0.4:
+    resolution: {integrity: sha512-EBR4I2VDSSYr7PkBmFy04uhycIpDKp+21p/jARYXlCSjQksTBQcJ0HFUPOO79EPPH5JS6VAhiIQbycf0O3JAxQ==}
+    dev: false
 
   /run-async/2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}

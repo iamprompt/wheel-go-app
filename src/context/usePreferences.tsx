@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getLocales } from 'expo-localization'
 import type { FC, ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 
@@ -31,7 +32,12 @@ const usePreferencesProvider = (): Preferences => {
     if (item) {
       setAppLanguage(item)
     } else {
-      await AsyncStorage.setItem('appLanguage', appLanguage)
+      const deviceLanguage = getLocales()[0].languageCode
+      const deviceLanguageIsSupported = ['th', 'en'].includes(deviceLanguage)
+      await AsyncStorage.setItem(
+        'appLanguage',
+        deviceLanguageIsSupported ? deviceLanguage : appLanguage
+      )
     }
   }
 
