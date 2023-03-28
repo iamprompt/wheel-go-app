@@ -7,10 +7,10 @@ const WHEELGO_CMS_API = process.env.WHEELGO_CMS_API
 
 const config: CodegenConfig = {
   schema: `${WHEELGO_CMS_API}/graphql`,
-  documents: ['graphql/**/*.{ts,tsx}'],
+  documents: ['src/graphql/**/*.{ts,tsx}'],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    './graphql/gql/': {
+    './src/graphql/gql/': {
       preset: 'client',
     },
   },

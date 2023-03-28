@@ -219,6 +219,33 @@ export default function App() {
           </View>
         </View>
       </View>
+
+      <View
+        style={{
+          padding: 16,
+          marginTop: 32,
+        }}
+      >
+        <Pressable
+          style={{
+            borderRadius: 12,
+            borderColor: COLORS['french-vanilla'][300],
+            borderWidth: 1,
+            paddingVertical: 12,
+            alignItems: 'center',
+          }}
+          onPress={() => {}}
+        >
+          <Text
+            style={{
+              fontFamily: FONTS.LSTH_BOLD,
+              fontSize: 16,
+            }}
+          >
+            Delete Account
+          </Text>
+        </Pressable>
+      </View>
     </ScrollView>
   )
 }

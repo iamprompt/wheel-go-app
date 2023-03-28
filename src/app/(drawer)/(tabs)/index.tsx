@@ -105,7 +105,13 @@ export default function App() {
                 ? 'curbcut'
                 : facility.type === 'transportation'
                 ? 'bus-stop'
-                : facility.type
+                : facility.type === 'ramp'
+                ? 'ramp'
+                : null
+
+            if (!type) {
+              return null
+            }
 
             return (
               <Marker

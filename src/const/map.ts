@@ -65,10 +65,11 @@ export const PinIcon: Record<string, number> = {
   cafe: require('~/assets/places/cafe-pin.png'),
   food: require('~/assets/places/food-pin.png'),
   'bus-stop': require('~/assets/places/bus-stop-pin.png'),
-  curbcut: require('~/assets/places/curbcut-pin-2.png'),
+  curbcut: require('~/assets/places/curbcut-pin.png'),
   incident: require('~/assets/places/incident-pin.png'),
   park: require('~/assets/places/park-pin.png'),
   parking: require('~/assets/places/parking-pin.png'),
   toilet: require('~/assets/places/toilet-pin.png'),
   residence: require('~/assets/places/residence-pin.png'),
+  ramp: require('~/assets/places/ramp-pin.png'),
 }

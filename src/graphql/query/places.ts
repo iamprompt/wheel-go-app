@@ -2,7 +2,7 @@ import { graphql } from '../gql'
 
 export const allPlaces = graphql(/* GraphQL */ `
   query AllPlaces {
-    Places(limit: 100) {
+    Places(limit: 1000) {
       docs {
         id
         nameTH
@@ -12,7 +12,10 @@ export const allPlaces = graphql(/* GraphQL */ `
       }
     }
 
-    Facilities(limit: 100, where: { type: { in: [curbCut, transportation] } }) {
+    Facilities(
+      limit: 1000
+      where: { type: { in: [curbCut, transportation, ramp] } }
+    ) {
       docs {
         id
         type
