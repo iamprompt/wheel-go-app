@@ -24,7 +24,7 @@ export const DrawerItems = [
   },
   {
     label: 'How to use',
-    href: '/how-to-use',
+    href: '/howto',
   },
   {
     label: 'FAQ',

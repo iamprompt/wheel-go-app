@@ -6,12 +6,18 @@ import { createContext, useContext, useEffect, useState } from 'react'
 interface Preferences {
   appLanguage: string
   setLanguage: (lang: string) => void
+  tutorialShown: boolean
+  setTutorialShown: (tutorialShown: boolean) => void
 }
 
 const DefaultPreferences = {
   appLanguage: 'th',
   setLanguage: async (_lang: string) => {
     throw new Error('setLanguage is not implemented')
+  },
+  tutorialShown: false,
+  setTutorialShown: async (_tutorialShown: boolean) => {
+    throw new Error('setTutorialShown is not implemented')
   },
 } satisfies Preferences
 
@@ -21,6 +27,7 @@ export const usePreferences = () => useContext(PreferencesContext)
 
 const usePreferencesProvider = (): Preferences => {
   const [appLanguage, setAppLanguage] = useState(DefaultPreferences.appLanguage)
+  const [tutorialShown, setTutorialShown] = useState(false)
 
   const setLanguage = async (lang: string) => {
     await AsyncStorage.setItem('appLanguage', lang)
@@ -41,13 +48,30 @@ const usePreferencesProvider = (): Preferences => {
     }
   }
 
+  const setTutorial = async () => {
+    await AsyncStorage.setItem('tutorialShown', 'true')
+    setTutorialShown(true)
+  }
+
+  const readTutorial = async () => {
+    const item = await AsyncStorage.getItem('tutorialShown')
+    if (item) {
+      setTutorialShown(Boolean(item))
+    } else {
+      await AsyncStorage.setItem('tutorialShown', 'false')
+    }
+  }
+
   useEffect(() => {
     readLanguage()
+    readTutorial()
   }, [])
 
   return {
     appLanguage,
     setLanguage,
+    tutorialShown,
+    setTutorialShown: setTutorial,
   }
 }
 
