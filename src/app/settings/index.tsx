@@ -7,6 +7,7 @@ import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { usePreferences } from '~/context/usePreferences'
 
 interface SettingItem {
   name: string
@@ -23,7 +24,9 @@ interface SettingSection {
 }
 
 export default function App() {
+  const { appLanguage } = usePreferences()
   const router = useRouter()
+
   const settingItems = useMemo<SettingSection[]>(() => {
     return [
       {
@@ -34,7 +37,7 @@ export default function App() {
             name: 'language',
             label: 'Language/ภาษา',
             href: '/settings/language',
-            value: 'English',
+            value: appLanguage === 'th' ? 'ไทย' : 'English',
           },
         ],
       },
@@ -73,7 +76,7 @@ export default function App() {
         ],
       },
     ]
-  }, [])
+  }, [appLanguage])
 
   return (
     <ScrollView
@@ -195,7 +198,7 @@ export default function App() {
               flexDirection: 'row',
               justifyContent: 'center',
               paddingHorizontal: 16,
-              paddingVertical: 12,
+              paddingVertical: 16,
               borderColor: COLORS.soap[100],
               borderBottomWidth: 1,
               borderTopWidth: 1,

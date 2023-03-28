@@ -20,7 +20,7 @@ export const DrawerItems = [
   },
   {
     label: 'Settings',
-    href: '(settings)/settings',
+    href: '/settings',
   },
   {
     label: 'How to use',
