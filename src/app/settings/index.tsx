@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
 import { Image, Pressable, ScrollView, Text, View } from 'react-native'
 import * as Linking from 'expo-linking'
+import { useTranslation } from 'react-i18next'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -24,6 +25,7 @@ interface SettingSection {
 }
 
 export default function App() {
+  const { t } = useTranslation()
   const { appLanguage } = usePreferences()
   const router = useRouter()
 
@@ -31,11 +33,11 @@ export default function App() {
     return [
       {
         name: 'general',
-        label: 'General',
+        label: 'settings.general',
         items: [
           {
             name: 'language',
-            label: 'Language/ภาษา',
+            label: 'settings.language',
             href: '/settings/language',
             value: appLanguage === 'th' ? 'ไทย' : 'English',
           },
@@ -43,35 +45,35 @@ export default function App() {
       },
       {
         name: 'privacy',
-        label: 'Privacy',
+        label: 'settings.privacy',
         items: [
           {
-            name: 'your-data-allowance',
-            label: 'Your Personal Data Allowance',
+            name: 'data-allowance',
+            label: 'settings.data_allowance',
             action: async () => {
               await Linking.openSettings()
             },
           },
           {
             name: 'privacy-policy',
-            label: 'Privacy Policy',
+            label: 'settings.privacy_policy',
             href: '/policy',
           },
         ],
       },
       {
         name: 'about',
-        label: 'About',
+        label: 'settings.about',
         items: [
           {
             name: 'version',
-            label: 'Version',
+            label: 'settings.version',
             value: '0.0.1',
           },
           {
             name: 'copyright',
-            label: 'Copyright',
-            value: 'Mahidol University',
+            label: 'settings.copyright',
+            value: 'settings.mahidol_university',
           },
         ],
       },
@@ -89,7 +91,7 @@ export default function App() {
     >
       <Stack.Screen
         options={{
-          title: 'Settings',
+          title: t('page.settings')!,
           headerShown: true,
         }}
       />
@@ -111,7 +113,7 @@ export default function App() {
                 color: COLORS['french-vanilla'][500],
               }}
             >
-              {section.label}
+              {t(section.label)}
             </Text>
             <View>
               {section.items.map((item, index) => {
@@ -140,7 +142,7 @@ export default function App() {
                         fontFamily: FONTS.LSTH_BOLD,
                       }}
                     >
-                      {item.label}
+                      {t(item.label)}
                     </Text>
                     <View
                       style={{
@@ -155,7 +157,7 @@ export default function App() {
                             color: COLORS['french-vanilla'][500],
                           }}
                         >
-                          {item.value}
+                          {t(item.value)}
                         </Text>
                       ) : null}
                       {!!item.href || !!item.action ? (
@@ -190,7 +192,7 @@ export default function App() {
             color: COLORS['french-vanilla'][500],
           }}
         >
-          Supported Division Organizations
+          {t('settings.support_division')}
         </Text>
         <View>
           <View
@@ -242,7 +244,7 @@ export default function App() {
               fontSize: 16,
             }}
           >
-            Delete Account
+            {t('settings.delete_account_cta')}
           </Text>
         </Pressable>
       </View>

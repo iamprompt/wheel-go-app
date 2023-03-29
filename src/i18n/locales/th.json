@@ -1,0 +1,27 @@
+{
+  "test": "สวัสดีชาวโลก",
+  "page": {
+    "faq": "คำถามที่พบบ่อย",
+    "faq_short": "คำถามที่พบบ่อย",
+    "announcements": "ประกาศ",
+    "settings": "การตั้งค่า",
+    "how_to_use": "วิธีใช้",
+    "help": "ช่วยเหลือ",
+    "explore": "สำรวจ",
+    "records": "บันทึกของฉัน",
+    "profile": "โปรไฟล์"
+  },
+  "settings": {
+    "general": "ทั่วไป",
+    "language": "Languages/ภาษา",
+    "privacy": "ความเป็นส่วนตัว",
+    "data_allowance": "การอนุญาตการให้ข้อมูล",
+    "privacy_policy": "ข้อกำหนดและเงื่อนไข",
+    "about": "เกี่ยวกับ",
+    "version": "เวอร์ชัน",
+    "copyright": "ลิขสิทธิ์",
+    "mahidol_university": "มหาวิทยาลัยมหิดล",
+    "support_division": "หน่วยงานที่สนับสนุน",
+    "delete_account_cta": "ลบบัญชี"
+  }
+}

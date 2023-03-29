@@ -3,6 +3,8 @@ import { getLocales } from 'expo-localization'
 import type { FC, ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import * as AsyncStorageUtils from '~/utils/asyncStorage'
+
 interface Preferences {
   appLanguage: string
   setLanguage: (lang: string) => void
@@ -30,22 +32,19 @@ const usePreferencesProvider = (): Preferences => {
   const [tutorialShown, setTutorialShown] = useState(false)
 
   const setLanguage = async (lang: string) => {
-    await AsyncStorage.setItem('appLanguage', lang)
+    await AsyncStorageUtils.setAppLanguage(lang)
     setAppLanguage(lang)
   }
 
   const readLanguage = async () => {
-    const item = await AsyncStorage.getItem('appLanguage')
-    if (item) {
-      setAppLanguage(item)
-    } else {
-      const deviceLanguage = getLocales()[0].languageCode
-      const deviceLanguageIsSupported = ['th', 'en'].includes(deviceLanguage)
-      await AsyncStorage.setItem(
-        'appLanguage',
-        deviceLanguageIsSupported ? deviceLanguage : appLanguage
-      )
-    }
+    const deviceLanguage = getLocales()[0].languageCode
+    const deviceLanguageIsSupported = ['th', 'en'].includes(deviceLanguage)
+    const fallbackLang = deviceLanguageIsSupported
+      ? deviceLanguage
+      : appLanguage
+
+    const language = await AsyncStorageUtils.readAppLanguage(fallbackLang)
+    setAppLanguage(language)
   }
 
   const setTutorial = async () => {

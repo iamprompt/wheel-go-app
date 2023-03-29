@@ -12,26 +12,26 @@ interface DrawerItem {
 
 export const DrawerItems = [
   {
-    label: 'Announcements',
+    label: 'page.announcements',
     icon: 'campaign',
     iconPosition: 'right',
     iconColor: COLORS.error[500],
     href: '/announcements',
   },
   {
-    label: 'Settings',
+    label: 'page.settings',
     href: '/settings',
   },
   {
-    label: 'How to use',
+    label: 'page.how_to_use',
     href: '/howto',
   },
   {
-    label: 'FAQ',
+    label: 'page.faq_short',
     href: '/faq',
   },
   {
-    label: 'Help',
+    label: 'page.help',
     href: '/help',
   },
 ] satisfies DrawerItem[]

@@ -4,12 +4,14 @@ import type { FC } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
+import { useTranslation } from 'react-i18next'
 import { DrawerItems } from '~/const/drawer'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import FONTS from '~/styles/fonts'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
+  const { t } = useTranslation()
 
   return (
     <SafeAreaView style={{ padding: 16, flex: 1 }}>
@@ -55,7 +57,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
                   fontSize: 16,
                 }}
               >
-                {item.label}
+                {t(item.label)}
               </Text>
               {IconElement}
             </Pressable>

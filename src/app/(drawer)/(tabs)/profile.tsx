@@ -6,11 +6,7 @@ import { GlobalStyle } from '~/styles'
 export default function App() {
   return (
     <View style={[GlobalStyle.container]}>
-      <Stack.Screen
-        options={{
-          title: 'Profile',
-        }}
-      />
+      <Stack.Screen />
 
       <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />

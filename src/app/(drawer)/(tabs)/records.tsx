@@ -12,11 +12,7 @@ export default function App() {
 
   return (
     <ScrollView style={[GlobalStyle.container]}>
-      <Stack.Screen
-        options={{
-          title: 'Records',
-        }}
-      />
+      <Stack.Screen />
 
       <StatusBar style="auto" />
 

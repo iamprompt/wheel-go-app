@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar'
 import { Image, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
+import { useTranslation } from 'react-i18next'
 import { MapStyle, PinIcon } from '~/const/map'
 import { allPlaces } from '~/graphql/query/places'
 import { useGraphQL } from '~/utils/useGraphQL'
@@ -10,6 +11,7 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
 
 export default function App() {
+  const { t } = useTranslation()
   const navigation = useNavigation()
 
   const { data } = useGraphQL(allPlaces)
@@ -18,7 +20,7 @@ export default function App() {
     <View style={[GlobalStyle.container]}>
       <Stack.Screen
         options={{
-          title: 'Home',
+          title: t('page.explore')!,
           headerTitle: () => {
             return (
               <View>

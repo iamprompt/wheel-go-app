@@ -1,11 +1,15 @@
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { Policy } from '~/const/policy'
 import { GlobalStyle } from '~/styles'
 import FONTS from '~/styles/fonts'
+import { getDisplayLanguage } from '~/utils/i18n'
 
 const Page = () => {
+  const { t } = useTranslation()
+
   return (
     <ScrollView
       style={[
@@ -18,7 +22,7 @@ const Page = () => {
     >
       <Stack.Screen
         options={{
-          title: 'Privacy Policy',
+          title: t('page.privacy_policy')!,
           headerShown: true,
         }}
       />
@@ -45,7 +49,7 @@ const Page = () => {
             fontSize: 12,
           }}
         >
-          {Policy.en}
+          {Policy[getDisplayLanguage(['th', 'en'], 'th')]}
         </Text>
       </View>
     </ScrollView>

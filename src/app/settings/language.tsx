@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router'
 import { Pressable, ScrollView, Text, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -7,6 +8,7 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { usePreferences } from '~/context/usePreferences'
 
 const Page = () => {
+  const { t } = useTranslation()
   const { appLanguage, setLanguage } = usePreferences()
 
   const languageOptions = [
@@ -19,7 +21,7 @@ const Page = () => {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: 'Language',
+          title: t('settings.language')!,
         }}
       />
 

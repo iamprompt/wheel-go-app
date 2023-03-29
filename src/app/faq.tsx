@@ -2,12 +2,14 @@ import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import type { FC } from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { FAQItems } from '~/const/faq'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { getDisplayLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface QuestionItemProps {
@@ -68,6 +70,7 @@ const QuestionItem: FC<QuestionItemProps> = ({ question, answer }) => {
 }
 
 const Page = () => {
+  const { t } = useTranslation()
   const insets = useSafeAreaInsets()
 
   return (
@@ -76,7 +79,7 @@ const Page = () => {
     >
       <Stack.Screen
         options={{
-          title: 'FAQ',
+          title: t('page.faq_short')!,
           headerShown: true,
         }}
       />
@@ -89,7 +92,7 @@ const Page = () => {
           fontSize: 24,
         }}
       >
-        Frequently Asked Questions
+        {t('page.faq')}
       </Text>
 
       <View
@@ -98,15 +101,17 @@ const Page = () => {
         }}
       >
         <View>
-          {FAQItems.en.map((item, index) => {
-            return (
-              <QuestionItem
-                key={index}
-                question={item.question}
-                answer={item.answer}
-              />
-            )
-          })}
+          {FAQItems[getDisplayLanguage(['th', 'en'], 'th')].map(
+            (item, index) => {
+              return (
+                <QuestionItem
+                  key={index}
+                  question={item.question}
+                  answer={item.answer}
+                />
+              )
+            }
+          )}
         </View>
         <View>
           <Text

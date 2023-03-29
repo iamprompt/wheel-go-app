@@ -1,4 +1,9 @@
-export const FAQItems = {
+interface FAQItem {
+  question: string
+  answer: string
+}
+
+export const FAQItems: Record<string, Array<FAQItem>> = {
   th: [
     {
       question: 'Wheel Go คืออะไร?',

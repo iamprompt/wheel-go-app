@@ -1,0 +1,26 @@
+{
+  "page": {
+    "faq": "Frequently Asked Questions",
+    "faq_short": "FAQ",
+    "announcements": "Announcements",
+    "settings": "Settings",
+    "how_to_use": "How to use",
+    "help": "Help",
+    "explore": "Explore",
+    "records": "Records",
+    "profile": "Profile"
+  },
+  "settings": {
+    "general": "General",
+    "language": "Languages/ภาษา",
+    "privacy": "Privacy",
+    "data_allowance": "My Personal Data Allowance",
+    "privacy_policy": "Privacy Policy",
+    "about": "About",
+    "version": "Version",
+    "copyright": "Copyright",
+    "mahidol_university": "Mahidol University",
+    "support_division": "Supported Division Organizations",
+    "delete_account_cta": "Delete Account"
+  }
+}

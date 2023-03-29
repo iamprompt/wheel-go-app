@@ -1,12 +1,14 @@
 import { Tabs } from 'expo-router'
 
 import type { ComponentProps } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const HomeLayout = () => {
+  const { t } = useTranslation()
   const insets = useSafeAreaInsets()
 
   return (
@@ -48,19 +50,19 @@ const HomeLayout = () => {
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Explore',
+            title: t('page.explore')!,
           }}
         />
         <Tabs.Screen
           name="records"
           options={{
-            title: 'Records',
+            title: t('page.records')!,
           }}
         />
         <Tabs.Screen
           name="profile"
           options={{
-            title: 'Profile',
+            title: t('page.profile')!,
           }}
         />
       </Tabs>
