@@ -1,9 +1,11 @@
 import { Stack, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Image, View } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
+// eslint-disable-next-line import/default
+import MapView from 'react-native-map-clustering'
 import { MapStyle, PinIcon } from '~/const/map'
 import { allPlaces } from '~/graphql/query/places'
 import { useGraphQL } from '~/utils/useGraphQL'
@@ -71,6 +73,12 @@ export default function App() {
           customMapStyle={MapStyle}
           rotateEnabled={false}
           pitchEnabled={false}
+          initialRegion={{
+            latitude: 13.7952296,
+            longitude: 100.3229328,
+            latitudeDelta: 3.5,
+            longitudeDelta: 3.5,
+          }}
           initialCamera={{
             center: {
               latitude: 13.7952296,
