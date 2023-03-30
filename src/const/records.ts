@@ -15,32 +15,32 @@ interface RecordListItem {
 
 export const RecordListItems = [
   {
-    label: 'Favorite Places',
+    label: 'records.favorite_places',
     icon: 'favorite_border',
     iconColor: COLORS.pomegranate[300],
     unit: {
-      singular: 'place',
-      plural: 'places',
+      singular: 'units.place',
+      plural: 'units.places',
     },
     href: '/records/favorites',
   },
   {
-    label: 'Place Reviews',
+    label: 'records.places_reviews',
     icon: 'star_border',
     iconColor: COLORS.warning[400],
     unit: {
-      singular: 'review',
-      plural: 'reviews',
+      singular: 'units.review',
+      plural: 'units.reviews',
     },
     href: '/records/reviews',
   },
   {
-    label: 'Contributed Routes',
+    label: 'records.contributed_routes',
     icon: 'route',
     iconColor: COLORS.success[400],
     unit: {
-      singular: 'route',
-      plural: 'routes',
+      singular: 'units.route',
+      plural: 'units.routes',
     },
     href: '/records/routes',
   },

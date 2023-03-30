@@ -1,6 +1,7 @@
 import type { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { Drawer } from 'expo-router/drawer'
 import type { FC } from 'react'
+import { useState } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
@@ -28,6 +29,10 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
         }}
       >
         {DrawerItems.map((item) => {
+          const [isModalOpen, setIsModalOpen] = useState(false)
+
+          const ModalElement = item.modal ? item.modal : null
+
           const IconElement = item.icon ? (
             <MaterialIcons
               name={item.icon}
@@ -38,29 +43,42 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
           ) : null
 
           return (
-            <Pressable
-              key={`drawer-item-${item.label}`}
-              onPress={(_e) => {
-                router.push(item.href)
-              }}
-              style={{
-                paddingHorizontal: 20,
-                paddingVertical: 16,
-                marginBottom: 12,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Text
+            <View key={`drawer-item-${item.label}`}>
+              <Pressable
+                onPress={(_e) => {
+                  if (item.href) {
+                    router.push(item.href)
+                  }
+
+                  if (ModalElement) {
+                    setIsModalOpen(true)
+                  }
+                }}
                 style={{
-                  fontFamily: FONTS.LSTH_BOLD,
-                  fontSize: 16,
+                  paddingHorizontal: 20,
+                  paddingVertical: 16,
+                  marginBottom: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
                 }}
               >
-                {t(item.label)}
-              </Text>
-              {IconElement}
-            </Pressable>
+                <Text
+                  style={{
+                    fontFamily: FONTS.LSTH_BOLD,
+                    fontSize: 16,
+                  }}
+                >
+                  {t(item.label)}
+                </Text>
+                {IconElement}
+              </Pressable>
+              {ModalElement ? (
+                <ModalElement
+                  isVisible={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                />
+              ) : null}
+            </View>
           )
         })}
       </View>

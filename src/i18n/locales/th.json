@@ -23,5 +23,29 @@
     "mahidol_university": "มหาวิทยาลัยมหิดล",
     "support_division": "หน่วยงานที่สนับสนุน",
     "delete_account_cta": "ลบบัญชี"
+  },
+  "records": {
+    "my_lists": "ลิสต์ของฉัน",
+    "favorite_places": "สถานที่ของฉัน",
+    "places_reviews": "รีวิวของฉัน",
+    "contributed_routes": "เส้นทางของฉัน"
+  },
+  "units": {
+    "place": "ที่",
+    "places": "ที่",
+    "review": "รีวิว",
+    "reviews": "รีวิว",
+    "route": "เส้นทาง",
+    "routes": "เส้นทาง"
+  },
+  "helpModal": {
+    "title": "ต้องการความช่วยเหลือ?",
+    "description": "คุณจะถูกนำไปที่หน่วยบริการสนับสนุนสำหรับนักศึกษาพิการ"
+  },
+  "button": {
+    "cancel": "ยกเลิก",
+    "ok": "ตกลง",
+    "go": "ไป",
+    "save": "บันทึก"
   }
 }

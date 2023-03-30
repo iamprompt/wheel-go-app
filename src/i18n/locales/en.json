@@ -22,5 +22,29 @@
     "mahidol_university": "Mahidol University",
     "support_division": "Supported Division Organizations",
     "delete_account_cta": "Delete Account"
+  },
+  "records": {
+    "my_lists": "My Lists",
+    "favorite_places": "Favorite Places",
+    "places_reviews": "Places Reviews",
+    "contributed_routes": "Contributed Routes"
+  },
+  "units": {
+    "place": "Place",
+    "places": "Places",
+    "review": "Review",
+    "reviews": "Reviews",
+    "route": "Route",
+    "routes": "Routes"
+  },
+  "helpModal": {
+    "title": "Need a help?",
+    "description": "You will be redirected to Mahidol Disability Service Support"
+  },
+  "button": {
+    "cancel": "Cancel",
+    "ok": "OK",
+    "go": "Go",
+    "save": "Save"
   }
 }

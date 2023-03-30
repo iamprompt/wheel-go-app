@@ -1,13 +1,20 @@
-import type { ComponentProps } from 'react'
+import type { ComponentProps, FC } from 'react'
+import HelpModal from '~/components/HelpModal'
 import COLORS from '~/styles/colors'
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
+
+interface ModalProps {
+  isVisible: boolean
+  onClose: () => void
+}
 
 interface DrawerItem {
   label: string
   icon?: ComponentProps<typeof MaterialIcons>['name']
   iconPosition?: 'left' | 'right'
   iconColor?: string
-  href: string
+  href?: string
+  modal?: FC<ModalProps>
 }
 
 export const DrawerItems = [
@@ -32,6 +39,6 @@ export const DrawerItems = [
   },
   {
     label: 'page.help',
-    href: '/help',
+    modal: HelpModal,
   },
 ] satisfies DrawerItem[]

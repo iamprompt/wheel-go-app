@@ -1,6 +1,7 @@
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Pressable, ScrollView, Text, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { RecordListItems } from '~/const/records'
 import { GlobalStyle } from '~/styles'
@@ -8,6 +9,7 @@ import FONTS from '~/styles/fonts'
 import COLORS from '~/styles/colors'
 
 export default function App() {
+  const { t } = useTranslation()
   const router = useRouter()
 
   return (
@@ -29,7 +31,7 @@ export default function App() {
             fontSize: 16,
           }}
         >
-          My lists
+          {t('records.my_lists')}
         </Text>
       </View>
       <View>
@@ -74,7 +76,7 @@ export default function App() {
                       marginBottom: 4,
                     }}
                   >
-                    {item.label}
+                    {t(item.label)}
                   </Text>
                   <Text
                     style={{
@@ -83,7 +85,7 @@ export default function App() {
                       color: COLORS['french-vanilla'][500],
                     }}
                   >
-                    3 {item.unit.plural}
+                    3 {t(item.unit.plural)}
                   </Text>
                 </View>
               </View>
