@@ -49,8 +49,8 @@ const RootLayout = () => {
               return (
                 <View>
                   <MaterialIcons
-                    name="chevron_left"
-                    size={28}
+                    name="arrow_back_ios_new"
+                    size={24}
                     onPress={(_e) => {
                       navigation.canGoBack() && navigation.goBack()
                     }}
