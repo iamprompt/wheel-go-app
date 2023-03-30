@@ -7,7 +7,7 @@ import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
-const Page = () => {
+function Page() {
   const { t } = useTranslation()
   const router = useRouter()
 

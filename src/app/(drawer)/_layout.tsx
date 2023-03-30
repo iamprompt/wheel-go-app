@@ -86,7 +86,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   )
 }
 
-const DrawerLayout = () => {
+function DrawerLayout() {
   return (
     <Drawer
       screenOptions={{

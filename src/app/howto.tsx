@@ -22,7 +22,7 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const { width: screenWidth } = Dimensions.get('window')
 
-const HowToPage = ({
+function HowToPage({
   image,
   title,
   description,
@@ -30,7 +30,7 @@ const HowToPage = ({
   image: ImageSourcePropType
   title: string
   description: string
-}) => {
+}) {
   return (
     <View
       style={{
@@ -73,7 +73,7 @@ const HowToPage = ({
 
 const noOfPages = 8
 
-const Page = () => {
+function Page() {
   const router = useRouter()
   const { setTutorialShown } = usePreferences()
   const insets = useSafeAreaInsets()

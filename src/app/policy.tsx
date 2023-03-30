@@ -7,7 +7,7 @@ import { GlobalStyle } from '~/styles'
 import FONTS from '~/styles/fonts'
 import { getDisplayLanguage } from '~/utils/i18n'
 
-const Page = () => {
+function Page() {
   const { t } = useTranslation()
 
   return (

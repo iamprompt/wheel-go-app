@@ -25,9 +25,11 @@ const DefaultPreferences = {
 
 const PreferencesContext = createContext<Preferences>(DefaultPreferences)
 
-export const usePreferences = () => useContext(PreferencesContext)
+export function usePreferences() {
+  return useContext(PreferencesContext)
+}
 
-const usePreferencesProvider = (): Preferences => {
+function usePreferencesProvider(): Preferences {
   const [appLanguage, setAppLanguage] = useState(DefaultPreferences.appLanguage)
   const [tutorialShown, setTutorialShown] = useState(false)
 

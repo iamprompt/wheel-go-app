@@ -7,7 +7,7 @@ import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { usePreferences } from '~/context/usePreferences'
 
-const Page = () => {
+function Page() {
   const { t } = useTranslation()
   const { appLanguage, setLanguage } = usePreferences()
 

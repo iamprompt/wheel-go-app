@@ -69,7 +69,7 @@ const QuestionItem: FC<QuestionItemProps> = ({ question, answer }) => {
   )
 }
 
-const Page = () => {
+function Page() {
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
 

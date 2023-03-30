@@ -12,7 +12,7 @@ const fontSource = {
   'LINESeedSansTH-Thin': require('~/assets/fonts/LINESeedSansTH_A_Th.otf'),
 } satisfies Record<FONTS, any>
 
-export const loadFonts = () => {
+export function loadFonts() {
   return useFonts(fontSource)
 }
 

@@ -13,7 +13,7 @@ import { PreferencesProvider } from '~/context/usePreferences'
 
 SplashScreen.preventAutoHideAsync()
 
-const RootLayout = () => {
+function RootLayout() {
   const navigation = useNavigation()
   const [fontsLoaded] = loadFonts()
 
