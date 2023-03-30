@@ -41,6 +41,10 @@
     "title": "Need a help?",
     "description": "You will be redirected to Mahidol Disability Service Support"
   },
+  "tags": {
+    "building": "Building",
+    "incident": "Incident"
+  },
   "button": {
     "cancel": "Cancel",
     "ok": "OK",

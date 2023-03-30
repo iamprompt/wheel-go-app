@@ -14,7 +14,7 @@ export type Scalars = {
   Float: number;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
-  /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
+  /** A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address. */
   EmailAddress: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
@@ -322,6 +322,7 @@ export type Announcement = {
   image?: Maybe<Media>;
   location?: Maybe<Array<Scalars['Float']>>;
   place?: Maybe<Place>;
+  tags?: Maybe<Array<Announcement_Tags>>;
   titleEN?: Maybe<Scalars['String']>;
   titleTH?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
@@ -331,6 +332,11 @@ export type Announcement = {
 export type AnnouncementImageArgs = {
   where?: InputMaybe<Announcement_Image_Where>;
 };
+
+export enum AnnouncementUpdate_Tags_MutationInput {
+  Building = 'building',
+  Incident = 'incident'
+}
 
 export type Announcement_Contact = {
   __typename?: 'Announcement_Contact';
@@ -787,6 +793,30 @@ export type Announcement_Place_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
+export enum Announcement_Tags {
+  Building = 'building',
+  Incident = 'incident'
+}
+
+export enum Announcement_Tags_Input {
+  Building = 'building',
+  Incident = 'incident'
+}
+
+export enum Announcement_Tags_MutationInput {
+  Building = 'building',
+  Incident = 'incident'
+}
+
+export type Announcement_Tags_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Announcement_Tags_Input>>>;
+  equals?: InputMaybe<Announcement_Tags_Input>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Announcement_Tags_Input>>>;
+  not_equals?: InputMaybe<Announcement_Tags_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Announcement_Tags_Input>>>;
+};
+
 export type Announcement_TitleEn_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   contains?: InputMaybe<Scalars['String']>;
@@ -833,6 +863,7 @@ export type Announcement_Where = {
   image?: InputMaybe<Announcement_Image_Operator>;
   location?: InputMaybe<Announcement_Location_Operator>;
   place?: InputMaybe<Announcement_Place_Operator>;
+  tags?: InputMaybe<Announcement_Tags_Operator>;
   titleEN?: InputMaybe<Announcement_TitleEn_Operator>;
   titleTH?: InputMaybe<Announcement_TitleTh_Operator>;
   updatedAt?: InputMaybe<Announcement_UpdatedAt_Operator>;
@@ -849,6 +880,7 @@ export type Announcement_Where_And = {
   image?: InputMaybe<Announcement_Image_Operator>;
   location?: InputMaybe<Announcement_Location_Operator>;
   place?: InputMaybe<Announcement_Place_Operator>;
+  tags?: InputMaybe<Announcement_Tags_Operator>;
   titleEN?: InputMaybe<Announcement_TitleEn_Operator>;
   titleTH?: InputMaybe<Announcement_TitleTh_Operator>;
   updatedAt?: InputMaybe<Announcement_UpdatedAt_Operator>;
@@ -865,6 +897,7 @@ export type Announcement_Where_Or = {
   image?: InputMaybe<Announcement_Image_Operator>;
   location?: InputMaybe<Announcement_Location_Operator>;
   place?: InputMaybe<Announcement_Place_Operator>;
+  tags?: InputMaybe<Announcement_Tags_Operator>;
   titleEN?: InputMaybe<Announcement_TitleEn_Operator>;
   titleTH?: InputMaybe<Announcement_TitleTh_Operator>;
   updatedAt?: InputMaybe<Announcement_UpdatedAt_Operator>;
@@ -917,6 +950,7 @@ export type AnnouncementsDocAccessFields = {
   image?: Maybe<AnnouncementsDocAccessFields_Image>;
   location?: Maybe<AnnouncementsDocAccessFields_Location>;
   place?: Maybe<AnnouncementsDocAccessFields_Place>;
+  tags?: Maybe<AnnouncementsDocAccessFields_Tags>;
   titleEN?: Maybe<AnnouncementsDocAccessFields_TitleEn>;
   titleTH?: Maybe<AnnouncementsDocAccessFields_TitleTh>;
 };
@@ -1181,6 +1215,34 @@ export type AnnouncementsDocAccessFields_Place_Update = {
   permission: Scalars['Boolean'];
 };
 
+export type AnnouncementsDocAccessFields_Tags = {
+  __typename?: 'AnnouncementsDocAccessFields_tags';
+  create?: Maybe<AnnouncementsDocAccessFields_Tags_Create>;
+  delete?: Maybe<AnnouncementsDocAccessFields_Tags_Delete>;
+  read?: Maybe<AnnouncementsDocAccessFields_Tags_Read>;
+  update?: Maybe<AnnouncementsDocAccessFields_Tags_Update>;
+};
+
+export type AnnouncementsDocAccessFields_Tags_Create = {
+  __typename?: 'AnnouncementsDocAccessFields_tags_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsDocAccessFields_Tags_Delete = {
+  __typename?: 'AnnouncementsDocAccessFields_tags_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsDocAccessFields_Tags_Read = {
+  __typename?: 'AnnouncementsDocAccessFields_tags_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsDocAccessFields_Tags_Update = {
+  __typename?: 'AnnouncementsDocAccessFields_tags_Update';
+  permission: Scalars['Boolean'];
+};
+
 export type AnnouncementsDocAccessFields_TitleEn = {
   __typename?: 'AnnouncementsDocAccessFields_titleEN';
   create?: Maybe<AnnouncementsDocAccessFields_TitleEn_Create>;
@@ -1245,6 +1307,7 @@ export type AnnouncementsFields = {
   image?: Maybe<AnnouncementsFields_Image>;
   location?: Maybe<AnnouncementsFields_Location>;
   place?: Maybe<AnnouncementsFields_Place>;
+  tags?: Maybe<AnnouncementsFields_Tags>;
   titleEN?: Maybe<AnnouncementsFields_TitleEn>;
   titleTH?: Maybe<AnnouncementsFields_TitleTh>;
 };
@@ -1506,6 +1569,34 @@ export type AnnouncementsFields_Place_Read = {
 
 export type AnnouncementsFields_Place_Update = {
   __typename?: 'AnnouncementsFields_place_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsFields_Tags = {
+  __typename?: 'AnnouncementsFields_tags';
+  create?: Maybe<AnnouncementsFields_Tags_Create>;
+  delete?: Maybe<AnnouncementsFields_Tags_Delete>;
+  read?: Maybe<AnnouncementsFields_Tags_Read>;
+  update?: Maybe<AnnouncementsFields_Tags_Update>;
+};
+
+export type AnnouncementsFields_Tags_Create = {
+  __typename?: 'AnnouncementsFields_tags_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsFields_Tags_Delete = {
+  __typename?: 'AnnouncementsFields_tags_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsFields_Tags_Read = {
+  __typename?: 'AnnouncementsFields_tags_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsFields_Tags_Update = {
+  __typename?: 'AnnouncementsFields_tags_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -9653,6 +9744,7 @@ export type MutationAnnouncementInput = {
   image?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   place?: InputMaybe<Scalars['String']>;
+  tags?: InputMaybe<Array<InputMaybe<Announcement_Tags_MutationInput>>>;
   titleEN?: InputMaybe<Scalars['String']>;
   titleTH?: InputMaybe<Scalars['String']>;
 };
@@ -9664,6 +9756,7 @@ export type MutationAnnouncementUpdateInput = {
   image?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   place?: InputMaybe<Scalars['String']>;
+  tags?: InputMaybe<Array<InputMaybe<AnnouncementUpdate_Tags_MutationInput>>>;
   titleEN?: InputMaybe<Scalars['String']>;
   titleTH?: InputMaybe<Scalars['String']>;
 };
@@ -10028,10 +10121,16 @@ export type UsersResetPassword = {
   user?: Maybe<User>;
 };
 
+export type AllAnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllAnnouncementsQuery = { __typename?: 'Query', Announcements?: { __typename?: 'Announcements', docs?: Array<{ __typename?: 'Announcement', id?: string | null, titleTH?: string | null, titleEN?: string | null, descriptionTH?: string | null, descriptionEN?: string | null, tags?: Array<Announcement_Tags> | null, createdAt: any, place?: { __typename?: 'Place', id?: string | null, nameTH: string, nameEN: string } | null } | null> | null } | null };
+
 export type AllPlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllPlacesQuery = { __typename?: 'Query', Places?: { __typename?: 'Places', docs?: Array<{ __typename?: 'Place', id?: string | null, nameTH: string, nameEN: string, category: Place_Category, geolocation?: Array<number> | null } | null> | null } | null, Facilities?: { __typename?: 'Facilities', docs?: Array<{ __typename?: 'Facility', id?: string | null, type: Facility_Type, detailTH?: string | null, detailEN?: string | null, geolocation?: Array<number> | null } | null> | null } | null };
 
 
+export const AllAnnouncementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Announcements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"titleTH"}},{"kind":"Field","name":{"kind":"Name","value":"titleEN"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionTH"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionEN"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<AllAnnouncementsQuery, AllAnnouncementsQueryVariables>;
 export const AllPlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllPlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Places"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Facilities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"curbCut"},{"kind":"EnumValue","value":"transportation"},{"kind":"EnumValue","value":"ramp"}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"detailTH"}},{"kind":"Field","name":{"kind":"Name","value":"detailEN"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}}]}}]}}]}}]} as unknown as DocumentNode<AllPlacesQuery, AllPlacesQueryVariables>;

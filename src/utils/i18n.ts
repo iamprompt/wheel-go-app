@@ -10,3 +10,10 @@ export function getDisplayLanguage(
   }
   return fallbackLanguage
 }
+
+export function getDisplayTextFromCurrentLanguage(langTxt: {
+  [key: string]: string | null | undefined
+}) {
+  const language = i18n.language
+  return langTxt[language] || langTxt.th || ''
+}

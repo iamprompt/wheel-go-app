@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import * as SplashScreen from 'expo-splash-screen'
 
 import '~/i18n'
+import '~/utils/dayjs'
 import '~/utils/network'
 import { View } from 'react-native'
 import FONTS, { loadFonts } from '~/styles/fonts'
