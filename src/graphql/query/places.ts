@@ -26,3 +26,15 @@ export const allPlaces = graphql(/* GraphQL */ `
     }
   }
 `)
+
+export const getPlaceById = graphql(/* GraphQL */ `
+  query GetPlaceById($id: String!) {
+    Place(id: $id) {
+      id
+      nameTH
+      nameEN
+      category
+      geolocation
+    }
+  }
+`)

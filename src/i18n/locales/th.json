@@ -51,5 +51,14 @@
     "ok": "ตกลง",
     "go": "ไป",
     "save": "บันทึก"
+  },
+  "announcements": {
+    "details": "รายละเอียด",
+    "contact": {
+      "title": "ติดต่อ",
+      "email": "อีเมล",
+      "phone": "โทรศัพท์",
+      "line": "LINE Official Account"
+    }
   }
 }

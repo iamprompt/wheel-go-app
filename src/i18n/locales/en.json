@@ -50,5 +50,8 @@
     "ok": "OK",
     "go": "Go",
     "save": "Save"
+  },
+  "announcements": {
+    "title": "Announcements {{id}}"
   }
 }

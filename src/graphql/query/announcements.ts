@@ -20,3 +20,32 @@ export const AllAnnouncements = graphql(/* GraphQL */ `
     }
   }
 `)
+
+export const GetAnnouncementById = graphql(/* GraphQL */ `
+  query GetAnnouncementById($id: String!) {
+    Announcement(id: $id) {
+      id
+      titleTH
+      titleEN
+      descriptionTH
+      descriptionEN
+      tags
+      image {
+        url
+        width
+        height
+      }
+      contact {
+        phone
+        email
+        line
+      }
+      place {
+        id
+        nameTH
+        nameEN
+      }
+      createdAt
+    }
+  }
+`)
