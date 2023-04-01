@@ -62,8 +62,8 @@ const HelpModal: FC<HelpModalProps> = ({ isVisible, onClose }) => {
               <MaterialIcons
                 name="warning"
                 size={32}
+                color={COLORS.warning[400]}
                 style={{
-                  color: COLORS.warning[400],
                   marginRight: 12,
                 }}
               />

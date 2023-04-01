@@ -54,7 +54,7 @@ function Page() {
                     : 'radio_button_unchecked'
                 }
                 size={24}
-                style={{ color: COLORS.magenta[500] }}
+                color={COLORS.magenta[500]}
               />
             </View>
           </Pressable>

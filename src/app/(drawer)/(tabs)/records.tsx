@@ -63,8 +63,8 @@ export default function App() {
                 <MaterialIcons
                   name={item.icon}
                   size={24}
+                  color={item.iconColor}
                   style={{
-                    color: item.iconColor,
                     marginRight: 12,
                   }}
                 />
@@ -92,9 +92,7 @@ export default function App() {
               <MaterialIcons
                 name="chevron_right"
                 size={24}
-                style={{
-                  color: COLORS['french-vanilla'][300],
-                }}
+                color={COLORS['french-vanilla'][300]}
               />
             </Pressable>
           )

@@ -292,9 +292,7 @@ function Page() {
               <MaterialIcons
                 name="arrow_forward_ios"
                 size={24}
-                style={{
-                  color: COLORS['french-vanilla'][100],
-                }}
+                color={COLORS['french-vanilla'][100]}
               />
             )}
           </Pressable>
