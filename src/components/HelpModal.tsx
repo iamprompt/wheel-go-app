@@ -1,7 +1,8 @@
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, Pressable, Text, View } from 'react-native'
+import { Modal, Text, View } from 'react-native'
 import * as Linking from 'expo-linking'
+import Button, { ButtonVariant } from './Button'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
@@ -94,51 +95,18 @@ const HelpModal: FC<HelpModalProps> = ({ isVisible, onClose }) => {
               gap: 12,
             }}
           >
-            <Pressable
+            <Button
+              label={t('button.cancel')}
+              variant={ButtonVariant.Text}
               onPress={onClose}
-              style={{
-                borderRadius: 12,
-                flex: 1,
-                height: 48,
-                alignItems: 'center',
-                alignContent: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: FONTS.LSTH_BOLD,
-                  fontSize: 16,
-                }}
-              >
-                {t('button.cancel')}
-              </Text>
-            </Pressable>
-            <Pressable
+            />
+            <Button
+              label={t('button.go')}
               onPress={() => {
                 Linking.openURL('https://www.facebook.com/DSS.Mahidol.Page/')
                 onClose()
               }}
-              style={{
-                borderRadius: 12,
-                flex: 1,
-                height: 48,
-                backgroundColor: COLORS.magenta[500],
-                alignItems: 'center',
-                alignContent: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: FONTS.LSTH_BOLD,
-                  fontSize: 16,
-                  color: COLORS.white,
-                }}
-              >
-                {t('button.go')}
-              </Text>
-            </Pressable>
+            />
           </View>
         </View>
       </View>

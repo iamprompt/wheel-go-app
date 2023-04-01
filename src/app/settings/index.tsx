@@ -1,7 +1,7 @@
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
-import { Image, Pressable, ScrollView, Text, View } from 'react-native'
+import { Alert, Image, Pressable, ScrollView, Text, View } from 'react-native'
 import * as Linking from 'expo-linking'
 import { useTranslation } from 'react-i18next'
 import { GlobalStyle } from '~/styles'
@@ -9,6 +9,7 @@ import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { usePreferences } from '~/context/usePreferences'
+import Button, { ButtonVariant } from '~/components/Button'
 
 interface SettingItem {
   name: string
@@ -228,25 +229,13 @@ export default function App() {
           marginTop: 32,
         }}
       >
-        <Pressable
-          style={{
-            borderRadius: 12,
-            borderColor: COLORS['french-vanilla'][300],
-            borderWidth: 1,
-            paddingVertical: 12,
-            alignItems: 'center',
+        <Button
+          label={t('settings.delete_account_cta')}
+          variant={ButtonVariant.Secondary}
+          onPress={() => {
+            Alert.alert(t('settings.delete_account_cta')!)
           }}
-          onPress={() => {}}
-        >
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 16,
-            }}
-          >
-            {t('settings.delete_account_cta')}
-          </Text>
-        </Pressable>
+        />
       </View>
     </ScrollView>
   )
