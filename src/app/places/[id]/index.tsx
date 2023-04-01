@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient'
 import { Stack, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +12,8 @@ import FONTS from '~/styles/fonts'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { useGraphQL } from '~/utils/useGraphQL'
 import { IconActionButton } from '~/components/IconActionButton'
+import { ListCategoryIcon } from '~/const/category'
+import { BrandGradient } from '~/components/BrandGradient'
 
 function Page() {
   const { t } = useTranslation()
@@ -80,24 +81,36 @@ function Page() {
         }}
       />
 
-      <LinearGradient
+      <BrandGradient
         style={{
           padding: 16,
         }}
-        colors={['#6A11B1', '#78CCDD']}
-        start={[0, 0.5]}
-        end={[1, 0.5]}
       >
         <View>
-          <Text
+          <View
             style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 14,
-              color: COLORS.white,
+              flexDirection: 'row',
+              gap: 8,
             }}
           >
-            {t(`categories.${data.Place.category}`)}
-          </Text>
+            <Image
+              source={ListCategoryIcon[data.Place.category]}
+              style={{
+                width: 24,
+                height: 24,
+              }}
+            />
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 14,
+                color: COLORS.white,
+              }}
+            >
+              {t(`categories.${data.Place.category}`)}
+            </Text>
+          </View>
+
           <Text
             style={{
               fontFamily: FONTS.LSTH_BOLD,
@@ -111,7 +124,7 @@ function Page() {
             })}
           </Text>
         </View>
-      </LinearGradient>
+      </BrandGradient>
       <View
         style={{
           paddingHorizontal: 16,

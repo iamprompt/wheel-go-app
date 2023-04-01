@@ -1,6 +1,6 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Image, View } from 'react-native'
+import { Image, Pressable, Text, View } from 'react-native'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
@@ -11,6 +11,10 @@ import { allPlaces } from '~/graphql/query/places'
 import { useGraphQL } from '~/utils/useGraphQL'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
+import { BrandGradient } from '~/components/BrandGradient'
+import FONTS from '~/styles/fonts'
+import COLORS from '~/styles/colors'
+import { ListCategoryIcon } from '~/const/category'
 
 export default function App() {
   const { t } = useTranslation()
@@ -140,6 +144,71 @@ export default function App() {
             )
           })}
         </MapView>
+        <View
+          style={{
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            left: 0,
+            marginHorizontal: 16,
+          }}
+        >
+          <Pressable>
+            <BrandGradient
+              style={{
+                padding: 16,
+                flexDirection: 'row',
+                width: '100%',
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 8,
+                  }}
+                >
+                  <Image
+                    source={ListCategoryIcon.building}
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONTS.LSTH_BOLD,
+                      fontSize: 14,
+                      color: COLORS.white,
+                    }}
+                  >
+                    อาคาร
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    fontFamily: FONTS.LSTH_BOLD,
+                    fontSize: 20,
+                    color: COLORS.white,
+                  }}
+                >
+                  สำนักงานอธิการบดี
+                </Text>
+              </View>
+              <View>
+                <MaterialIcons
+                  name="info_outline"
+                  size={24}
+                  color={COLORS.white}
+                />
+              </View>
+            </BrandGradient>
+          </Pressable>
+        </View>
       </View>
     </View>
   )
