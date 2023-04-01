@@ -16,7 +16,7 @@ const documents = {
     "\n  query AllAnnouncements {\n    Announcements(limit: 1000) {\n      docs {\n        id\n        titleTH\n        titleEN\n        descriptionTH\n        descriptionEN\n        tags\n        place {\n          id\n          nameTH\n          nameEN\n        }\n        createdAt\n      }\n    }\n  }\n": types.AllAnnouncementsDocument,
     "\n  query GetAnnouncementById($id: String!) {\n    Announcement(id: $id) {\n      id\n      titleTH\n      titleEN\n      descriptionTH\n      descriptionEN\n      tags\n      image {\n        url\n        width\n        height\n      }\n      contact {\n        phone\n        email\n        line\n      }\n      place {\n        id\n        nameTH\n        nameEN\n      }\n      createdAt\n    }\n  }\n": types.GetAnnouncementByIdDocument,
     "\n  query AllPlaces {\n    Places(limit: 1000) {\n      docs {\n        id\n        nameTH\n        nameEN\n        category\n        geolocation\n      }\n    }\n\n    Facilities(\n      limit: 1000\n      where: { type: { in: [curbCut, transportation, ramp] } }\n    ) {\n      docs {\n        id\n        type\n        detailTH\n        detailEN\n        geolocation\n      }\n    }\n  }\n": types.AllPlacesDocument,
-    "\n  query GetPlaceById($id: String!) {\n    Place(id: $id) {\n      id\n      nameTH\n      nameEN\n      category\n      geolocation\n    }\n  }\n": types.GetPlaceByIdDocument,
+    "\n  query GetPlaceById($id: String!) {\n    Place(id: $id) {\n      id\n      nameTH\n      nameEN\n      category\n      placeAddressTH\n      placeAddressEN\n      geolocation\n      phone\n      website\n      image {\n        url\n        width\n        height\n      }\n    }\n  }\n": types.GetPlaceByIdDocument,
 };
 
 /**
@@ -48,7 +48,7 @@ export function graphql(source: "\n  query AllPlaces {\n    Places(limit: 1000) 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetPlaceById($id: String!) {\n    Place(id: $id) {\n      id\n      nameTH\n      nameEN\n      category\n      geolocation\n    }\n  }\n"): (typeof documents)["\n  query GetPlaceById($id: String!) {\n    Place(id: $id) {\n      id\n      nameTH\n      nameEN\n      category\n      geolocation\n    }\n  }\n"];
+export function graphql(source: "\n  query GetPlaceById($id: String!) {\n    Place(id: $id) {\n      id\n      nameTH\n      nameEN\n      category\n      placeAddressTH\n      placeAddressEN\n      geolocation\n      phone\n      website\n      image {\n        url\n        width\n        height\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetPlaceById($id: String!) {\n    Place(id: $id) {\n      id\n      nameTH\n      nameEN\n      category\n      placeAddressTH\n      placeAddressEN\n      geolocation\n      phone\n      website\n      image {\n        url\n        width\n        height\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

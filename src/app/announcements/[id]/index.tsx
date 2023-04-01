@@ -47,7 +47,7 @@ function Page() {
       en: data?.Announcement?.titleEN || '',
       th: data?.Announcement?.titleTH || '',
     })
-  }, [contentOffsetY])
+  }, [contentOffsetY, data?.Announcement?.titleEN, data?.Announcement?.titleTH])
 
   const contacts = useMemo(() => {
     if (!data?.Announcement?.contact) {
@@ -115,7 +115,7 @@ function Page() {
         }}
         style={{
           width: '100%',
-          height: insets.top + 44 + 100,
+          height: insets.top + 44 + 150,
         }}
       />
 

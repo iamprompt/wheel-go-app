@@ -1,4 +1,4 @@
-import { Stack, useNavigation } from 'expo-router'
+import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Image, View } from 'react-native'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
@@ -15,6 +15,7 @@ import { GlobalStyle } from '~/styles'
 export default function App() {
   const { t } = useTranslation()
   const navigation = useNavigation()
+  const router = useRouter()
 
   const { data } = useGraphQL(allPlaces)
 
@@ -102,6 +103,9 @@ export default function App() {
                   longitude: place?.geolocation[0],
                 }}
                 image={PinIcon[place.category] || undefined}
+                onPress={() => {
+                  router.push(`/places/${place.id}`)
+                }}
               />
             )
           })}

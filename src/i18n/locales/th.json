@@ -60,5 +60,15 @@
       "phone": "โทรศัพท์",
       "line": "LINE Official Account"
     }
+  },
+  "categories": {
+    "building": "อาคาร"
+  },
+  "places": {
+    "address": "ที่อยู่",
+    "show_on_map": "โชว์บนแผนที่",
+    "contact": "ติดต่อ",
+    "website": "เว็บไซต์",
+    "share": "แชร์"
   }
 }
