@@ -14,6 +14,10 @@ import { useGraphQL } from '~/utils/useGraphQL'
 import { IconActionButton } from '~/components/IconActionButton'
 import { ListCategoryIcon } from '~/const/category'
 import { BrandGradient } from '~/components/BrandGradient'
+import {
+  AvailabilityStatus,
+  FacilitiesAvailabilityStatus,
+} from '~/components/FacilitiesAvailabilityStatus'
 
 function Page() {
   const { t } = useTranslation()
@@ -213,6 +217,26 @@ function Page() {
           width: '100%',
         }}
       />
+      <View>
+        <View>
+          <Text
+            style={{
+              fontFamily: FONTS.LSTH_BOLD,
+              fontSize: 14,
+            }}
+          >
+            {t('places.facilities_title')}
+          </Text>
+          <FacilitiesAvailabilityStatus
+            ramp={AvailabilityStatus.AVAILABLE}
+            assistance={AvailabilityStatus.UNAVAILABLE}
+            elevator={AvailabilityStatus.AVAILABLE}
+            toilet={AvailabilityStatus.AVAILABLE}
+            parking={AvailabilityStatus.WARNING}
+            surface={AvailabilityStatus.AVAILABLE}
+          />
+        </View>
+      </View>
     </ScrollView>
   )
 }

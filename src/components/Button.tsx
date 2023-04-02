@@ -59,7 +59,7 @@ const Button: FC<ButtonProps> = ({
     <Pressable
       {...props}
       style={{
-        flex: 1,
+        // flex: 1,
         borderRadius: 12,
         height: 48,
         // Set Content Alignment to Center

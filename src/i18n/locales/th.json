@@ -69,6 +69,8 @@
     "show_on_map": "โชว์บนแผนที่",
     "contact": "ติดต่อ",
     "website": "เว็บไซต์",
-    "share": "แชร์"
+    "share": "แชร์",
+    "facilities_title": "สิ่งอำนวยความสะดวก",
+    "see_place_details": "ดูข้อมูลสถานที่"
   }
 }

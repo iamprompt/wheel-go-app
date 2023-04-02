@@ -1,25 +1,27 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Image, Pressable, Text, View } from 'react-native'
+import { Image, View } from 'react-native'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
 // eslint-disable-next-line import/default
 import MapView from 'react-native-map-clustering'
+import { useState } from 'react'
 import { MapStyle, PinIcon } from '~/const/map'
 import { allPlaces } from '~/graphql/query/places'
 import { useGraphQL } from '~/utils/useGraphQL'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
-import { BrandGradient } from '~/components/BrandGradient'
-import FONTS from '~/styles/fonts'
-import COLORS from '~/styles/colors'
-import { ListCategoryIcon } from '~/const/category'
+import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
+import { PlaceExploreModal } from '~/components/PlaceExploreModal'
 
 export default function App() {
   const { t } = useTranslation()
   const navigation = useNavigation()
   const router = useRouter()
+
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
+  const [isModalVisible, setModalVisible] = useState(false)
 
   const { data } = useGraphQL(allPlaces)
 
@@ -108,7 +110,9 @@ export default function App() {
                 }}
                 image={PinIcon[place.category] || undefined}
                 onPress={() => {
-                  router.push(`/places/${place.id}`)
+                  // router.push(`/places/${place.id}`)
+                  setSelectedPlaceId(place.id as string)
+                  setModalVisible(true)
                 }}
               />
             )
@@ -153,63 +157,26 @@ export default function App() {
             marginHorizontal: 16,
           }}
         >
-          <Pressable>
-            <BrandGradient
-              style={{
-                padding: 16,
-                flexDirection: 'row',
-                width: '100%',
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    gap: 8,
-                  }}
-                >
-                  <Image
-                    source={ListCategoryIcon.building}
-                    style={{
-                      width: 24,
-                      height: 24,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontFamily: FONTS.LSTH_BOLD,
-                      fontSize: 14,
-                      color: COLORS.white,
-                    }}
-                  >
-                    อาคาร
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    fontFamily: FONTS.LSTH_BOLD,
-                    fontSize: 20,
-                    color: COLORS.white,
-                  }}
-                >
-                  สำนักงานอธิการบดี
-                </Text>
-              </View>
-              <View>
-                <MaterialIcons
-                  name="info_outline"
-                  size={24}
-                  color={COLORS.white}
-                />
-              </View>
-            </BrandGradient>
-          </Pressable>
+          <NearbyPlaceBlock
+            name="Siam Paragon"
+            category="building"
+            onPress={() => {
+              console.log('Pressed NearbyPlaceBlock')
+            }}
+          />
         </View>
       </View>
+
+      {selectedPlaceId ? (
+        <PlaceExploreModal
+          placeId={selectedPlaceId}
+          isVisible={isModalVisible}
+          onClose={() => {
+            setModalVisible(false)
+            setSelectedPlaceId(null)
+          }}
+        />
+      ) : null}
     </View>
   )
 }
