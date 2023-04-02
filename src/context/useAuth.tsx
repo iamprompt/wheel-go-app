@@ -8,6 +8,7 @@ import {
   setUserToken,
 } from '~/utils/asyncStorage'
 import { WheelGoGraphQL } from '~/utils/graphql'
+import { getGravatarUrl } from '~/utils/gravatar'
 
 interface AuthContextData {
   signin: (email: string, password: string) => Promise<void>
@@ -21,6 +22,7 @@ interface User {
   firstName: string
   lastName: string
   email: string
+  image: string
 }
 
 const DefaultAuthContextData = {
@@ -66,6 +68,7 @@ function useAuthProvider() {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         email: user.email || '',
+        image: getGravatarUrl(user.email || ''),
       })
     }
   }

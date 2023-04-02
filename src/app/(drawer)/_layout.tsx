@@ -12,7 +12,6 @@ import FONTS from '~/styles/fonts'
 import { BrandGradient } from '~/components/BrandGradient'
 import COLORS from '~/styles/colors'
 import { useAuth } from '~/context/useAuth'
-import { getGravatarUrl } from '~/utils/gravatar'
 import Button, { ButtonVariant } from '~/components/Button'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
@@ -101,7 +100,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
           >
             <Image
               source={{
-                uri: getGravatarUrl(user.email),
+                uri: user.image,
                 width: 48,
                 height: 48,
               }}
@@ -196,15 +195,17 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
           )
         })}
       </View>
-      <View>
-        <Button
-          label="auth.logout"
-          variant={ButtonVariant.Secondary}
-          onPress={() => {
-            signout()
-          }}
-        />
-      </View>
+      {user ? (
+        <View>
+          <Button
+            label="auth.logout"
+            variant={ButtonVariant.Secondary}
+            onPress={() => {
+              signout()
+            }}
+          />
+        </View>
+      ) : null}
     </SafeAreaView>
   )
 }

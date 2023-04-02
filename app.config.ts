@@ -28,6 +28,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
+    package: 'com.nakama.wheelgo',
     adaptiveIcon: {
       foregroundImage: './src/assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
@@ -40,6 +41,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     WHEELGO_CMS_API: process.env.WHEELGO_CMS_API,
+    eas: {
+      projectId: 'efa55918-84e9-481e-9dcf-716a52dd37ce',
+    },
   },
   scheme: 'wheelgo',
   plugins: ['expo-localization'],
