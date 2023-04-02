@@ -249,7 +249,12 @@ function Page() {
           >
             {t('announcements.details')}
           </Text>
-          <Text>
+          <Text
+            style={{
+              fontFamily: FONTS.LSTH_REGULAR,
+              fontSize: 12,
+            }}
+          >
             {getDisplayTextFromCurrentLanguage({
               th: data.Announcement?.descriptionTH,
               en: data.Announcement?.descriptionEN,

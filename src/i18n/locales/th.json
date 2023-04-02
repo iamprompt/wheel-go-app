@@ -95,6 +95,7 @@
     "password": "รหัสผ่าน",
     "email_placeholder": "อีเมลของคุณ",
     "password_placeholder": "********",
-    "login": "ลงชื่อเข้าใช้"
+    "login": "ลงชื่อเข้าใช้",
+    "logout": "ออกจากระบบ"
   }
 }

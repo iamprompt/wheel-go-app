@@ -6,11 +6,13 @@ import { Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Button from '~/components/Button'
 import { WGTextInput } from '~/components/form/TextInput'
+import { useAuth } from '~/context/useAuth'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 
 function Page() {
+  const { signin } = useAuth()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
 
@@ -18,6 +20,7 @@ function Page() {
 
   const onSignIn: SubmitHandler<FieldValues> = (props) => {
     console.log(props)
+    signin(props.email, props.password)
   }
 
   return (

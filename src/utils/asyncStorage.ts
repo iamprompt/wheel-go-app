@@ -15,3 +15,15 @@ export async function setAppLanguage(language: string) {
   dayjs.locale(language)
   await AsyncStorage.setItem('appLanguage', language)
 }
+
+export async function getUserToken() {
+  return AsyncStorage.getItem('userToken')
+}
+
+export async function setUserToken(token: string) {
+  await AsyncStorage.setItem('userToken', token)
+}
+
+export async function removeUserToken() {
+  await AsyncStorage.removeItem('userToken')
+}

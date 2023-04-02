@@ -11,10 +11,14 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import FONTS from '~/styles/fonts'
 import { BrandGradient } from '~/components/BrandGradient'
 import COLORS from '~/styles/colors'
+import { useAuth } from '~/context/useAuth'
+import { getGravatarUrl } from '~/utils/gravatar'
+import Button, { ButtonVariant } from '~/components/Button'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { user, signout } = useAuth()
 
   return (
     <SafeAreaView style={{ padding: 16, flex: 1 }}>
@@ -30,51 +34,108 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
           source={require('~/assets/wordmark-dark.png')}
         />
       </View>
-      <View
-        style={{
-          marginVertical: 16,
-        }}
-      >
-        <Pressable
+      {!user ? (
+        <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderRadius: 12,
-            height: 48,
-          }}
-          onPress={() => {
-            router.push('/auth/login')
+            marginVertical: 16,
           }}
         >
-          <BrandGradient
+          <Pressable
             style={{
-              flex: 1,
-              height: '100%',
-              borderRadius: 12,
               flexDirection: 'row',
               alignItems: 'center',
-              paddingHorizontal: 24,
-              paddingVertical: 12,
-              justifyContent: 'space-between',
+              borderRadius: 12,
+              height: 48,
+            }}
+            onPress={() => {
+              router.push('/auth/login')
+            }}
+          >
+            <BrandGradient
+              style={{
+                flex: 1,
+                height: '100%',
+                borderRadius: 12,
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingHorizontal: 24,
+                paddingVertical: 12,
+                justifyContent: 'space-between',
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 16,
+                  color: COLORS.white,
+                }}
+              >
+                {t('auth.login_to_wheelgo')}
+              </Text>
+              <MaterialIcons
+                name="navigate_next"
+                size={20}
+                color={COLORS['french-vanilla'][100]}
+              />
+            </BrandGradient>
+          </Pressable>
+        </View>
+      ) : null}
+      {user ? (
+        <View
+          style={{
+            paddingVertical: 16,
+            flexDirection: 'row',
+            gap: 8,
+            alignItems: 'center',
+            borderBottomColor: COLORS.soap[100],
+            borderBottomWidth: 1,
+            borderTopColor: COLORS.soap[100],
+            borderTopWidth: 1,
+          }}
+        >
+          <View
+            style={{
+              paddingHorizontal: 16,
+            }}
+          >
+            <Image
+              source={{
+                uri: getGravatarUrl(user.email),
+                width: 48,
+                height: 48,
+              }}
+              style={{
+                borderRadius: 24,
+              }}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
             }}
           >
             <Text
               style={{
-                fontFamily: FONTS.LSTH_BOLD,
-                fontSize: 16,
-                color: COLORS.white,
+                fontFamily: FONTS.LSTH_REGULAR,
+                fontSize: 14,
               }}
             >
-              {t('auth.login_to_wheelgo')}
+              สวัสดี 👋,
             </Text>
-            <MaterialIcons
-              name="navigate_next"
-              size={20}
-              color={COLORS['french-vanilla'][100]}
-            />
-          </BrandGradient>
-        </Pressable>
-      </View>
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 20,
+              }}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {user.firstName} {user.lastName}
+            </Text>
+          </View>
+        </View>
+      ) : null}
       <View
         style={{
           marginTop: 32,
@@ -134,6 +195,15 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
             </View>
           )
         })}
+      </View>
+      <View>
+        <Button
+          label="auth.logout"
+          variant={ButtonVariant.Secondary}
+          onPress={() => {
+            signout()
+          }}
+        />
       </View>
     </SafeAreaView>
   )
