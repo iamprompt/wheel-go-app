@@ -73,6 +73,18 @@
     "share": "แชร์",
     "facilities_title": "สิ่งอำนวยความสะดวก",
     "see_place_details": "ดูข้อมูลสถานที่",
-    "nearby_places": "สถานที่ใกล้เคียง"
+    "nearby_places": "สถานที่ใกล้เคียง",
+    "accessibility_rating_title": "ระดับความเข้าถึง",
+    "see_reviews": "ดูรีวิว",
+    "see_more_details": "ดูข้อมูลเพิ่มเติม",
+    "review_here": "ให้คะแนนที่นี่"
+  },
+  "facilities": {
+    "ramp": "ทางลาด",
+    "assistance": "ผู้ช่วย",
+    "toilet": "ห้องน้ำ",
+    "elevator": "ลิฟต์โดยสาร",
+    "parking": "ที่จอดรถ",
+    "surface": "พื้นผิว"
   }
 }

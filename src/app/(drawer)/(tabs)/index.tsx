@@ -110,7 +110,6 @@ export default function App() {
                 }}
                 image={PinIcon[place.category] || undefined}
                 onPress={() => {
-                  // router.push(`/places/${place.id}`)
                   setSelectedPlaceId(place.id as string)
                   setModalVisible(true)
                 }}

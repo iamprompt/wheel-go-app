@@ -5,11 +5,11 @@ import { useMemo } from 'react'
 import { BrandGradient } from './BrandGradient'
 import { HorizontalDivider } from './HorizontalDivider'
 import Button, { ButtonVariant } from './Button'
-import { VerticalDivider } from './VerticalDivider'
 import {
   AvailabilityStatus,
   FacilitiesAvailabilityStatus,
 } from './FacilitiesAvailabilityStatus'
+import { AccessibilityRatingOverall } from './AccessibilityRatingOverall'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
@@ -182,47 +182,7 @@ export function PlaceExploreModal({
               >
                 {t('level.accessibility_level')}
               </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  gap: 12,
-                  alignItems: 'center',
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: 4,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: FONTS.LSTH_BOLD,
-                      fontSize: 24,
-                    }}
-                  >
-                    5
-                  </Text>
-                  <MaterialIcons
-                    name="star"
-                    size={24}
-                    color={COLORS.warning[300]}
-                  />
-                </View>
-                <VerticalDivider height={24} />
-                <View>
-                  <Text
-                    style={{
-                      fontFamily: FONTS.LSTH_REGULAR,
-                      fontSize: 12,
-                      color: COLORS['french-vanilla'][500],
-                    }}
-                  >
-                    {t('level.accessibility_level_description.1')}
-                  </Text>
-                </View>
-              </View>
+              <AccessibilityRatingOverall rating={5} />
             </View>
             <HorizontalDivider />
             <View>

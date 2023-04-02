@@ -2,7 +2,15 @@ import { Stack, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
-import { Image, Platform, ScrollView, Share, Text, View } from 'react-native'
+import {
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  Share,
+  Text,
+  View,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import { GetPlaceById } from '~/graphql/query/places'
@@ -18,6 +26,10 @@ import {
   AvailabilityStatus,
   FacilitiesAvailabilityStatus,
 } from '~/components/FacilitiesAvailabilityStatus'
+import { AccessibilityRatingOverall } from '~/components/AccessibilityRatingOverall'
+import { HorizontalDivider } from '~/components/HorizontalDivider'
+import { AccessibilityRatingContainer } from '~/components/AccessibilityRatingContainer'
+import { ReviewHereButton } from '~/components/ReviewHereButton'
 
 function Page() {
   const { t } = useTranslation()
@@ -73,169 +85,252 @@ function Page() {
         }}
       />
 
-      <Image
-        source={{
-          uri: data?.Place?.image?.url || '',
-          width: data?.Place?.image?.width || 0,
-          height: data?.Place?.image?.height || 0,
-        }}
+      <View
         style={{
-          width: '100%',
-          height: insets.top + 44 + 100,
-        }}
-      />
-
-      <BrandGradient
-        style={{
-          padding: 16,
+          paddingBottom: insets.bottom + 16,
         }}
       >
-        <View>
+        <Image
+          source={{
+            uri: data?.Place?.image?.url || '',
+            width: data?.Place?.image?.width || 0,
+            height: data?.Place?.image?.height || 0,
+          }}
+          style={{
+            width: '100%',
+            height: insets.top + 44 + 100,
+          }}
+        />
+
+        <BrandGradient
+          style={{
+            padding: 16,
+          }}
+        >
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 8,
+              }}
+            >
+              <Image
+                source={ListCategoryIcon[data.Place.category]}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 14,
+                  color: COLORS.white,
+                }}
+              >
+                {t(`categories.${data.Place.category}`)}
+              </Text>
+            </View>
+
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 20,
+                color: COLORS.white,
+              }}
+            >
+              {getDisplayTextFromCurrentLanguage({
+                en: data?.Place?.nameEN || '',
+                th: data?.Place?.nameTH || '',
+              })}
+            </Text>
+          </View>
+        </BrandGradient>
+        <View
+          style={{
+            paddingHorizontal: 16,
+          }}
+        >
           <View
             style={{
+              paddingVertical: 24,
+              borderBottomWidth: 1,
+              borderBottomColor: COLORS.soap[100],
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 16,
+                marginBottom: 8,
+              }}
+            >
+              {t('places.address')}
+            </Text>
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_REGULAR,
+                fontSize: 12,
+                color: COLORS['french-vanilla'][500],
+              }}
+            >
+              {getDisplayTextFromCurrentLanguage({
+                en: data?.Place?.placeAddressEN || '',
+                th: data?.Place?.placeAddressTH || '',
+              })}
+            </Text>
+          </View>
+          <View
+            style={{
+              paddingVertical: 24,
               flexDirection: 'row',
               gap: 8,
             }}
           >
-            <Image
-              source={ListCategoryIcon[data.Place.category]}
-              style={{
-                width: 24,
-                height: 24,
+            <IconActionButton
+              label={t('places.show_on_map')}
+              icon="place"
+              onPress={() => {
+                const address = data.Place?.geolocation?.reverse().join(',')
+                const url = Platform.select({
+                  ios: `maps:0,0?q=${address}`,
+                  android: `geo:0,0?q=${address}`,
+                })
+
+                url && Linking.openURL(url)
               }}
             />
-            <Text
+            <IconActionButton
+              label={t('places.contact')}
+              icon="call"
+              onPress={() => {
+                data.Place?.phone && Linking.openURL(`tel:${data.Place?.phone}`)
+              }}
+            />
+            <IconActionButton
+              label={t('places.website')}
+              icon="link"
+              onPress={() => {
+                data.Place?.website && Linking.openURL(data.Place.website)
+              }}
+            />
+            <IconActionButton
+              label={t('places.share')}
+              icon="share"
+              onPress={async () => {
+                const result = await Share.share({
+                  message: data.Place?.website || '',
+                })
+
+                result.action === Share.sharedAction && console.log('shared')
+              }}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: COLORS.soap[100],
+            height: 12,
+            width: '100%',
+          }}
+        />
+        <View
+          style={{
+            paddingHorizontal: 16,
+            paddingVertical: 24,
+            gap: 16,
+          }}
+        >
+          <View>
+            <View
               style={{
-                fontFamily: FONTS.LSTH_BOLD,
-                fontSize: 14,
-                color: COLORS.white,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 12,
               }}
             >
-              {t(`categories.${data.Place.category}`)}
-            </Text>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 16,
+                  flex: 1,
+                }}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {t('places.accessibility_rating_title')}
+              </Text>
+              <Pressable>
+                <Text
+                  style={{
+                    color: COLORS.info[400],
+                    fontFamily: FONTS.LSTH_REGULAR,
+                    fontSize: 12,
+                  }}
+                >
+                  {t('places.see_reviews')}
+                </Text>
+              </Pressable>
+            </View>
+            <AccessibilityRatingOverall rating={5} reviews={10} />
+            <AccessibilityRatingContainer
+              style={{
+                marginTop: 24,
+              }}
+            />
           </View>
 
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 20,
-              color: COLORS.white,
-            }}
-          >
-            {getDisplayTextFromCurrentLanguage({
-              en: data?.Place?.nameEN || '',
-              th: data?.Place?.nameTH || '',
-            })}
-          </Text>
-        </View>
-      </BrandGradient>
-      <View
-        style={{
-          paddingHorizontal: 16,
-        }}
-      >
-        <View
-          style={{
-            paddingVertical: 24,
-            borderBottomWidth: 1,
-            borderBottomColor: COLORS.soap[100],
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 16,
-              marginBottom: 8,
-            }}
-          >
-            {t('places.address')}
-          </Text>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_REGULAR,
-              fontSize: 12,
-              color: COLORS['french-vanilla'][500],
-            }}
-          >
-            {getDisplayTextFromCurrentLanguage({
-              en: data?.Place?.placeAddressEN || '',
-              th: data?.Place?.placeAddressTH || '',
-            })}
-          </Text>
-        </View>
-        <View
-          style={{
-            paddingVertical: 24,
-            flexDirection: 'row',
-            gap: 8,
-          }}
-        >
-          <IconActionButton
-            label={t('places.show_on_map')}
-            icon="place"
-            onPress={() => {
-              const address = data.Place?.geolocation?.reverse().join(',')
-              const url = Platform.select({
-                ios: `maps:0,0?q=${address}`,
-                android: `geo:0,0?q=${address}`,
-              })
+          <HorizontalDivider />
 
-              url && Linking.openURL(url)
-            }}
-          />
-          <IconActionButton
-            label={t('places.contact')}
-            icon="call"
-            onPress={() => {
-              data.Place?.phone && Linking.openURL(`tel:${data.Place?.phone}`)
-            }}
-          />
-          <IconActionButton
-            label={t('places.website')}
-            icon="link"
-            onPress={() => {
-              data.Place?.website && Linking.openURL(data.Place.website)
-            }}
-          />
-          <IconActionButton
-            label={t('places.share')}
-            icon="share"
-            onPress={async () => {
-              const result = await Share.share({
-                message: data.Place?.website || '',
-              })
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 12,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 16,
+                  flex: 1,
+                }}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {t('places.facilities_title')}
+              </Text>
+              <Pressable>
+                <Text
+                  style={{
+                    color: COLORS.info[400],
+                    fontFamily: FONTS.LSTH_REGULAR,
+                    fontSize: 12,
+                  }}
+                >
+                  {t('places.see_more_details')}
+                </Text>
+              </Pressable>
+            </View>
+            <FacilitiesAvailabilityStatus
+              ramp={AvailabilityStatus.AVAILABLE}
+              assistance={AvailabilityStatus.UNAVAILABLE}
+              elevator={AvailabilityStatus.AVAILABLE}
+              toilet={AvailabilityStatus.AVAILABLE}
+              parking={AvailabilityStatus.WARNING}
+              surface={AvailabilityStatus.AVAILABLE}
+            />
+          </View>
 
-              result.action === Share.sharedAction && console.log('shared')
-            }}
-          />
+          <HorizontalDivider />
+
+          <ReviewHereButton />
         </View>
-      </View>
-      <View
-        style={{
-          backgroundColor: COLORS.soap[100],
-          height: 12,
-          width: '100%',
-        }}
-      />
-      <View>
-        <View>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 14,
-            }}
-          >
-            {t('places.facilities_title')}
-          </Text>
-          <FacilitiesAvailabilityStatus
-            ramp={AvailabilityStatus.AVAILABLE}
-            assistance={AvailabilityStatus.UNAVAILABLE}
-            elevator={AvailabilityStatus.AVAILABLE}
-            toilet={AvailabilityStatus.AVAILABLE}
-            parking={AvailabilityStatus.WARNING}
-            surface={AvailabilityStatus.AVAILABLE}
-          />
-        </View>
+
+        <HorizontalDivider height={12} />
       </View>
     </ScrollView>
   )

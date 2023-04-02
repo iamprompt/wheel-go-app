@@ -1,8 +1,8 @@
-import type { ComponentProps } from 'react'
 import { View } from 'react-native'
 import { HorizontalDivider } from './HorizontalDivider'
 import COLORS from '~/styles/colors'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { FACILITIES } from '~/const/facility'
 
 export enum AvailabilityStatus {
   AVAILABLE = 'AVAILABLE',
@@ -18,41 +18,6 @@ interface FacilitiesAvailabilityStatusProps {
   parking: AvailabilityStatus
   surface: AvailabilityStatus
 }
-
-type FacilitiesKey = Record<
-  keyof FacilitiesAvailabilityStatusProps,
-  {
-    label: string
-    icon: ComponentProps<typeof MaterialIcons>['name']
-  }
->
-
-const FACILITIES = {
-  ramp: {
-    label: 'ramp',
-    icon: 'signal_cellular_4_bar',
-  },
-  assistance: {
-    label: 'assistance',
-    icon: 'wheelchair_pickup',
-  },
-  toilet: {
-    label: 'toilet',
-    icon: 'wc',
-  },
-  elevator: {
-    label: 'elevator',
-    icon: 'elevator',
-  },
-  parking: {
-    label: 'parking',
-    icon: 'local_parking',
-  },
-  surface: {
-    label: 'surface',
-    icon: 'texture',
-  },
-} satisfies FacilitiesKey
 
 export function AvailabilityIcon({
   availability,
@@ -86,7 +51,7 @@ export function FacilitiesAvailabilityStatus({
         flexDirection: 'row',
       }}
     >
-      {Object.entries(FACILITIES).map(([key, { label, icon }]) => {
+      {Object.entries(FACILITIES).map(([key, { icon }]) => {
         return (
           <View
             key={key}
