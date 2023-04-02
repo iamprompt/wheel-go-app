@@ -6,6 +6,7 @@ import Constants from 'expo-constants'
 const WHEELGO_CMS_API = Constants.expoConfig?.extra?.WHEELGO_CMS_API
 
 export function useGraphQL<TResult, TVariables>(
+  enabled: boolean,
   document: TypedDocumentNode<TResult, TVariables>,
   ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
 ): UseQueryResult<TResult> {
@@ -16,6 +17,9 @@ export function useGraphQL<TResult, TVariables>(
         `${WHEELGO_CMS_API}/graphql`,
         document,
         queryKey[1] ? queryKey[1] : undefined
-      )
+      ),
+    {
+      enabled,
+    }
   )
 }

@@ -15,7 +15,7 @@ function Page() {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const { data } = useGraphQL(AllAnnouncements)
+  const { data } = useGraphQL(true, AllAnnouncements)
 
   return (
     <ScrollView style={[GlobalStyle.container]}>

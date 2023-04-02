@@ -13,5 +13,5 @@ export const ListCategoryIcon = {
   parking: require('~/assets/places/parking-icon.png'),
   residence: require('~/assets/places/residence-icon.png'),
   toilet: require('~/assets/places/toilet-icon.png'),
-  sport: '',
+  sport: require('~/assets/places/building-icon.png'),
 } satisfies CategoryIcon

@@ -49,8 +49,16 @@ export const GetPlaceById = graphql(/* GraphQL */ `
 `)
 
 export const GetNearbyPlacesFromLocation = graphql(/* GraphQL */ `
-  query GetNearbyPlacesFromLocation($lat: Float!, $lng: Float!, $limit: Int) {
-    Places(limit: $limit, where: { geolocation: { near: [$lng, $lat] } }) {
+  query GetNearbyPlacesFromLocation(
+    $lat: Float!
+    $lng: Float!
+    $distance: Float!
+    $limit: Int
+  ) {
+    Places(
+      limit: $limit
+      where: { geolocation: { near: [$lng, $lat, $distance] } }
+    ) {
       docs {
         id
         nameTH

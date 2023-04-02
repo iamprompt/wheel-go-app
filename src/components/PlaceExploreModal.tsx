@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Image, Modal, Text, View } from 'react-native'
 import { useRouter } from 'expo-router'
+import { useMemo } from 'react'
 import { BrandGradient } from './BrandGradient'
 import { HorizontalDivider } from './HorizontalDivider'
 import Button, { ButtonVariant } from './Button'
@@ -14,7 +15,11 @@ import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { ListCategoryIcon } from '~/const/category'
 import { useGraphQL } from '~/utils/useGraphQL'
-import { GetPlaceById } from '~/graphql/query/places'
+import {
+  GetNearbyPlacesFromLocation,
+  GetPlaceById,
+} from '~/graphql/query/places'
+import { getNearestPlaces } from '~/utils/geo'
 
 interface PlaceExploreModalProps {
   isVisible: boolean
@@ -30,11 +35,39 @@ export function PlaceExploreModal({
   const { t } = useTranslation()
   const router = useRouter()
 
-  const { data } = useGraphQL(GetPlaceById, {
+  const { data: placeData } = useGraphQL(true, GetPlaceById, {
     id: placeId,
   })
 
-  if (!data || !data.Place) {
+  const { data: nearbyPlacesData = {} } = useGraphQL(
+    !!placeData?.Place,
+    GetNearbyPlacesFromLocation,
+    {
+      lat: placeData?.Place?.geolocation?.[1] || 0,
+      lng: placeData?.Place?.geolocation?.[0] || 0,
+      distance: 5000,
+      limit: 1000,
+    }
+  )
+
+  const nearbyPlaces = useMemo(() => {
+    if (!nearbyPlacesData?.Places || !placeData?.Place?.geolocation) {
+      return []
+    }
+
+    return (
+      getNearestPlaces(nearbyPlacesData, {
+        lat: placeData.Place.geolocation[1],
+        lng: placeData.Place.geolocation[0],
+        limit: 3,
+        exclude: [placeData.Place.id!],
+      }) || []
+    )
+  }, [nearbyPlacesData])
+
+  console.log(JSON.stringify(nearbyPlaces[0], null, 2))
+
+  if (!placeData || !placeData.Place) {
     return null
   }
 
@@ -93,7 +126,7 @@ export function PlaceExploreModal({
                 }}
               >
                 <Image
-                  source={ListCategoryIcon[data.Place.category]}
+                  source={ListCategoryIcon[placeData.Place.category]}
                   style={{
                     width: 24,
                     height: 24,
@@ -106,7 +139,7 @@ export function PlaceExploreModal({
                     color: COLORS.white,
                   }}
                 >
-                  {t(`categories.${data.Place.category}`)}
+                  {t(`categories.${placeData.Place.category}`)}
                 </Text>
               </View>
               <Text
@@ -116,7 +149,7 @@ export function PlaceExploreModal({
                   color: COLORS.white,
                 }}
               >
-                {data.Place.nameTH}
+                {placeData.Place.nameTH}
               </Text>
             </View>
             <View
@@ -235,35 +268,70 @@ export function PlaceExploreModal({
                   fontSize: 14,
                 }}
               >
-                {t('places.nearby_places_title')}
+                {t('places.nearby_places')}
               </Text>
             </View>
 
             <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 8,
-                  paddingVertical: 12,
-                }}
-              >
-                <Image
-                  source={ListCategoryIcon[data.Place.category]}
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
-                />
-                <Text
-                  style={{
-                    fontFamily: FONTS.LSTH_REGULAR,
-                    fontSize: 12,
-                  }}
-                >
-                  {data.Place.nameTH}
-                </Text>
-              </View>
+              {nearbyPlaces.map((place, i) => {
+                if (!place) {
+                  return null
+                }
+
+                return (
+                  <View
+                    key={place.id}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      justifyContent: 'space-between',
+                      borderColor: COLORS.soap[100],
+                      borderBottomWidth: i === nearbyPlaces.length - 1 ? 0 : 1,
+                      gap: 16,
+                    }}
+                  >
+                    <View
+                      style={{
+                        gap: 8,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flex: 1,
+                      }}
+                    >
+                      <Image
+                        source={ListCategoryIcon[place.category!]}
+                        style={{
+                          width: 24,
+                          height: 24,
+                        }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: FONTS.LSTH_REGULAR,
+                          fontSize: 12,
+                          flex: 1,
+                        }}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                      >
+                        {place.nameTH}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontFamily: FONTS.LSTH_REGULAR,
+                          fontSize: 10,
+                          color: COLORS['french-vanilla'][500],
+                        }}
+                      >
+                        {place.distance} {t('units.meters')}
+                      </Text>
+                    </View>
+                  </View>
+                )
+              })}
             </View>
           </View>
         </View>

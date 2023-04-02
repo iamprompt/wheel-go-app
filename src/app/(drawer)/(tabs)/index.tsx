@@ -23,7 +23,7 @@ export default function App() {
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
   const [isModalVisible, setModalVisible] = useState(false)
 
-  const { data } = useGraphQL(allPlaces)
+  const { data } = useGraphQL(true, allPlaces)
 
   return (
     <View style={[GlobalStyle.container]}>

@@ -22,7 +22,7 @@ function Page() {
 
   const [contentOffsetY, setContentOffsetY] = useState(0)
 
-  const { data } = useGraphQL(GetAnnouncementById, {
+  const { data } = useGraphQL(true, GetAnnouncementById, {
     id: id!,
   })
 

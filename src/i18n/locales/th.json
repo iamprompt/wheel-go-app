@@ -36,7 +36,8 @@
     "review": "รีวิว",
     "reviews": "รีวิว",
     "route": "เส้นทาง",
-    "routes": "เส้นทาง"
+    "routes": "เส้นทาง",
+    "meters": "เมตร"
   },
   "helpModal": {
     "title": "ต้องการความช่วยเหลือ?",
@@ -71,6 +72,7 @@
     "website": "เว็บไซต์",
     "share": "แชร์",
     "facilities_title": "สิ่งอำนวยความสะดวก",
-    "see_place_details": "ดูข้อมูลสถานที่"
+    "see_place_details": "ดูข้อมูลสถานที่",
+    "nearby_places": "สถานที่ใกล้เคียง"
   }
 }

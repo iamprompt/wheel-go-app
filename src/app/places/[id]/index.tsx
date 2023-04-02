@@ -23,7 +23,7 @@ function Page() {
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
   const { id } = useSearchParams<{ id: string }>()
-  const { data } = useGraphQL(GetPlaceById, {
+  const { data } = useGraphQL(true, GetPlaceById, {
     id: id!,
   })
 
