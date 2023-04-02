@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { DrawerItems } from '~/const/drawer'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import FONTS from '~/styles/fonts'
+import { BrandGradient } from '~/components/BrandGradient'
+import COLORS from '~/styles/colors'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
@@ -16,11 +18,62 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
 
   return (
     <SafeAreaView style={{ padding: 16, flex: 1 }}>
-      <View style={{ justifyContent: 'flex-end', flexDirection: 'row' }}>
+      <View
+        style={{
+          justifyContent: 'flex-end',
+          flexDirection: 'row',
+          marginBottom: 32,
+        }}
+      >
         <Image
           style={{ width: 140, height: 32 }}
           source={require('~/assets/wordmark-dark.png')}
         />
+      </View>
+      <View
+        style={{
+          marginVertical: 16,
+        }}
+      >
+        <Pressable
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderRadius: 12,
+            height: 48,
+          }}
+          onPress={() => {
+            router.push('/auth/login')
+          }}
+        >
+          <BrandGradient
+            style={{
+              flex: 1,
+              height: '100%',
+              borderRadius: 12,
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: 24,
+              paddingVertical: 12,
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 16,
+                color: COLORS.white,
+              }}
+            >
+              {t('auth.login_to_wheelgo')}
+            </Text>
+            <MaterialIcons
+              name="navigate_next"
+              size={20}
+              color={COLORS['french-vanilla'][100]}
+            />
+          </BrandGradient>
+        </Pressable>
       </View>
       <View
         style={{

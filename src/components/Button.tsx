@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { PressableProps } from 'react-native'
 import { Pressable, Text } from 'react-native'
 import COLORS from '~/styles/colors'
@@ -22,6 +23,7 @@ const Button: FC<ButtonProps> = ({
   label,
   ...props
 }) => {
+  const { t } = useTranslation()
   const BackgroundColor =
     variant === ButtonVariant.Primary
       ? COLORS.magenta[500]
@@ -80,7 +82,7 @@ const Button: FC<ButtonProps> = ({
           color: TextColor,
         }}
       >
-        {label}
+        {t(label)}
       </Text>
     </Pressable>
   )

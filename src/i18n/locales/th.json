@@ -86,5 +86,15 @@
     "elevator": "ลิฟต์โดยสาร",
     "parking": "ที่จอดรถ",
     "surface": "พื้นผิว"
+  },
+  "auth": {
+    "login_to_wheelgo": "ลงชื่อเข้าสู่ วีลโก",
+    "login_title": "ลงชื่อเข้าใช้",
+    "login_description": "เพื่อสร้างสิ่งแวดล้อมเพื่อคนทุกคนร่วมกัน",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "email_placeholder": "อีเมลของคุณ",
+    "password_placeholder": "********",
+    "login": "ลงชื่อเข้าใช้"
   }
 }
