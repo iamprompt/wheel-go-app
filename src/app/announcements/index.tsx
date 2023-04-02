@@ -76,18 +76,20 @@ function Page() {
                       en: item.titleEN,
                     })}
                   </Text>
-                  <Text
-                    style={{
-                      fontFamily: FONTS.LSTH_REGULAR,
-                      fontSize: 12,
-                      color: COLORS['french-vanilla'][500],
-                    }}
-                  >
-                    {getDisplayTextFromCurrentLanguage({
-                      th: item.place?.nameTH,
-                      en: item.place?.nameEN,
-                    })}
-                  </Text>
+                  {item.place ? (
+                    <Text
+                      style={{
+                        fontFamily: FONTS.LSTH_REGULAR,
+                        fontSize: 12,
+                        color: COLORS['french-vanilla'][500],
+                      }}
+                    >
+                      {getDisplayTextFromCurrentLanguage({
+                        th: item.place?.nameTH,
+                        en: item.place?.nameEN,
+                      })}
+                    </Text>
+                  ) : null}
                 </View>
                 <View
                   style={{

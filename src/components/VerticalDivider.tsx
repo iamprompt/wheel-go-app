@@ -14,6 +14,6 @@ export function VerticalDivider({ width = 1, height }: VerticalDividerProps) {
         backgroundColor: COLORS.soap[100],
         width,
       }}
-    ></View>
+    />
   )
 }

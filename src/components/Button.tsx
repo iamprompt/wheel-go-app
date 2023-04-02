@@ -16,11 +16,13 @@ export enum ButtonVariant {
 type ButtonProps = {
   variant?: ButtonVariant
   label: string
+  fullWidth?: boolean
 } & Omit<PressableProps, 'style'>
 
 const Button: FC<ButtonProps> = ({
   variant = ButtonVariant.Primary,
   label,
+  fullWidth = false,
   ...props
 }) => {
   const { t } = useTranslation()
@@ -61,7 +63,7 @@ const Button: FC<ButtonProps> = ({
     <Pressable
       {...props}
       style={{
-        // flex: 1,
+        flex: fullWidth ? 1 : 0,
         borderRadius: 12,
         height: 48,
         // Set Content Alignment to Center

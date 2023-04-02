@@ -17,6 +17,6 @@ export function HorizontalDivider({
         backgroundColor: COLORS.soap[100],
         width: width ?? '100%',
       }}
-    ></View>
+    />
   )
 }

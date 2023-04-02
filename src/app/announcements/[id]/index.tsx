@@ -85,6 +85,14 @@ function Page() {
     return contactData
   }, [data?.Announcement?.contact])
 
+  const shouldShowContact = useMemo(() => {
+    if (!contacts) {
+      return false
+    }
+
+    return contacts.some((item) => !!item.value)
+  }, [contacts])
+
   if (!data) {
     return null
   }
@@ -107,17 +115,27 @@ function Page() {
         }}
       />
 
-      <Image
-        source={{
-          uri: data?.Announcement?.image?.url || '',
-          width: data?.Announcement?.image?.width || 0,
-          height: data?.Announcement?.image?.height || 0,
-        }}
-        style={{
-          width: '100%',
-          height: insets.top + 44 + 150,
-        }}
-      />
+      {data.Announcement?.image ? (
+        <Image
+          source={{
+            uri: data?.Announcement?.image?.url || '',
+            width: data?.Announcement?.image?.width || 0,
+            height: data?.Announcement?.image?.height || 0,
+          }}
+          style={{
+            width: '100%',
+            height: insets.top + 44 + 150,
+          }}
+        />
+      ) : (
+        <View
+          style={{
+            width: '100%',
+            height: insets.top + 44 + 150,
+            backgroundColor: COLORS.soap[100],
+          }}
+        />
+      )}
 
       <View
         style={{
@@ -147,17 +165,19 @@ function Page() {
                 en: data?.Announcement?.titleEN,
               })}
             </Text>
-            <Text
-              style={{
-                fontSize: 14,
-                fontFamily: FONTS.LSTH_REGULAR,
-              }}
-            >
-              {getDisplayTextFromCurrentLanguage({
-                th: data.Announcement?.place?.nameTH,
-                en: data.Announcement?.place?.nameEN,
-              })}
-            </Text>
+            {data.Announcement?.place ? (
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: FONTS.LSTH_REGULAR,
+                }}
+              >
+                {getDisplayTextFromCurrentLanguage({
+                  th: data.Announcement?.place?.nameTH,
+                  en: data.Announcement?.place?.nameEN,
+                })}
+              </Text>
+            ) : null}
           </View>
           <View
             style={{
@@ -262,63 +282,65 @@ function Page() {
           </Text>
         </View>
 
-        <View
-          style={{
-            paddingVertical: 24,
-            borderColor: COLORS.soap[100],
-            borderBottomWidth: 1,
-          }}
-        >
-          <Text
+        {shouldShowContact ? (
+          <View
             style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 16,
-              marginBottom: 12,
+              paddingVertical: 24,
+              borderColor: COLORS.soap[100],
+              borderBottomWidth: 1,
             }}
           >
-            {t('announcements.contact.title')}
-          </Text>
-          <View>
-            {contacts?.map((item, index) => {
-              return (
-                <View
-                  key={`announcement-${id}-contact-${index}`}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    paddingVertical: 12,
-                  }}
-                >
-                  <Text
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 16,
+                marginBottom: 12,
+              }}
+            >
+              {t('announcements.contact.title')}
+            </Text>
+            <View>
+              {contacts?.map((item, index) => {
+                return (
+                  <View
+                    key={`announcement-${id}-contact-${index}`}
                     style={{
-                      fontFamily: FONTS.LSTH_BOLD,
-                      fontSize: 14,
-                      color: COLORS['french-vanilla'][500],
-                    }}
-                  >
-                    {item.label}
-                  </Text>
-                  <Pressable
-                    onPress={() => {
-                      Linking.openURL(item.href)
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingVertical: 12,
                     }}
                   >
                     <Text
                       style={{
-                        fontFamily: FONTS.LSTH_REGULAR,
+                        fontFamily: FONTS.LSTH_BOLD,
                         fontSize: 14,
-                        color: COLORS.magenta[500],
+                        color: COLORS['french-vanilla'][500],
                       }}
                     >
-                      {item.value}
+                      {item.label}
                     </Text>
-                  </Pressable>
-                </View>
-              )
-            })}
+                    <Pressable
+                      onPress={() => {
+                        Linking.openURL(item.href)
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: FONTS.LSTH_REGULAR,
+                          fontSize: 14,
+                          color: COLORS.magenta[500],
+                        }}
+                      >
+                        {item.value}
+                      </Text>
+                    </Pressable>
+                  </View>
+                )
+              })}
+            </View>
           </View>
-        </View>
+        ) : null}
       </View>
     </ScrollView>
   )

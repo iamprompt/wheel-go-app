@@ -99,6 +99,7 @@ const HelpModal: FC<HelpModalProps> = ({ isVisible, onClose }) => {
               label={t('button.cancel')}
               variant={ButtonVariant.Text}
               onPress={onClose}
+              fullWidth
             />
             <Button
               label={t('button.go')}
@@ -106,6 +107,7 @@ const HelpModal: FC<HelpModalProps> = ({ isVisible, onClose }) => {
                 Linking.openURL('https://www.facebook.com/DSS.Mahidol.Page/')
                 onClose()
               }}
+              fullWidth
             />
           </View>
         </View>
