@@ -3,10 +3,12 @@ import { StatusBar } from 'expo-status-bar'
 import { useTranslation } from 'react-i18next'
 import { Image, Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { useAuth } from '~/context/useAuth'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export default function App() {
   const insets = useSafeAreaInsets()
@@ -119,6 +121,48 @@ export default function App() {
           </Text>
         </Pressable>
       </View>
+      <View
+        style={{
+          marginTop: 32,
+          marginBottom: 16,
+          flexDirection: 'row',
+          gap: 16,
+          justifyContent: 'center',
+        }}
+      >
+        {Array.from({ length: 3 }).map((_, index) => (
+          <View
+            key={index}
+            style={{
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                borderColor: COLORS['french-vanilla'][300],
+                borderWidth: 2,
+                borderRadius: 28,
+                padding: 8,
+                width: 52,
+                height: 52,
+              }}
+            >
+              <MaterialIcons name="navigation" size={32} />
+            </View>
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 12,
+                width: 80,
+                textAlign: 'center',
+              }}
+            >
+              Master Navigation
+            </Text>
+          </View>
+        ))}
+      </View>
+      <HorizontalDivider />
     </ScrollView>
   )
 }
