@@ -28,7 +28,11 @@
     "my_lists": "ลิสต์ของฉัน",
     "favorite_places": "สถานที่ของฉัน",
     "places_reviews": "รีวิวของฉัน",
-    "contributed_routes": "เส้นทางของฉัน"
+    "contributed_routes": "เส้นทางของฉัน",
+    "date": "วันที่",
+    "time": "เวลา",
+    "elapsed_time": "เวลาที่ใช้",
+    "distance": "ระยะทาง"
   },
   "units": {
     "place": "ที่",

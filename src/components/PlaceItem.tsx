@@ -1,0 +1,106 @@
+import dayjs from 'dayjs'
+import { Image, Pressable, Text, View } from 'react-native'
+import { VerticalDivider } from './VerticalDivider'
+import { ListCategoryIcon } from '~/const/category'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+
+export function PlaceItem({
+  name,
+  rating,
+  category,
+  date,
+  onPress,
+  borderTop,
+  borderBottom,
+}: {
+  name: string
+  rating: number
+  category: keyof typeof ListCategoryIcon
+  date: string
+  onPress: () => void
+  borderTop?: boolean
+  borderBottom?: boolean
+}) {
+  return (
+    <Pressable
+      style={({ pressed: _pressed }) => ({
+        paddingHorizontal: 16,
+        paddingVertical: 24,
+        borderColor: COLORS.soap[100],
+        borderTopWidth: borderTop ? 1 : 0,
+        borderBottomWidth: borderBottom ? 1 : 0,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+      })}
+      onPress={onPress}
+    >
+      <Image
+        source={ListCategoryIcon[category]}
+        style={{
+          width: 32,
+          height: 32,
+        }}
+      />
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: FONTS.LSTH_REGULAR,
+            fontSize: 14,
+            marginBottom: 4,
+          }}
+        >
+          {name}
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 4,
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 16,
+                color: COLORS.magenta[500],
+              }}
+            >
+              {rating}
+            </Text>
+            <MaterialIcons name="star" size={24} color={COLORS.warning[300]} />
+          </View>
+          <VerticalDivider />
+          <Text
+            style={{
+              fontFamily: FONTS.LSTH_REGULAR,
+              fontSize: 10,
+              color: COLORS['french-vanilla'][500],
+            }}
+          >
+            {dayjs(date).format('DD MMMM YYYY')}
+          </Text>
+        </View>
+      </View>
+      <MaterialIcons
+        name="chevron_right"
+        size={24}
+        color={COLORS['french-vanilla'][300]}
+      />
+    </Pressable>
+  )
+}
