@@ -1,16 +1,28 @@
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { PlaceItem } from '~/components/PlaceItem'
+import { GetUserFavoritePlaces } from '~/graphql/query/user'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useGraphQL } from '~/utils/useGraphQL'
 
 export default function Page() {
+  const router = useRouter()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
+
+  const { data } = useGraphQL(true, GetUserFavoritePlaces)
+  const favoritePlaces = useMemo(
+    () =>
+      data?.meUser?.user?.favoritePlaces?.filter((place) => !!place.place) ||
+      [],
+    [data?.meUser?.user?.favoritePlaces]
+  )
 
   return (
     <ScrollView style={[GlobalStyle.container]}>
@@ -69,7 +81,7 @@ export default function Page() {
               color: COLORS['french-vanilla'][500],
             }}
           >
-            3 {t('units.places')}
+            {favoritePlaces.length} {t('units.places')}
           </Text>
         </View>
         <View
@@ -77,20 +89,28 @@ export default function Page() {
             marginTop: 24,
           }}
         >
-          {Array.from({ length: 3 }).map((_, i) => (
-            <PlaceItem
-              key={i}
-              name="คณะเทคโนโลยีสารสนเทศและการสื่อสาร"
-              rating={4.5}
-              category="building"
-              date="2023-03-03"
-              onPress={() => {
-                console.log('onPress')
-              }}
-              borderTop={i === 0}
-              borderBottom
-            />
-          ))}
+          {favoritePlaces.map((favoritePlace, i) => {
+            if (!favoritePlace.place) {
+              return null
+            }
+
+            const { place } = favoritePlace
+
+            return (
+              <PlaceItem
+                key={`favoritePlace-${place.id}-${i}`}
+                name={place.nameTH}
+                rating={4.5}
+                category={place.category}
+                date={favoritePlace.addedAt}
+                onPress={() => {
+                  router.push(`/places/${place.id}`)
+                }}
+                borderTop={i === 0}
+                borderBottom
+              />
+            )
+          })}
         </View>
       </View>
     </ScrollView>
