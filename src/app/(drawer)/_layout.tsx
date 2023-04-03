@@ -13,6 +13,7 @@ import { BrandGradient } from '~/components/BrandGradient'
 import COLORS from '~/styles/colors'
 import { useAuth } from '~/context/useAuth'
 import Button, { ButtonVariant } from '~/components/Button'
+import { Modal } from '~/components/Modal'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
@@ -186,9 +187,10 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
                 {IconElement}
               </Pressable>
               {ModalElement ? (
-                <ModalElement
+                <Modal
                   isVisible={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
+                  modal={ModalElement}
                 />
               ) : null}
             </View>

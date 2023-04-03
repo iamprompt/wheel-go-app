@@ -1,5 +1,5 @@
 import type { ComponentProps, FC } from 'react'
-import HelpModal from '~/components/HelpModal'
+import { HelpModal } from '~/components/HelpModal'
 import COLORS from '~/styles/colors'
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 

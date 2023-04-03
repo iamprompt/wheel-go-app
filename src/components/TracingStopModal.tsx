@@ -1,18 +1,20 @@
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
-import * as Linking from 'expo-linking'
 import Button, { ButtonVariant } from './Button'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
-interface HelpModalProps {
+interface TracingStopModalProps {
   onClose: () => void
   onAction?: () => void
 }
 
-export const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
+export const TracingStopModal: FC<TracingStopModalProps> = ({
+  onClose,
+  onAction,
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -54,7 +56,7 @@ export const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
               textAlign: 'center',
             }}
           >
-            {t('helpModal.title')}
+            {t('trace.stop_modal.title')}
           </Text>
         </View>
         <Text
@@ -65,7 +67,7 @@ export const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
             color: COLORS['french-vanilla'][500],
           }}
         >
-          {t('helpModal.description')}
+          {t('trace.stop_modal.description')}
         </Text>
       </View>
       <View
@@ -81,9 +83,9 @@ export const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
           fullWidth
         />
         <Button
-          label={t('button.go')}
+          label={t('button.stop')}
           onPress={() => {
-            Linking.openURL('https://www.facebook.com/DSS.Mahidol.Page/')
+            onAction?.()
             onClose()
           }}
           fullWidth

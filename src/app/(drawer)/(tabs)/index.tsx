@@ -1,6 +1,6 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Image, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +14,7 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
 import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
 import { PlaceExploreModal } from '~/components/PlaceExploreModal'
+import { HeaderLogo } from '~/components/HeaderLogo'
 
 export default function App() {
   const { t } = useTranslation()
@@ -30,16 +31,7 @@ export default function App() {
       <Stack.Screen
         options={{
           title: t('page.explore')!,
-          headerTitle: () => {
-            return (
-              <View>
-                <Image
-                  style={{ width: 105, height: 24 }}
-                  source={require('~/assets/wordmark-dark.png')}
-                />
-              </View>
-            )
-          },
+          headerTitle: HeaderLogo,
           headerLeft: () => {
             return (
               <View style={{ marginLeft: 16 }}>
@@ -163,6 +155,29 @@ export default function App() {
               console.log('Pressed NearbyPlaceBlock')
             }}
           />
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            marginHorizontal: 16,
+            marginVertical: 16,
+          }}
+        >
+          <Pressable
+            style={{
+              backgroundColor: 'white',
+              padding: 8,
+              borderRadius: 8,
+            }}
+            onPress={() => {
+              console.log('Pressed MyLocation')
+              router.push('/tracing')
+            }}
+          >
+            <MaterialIcons name="draw" size={24} />
+          </Pressable>
         </View>
       </View>
 
