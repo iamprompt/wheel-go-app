@@ -42,7 +42,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   extra: {
     WHEELGO_CMS_API,
     eas: {
-      projectId: 'efa55918-84e9-481e-9dcf-716a52dd37ce',
+      projectId: '5fad5236-a703-4ae6-ba12-3f09eab47475',
     },
   },
   scheme: 'wheelgo',
