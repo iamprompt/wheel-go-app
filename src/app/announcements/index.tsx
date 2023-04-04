@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { Stack, useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
-import { TagsLabel } from '~/const/tags'
+import { CategoryLabel } from '~/components/CategoryLabel'
 import { AllAnnouncements } from '~/graphql/query/announcements'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -133,34 +133,10 @@ function Page() {
                 >
                   {item.tags?.map((tag, index) => {
                     return (
-                      <View
+                      <CategoryLabel
                         key={`announcement-${item.id}-tag-${index}`}
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          gap: 8,
-                          paddingVertical: 4,
-                          paddingHorizontal: 8,
-                          borderColor: COLORS['french-vanilla'][300],
-                          borderWidth: 1,
-                          borderRadius: 8,
-                        }}
-                      >
-                        <MaterialIcons
-                          name={TagsLabel[tag].icon}
-                          color={TagsLabel[tag].color}
-                          size={16}
-                        />
-                        <Text
-                          style={{
-                            fontFamily: FONTS.LSTH_BOLD,
-                            fontSize: 12,
-                            color: TagsLabel[tag].color,
-                          }}
-                        >
-                          {t(TagsLabel[tag].label)}
-                        </Text>
-                      </View>
+                        name={tag}
+                      />
                     )
                   })}
                 </View>

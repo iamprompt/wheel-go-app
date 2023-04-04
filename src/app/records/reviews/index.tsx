@@ -1,16 +1,33 @@
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { PlaceItem } from '~/components/PlaceItem'
+import { useAuth } from '~/context/useAuth'
+import { GetMyReviews } from '~/graphql/query/reviews'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useGraphQL } from '~/utils/useGraphQL'
 
 export default function Page() {
+  const { user } = useAuth()
+  const router = useRouter()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
+
+  const { data: reviewsData } = useGraphQL(!!user?.id, GetMyReviews, {
+    userId: user?.id || '',
+  })
+
+  const reviews = useMemo(() => {
+    if (!reviewsData || !reviewsData.Reviews) {
+      return []
+    }
+    return reviewsData.Reviews?.docs || []
+  }, [reviewsData])
 
   return (
     <ScrollView style={[GlobalStyle.container]}>
@@ -77,20 +94,27 @@ export default function Page() {
             marginTop: 24,
           }}
         >
-          {Array.from({ length: 3 }).map((_, i) => (
-            <PlaceItem
-              key={i}
-              name="คณะเทคโนโลยีสารสนเทศและการสื่อสาร"
-              rating={4.5}
-              category="building"
-              date="2023-03-03"
-              onPress={() => {
-                console.log('onPress')
-              }}
-              borderTop={i === 0}
-              borderBottom
-            />
-          ))}
+          {reviews.map((review, i) => {
+            if (!review) {
+              return null
+            }
+
+            return (
+              <PlaceItem
+                key={review.id}
+                name={review.place.nameTH}
+                rating={review.rating?.overall || 0}
+                category={review.place.category}
+                date={review.createdAt}
+                onPress={() => {
+                  console.log('onPress')
+                  router.push(`/records/reviews/${review.id}`)
+                }}
+                borderTop={i === 0}
+                borderBottom
+              />
+            )
+          })}
         </View>
       </View>
     </ScrollView>

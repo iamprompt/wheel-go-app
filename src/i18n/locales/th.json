@@ -32,7 +32,10 @@
     "date": "วันที่",
     "time": "เวลา",
     "elapsed_time": "เวลาที่ใช้",
-    "distance": "ระยะทาง"
+    "distance": "ระยะทาง",
+    "reviews": {
+      "my_review": "รีวิวของฉัน"
+    }
   },
   "units": {
     "place": "ที่",
