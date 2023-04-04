@@ -7,9 +7,9 @@ const WHEELGO_CMS_API = process.env.WHEELGO_CMS_API
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'wheel-go-rn',
-  slug: 'wheel-go-rn',
-  version: '1.0.0',
+  name: 'Wheel Go',
+  slug: 'wheel-go',
+  version: '1.0.1',
   orientation: 'portrait',
   icon: './src/assets/icon.png',
   userInterfaceStyle: 'light',
@@ -20,6 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
+    buildNumber: '3',
     supportsTablet: true,
     bundleIdentifier: 'com.nakama.wheelgo',
     config: {
@@ -30,7 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     package: 'com.nakama.wheelgo',
     adaptiveIcon: {
       foregroundImage: './src/assets/adaptive-icon.png',
-      backgroundColor: '#ffffff',
+      backgroundColor: '#6A11B1',
     },
     config: {
       googleMaps: {

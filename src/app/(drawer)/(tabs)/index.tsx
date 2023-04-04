@@ -1,6 +1,6 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Pressable, View } from 'react-native'
+import { Image, Pressable, View } from 'react-native'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
@@ -100,12 +100,17 @@ export default function App() {
                   latitude: place?.geolocation[1],
                   longitude: place?.geolocation[0],
                 }}
-                image={PinIcon[place.category] || undefined}
+                // image={PinIcon[place.category] || undefined}
                 onPress={() => {
                   setSelectedPlaceId(place.id as string)
                   setModalVisible(true)
                 }}
-              />
+              >
+                <Image
+                  source={PinIcon[place.category]}
+                  style={{ width: 32, height: 42 }}
+                />
+              </Marker>
             )
           })}
           {data?.Facilities?.docs?.map((facility) => {
@@ -134,8 +139,16 @@ export default function App() {
                   longitude: facility?.geolocation[0],
                 }}
                 anchor={type === 'curbcut' ? { x: 0.5, y: 0.5 } : undefined}
-                image={PinIcon[type] || undefined}
-              />
+              >
+                <Image
+                  source={PinIcon[type]}
+                  style={{
+                    ...(type === 'bus-stop'
+                      ? { width: 32, height: 42 }
+                      : { width: 32, height: 32 }),
+                  }}
+                />
+              </Marker>
             )
           })}
         </MapView>
