@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    buildNumber: '3',
+    buildNumber: '5',
     supportsTablet: true,
     bundleIdentifier: 'com.nakama.wheelgo',
     config: {
@@ -29,6 +29,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     infoPlist: {
       CFBundleAllowMixedLocalizations: true,
+      NSLocationWhenInUseUsageDescription:
+        'This app needs access to your location to find the nearest place.',
     },
   },
   locales: {
