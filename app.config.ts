@@ -25,7 +25,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: 'com.nakama.wheelgo',
     config: {
       googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+      usesNonExemptEncryption: false,
     },
+    infoPlist: {
+      CFBundleAllowMixedLocalizations: true,
+    },
+  },
+  locales: {
+    en: './src/i18n/metadata/en.json',
+    th: './src/i18n/metadata/th.json',
   },
   android: {
     package: 'com.nakama.wheelgo',
