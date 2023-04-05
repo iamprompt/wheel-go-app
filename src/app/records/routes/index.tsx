@@ -1,17 +1,26 @@
 import { Stack, useRouter } from 'expo-router'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { RouteItem } from '~/components/RouteItem'
+import { GetMyTracedRoutes } from '~/graphql/query/tracedRoute'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useGraphQL } from '~/utils/useGraphQL'
 
 export default function Page() {
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
   const router = useRouter()
+
+  const { data } = useGraphQL(true, GetMyTracedRoutes)
+
+  console.log(data)
+
+  const routes = useMemo(() => data?.TracedRoutes?.docs || [], [data])
 
   return (
     <ScrollView style={[GlobalStyle.container]}>
@@ -70,7 +79,7 @@ export default function Page() {
               color: COLORS['french-vanilla'][500],
             }}
           >
-            3 {t('units.routes')}
+            {routes.length} {t('units.routes')}
           </Text>
         </View>
         <View
@@ -78,18 +87,23 @@ export default function Page() {
             marginTop: 24,
           }}
         >
-          {Array.from({ length: 3 }).map((_, i) => (
-            <RouteItem
-              key={i}
-              date="2023-03-03"
-              onPress={() => {
-                console.log('onPress')
-                router.push('/records/routes/1')
-              }}
-              borderTop={i === 0}
-              borderBottom
-            />
-          ))}
+          {routes.map((route, i) => {
+            if (!route) {
+              return null
+            }
+
+            return (
+              <RouteItem
+                key={i}
+                date={route.createdAt}
+                onPress={() => {
+                  router.push(`/records/routes/${route.id}`)
+                }}
+                borderTop={i === 0}
+                borderBottom
+              />
+            )
+          })}
         </View>
       </View>
     </ScrollView>

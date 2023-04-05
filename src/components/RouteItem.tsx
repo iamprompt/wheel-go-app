@@ -91,7 +91,7 @@ export function RouteItem({
               color: COLORS.black,
             }}
           >
-            {dayjs(date).format('DD MMM YYYY')}
+            {dayjs(date).format('HH:mm')}
           </Text>
         </View>
       </View>

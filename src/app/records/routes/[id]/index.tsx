@@ -1,22 +1,64 @@
 import dayjs from 'dayjs'
 import { Stack, useSearchParams } from 'expo-router'
+import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { MapStyle } from '~/const/map'
+import { GetRouteById } from '~/graphql/query/tracedRoute'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
 
+  const mapRef = useRef<MapView>(null)
+
   const { id } = useSearchParams<{ id: string }>()
 
-  if (!id) {
+  const { data } = useGraphQL(!!id, GetRouteById, {
+    id: id!,
+  })
+
+  const route = useMemo(() => data?.TracedRoute || null, [data])
+
+  const routePoints = useMemo(
+    () =>
+      route?.route.map(
+        (point: { latitude: number; longitude: number; timestamp: number }) => {
+          return {
+            latitude: point.latitude,
+            longitude: point.longitude,
+          }
+        }
+      ) || [],
+    [route]
+  )
+
+  const fitPolyline = () => {
+    if (routePoints.length > 0) {
+      mapRef.current?.fitToCoordinates(routePoints, {
+        edgePadding: {
+          top: 100,
+          right: 100,
+          bottom: 100,
+          left: 100,
+        },
+        animated: true,
+      })
+    }
+  }
+
+  useEffect(() => {
+    fitPolyline()
+  }, [routePoints])
+
+  if (!id || !route) {
     return null
   }
 
@@ -37,6 +79,7 @@ function Page() {
         }}
       >
         <MapView
+          ref={mapRef}
           style={{
             flex: 1,
           }}
@@ -59,7 +102,9 @@ function Page() {
             heading: 0,
             zoom: 16,
           }}
-        ></MapView>
+        >
+          <Polyline coordinates={routePoints} />
+        </MapView>
         <View
           style={{
             position: 'absolute',
@@ -126,7 +171,7 @@ function Page() {
                     fontSize: 14,
                   }}
                 >
-                  {dayjs('2021-01-01').format('DD MMMM YYYY')}
+                  {dayjs(route.createdAt).format('DD MMMM YYYY')}
                 </Text>
               </View>
               <VerticalDivider />
@@ -153,7 +198,7 @@ function Page() {
                     fontSize: 14,
                   }}
                 >
-                  {dayjs('2021-01-01').format('HH:mm')}
+                  {dayjs(route.createdAt).format('HH:mm')}
                 </Text>
               </View>
             </View>
@@ -187,7 +232,9 @@ function Page() {
                     fontSize: 14,
                   }}
                 >
-                  {dayjs.duration(186, 'seconds').format('HH:mm:ss')}
+                  {dayjs
+                    .duration(route.duration || 0, 'seconds')
+                    .format('HH:mm:ss')}
                 </Text>
               </View>
               <VerticalDivider />
@@ -214,7 +261,7 @@ function Page() {
                     fontSize: 14,
                   }}
                 >
-                  20 {t('units.meters')}
+                  {route.distance || 0} {t('units.meters')}
                 </Text>
               </View>
             </View>
