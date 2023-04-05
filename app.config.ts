@@ -56,5 +56,5 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   scheme: 'wheelgo',
-  plugins: ['expo-localization'],
+  plugins: ['expo-localization', 'expo-location'],
 })

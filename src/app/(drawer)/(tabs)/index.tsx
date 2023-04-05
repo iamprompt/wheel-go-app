@@ -1,12 +1,17 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Image, Pressable, View } from 'react-native'
+import type MapView from 'react-native-maps'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
 // eslint-disable-next-line import/default
-import MapView from 'react-native-map-clustering'
-import { useState } from 'react'
+import ClusterMapView from 'react-native-map-clustering'
+import { useRef, useState } from 'react'
+import {
+  getCurrentPositionAsync,
+  requestForegroundPermissionsAsync,
+} from 'expo-location'
 import { MapStyle, PinIcon } from '~/const/map'
 import { allPlaces } from '~/graphql/query/places'
 import { useGraphQL } from '~/utils/useGraphQL'
@@ -15,6 +20,7 @@ import { GlobalStyle } from '~/styles'
 import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
 import { PlaceExploreModal } from '~/components/PlaceExploreModal'
 import { HeaderLogo } from '~/components/HeaderLogo'
+import { HorizontalDivider } from '~/components/HorizontalDivider'
 
 export default function App() {
   const { t } = useTranslation()
@@ -25,6 +31,24 @@ export default function App() {
   const [isModalVisible, setModalVisible] = useState(false)
 
   const { data } = useGraphQL(true, allPlaces)
+
+  const mapRef = useRef<MapView>(null)
+
+  const handleCurrentLocation = async () => {
+    const { status } = await requestForegroundPermissionsAsync()
+    if (status !== 'granted') {
+      // setErrorMsg('Permission to access location was denied');
+      return
+    }
+
+    const location = await getCurrentPositionAsync({})
+    mapRef.current?.animateToRegion({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    })
+  }
 
   return (
     <View style={[GlobalStyle.container]}>
@@ -62,7 +86,8 @@ export default function App() {
           width: '100%',
         }}
       >
-        <MapView
+        <ClusterMapView
+          ref={mapRef}
           style={{
             flex: 1,
           }}
@@ -100,7 +125,6 @@ export default function App() {
                   latitude: place?.geolocation[1],
                   longitude: place?.geolocation[0],
                 }}
-                // image={PinIcon[place.category] || undefined}
                 onPress={() => {
                   setSelectedPlaceId(place.id as string)
                   setModalVisible(true)
@@ -151,7 +175,7 @@ export default function App() {
               </Marker>
             )
           })}
-        </MapView>
+        </ClusterMapView>
         <View
           style={{
             position: 'absolute',
@@ -174,10 +198,51 @@ export default function App() {
             position: 'absolute',
             right: 0,
             top: 0,
+            gap: 8,
             marginHorizontal: 16,
             marginVertical: 16,
           }}
         >
+          <View
+            style={{
+              borderRadius: 8,
+            }}
+          >
+            <Pressable
+              style={{
+                backgroundColor: 'white',
+                padding: 8,
+                borderTopLeftRadius: 8,
+                borderTopRightRadius: 8,
+              }}
+              onPress={() => {
+                console.log('Pressed Route')
+              }}
+            >
+              <MaterialIcons name="route" size={24} />
+            </Pressable>
+            <HorizontalDivider />
+            <View
+              style={{
+                borderRadius: 8,
+              }}
+            >
+              <Pressable
+                style={{
+                  backgroundColor: 'white',
+                  padding: 8,
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
+                }}
+                onPress={() => {
+                  console.log('Pressed MyLocation')
+                  handleCurrentLocation()
+                }}
+              >
+                <MaterialIcons name="near_me" size={24} />
+              </Pressable>
+            </View>
+          </View>
           <Pressable
             style={{
               backgroundColor: 'white',
