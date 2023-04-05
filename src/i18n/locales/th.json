@@ -90,7 +90,8 @@
     "accessibility_rating_title": "ระดับความเข้าถึง",
     "see_reviews": "ดูรีวิว",
     "see_more_details": "ดูข้อมูลเพิ่มเติม",
-    "review_here": "ให้คะแนนที่นี่"
+    "review_here": "ให้คะแนนที่นี่",
+    "review_text": "รีวิว"
   },
   "facilities": {
     "ramp": "ทางลาด",

@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
+import dayjs from 'dayjs'
 import { GetPlaceById } from '~/graphql/query/places'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -30,6 +31,9 @@ import { AccessibilityRatingOverall } from '~/components/AccessibilityRatingOver
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { AccessibilityRatingContainer } from '~/components/AccessibilityRatingContainer'
 import { ReviewHereButton } from '~/components/ReviewHereButton'
+import { HeaderLogo } from '~/components/HeaderLogo'
+import Button, { ButtonVariant } from '~/components/Button'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const { t } = useTranslation()
@@ -331,6 +335,143 @@ function Page() {
         </View>
 
         <HorizontalDivider height={12} />
+        <View
+          style={{
+            paddingHorizontal: 16,
+            paddingVertical: 24,
+            gap: 16,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-end',
+              gap: 8,
+            }}
+          >
+            <HeaderLogo />
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 20,
+                marginBottom: -8,
+              }}
+            >
+              {t('places.review_text')}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              gap: 12,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 12,
+                }}
+              >
+                N*****m
+              </Text>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_REGULAR,
+                  fontSize: 12,
+                  color: COLORS['french-vanilla'][500],
+                }}
+              >
+                {dayjs('2023-04-02').format('DD MMM YYYY')}
+              </Text>
+            </View>
+            <AccessibilityRatingOverall rating={5} />
+            <View>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_REGULAR,
+                  fontSize: 12,
+                  color: COLORS['french-vanilla'][500],
+                }}
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation
+              </Text>
+            </View>
+            <View
+              style={{
+                borderRadius: 8,
+                borderColor: COLORS['french-vanilla'][300],
+                borderWidth: 1,
+                padding: 12,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: 8,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 8,
+                  }}
+                >
+                  <MaterialIcons
+                    name="local_police"
+                    size={20}
+                    color={COLORS.info[500]}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONTS.LSTH_BOLD,
+                      fontSize: 12,
+                    }}
+                  >
+                    {t('reviews.additional_official_comment')}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    fontFamily: FONTS.LSTH_REGULAR,
+                    fontSize: 12,
+                    color: COLORS['french-vanilla'][500],
+                  }}
+                >
+                  {dayjs('2023-04-02').format('DD MMM YYYY')}
+                </Text>
+              </View>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_REGULAR,
+                  fontSize: 12,
+                  color: COLORS['french-vanilla'][500],
+                }}
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              </Text>
+            </View>
+          </View>
+
+          <Button
+            label={t('places.see_all_reviews')}
+            variant={ButtonVariant.Secondary}
+            onPress={() => {
+              console.log('see all reviews')
+            }}
+          />
+        </View>
       </View>
     </ScrollView>
   )
