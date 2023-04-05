@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation LoginUser($email: String!, $password: String!) {\n    loginUser(email: $email, password: $password) {\n      token\n      exp\n      user {\n        id\n        email\n        username\n        firstName\n        lastName\n        displayNameType\n      }\n    }\n  }\n": types.LoginUserDocument,
     "\n  query MeProfile {\n    meUser {\n      user {\n        id\n        email\n        username\n        firstName\n        lastName\n        displayNameType\n      }\n    }\n  }\n": types.MeProfileDocument,
+    "\n  mutation CreateTracedRoute($input: mutationTracedRouteInput!) {\n    createTracedRoute(data: $input) {\n      id\n    }\n  }\n": types.CreateTracedRouteDocument,
     "\n  query AllAnnouncements {\n    Announcements(limit: 1000) {\n      docs {\n        id\n        titleTH\n        titleEN\n        descriptionTH\n        descriptionEN\n        tags\n        place {\n          id\n          nameTH\n          nameEN\n        }\n        createdAt\n      }\n    }\n  }\n": types.AllAnnouncementsDocument,
     "\n  query GetAnnouncementById($id: String!) {\n    Announcement(id: $id) {\n      id\n      titleTH\n      titleEN\n      descriptionTH\n      descriptionEN\n      tags\n      image {\n        url\n        width\n        height\n      }\n      contact {\n        phone\n        email\n        line\n      }\n      place {\n        id\n        nameTH\n        nameEN\n      }\n      createdAt\n    }\n  }\n": types.GetAnnouncementByIdDocument,
     "\n  query AllPlaces {\n    Places(limit: 1000) {\n      docs {\n        id\n        nameTH\n        nameEN\n        category\n        geolocation\n      }\n    }\n\n    Facilities(\n      limit: 1000\n      where: { type: { in: [curbCut, transportation, ramp] } }\n    ) {\n      docs {\n        id\n        type\n        detailTH\n        detailEN\n        geolocation\n      }\n    }\n  }\n": types.AllPlacesDocument,
@@ -47,6 +48,10 @@ export function graphql(source: "\n  mutation LoginUser($email: String!, $passwo
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query MeProfile {\n    meUser {\n      user {\n        id\n        email\n        username\n        firstName\n        lastName\n        displayNameType\n      }\n    }\n  }\n"): (typeof documents)["\n  query MeProfile {\n    meUser {\n      user {\n        id\n        email\n        username\n        firstName\n        lastName\n        displayNameType\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateTracedRoute($input: mutationTracedRouteInput!) {\n    createTracedRoute(data: $input) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateTracedRoute($input: mutationTracedRouteInput!) {\n    createTracedRoute(data: $input) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

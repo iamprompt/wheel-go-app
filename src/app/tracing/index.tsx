@@ -22,8 +22,10 @@ import { TracingStatusIndicator } from '~/components/TracingStatusIndicator'
 import { TracingStopModal } from '~/components/TracingStopModal'
 import { MapStyle } from '~/const/map'
 import { TRACING_STATES } from '~/const/trace'
+import { CreateTracedRoute } from '~/graphql/mutation/tracedRoute'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { WheelGoGraphQL } from '~/utils/graphql'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface Record {
@@ -92,7 +94,15 @@ function Page() {
     setIsSaveModalVisible(true)
   }
 
-  const handleSaveAction = () => {
+  const handleSaveAction = async () => {
+    const result = await WheelGoGraphQL(CreateTracedRoute, {
+      input: {
+        route: [...record],
+      },
+    })
+
+    console.log(result)
+
     setState(TRACING_STATES.SAVED)
   }
 
