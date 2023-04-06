@@ -1,57 +1,150 @@
 {
+  "announcements": {
+    "contact": {
+      "email": "Email",
+      "line": "LINE Official Account",
+      "phone": "Phone",
+      "title": "Contact"
+    },
+    "details": "Detail"
+  },
+  "auth": {
+    "email": "Email",
+    "email_placeholder": "Your email",
+    "login": "Sign in",
+    "login_description": "To create more universal environment together",
+    "login_title": "Sign in",
+    "login_to_wheelgo": "Sign in to Wheel Go",
+    "logout": "Sign out",
+    "password": "Password",
+    "password_placeholder": "********"
+  },
+  "button": {
+    "cancel": "Cancel",
+    "done": "Done",
+    "go": "Go",
+    "ok": "OK",
+    "save": "Save",
+    "stop": "Stop"
+  },
+  "categories": {
+    "building": "Building",
+    "cafe": "Cafe",
+    "curb-cut": "Curb Cut",
+    "food": "Food",
+    "incident": "Incident",
+    "park": "Park",
+    "residence": "Residence",
+    "toilet": "Toilet",
+    "transport": "Transport"
+  },
+  "facilities": {
+    "assistance": "Assistance",
+    "elevator": "Elevator",
+    "parking": "Parking",
+    "ramp": "Ramp",
+    "surface": "Surface",
+    "toilet": "Toilet"
+  },
+  "helpModal": {
+    "description": "You will be redirected to Mahidol Disability Service Support",
+    "title": "Need a help?"
+  },
   "page": {
+    "announcements": "Announcements",
+    "explore": "Explore",
     "faq": "Frequently Asked Questions",
     "faq_short": "FAQ",
-    "announcements": "Announcements",
-    "settings": "Settings",
-    "how_to_use": "How to use",
     "help": "Help",
-    "explore": "Explore",
+    "how_to_use": "How to use",
+    "profile": "Profile",
     "records": "Records",
-    "profile": "Profile"
+    "settings": "Settings"
   },
-  "settings": {
-    "general": "General",
-    "language": "Languages/ภาษา",
-    "privacy": "Privacy",
-    "data_allowance": "My Personal Data Allowance",
-    "privacy_policy": "Privacy Policy",
-    "about": "About",
-    "version": "Version",
-    "copyright": "Copyright",
-    "mahidol_university": "Mahidol University",
-    "support_division": "Supported Division Organizations",
-    "delete_account_cta": "Delete Account"
+  "places": {
+    "accessibility_rating_title": "Accessibility Rating",
+    "address": "Address",
+    "contact": "Contact",
+    "facilities_title": "Facilities",
+    "nearby_places": "Nearby Places",
+    "review_here": "Review Here",
+    "review_text": "Review",
+    "see_more_details": "See More Details",
+    "see_place_details": "See Place Details",
+    "see_reviews": "See Reviews",
+    "share": "Share",
+    "show_on_map": "Show on Map",
+    "website": "Website"
   },
   "records": {
-    "my_lists": "My Lists",
+    "contributed_routes": "Contributed Routes",
     "favorite_places": "Favorite Places",
+    "my_lists": "My Lists",
     "places_reviews": "Places Reviews",
-    "contributed_routes": "Contributed Routes"
+    "date": "Date",
+    "distance": "Distance",
+    "elapsed_time": "Elapsed Time",
+    "reviews": {
+      "my_review": "My Review"
+    },
+    "time": "Time"
+  },
+  "settings": {
+    "about": "About",
+    "copyright": "Copyright",
+    "data_allowance": "My Personal Data Allowance",
+    "delete_account_cta": "Delete Account",
+    "general": "General",
+    "language": "Languages/ภาษา",
+    "mahidol_university": "Mahidol University",
+    "privacy": "Privacy",
+    "privacy_policy": "Privacy Policy",
+    "support_division": "Supported Division Organizations",
+    "version": "Version"
+  },
+  "trace": {
+    "finish_popup": {
+      "description": "คุณต้องการบันทึกการเดินทางหรือไม่?",
+      "overall_distance": "ระยะทางทั้งหมด",
+      "overall_time": "เวลาทั้งหมด",
+      "title": "เสร็จสิ้นการเดินทาง"
+    },
+    "pause": "Pause",
+    "pause_popup": {
+      "description": "บันทึกต่อเมื่อคุณพร้อม",
+      "title": "หยุดพัก"
+    },
+    "resume": "Resume",
+    "save": "Save Journey",
+    "save_modal": {
+      "description": "Are you sure to save this journey",
+      "title": "Save Journey"
+    },
+    "start": "Start Recording",
+    "status": {
+      "finished": "Finished Recording",
+      "paused": "Paused Recording",
+      "ready": "Ready to Record",
+      "recording": "Recording",
+      "saved": "Saved"
+    },
+    "stop": "Stop",
+    "stop_modal": {
+      "description": "Are you sure to stop recording?",
+      "title": "Stop Recording"
+    }
   },
   "units": {
+    "hours": "Hours",
+    "kilometers": "Kilometers",
+    "meters": "Meters",
+    "minutes": "Minutes",
     "place": "Place",
     "places": "Places",
     "review": "Review",
     "reviews": "Reviews",
     "route": "Route",
-    "routes": "Routes"
-  },
-  "helpModal": {
-    "title": "Need a help?",
-    "description": "You will be redirected to Mahidol Disability Service Support"
-  },
-  "tags": {
-    "building": "Building",
-    "incident": "Incident"
-  },
-  "button": {
-    "cancel": "Cancel",
-    "ok": "OK",
-    "go": "Go",
-    "save": "Save"
-  },
-  "announcements": {
-    "title": "Announcements {{id}}"
+    "routes": "Routes",
+    "seconds": "Seconds"
   }
 }

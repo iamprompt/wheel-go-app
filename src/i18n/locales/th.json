@@ -1,147 +1,150 @@
 {
-  "test": "สวัสดีชาวโลก",
+  "announcements": {
+    "contact": {
+      "email": "อีเมล",
+      "line": "LINE Official Account",
+      "phone": "โทรศัพท์",
+      "title": "ติดต่อ"
+    },
+    "details": "รายละเอียด"
+  },
+  "auth": {
+    "email": "อีเมล",
+    "email_placeholder": "อีเมลของคุณ",
+    "login": "ลงชื่อเข้าใช้",
+    "login_description": "เพื่อสร้างสิ่งแวดล้อมเพื่อคนทุกคนร่วมกัน",
+    "login_title": "ลงชื่อเข้าใช้",
+    "login_to_wheelgo": "ลงชื่อเข้าสู่ วีลโก",
+    "logout": "ออกจากระบบ",
+    "password": "รหัสผ่าน",
+    "password_placeholder": "********"
+  },
+  "button": {
+    "cancel": "ยกเลิก",
+    "done": "เสร็จสิ้น",
+    "go": "ไป",
+    "ok": "ตกลง",
+    "save": "บันทึก",
+    "stop": "หยุด"
+  },
+  "categories": {
+    "building": "อาคาร",
+    "cafe": "คาเฟ่",
+    "curb-cut": "ทางลาดขนาดย่อม",
+    "food": "อาหาร",
+    "incident": "เหตุฉุกเฉิน",
+    "park": "สวนสาธารณะ",
+    "residence": "ที่พักอาศัย",
+    "toilet": "ห้องน้ำ",
+    "transport": "การขนส่ง"
+  },
+  "facilities": {
+    "assistance": "ผู้ช่วย",
+    "elevator": "ลิฟต์โดยสาร",
+    "parking": "ที่จอดรถ",
+    "ramp": "ทางลาด",
+    "surface": "พื้นผิว",
+    "toilet": "ห้องน้ำ"
+  },
+  "helpModal": {
+    "description": "คุณจะถูกนำไปที่หน่วยบริการสนับสนุนสำหรับนักศึกษาพิการ",
+    "title": "ต้องการความช่วยเหลือ?"
+  },
   "page": {
+    "announcements": "ประกาศ",
+    "explore": "สำรวจ",
     "faq": "คำถามที่พบบ่อย",
     "faq_short": "คำถามที่พบบ่อย",
-    "announcements": "ประกาศ",
-    "settings": "การตั้งค่า",
-    "how_to_use": "วิธีใช้",
     "help": "ช่วยเหลือ",
-    "explore": "สำรวจ",
+    "how_to_use": "วิธีใช้",
+    "profile": "โปรไฟล์",
     "records": "บันทึกของฉัน",
-    "profile": "โปรไฟล์"
+    "settings": "การตั้งค่า"
   },
-  "settings": {
-    "general": "ทั่วไป",
-    "language": "Languages/ภาษา",
-    "privacy": "ความเป็นส่วนตัว",
-    "data_allowance": "การอนุญาตการให้ข้อมูล",
-    "privacy_policy": "ข้อกำหนดและเงื่อนไข",
-    "about": "เกี่ยวกับ",
-    "version": "เวอร์ชัน",
-    "copyright": "ลิขสิทธิ์",
-    "mahidol_university": "มหาวิทยาลัยมหิดล",
-    "support_division": "หน่วยงานที่สนับสนุน",
-    "delete_account_cta": "ลบบัญชี"
+  "places": {
+    "accessibility_rating_title": "ระดับความเข้าถึง",
+    "address": "ที่อยู่",
+    "contact": "ติดต่อ",
+    "facilities_title": "สิ่งอำนวยความสะดวก",
+    "nearby_places": "สถานที่ใกล้เคียง",
+    "review_here": "ให้คะแนนที่นี่",
+    "review_text": "รีวิว",
+    "see_more_details": "ดูข้อมูลเพิ่มเติม",
+    "see_place_details": "ดูข้อมูลสถานที่",
+    "see_reviews": "ดูรีวิว",
+    "share": "แชร์",
+    "show_on_map": "โชว์บนแผนที่",
+    "website": "เว็บไซต์"
   },
   "records": {
-    "my_lists": "ลิสต์ของฉัน",
-    "favorite_places": "สถานที่ของฉัน",
-    "places_reviews": "รีวิวของฉัน",
     "contributed_routes": "เส้นทางของฉัน",
     "date": "วันที่",
-    "time": "เวลา",
-    "elapsed_time": "เวลาที่ใช้",
     "distance": "ระยะทาง",
+    "elapsed_time": "เวลาที่ใช้",
+    "favorite_places": "สถานที่ของฉัน",
+    "my_lists": "ลิสต์ของฉัน",
+    "places_reviews": "รีวิวของฉัน",
     "reviews": {
       "my_review": "รีวิวของฉัน"
+    },
+    "time": "เวลา"
+  },
+  "settings": {
+    "about": "เกี่ยวกับ",
+    "copyright": "ลิขสิทธิ์",
+    "data_allowance": "การอนุญาตการให้ข้อมูล",
+    "delete_account_cta": "ลบบัญชี",
+    "general": "ทั่วไป",
+    "language": "Languages/ภาษา",
+    "mahidol_university": "มหาวิทยาลัยมหิดล",
+    "privacy": "ความเป็นส่วนตัว",
+    "privacy_policy": "ข้อกำหนดและเงื่อนไข",
+    "support_division": "หน่วยงานที่สนับสนุน",
+    "version": "เวอร์ชัน"
+  },
+  "trace": {
+    "finish_popup": {
+      "description": "คุณต้องการบันทึกการเดินทางหรือไม่?",
+      "overall_distance": "ระยะทางทั้งหมด",
+      "overall_time": "เวลาทั้งหมด",
+      "title": "เสร็จสิ้นการเดินทาง"
+    },
+    "pause": "พัก",
+    "pause_popup": {
+      "description": "บันทึกต่อเมื่อคุณพร้อม",
+      "title": "หยุดพัก"
+    },
+    "resume": "เดินทางต่อ",
+    "save": "บันทึกการเดินทาง",
+    "save_modal": {
+      "description": "คุณต้องการบันทึกการเดินทางหรือไม่?",
+      "title": "บันทึกการเดินทาง"
+    },
+    "start": "เริ่มการเดินทาง",
+    "status": {
+      "finished": "เสร็จสิ้นการเดินทาง",
+      "paused": "พักการเดินทาง",
+      "ready": "พร้อมสำหรับการบันทึก",
+      "recording": "กำลังบันทึกการเดินทาง",
+      "saved": "การเดินทางถูกบันทึกแล้ว"
+    },
+    "stop": "หยุด",
+    "stop_modal": {
+      "description": "คุณต้องการหยุดการบันทึกการเดินทางหรือไม่?",
+      "title": "หยุดการเดินทาง"
     }
   },
   "units": {
+    "hours": "ชั่วโมง",
+    "kilometers": "กิโลเมตร",
+    "meters": "เมตร",
+    "minutes": "นาที",
     "place": "ที่",
     "places": "ที่",
     "review": "รีวิว",
     "reviews": "รีวิว",
     "route": "เส้นทาง",
     "routes": "เส้นทาง",
-    "meters": "เมตร",
-    "minutes": "นาที",
-    "seconds": "วินาที",
-    "hours": "ชั่วโมง",
-    "kilometers": "กิโลเมตร"
-  },
-  "helpModal": {
-    "title": "ต้องการความช่วยเหลือ?",
-    "description": "คุณจะถูกนำไปที่หน่วยบริการสนับสนุนสำหรับนักศึกษาพิการ"
-  },
-  "tags": {
-    "building": "อาคาร",
-    "incident": "เหตุการณ์"
-  },
-  "button": {
-    "cancel": "ยกเลิก",
-    "ok": "ตกลง",
-    "go": "ไป",
-    "save": "บันทึก",
-    "stop": "หยุด",
-    "done": "เสร็จสิ้น"
-  },
-  "announcements": {
-    "details": "รายละเอียด",
-    "contact": {
-      "title": "ติดต่อ",
-      "email": "อีเมล",
-      "phone": "โทรศัพท์",
-      "line": "LINE Official Account"
-    }
-  },
-  "categories": {
-    "building": "อาคาร"
-  },
-  "places": {
-    "address": "ที่อยู่",
-    "show_on_map": "โชว์บนแผนที่",
-    "contact": "ติดต่อ",
-    "website": "เว็บไซต์",
-    "share": "แชร์",
-    "facilities_title": "สิ่งอำนวยความสะดวก",
-    "see_place_details": "ดูข้อมูลสถานที่",
-    "nearby_places": "สถานที่ใกล้เคียง",
-    "accessibility_rating_title": "ระดับความเข้าถึง",
-    "see_reviews": "ดูรีวิว",
-    "see_more_details": "ดูข้อมูลเพิ่มเติม",
-    "review_here": "ให้คะแนนที่นี่",
-    "review_text": "รีวิว"
-  },
-  "facilities": {
-    "ramp": "ทางลาด",
-    "assistance": "ผู้ช่วย",
-    "toilet": "ห้องน้ำ",
-    "elevator": "ลิฟต์โดยสาร",
-    "parking": "ที่จอดรถ",
-    "surface": "พื้นผิว"
-  },
-  "auth": {
-    "login_to_wheelgo": "ลงชื่อเข้าสู่ วีลโก",
-    "login_title": "ลงชื่อเข้าใช้",
-    "login_description": "เพื่อสร้างสิ่งแวดล้อมเพื่อคนทุกคนร่วมกัน",
-    "email": "อีเมล",
-    "password": "รหัสผ่าน",
-    "email_placeholder": "อีเมลของคุณ",
-    "password_placeholder": "********",
-    "login": "ลงชื่อเข้าใช้",
-    "logout": "ออกจากระบบ"
-  },
-  "trace": {
-    "status": {
-      "ready": "พร้อมสำหรับการบันทึก",
-      "recording": "กำลังบันทึกการเดินทาง",
-      "paused": "พักการเดินทาง",
-      "finished": "เสร็จสิ้นการเดินทาง",
-      "saved": "การเดินทางถูกบันทึกแล้ว"
-    },
-    "resume": "เดินทางต่อ",
-    "stop": "หยุด",
-    "pause": "พัก",
-    "start": "เริ่มการเดินทาง",
-    "save": "บันทึกการเดินทาง",
-    "pause_popup": {
-      "title": "หยุดพัก",
-      "description": "บันทึกต่อเมื่อคุณพร้อม"
-    },
-    "finish_popup": {
-      "title": "เสร็จสิ้นการเดินทาง",
-      "description": "คุณต้องการบันทึกการเดินทางหรือไม่?",
-      "overall_time": "เวลาทั้งหมด",
-      "overall_distance": "ระยะทางทั้งหมด"
-    },
-    "stop_modal": {
-      "title": "หยุดการเดินทาง",
-      "description": "คุณต้องการหยุดการบันทึกการเดินทางหรือไม่?"
-    },
-    "save_modal": {
-      "title": "บันทึกการเดินทาง",
-      "description": "คุณต้องการบันทึกการเดินทางหรือไม่?"
-    }
+    "seconds": "วินาที"
   }
 }
