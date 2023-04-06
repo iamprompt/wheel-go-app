@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
-import dayjs from 'dayjs'
 import { Image } from 'expo-image'
 import { GetPlaceById } from '~/graphql/query/places'
 import { GlobalStyle } from '~/styles'
@@ -33,8 +32,8 @@ import { AccessibilityRatingContainer } from '~/components/AccessibilityRatingCo
 import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import Button, { ButtonVariant } from '~/components/Button'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
+import { ReviewItem } from '~/components/ReviewItem'
 
 function Page() {
   const { t } = useTranslation()
@@ -349,7 +348,6 @@ function Page() {
           style={{
             paddingHorizontal: 16,
             paddingVertical: 24,
-            gap: 16,
           }}
         >
           <View
@@ -357,6 +355,7 @@ function Page() {
               flexDirection: 'row',
               alignItems: 'flex-end',
               gap: 8,
+              marginBottom: 16,
             }}
           >
             <HeaderLogo />
@@ -373,107 +372,44 @@ function Page() {
 
           <View
             style={{
-              gap: 12,
+              borderColor: COLORS.soap[100],
+              borderBottomWidth: 1,
+              paddingVertical: 24,
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+            <ReviewItem
+              reviewer="John Doe"
+              additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
+              overallRating={5}
+              date="2021-01-01"
+              officialComment={{
+                date: '2021-01-01',
+                isFlagged: true,
+                comment:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl.',
               }}
-            >
-              <Text
-                style={{
-                  fontFamily: FONTS.LSTH_BOLD,
-                  fontSize: 12,
-                }}
-              >
-                N*****m
-              </Text>
-              <Text
-                style={{
-                  fontFamily: FONTS.LSTH_REGULAR,
-                  fontSize: 12,
-                  color: COLORS['french-vanilla'][500],
-                }}
-              >
-                {dayjs('2023-04-02').format('DD MMM YYYY')}
-              </Text>
-            </View>
-            <AccessibilityRatingOverall rating={5} />
-            <View>
-              <Text
-                style={{
-                  fontFamily: FONTS.LSTH_REGULAR,
-                  fontSize: 12,
-                  color: COLORS['french-vanilla'][500],
-                }}
-              >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation
-              </Text>
-            </View>
-            <View
-              style={{
-                borderRadius: 8,
-                borderColor: COLORS['french-vanilla'][300],
-                borderWidth: 1,
-                padding: 12,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: 8,
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: 8,
-                  }}
-                >
-                  <MaterialIcons
-                    name="local_police"
-                    size={20}
-                    color={COLORS.info[500]}
-                  />
-                  <Text
-                    style={{
-                      fontFamily: FONTS.LSTH_BOLD,
-                      fontSize: 12,
-                    }}
-                  >
-                    {t('reviews.additional_official_comment')}
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    fontFamily: FONTS.LSTH_REGULAR,
-                    fontSize: 12,
-                    color: COLORS['french-vanilla'][500],
-                  }}
-                >
-                  {dayjs('2023-04-02').format('DD MMM YYYY')}
-                </Text>
-              </View>
-              <Text
-                style={{
-                  fontFamily: FONTS.LSTH_REGULAR,
-                  fontSize: 12,
-                  color: COLORS['french-vanilla'][500],
-                }}
-              >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              </Text>
-            </View>
+            />
           </View>
-
+          <View
+            style={{
+              borderColor: COLORS.soap[100],
+              borderBottomWidth: 1,
+              paddingVertical: 24,
+            }}
+          >
+            <ReviewItem
+              reviewer="John Doe"
+              additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
+              overallRating={5}
+              date="2021-01-01"
+              officialComment={{
+                date: '2021-01-01',
+                isFlagged: false,
+                comment:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl.',
+              }}
+            />
+          </View>
           <Button
             label={t('places.see_all_reviews')}
             variant={ButtonVariant.Secondary}
