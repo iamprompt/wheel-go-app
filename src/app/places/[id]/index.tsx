@@ -1,4 +1,4 @@
-import { Stack, useSearchParams } from 'expo-router'
+import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
@@ -13,6 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import { Image } from 'expo-image'
+import { StatusBar } from 'expo-status-bar'
 import { GetPlaceById } from '~/graphql/query/places'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -39,6 +40,7 @@ function Page() {
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
   const { id } = useSearchParams<{ id: string }>()
+  const router = useRouter()
 
   const { data = {} } = useGraphQL(true, GetPlaceById, {
     id: id!,
@@ -101,6 +103,8 @@ function Page() {
           },
         }}
       />
+
+      <StatusBar style="auto" />
 
       <View
         style={{
@@ -344,6 +348,7 @@ function Page() {
         </View>
 
         <HorizontalDivider height={12} />
+
         <View
           style={{
             paddingHorizontal: 16,
@@ -382,6 +387,12 @@ function Page() {
               additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
               overallRating={5}
               date="2021-01-01"
+              facilityTags={[
+                'cleanliness',
+                'nice_facilities',
+                'safety',
+                'great_service',
+              ]}
               officialComment={{
                 date: '2021-01-01',
                 isFlagged: true,
@@ -402,6 +413,14 @@ function Page() {
               additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
               overallRating={5}
               date="2021-01-01"
+              facilityRatings={{
+                ramp: 5,
+                assistance: 5,
+                elevator: 5,
+                toilet: 5,
+                parking: 4,
+                surface: 5,
+              }}
               officialComment={{
                 date: '2021-01-01',
                 isFlagged: false,
@@ -415,6 +434,7 @@ function Page() {
             variant={ButtonVariant.Secondary}
             onPress={() => {
               console.log('see all reviews')
+              router.push(`/places/${id}/reviews`)
             }}
           />
         </View>

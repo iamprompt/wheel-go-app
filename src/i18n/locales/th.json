@@ -90,6 +90,14 @@
     },
     "time": "เวลา"
   },
+  "reviews": {
+    "facility_tags": {
+      "cleanliness": "ถูกสุขลักษณะ",
+      "great_service": "บริการดี",
+      "nice_facilities": "สิ่งอำนวยความสะดวกดี",
+      "safety": "ปลอดภัย"
+    }
+  },
   "settings": {
     "about": "เกี่ยวกับ",
     "copyright": "ลิขสิทธิ์",
