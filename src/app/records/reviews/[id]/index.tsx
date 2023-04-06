@@ -3,11 +3,12 @@ import { Stack, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
-import { Image, ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AccessibilityRatingOverall } from '~/components/AccessibilityRatingOverall'
 import { CategoryLabel } from '~/components/CategoryLabel'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
+import { ImageWithFallback } from '~/components/ImageWithFallback'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { GetReviewById } from '~/graphql/query/reviews'
 import { GlobalStyle } from '~/styles'
@@ -22,9 +23,10 @@ function Page() {
   const [contentOffsetY, setContentOffsetY] = useState(0)
   const insets = useSafeAreaInsets()
 
-  const { data } = useGraphQL(!!id, GetReviewById, {
+  const { data = {} } = useGraphQL(!!id, GetReviewById, {
     id: id!,
   })
+  const { Review } = data
 
   const review = useMemo(() => {
     if (!data?.Review) {
@@ -59,6 +61,8 @@ function Page() {
 
   console.log('review', review)
 
+  const { createdAt, place, rating } = Review || {}
+
   if (!id || !data?.Review) {
     return null
   }
@@ -81,27 +85,11 @@ function Page() {
         }}
       />
 
-      {review?.place.image ? (
-        <Image
-          source={{
-            uri: review?.place.image?.url || '',
-            width: review?.place.image?.width || 0,
-            height: review?.place.image?.height || 0,
-          }}
-          style={{
-            width: '100%',
-            height: insets.top + 44 + 150,
-          }}
-        />
-      ) : (
-        <View
-          style={{
-            width: '100%',
-            height: insets.top + 44 + 150,
-            backgroundColor: COLORS.soap[100],
-          }}
-        />
-      )}
+      <ImageWithFallback
+        src={place?.image?.url}
+        width="100%"
+        height={insets.top + 44 + 150}
+      />
 
       <View
         style={{
@@ -117,8 +105,8 @@ function Page() {
           }}
         >
           {getDisplayTextFromCurrentLanguage({
-            th: review?.place.nameTH || '',
-            en: review?.place.nameEN || '',
+            th: place?.nameTH || '',
+            en: place?.nameEN || '',
           })}
         </Text>
         <View
@@ -128,7 +116,7 @@ function Page() {
             alignItems: 'center',
           }}
         >
-          <CategoryLabel name={review?.place.category} />
+          <CategoryLabel name={place?.category} />
           <VerticalDivider />
           <Text
             style={{
@@ -158,7 +146,7 @@ function Page() {
           {t('records.reviews.my_review')}
         </Text>
 
-        <AccessibilityRatingOverall rating={review?.rating?.overall || 0} />
+        <AccessibilityRatingOverall rating={rating?.overall || 0} />
 
         <HorizontalDivider />
 
@@ -167,7 +155,7 @@ function Page() {
             fontFamily: FONTS.LSTH_REGULAR,
           }}
         >
-          {review?.rating?.additionalComment}
+          {rating?.additionalComment}
         </Text>
       </View>
     </ScrollView>

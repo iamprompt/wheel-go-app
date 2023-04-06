@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 import {
-  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -14,6 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import dayjs from 'dayjs'
+import { Image } from 'expo-image'
 import { GetPlaceById } from '~/graphql/query/places'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -34,14 +34,17 @@ import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import Button, { ButtonVariant } from '~/components/Button'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { ImageWithFallback } from '~/components/ImageWithFallback'
 
 function Page() {
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
   const { id } = useSearchParams<{ id: string }>()
-  const { data } = useGraphQL(true, GetPlaceById, {
+
+  const { data = {} } = useGraphQL(true, GetPlaceById, {
     id: id!,
   })
+  const { Place } = data
 
   const [contentOffsetY, setContentOffsetY] = useState(0)
   const handlePageScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -55,20 +58,31 @@ function Page() {
 
     return COLORS.white
   }, [contentOffsetY])
+
   const headerTitle = useMemo(() => {
     if (contentOffsetY < insets.top + 44) {
       return ''
     }
 
     return getDisplayTextFromCurrentLanguage({
-      en: data?.Place?.nameEN || '',
-      th: data?.Place?.nameTH || '',
+      en: Place?.nameEN || '',
+      th: Place?.nameTH || '',
     })
-  }, [contentOffsetY, data?.Place?.nameEN, data?.Place?.nameTH])
+  }, [contentOffsetY, Place?.nameEN, Place?.nameTH])
 
-  console.log(data)
+  const {
+    nameEN,
+    nameTH,
+    placeAddressEN,
+    placeAddressTH,
+    category,
+    image,
+    website,
+    phone,
+    geolocation,
+  } = Place || {}
 
-  if (!id || !data?.Place) {
+  if (!id || !Place) {
     return null
   }
 
@@ -94,16 +108,10 @@ function Page() {
           paddingBottom: insets.bottom + 16,
         }}
       >
-        <Image
-          source={{
-            uri: data?.Place?.image?.url || '',
-            width: data?.Place?.image?.width || 0,
-            height: data?.Place?.image?.height || 0,
-          }}
-          style={{
-            width: '100%',
-            height: insets.top + 44 + 100,
-          }}
+        <ImageWithFallback
+          src={image?.url}
+          width="100%"
+          height={insets.top + 44 + 150}
         />
 
         <BrandGradient
@@ -119,7 +127,7 @@ function Page() {
               }}
             >
               <Image
-                source={ListCategoryIcon[data.Place.category]}
+                source={ListCategoryIcon[category!]}
                 style={{
                   width: 24,
                   height: 24,
@@ -132,7 +140,7 @@ function Page() {
                   color: COLORS.white,
                 }}
               >
-                {t(`categories.${data.Place.category}`)}
+                {t(`categories.${category}`)}
               </Text>
             </View>
 
@@ -144,8 +152,8 @@ function Page() {
               }}
             >
               {getDisplayTextFromCurrentLanguage({
-                en: data?.Place?.nameEN || '',
-                th: data?.Place?.nameTH || '',
+                en: nameEN,
+                th: nameTH,
               })}
             </Text>
           </View>
@@ -155,35 +163,37 @@ function Page() {
             paddingHorizontal: 16,
           }}
         >
-          <View
-            style={{
-              paddingVertical: 24,
-              borderBottomWidth: 1,
-              borderBottomColor: COLORS.soap[100],
-            }}
-          >
-            <Text
+          {placeAddressEN || placeAddressTH ? (
+            <View
               style={{
-                fontFamily: FONTS.LSTH_BOLD,
-                fontSize: 16,
-                marginBottom: 8,
+                paddingVertical: 24,
+                borderBottomWidth: 1,
+                borderBottomColor: COLORS.soap[100],
               }}
             >
-              {t('places.address')}
-            </Text>
-            <Text
-              style={{
-                fontFamily: FONTS.LSTH_REGULAR,
-                fontSize: 12,
-                color: COLORS['french-vanilla'][500],
-              }}
-            >
-              {getDisplayTextFromCurrentLanguage({
-                en: data?.Place?.placeAddressEN || '',
-                th: data?.Place?.placeAddressTH || '',
-              })}
-            </Text>
-          </View>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 16,
+                  marginBottom: 8,
+                }}
+              >
+                {t('places.address')}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_REGULAR,
+                  fontSize: 12,
+                  color: COLORS['french-vanilla'][500],
+                }}
+              >
+                {getDisplayTextFromCurrentLanguage({
+                  en: placeAddressEN || '',
+                  th: placeAddressTH || '',
+                })}
+              </Text>
+            </View>
+          ) : null}
           <View
             style={{
               paddingVertical: 24,
@@ -195,7 +205,7 @@ function Page() {
               label={t('places.show_on_map')}
               icon="place"
               onPress={() => {
-                const address = data.Place?.geolocation?.reverse().join(',')
+                const address = geolocation?.reverse().join(',')
                 const url = Platform.select({
                   ios: `maps:0,0?q=${address}`,
                   android: `geo:0,0?q=${address}`,
@@ -208,14 +218,14 @@ function Page() {
               label={t('places.contact')}
               icon="call"
               onPress={() => {
-                data.Place?.phone && Linking.openURL(`tel:${data.Place?.phone}`)
+                phone && Linking.openURL(`tel:${phone}`)
               }}
             />
             <IconActionButton
               label={t('places.website')}
               icon="link"
               onPress={() => {
-                data.Place?.website && Linking.openURL(data.Place.website)
+                website && Linking.openURL(website)
               }}
             />
             <IconActionButton
@@ -223,7 +233,7 @@ function Page() {
               icon="share"
               onPress={async () => {
                 const result = await Share.share({
-                  message: data.Place?.website || '',
+                  message: website || '',
                 })
 
                 result.action === Share.sharedAction && console.log('shared')

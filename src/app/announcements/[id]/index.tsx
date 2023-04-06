@@ -3,7 +3,7 @@ import { Stack, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
-import { Image, Pressable, ScrollView, Text, View } from 'react-native'
+import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import { TagsLabel } from '~/const/tags'
@@ -14,6 +14,7 @@ import FONTS from '~/styles/fonts'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { useGraphQL } from '~/utils/useGraphQL'
+import { ImageWithFallback } from '~/components/ImageWithFallback'
 
 function Page() {
   const { t } = useTranslation()
@@ -115,27 +116,11 @@ function Page() {
         }}
       />
 
-      {data.Announcement?.image ? (
-        <Image
-          source={{
-            uri: data?.Announcement?.image?.url || '',
-            width: data?.Announcement?.image?.width || 0,
-            height: data?.Announcement?.image?.height || 0,
-          }}
-          style={{
-            width: '100%',
-            height: insets.top + 44 + 150,
-          }}
-        />
-      ) : (
-        <View
-          style={{
-            width: '100%',
-            height: insets.top + 44 + 150,
-            backgroundColor: COLORS.soap[100],
-          }}
-        />
-      )}
+      <ImageWithFallback
+        src={data.Announcement?.image?.url}
+        width="100%"
+        height={insets.top + 44 + 150}
+      />
 
       <View
         style={{

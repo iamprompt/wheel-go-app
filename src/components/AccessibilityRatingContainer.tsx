@@ -17,6 +17,7 @@ export function AccessibilityRatingContainer({
       {Object.entries(FACILITIES).map(([key, { label, icon }]) => {
         return (
           <View
+            key={`accessibility-rating-${key}`}
             style={{
               paddingVertical: 8,
             }}
