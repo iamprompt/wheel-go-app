@@ -1,8 +1,7 @@
 import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, Text, View } from 'react-native'
+import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Button, { ButtonVariant } from '~/components/Button'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { ReviewHereButton } from '~/components/ReviewHereButton'
@@ -10,6 +9,7 @@ import { ReviewItem } from '~/components/ReviewItem'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const router = useRouter()
@@ -22,6 +22,15 @@ function Page() {
         options={{
           title: 'Reviews',
           headerShown: true,
+          headerRight: () => (
+            <Pressable
+              onPress={() => {
+                router.push(`/places/${placeId}/reviews/new`)
+              }}
+            >
+              <MaterialIcons name="add" size={24} />
+            </Pressable>
+          ),
         }}
       />
 
@@ -117,14 +126,6 @@ function Page() {
             }}
           />
         </View>
-        <Button
-          label={t('places.see_all_reviews')}
-          variant={ButtonVariant.Secondary}
-          onPress={() => {
-            console.log('see all reviews')
-            router.push(`/places/${placeId}/reviews`)
-          }}
-        />
       </View>
     </ScrollView>
   )

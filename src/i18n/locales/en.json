@@ -90,6 +90,22 @@
     },
     "time": "Time"
   },
+  "reviews": {
+    "facility_tags": {
+      "cleanliness": "ถูกสุขลักษณะ",
+      "great_service": "บริการดี",
+      "nice_facilities": "สิ่งอำนวยความสะดวกดี",
+      "safety": "ปลอดภัย"
+    },
+    "accessibility_rating": {
+      "rating_0": "This place is not accessible",
+      "rating_1": "This place is hard to access even got the help",
+      "rating_2": "Require help from person and equipment to visit this place",
+      "rating_3": "This place can access by assistance from another",
+      "rating_4": "This place can access by use of equipment",
+      "rating_5": "This place can access without any help"
+    }
+  },
   "settings": {
     "about": "About",
     "copyright": "Copyright",
