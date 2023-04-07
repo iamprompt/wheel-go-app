@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    buildNumber: '13',
+    buildNumber: '14',
     supportsTablet: true,
     bundleIdentifier: 'com.nakama.wheelgo',
     config: {

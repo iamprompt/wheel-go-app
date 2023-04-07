@@ -6,13 +6,17 @@ export function getNearestPlaces(
   options: { lat: number; lng: number; limit: number; exclude?: string[] }
 ) {
   const { lat, lng, limit } = options
-  const placesWithDistance = places.Places?.docs?.map((place) => {
-    const distance = getDistance(
-      { latitude: lat, longitude: lng },
-      { latitude: place!.geolocation![1], longitude: place!.geolocation![0] }
-    )
-    return { ...place, distance }
-  })
+  const placesWithDistance = places.Places?.docs
+    ?.filter((place) => {
+      return place?.geolocation?.length === 2
+    })
+    .map((place) => {
+      const distance = getDistance(
+        { latitude: lat, longitude: lng },
+        { latitude: place!.geolocation![1], longitude: place!.geolocation![0] }
+      )
+      return { ...place, distance }
+    })
 
   const sortedPlaces = placesWithDistance
     ?.sort((a, b) => a.distance - b.distance)

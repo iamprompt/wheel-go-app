@@ -119,6 +119,10 @@
     "additional_official_comment": "ข้อมูลเพิ่มเติมจากเจ้าหน้าที่",
     "see_all_reviews": "ดูรีวิวทั้งหมด"
   },
+  "search": {
+    "categories": "ประเภทสถานที่",
+    "near_me": "สถานที่ใกล้ฉัน"
+  },
   "settings": {
     "about": "เกี่ยวกับ",
     "copyright": "ลิขสิทธิ์",

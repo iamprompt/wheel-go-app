@@ -44,8 +44,8 @@ export const TagsLabel: Record<string, TagLabel> = {
     icon: 'park',
     color: COLORS.lime[400],
   },
-  resident: {
-    label: 'categories.resident',
+  residence: {
+    label: 'categories.residence',
     icon: 'cottage',
     color: COLORS.mint[600],
   },

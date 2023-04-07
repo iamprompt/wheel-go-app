@@ -1,9 +1,8 @@
-import type { HeaderBackButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types'
 import { useNavigation } from 'expo-router'
 import { Pressable } from 'react-native'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
-export function HeaderBackButton(_props: HeaderBackButtonProps) {
+export function HeaderBackButton() {
   const navigation = useNavigation()
 
   return (

@@ -71,9 +71,14 @@ export default function App() {
           },
           headerRight: () => {
             return (
-              <View style={{ marginRight: 16 }}>
-                <MaterialIcons name="search" size={24} onPress={() => {}} />
-              </View>
+              <Pressable
+                style={{ marginRight: 16 }}
+                onPress={() => {
+                  router.push('/search')
+                }}
+              >
+                <MaterialIcons name="search" size={24} />
+              </Pressable>
             )
           },
         }}
