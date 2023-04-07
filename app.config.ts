@@ -31,6 +31,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       CFBundleAllowMixedLocalizations: true,
       NSLocationWhenInUseUsageDescription:
         'This app needs access to your location to find the nearest place.',
+      NSPhotoLibraryUsageDescription:
+        'This app needs access to your photo library to upload photo.',
+      NSCameraUsageDescription:
+        'This app needs access to your camera to take photo.',
     },
   },
   locales: {
@@ -56,5 +60,5 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   scheme: 'wheelgo',
-  plugins: ['expo-localization', 'expo-location'],
+  plugins: ['expo-localization', 'expo-location', 'expo-image-picker'],
 })

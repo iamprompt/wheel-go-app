@@ -52,6 +52,9 @@ dependencies:
   expo-image:
     specifier: ~1.0.0
     version: 1.0.0(expo@48.0.9)
+  expo-image-picker:
+    specifier: ~14.1.1
+    version: 14.1.1(expo@48.0.9)
   expo-linear-gradient:
     specifier: ~12.1.2
     version: 12.1.2(expo@48.0.9)
@@ -5568,6 +5571,23 @@ packages:
     dependencies:
       expo: 48.0.9(@babel/core@7.21.3)
       fontfaceobserver: 2.3.0
+    dev: false
+
+  /expo-image-loader@4.1.1(expo@48.0.9):
+    resolution: {integrity: sha512-ciEHVokU0f6w0eTxdRxLCio6tskMsjxWIoV92+/ZD37qePUJYMfEphPhu1sruyvMBNR8/j5iyOvPFVGTfO8oxA==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 48.0.9(@babel/core@7.21.3)
+    dev: false
+
+  /expo-image-picker@14.1.1(expo@48.0.9):
+    resolution: {integrity: sha512-SvWtnkLW7jp5Ntvk3lVcRQmhFYja8psmiR7O6P/+7S6f4llt3vaFwb4I3+pUXqJxxpi7BHc2+95qOLf0SFOIag==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 48.0.9(@babel/core@7.21.3)
+      expo-image-loader: 4.1.1(expo@48.0.9)
     dev: false
 
   /expo-image@1.0.0(expo@48.0.9):
