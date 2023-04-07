@@ -155,7 +155,7 @@ function Page() {
             fontFamily: FONTS.LSTH_REGULAR,
           }}
         >
-          {rating?.additionalComment}
+          {rating?.comment}
         </Text>
       </View>
     </ScrollView>

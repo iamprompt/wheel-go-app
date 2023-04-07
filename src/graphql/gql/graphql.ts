@@ -314,6 +314,7 @@ export type AdminsUpdateDocAccess = {
 
 export type Announcement = {
   __typename?: 'Announcement';
+  author?: Maybe<Admin>;
   contact?: Maybe<Announcement_Contact>;
   createdAt: Scalars['DateTime'];
   descriptionEN?: Maybe<Scalars['String']>;
@@ -692,6 +693,15 @@ export type Announcement_Image_Width_Operator = {
   not_equals?: InputMaybe<Scalars['Float']>;
 };
 
+export type Announcement_Author_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
 export type Announcement_Contact__Email_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   contains?: InputMaybe<Scalars['String']>;
@@ -853,6 +863,7 @@ export type Announcement_UpdatedAt_Operator = {
 export type Announcement_Where = {
   AND?: InputMaybe<Array<InputMaybe<Announcement_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Announcement_Where_Or>>>;
+  author?: InputMaybe<Announcement_Author_Operator>;
   contact__email?: InputMaybe<Announcement_Contact__Email_Operator>;
   contact__line?: InputMaybe<Announcement_Contact__Line_Operator>;
   contact__phone?: InputMaybe<Announcement_Contact__Phone_Operator>;
@@ -870,6 +881,7 @@ export type Announcement_Where = {
 };
 
 export type Announcement_Where_And = {
+  author?: InputMaybe<Announcement_Author_Operator>;
   contact__email?: InputMaybe<Announcement_Contact__Email_Operator>;
   contact__line?: InputMaybe<Announcement_Contact__Line_Operator>;
   contact__phone?: InputMaybe<Announcement_Contact__Phone_Operator>;
@@ -887,6 +899,7 @@ export type Announcement_Where_And = {
 };
 
 export type Announcement_Where_Or = {
+  author?: InputMaybe<Announcement_Author_Operator>;
   contact__email?: InputMaybe<Announcement_Contact__Email_Operator>;
   contact__line?: InputMaybe<Announcement_Contact__Line_Operator>;
   contact__phone?: InputMaybe<Announcement_Contact__Phone_Operator>;
@@ -944,6 +957,7 @@ export type AnnouncementsDeleteDocAccess = {
 
 export type AnnouncementsDocAccessFields = {
   __typename?: 'AnnouncementsDocAccessFields';
+  author?: Maybe<AnnouncementsDocAccessFields_Author>;
   contact?: Maybe<AnnouncementsDocAccessFields_Contact>;
   descriptionEN?: Maybe<AnnouncementsDocAccessFields_DescriptionEn>;
   descriptionTH?: Maybe<AnnouncementsDocAccessFields_DescriptionTh>;
@@ -953,6 +967,34 @@ export type AnnouncementsDocAccessFields = {
   tags?: Maybe<AnnouncementsDocAccessFields_Tags>;
   titleEN?: Maybe<AnnouncementsDocAccessFields_TitleEn>;
   titleTH?: Maybe<AnnouncementsDocAccessFields_TitleTh>;
+};
+
+export type AnnouncementsDocAccessFields_Author = {
+  __typename?: 'AnnouncementsDocAccessFields_author';
+  create?: Maybe<AnnouncementsDocAccessFields_Author_Create>;
+  delete?: Maybe<AnnouncementsDocAccessFields_Author_Delete>;
+  read?: Maybe<AnnouncementsDocAccessFields_Author_Read>;
+  update?: Maybe<AnnouncementsDocAccessFields_Author_Update>;
+};
+
+export type AnnouncementsDocAccessFields_Author_Create = {
+  __typename?: 'AnnouncementsDocAccessFields_author_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsDocAccessFields_Author_Delete = {
+  __typename?: 'AnnouncementsDocAccessFields_author_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsDocAccessFields_Author_Read = {
+  __typename?: 'AnnouncementsDocAccessFields_author_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsDocAccessFields_Author_Update = {
+  __typename?: 'AnnouncementsDocAccessFields_author_Update';
+  permission: Scalars['Boolean'];
 };
 
 export type AnnouncementsDocAccessFields_Contact = {
@@ -1301,6 +1343,7 @@ export type AnnouncementsDocAccessFields_TitleTh_Update = {
 
 export type AnnouncementsFields = {
   __typename?: 'AnnouncementsFields';
+  author?: Maybe<AnnouncementsFields_Author>;
   contact?: Maybe<AnnouncementsFields_Contact>;
   descriptionEN?: Maybe<AnnouncementsFields_DescriptionEn>;
   descriptionTH?: Maybe<AnnouncementsFields_DescriptionTh>;
@@ -1310,6 +1353,34 @@ export type AnnouncementsFields = {
   tags?: Maybe<AnnouncementsFields_Tags>;
   titleEN?: Maybe<AnnouncementsFields_TitleEn>;
   titleTH?: Maybe<AnnouncementsFields_TitleTh>;
+};
+
+export type AnnouncementsFields_Author = {
+  __typename?: 'AnnouncementsFields_author';
+  create?: Maybe<AnnouncementsFields_Author_Create>;
+  delete?: Maybe<AnnouncementsFields_Author_Delete>;
+  read?: Maybe<AnnouncementsFields_Author_Read>;
+  update?: Maybe<AnnouncementsFields_Author_Update>;
+};
+
+export type AnnouncementsFields_Author_Create = {
+  __typename?: 'AnnouncementsFields_author_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsFields_Author_Delete = {
+  __typename?: 'AnnouncementsFields_author_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsFields_Author_Read = {
+  __typename?: 'AnnouncementsFields_author_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type AnnouncementsFields_Author_Update = {
+  __typename?: 'AnnouncementsFields_author_Update';
+  permission: Scalars['Boolean'];
 };
 
 export type AnnouncementsFields_Contact = {
@@ -6531,6 +6602,7 @@ export type Review = {
   createdAt: Scalars['DateTime'];
   id?: Maybe<Scalars['String']>;
   image?: Maybe<Media>;
+  official?: Maybe<Review_Official>;
   place: Place;
   rating?: Maybe<Review_Rating>;
   updatedAt: Scalars['DateTime'];
@@ -6896,18 +6968,383 @@ export type Review_Image_Width_Operator = {
   not_equals?: InputMaybe<Scalars['Float']>;
 };
 
+export type Review_Official = {
+  __typename?: 'Review_Official';
+  comment?: Maybe<Scalars['String']>;
+  flagged?: Maybe<Scalars['Boolean']>;
+  timestamp?: Maybe<Scalars['DateTime']>;
+};
+
 export type Review_Rating = {
   __typename?: 'Review_Rating';
-  additionalComment?: Maybe<Scalars['String']>;
   assistance?: Maybe<Scalars['Float']>;
+  comment?: Maybe<Scalars['String']>;
   elevator?: Maybe<Scalars['Float']>;
   facility?: Maybe<Array<Review_Rating_Facility>>;
-  isFlagged?: Maybe<Scalars['Boolean']>;
+  images?: Maybe<Array<Review_Rating_Images>>;
   overall?: Maybe<Scalars['Float']>;
   parking?: Maybe<Scalars['Float']>;
   ramp?: Maybe<Scalars['Float']>;
   surface?: Maybe<Scalars['Float']>;
   toilet?: Maybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images = {
+  __typename?: 'Review_Rating_Images';
+  id?: Maybe<Scalars['String']>;
+  image?: Maybe<Media>;
+};
+
+
+export type Review_Rating_ImagesImageArgs = {
+  where?: InputMaybe<Review_Rating_Images_Image_Where>;
+};
+
+export type Review_Rating_Images_Image_Filename_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Filesize_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Height_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  equals?: InputMaybe<Scalars['JSON']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+};
+
+export type Review_Rating_Images_Image_MimeType_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Card__Filename_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Card__Filesize_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Card__Height_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Card__MimeType_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Card__Url_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Card__Width_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Tablet__Filename_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Tablet__Filesize_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Tablet__Height_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Tablet__MimeType_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Tablet__Url_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Tablet__Width_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Thumbnail__Filename_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Thumbnail__Filesize_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Thumbnail__Height_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Thumbnail__MimeType_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Thumbnail__Url_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Sizes__Thumbnail__Width_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating_Images_Image_Url_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating_Images_Image_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Review_Rating_Images_Image_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Review_Rating_Images_Image_Where_Or>>>;
+  filename?: InputMaybe<Review_Rating_Images_Image_Filename_Operator>;
+  filesize?: InputMaybe<Review_Rating_Images_Image_Filesize_Operator>;
+  height?: InputMaybe<Review_Rating_Images_Image_Height_Operator>;
+  id?: InputMaybe<Review_Rating_Images_Image_Id_Operator>;
+  mimeType?: InputMaybe<Review_Rating_Images_Image_MimeType_Operator>;
+  sizes__card__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Filename_Operator>;
+  sizes__card__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Filesize_Operator>;
+  sizes__card__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Height_Operator>;
+  sizes__card__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__MimeType_Operator>;
+  sizes__card__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Url_Operator>;
+  sizes__card__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Width_Operator>;
+  sizes__tablet__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Filename_Operator>;
+  sizes__tablet__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Filesize_Operator>;
+  sizes__tablet__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Height_Operator>;
+  sizes__tablet__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__MimeType_Operator>;
+  sizes__tablet__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Url_Operator>;
+  sizes__tablet__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Width_Operator>;
+  sizes__thumbnail__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Filename_Operator>;
+  sizes__thumbnail__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Filesize_Operator>;
+  sizes__thumbnail__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Height_Operator>;
+  sizes__thumbnail__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__MimeType_Operator>;
+  sizes__thumbnail__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Url_Operator>;
+  sizes__thumbnail__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Width_Operator>;
+  url?: InputMaybe<Review_Rating_Images_Image_Url_Operator>;
+  width?: InputMaybe<Review_Rating_Images_Image_Width_Operator>;
+};
+
+export type Review_Rating_Images_Image_Where_And = {
+  filename?: InputMaybe<Review_Rating_Images_Image_Filename_Operator>;
+  filesize?: InputMaybe<Review_Rating_Images_Image_Filesize_Operator>;
+  height?: InputMaybe<Review_Rating_Images_Image_Height_Operator>;
+  id?: InputMaybe<Review_Rating_Images_Image_Id_Operator>;
+  mimeType?: InputMaybe<Review_Rating_Images_Image_MimeType_Operator>;
+  sizes__card__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Filename_Operator>;
+  sizes__card__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Filesize_Operator>;
+  sizes__card__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Height_Operator>;
+  sizes__card__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__MimeType_Operator>;
+  sizes__card__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Url_Operator>;
+  sizes__card__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Width_Operator>;
+  sizes__tablet__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Filename_Operator>;
+  sizes__tablet__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Filesize_Operator>;
+  sizes__tablet__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Height_Operator>;
+  sizes__tablet__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__MimeType_Operator>;
+  sizes__tablet__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Url_Operator>;
+  sizes__tablet__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Width_Operator>;
+  sizes__thumbnail__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Filename_Operator>;
+  sizes__thumbnail__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Filesize_Operator>;
+  sizes__thumbnail__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Height_Operator>;
+  sizes__thumbnail__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__MimeType_Operator>;
+  sizes__thumbnail__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Url_Operator>;
+  sizes__thumbnail__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Width_Operator>;
+  url?: InputMaybe<Review_Rating_Images_Image_Url_Operator>;
+  width?: InputMaybe<Review_Rating_Images_Image_Width_Operator>;
+};
+
+export type Review_Rating_Images_Image_Where_Or = {
+  filename?: InputMaybe<Review_Rating_Images_Image_Filename_Operator>;
+  filesize?: InputMaybe<Review_Rating_Images_Image_Filesize_Operator>;
+  height?: InputMaybe<Review_Rating_Images_Image_Height_Operator>;
+  id?: InputMaybe<Review_Rating_Images_Image_Id_Operator>;
+  mimeType?: InputMaybe<Review_Rating_Images_Image_MimeType_Operator>;
+  sizes__card__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Filename_Operator>;
+  sizes__card__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Filesize_Operator>;
+  sizes__card__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Height_Operator>;
+  sizes__card__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__MimeType_Operator>;
+  sizes__card__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Url_Operator>;
+  sizes__card__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Card__Width_Operator>;
+  sizes__tablet__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Filename_Operator>;
+  sizes__tablet__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Filesize_Operator>;
+  sizes__tablet__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Height_Operator>;
+  sizes__tablet__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__MimeType_Operator>;
+  sizes__tablet__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Url_Operator>;
+  sizes__tablet__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Tablet__Width_Operator>;
+  sizes__thumbnail__filename?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Filename_Operator>;
+  sizes__thumbnail__filesize?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Filesize_Operator>;
+  sizes__thumbnail__height?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Height_Operator>;
+  sizes__thumbnail__mimeType?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__MimeType_Operator>;
+  sizes__thumbnail__url?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Url_Operator>;
+  sizes__thumbnail__width?: InputMaybe<Review_Rating_Images_Image_Sizes__Thumbnail__Width_Operator>;
+  url?: InputMaybe<Review_Rating_Images_Image_Url_Operator>;
+  width?: InputMaybe<Review_Rating_Images_Image_Width_Operator>;
+};
+
+export type Review_Rating_Images_Image_Width_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
 };
 
 export enum Review_Rating_Facility {
@@ -6961,20 +7398,37 @@ export type Review_Image_Operator = {
   not_equals?: InputMaybe<Scalars['String']>;
 };
 
+export type Review_Official__Comment_Operator = {
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+};
+
+export type Review_Official__Flagged_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  not_equals?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type Review_Official__Timestamp_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['DateTime']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']>;
+  less_than?: InputMaybe<Scalars['DateTime']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']>;
+  like?: InputMaybe<Scalars['DateTime']>;
+  not_equals?: InputMaybe<Scalars['DateTime']>;
+};
+
 export type Review_Place_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   equals?: InputMaybe<Scalars['String']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   not_equals?: InputMaybe<Scalars['String']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-export type Review_Rating__AdditionalComment_Operator = {
-  contains?: InputMaybe<Scalars['String']>;
-  equals?: InputMaybe<Scalars['String']>;
-  exists?: InputMaybe<Scalars['Boolean']>;
-  like?: InputMaybe<Scalars['String']>;
-  not_equals?: InputMaybe<Scalars['String']>;
 };
 
 export type Review_Rating__Assistance_Operator = {
@@ -6985,6 +7439,14 @@ export type Review_Rating__Assistance_Operator = {
   less_than?: InputMaybe<Scalars['Float']>;
   less_than_equal?: InputMaybe<Scalars['Float']>;
   not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Review_Rating__Comment_Operator = {
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
 };
 
 export type Review_Rating__Elevator_Operator = {
@@ -7013,10 +7475,21 @@ export type Review_Rating__Facility_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Review_Rating__Facility_Input>>>;
 };
 
-export type Review_Rating__IsFlagged_Operator = {
-  equals?: InputMaybe<Scalars['Boolean']>;
+export type Review_Rating__Images__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
   exists?: InputMaybe<Scalars['Boolean']>;
-  not_equals?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  like?: InputMaybe<Scalars['String']>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Review_Rating__Images__Image_Operator = {
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  not_equals?: InputMaybe<Scalars['String']>;
 };
 
 export type Review_Rating__Overall_Operator = {
@@ -7095,12 +7568,16 @@ export type Review_Where = {
   createdAt?: InputMaybe<Review_CreatedAt_Operator>;
   id?: InputMaybe<Review_Id_Operator>;
   image?: InputMaybe<Review_Image_Operator>;
+  official__comment?: InputMaybe<Review_Official__Comment_Operator>;
+  official__flagged?: InputMaybe<Review_Official__Flagged_Operator>;
+  official__timestamp?: InputMaybe<Review_Official__Timestamp_Operator>;
   place?: InputMaybe<Review_Place_Operator>;
-  rating__additionalComment?: InputMaybe<Review_Rating__AdditionalComment_Operator>;
   rating__assistance?: InputMaybe<Review_Rating__Assistance_Operator>;
+  rating__comment?: InputMaybe<Review_Rating__Comment_Operator>;
   rating__elevator?: InputMaybe<Review_Rating__Elevator_Operator>;
   rating__facility?: InputMaybe<Review_Rating__Facility_Operator>;
-  rating__isFlagged?: InputMaybe<Review_Rating__IsFlagged_Operator>;
+  rating__images__id?: InputMaybe<Review_Rating__Images__Id_Operator>;
+  rating__images__image?: InputMaybe<Review_Rating__Images__Image_Operator>;
   rating__overall?: InputMaybe<Review_Rating__Overall_Operator>;
   rating__parking?: InputMaybe<Review_Rating__Parking_Operator>;
   rating__ramp?: InputMaybe<Review_Rating__Ramp_Operator>;
@@ -7115,12 +7592,16 @@ export type Review_Where_And = {
   createdAt?: InputMaybe<Review_CreatedAt_Operator>;
   id?: InputMaybe<Review_Id_Operator>;
   image?: InputMaybe<Review_Image_Operator>;
+  official__comment?: InputMaybe<Review_Official__Comment_Operator>;
+  official__flagged?: InputMaybe<Review_Official__Flagged_Operator>;
+  official__timestamp?: InputMaybe<Review_Official__Timestamp_Operator>;
   place?: InputMaybe<Review_Place_Operator>;
-  rating__additionalComment?: InputMaybe<Review_Rating__AdditionalComment_Operator>;
   rating__assistance?: InputMaybe<Review_Rating__Assistance_Operator>;
+  rating__comment?: InputMaybe<Review_Rating__Comment_Operator>;
   rating__elevator?: InputMaybe<Review_Rating__Elevator_Operator>;
   rating__facility?: InputMaybe<Review_Rating__Facility_Operator>;
-  rating__isFlagged?: InputMaybe<Review_Rating__IsFlagged_Operator>;
+  rating__images__id?: InputMaybe<Review_Rating__Images__Id_Operator>;
+  rating__images__image?: InputMaybe<Review_Rating__Images__Image_Operator>;
   rating__overall?: InputMaybe<Review_Rating__Overall_Operator>;
   rating__parking?: InputMaybe<Review_Rating__Parking_Operator>;
   rating__ramp?: InputMaybe<Review_Rating__Ramp_Operator>;
@@ -7135,12 +7616,16 @@ export type Review_Where_Or = {
   createdAt?: InputMaybe<Review_CreatedAt_Operator>;
   id?: InputMaybe<Review_Id_Operator>;
   image?: InputMaybe<Review_Image_Operator>;
+  official__comment?: InputMaybe<Review_Official__Comment_Operator>;
+  official__flagged?: InputMaybe<Review_Official__Flagged_Operator>;
+  official__timestamp?: InputMaybe<Review_Official__Timestamp_Operator>;
   place?: InputMaybe<Review_Place_Operator>;
-  rating__additionalComment?: InputMaybe<Review_Rating__AdditionalComment_Operator>;
   rating__assistance?: InputMaybe<Review_Rating__Assistance_Operator>;
+  rating__comment?: InputMaybe<Review_Rating__Comment_Operator>;
   rating__elevator?: InputMaybe<Review_Rating__Elevator_Operator>;
   rating__facility?: InputMaybe<Review_Rating__Facility_Operator>;
-  rating__isFlagged?: InputMaybe<Review_Rating__IsFlagged_Operator>;
+  rating__images__id?: InputMaybe<Review_Rating__Images__Id_Operator>;
+  rating__images__image?: InputMaybe<Review_Rating__Images__Image_Operator>;
   rating__overall?: InputMaybe<Review_Rating__Overall_Operator>;
   rating__parking?: InputMaybe<Review_Rating__Parking_Operator>;
   rating__ramp?: InputMaybe<Review_Rating__Ramp_Operator>;
@@ -7193,6 +7678,7 @@ export type ReviewsDocAccessFields = {
   __typename?: 'ReviewsDocAccessFields';
   comment?: Maybe<ReviewsDocAccessFields_Comment>;
   image?: Maybe<ReviewsDocAccessFields_Image>;
+  official?: Maybe<ReviewsDocAccessFields_Official>;
   place?: Maybe<ReviewsDocAccessFields_Place>;
   rating?: Maybe<ReviewsDocAccessFields_Rating>;
   user?: Maybe<ReviewsDocAccessFields_User>;
@@ -7254,6 +7740,126 @@ export type ReviewsDocAccessFields_Image_Update = {
   permission: Scalars['Boolean'];
 };
 
+export type ReviewsDocAccessFields_Official = {
+  __typename?: 'ReviewsDocAccessFields_official';
+  create?: Maybe<ReviewsDocAccessFields_Official_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Official_Delete>;
+  fields?: Maybe<ReviewsDocAccessFields_Official_Fields>;
+  read?: Maybe<ReviewsDocAccessFields_Official_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Official_Update>;
+};
+
+export type ReviewsDocAccessFields_Official_Create = {
+  __typename?: 'ReviewsDocAccessFields_official_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Delete = {
+  __typename?: 'ReviewsDocAccessFields_official_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Fields = {
+  __typename?: 'ReviewsDocAccessFields_official_Fields';
+  comment?: Maybe<ReviewsDocAccessFields_Official_Comment>;
+  flagged?: Maybe<ReviewsDocAccessFields_Official_Flagged>;
+  timestamp?: Maybe<ReviewsDocAccessFields_Official_Timestamp>;
+};
+
+export type ReviewsDocAccessFields_Official_Read = {
+  __typename?: 'ReviewsDocAccessFields_official_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Update = {
+  __typename?: 'ReviewsDocAccessFields_official_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Comment = {
+  __typename?: 'ReviewsDocAccessFields_official_comment';
+  create?: Maybe<ReviewsDocAccessFields_Official_Comment_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Official_Comment_Delete>;
+  read?: Maybe<ReviewsDocAccessFields_Official_Comment_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Official_Comment_Update>;
+};
+
+export type ReviewsDocAccessFields_Official_Comment_Create = {
+  __typename?: 'ReviewsDocAccessFields_official_comment_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Comment_Delete = {
+  __typename?: 'ReviewsDocAccessFields_official_comment_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Comment_Read = {
+  __typename?: 'ReviewsDocAccessFields_official_comment_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Comment_Update = {
+  __typename?: 'ReviewsDocAccessFields_official_comment_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Flagged = {
+  __typename?: 'ReviewsDocAccessFields_official_flagged';
+  create?: Maybe<ReviewsDocAccessFields_Official_Flagged_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Official_Flagged_Delete>;
+  read?: Maybe<ReviewsDocAccessFields_Official_Flagged_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Official_Flagged_Update>;
+};
+
+export type ReviewsDocAccessFields_Official_Flagged_Create = {
+  __typename?: 'ReviewsDocAccessFields_official_flagged_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Flagged_Delete = {
+  __typename?: 'ReviewsDocAccessFields_official_flagged_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Flagged_Read = {
+  __typename?: 'ReviewsDocAccessFields_official_flagged_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Flagged_Update = {
+  __typename?: 'ReviewsDocAccessFields_official_flagged_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Timestamp = {
+  __typename?: 'ReviewsDocAccessFields_official_timestamp';
+  create?: Maybe<ReviewsDocAccessFields_Official_Timestamp_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Official_Timestamp_Delete>;
+  read?: Maybe<ReviewsDocAccessFields_Official_Timestamp_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Official_Timestamp_Update>;
+};
+
+export type ReviewsDocAccessFields_Official_Timestamp_Create = {
+  __typename?: 'ReviewsDocAccessFields_official_timestamp_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Timestamp_Delete = {
+  __typename?: 'ReviewsDocAccessFields_official_timestamp_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Timestamp_Read = {
+  __typename?: 'ReviewsDocAccessFields_official_timestamp_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Official_Timestamp_Update = {
+  __typename?: 'ReviewsDocAccessFields_official_timestamp_Update';
+  permission: Scalars['Boolean'];
+};
+
 export type ReviewsDocAccessFields_Place = {
   __typename?: 'ReviewsDocAccessFields_place';
   create?: Maybe<ReviewsDocAccessFields_Place_Create>;
@@ -7303,11 +7909,11 @@ export type ReviewsDocAccessFields_Rating_Delete = {
 
 export type ReviewsDocAccessFields_Rating_Fields = {
   __typename?: 'ReviewsDocAccessFields_rating_Fields';
-  additionalComment?: Maybe<ReviewsDocAccessFields_Rating_AdditionalComment>;
   assistance?: Maybe<ReviewsDocAccessFields_Rating_Assistance>;
+  comment?: Maybe<ReviewsDocAccessFields_Rating_Comment>;
   elevator?: Maybe<ReviewsDocAccessFields_Rating_Elevator>;
   facility?: Maybe<ReviewsDocAccessFields_Rating_Facility>;
-  isFlagged?: Maybe<ReviewsDocAccessFields_Rating_IsFlagged>;
+  images?: Maybe<ReviewsDocAccessFields_Rating_Images>;
   overall?: Maybe<ReviewsDocAccessFields_Rating_Overall>;
   parking?: Maybe<ReviewsDocAccessFields_Rating_Parking>;
   ramp?: Maybe<ReviewsDocAccessFields_Rating_Ramp>;
@@ -7322,34 +7928,6 @@ export type ReviewsDocAccessFields_Rating_Read = {
 
 export type ReviewsDocAccessFields_Rating_Update = {
   __typename?: 'ReviewsDocAccessFields_rating_Update';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsDocAccessFields_Rating_AdditionalComment = {
-  __typename?: 'ReviewsDocAccessFields_rating_additionalComment';
-  create?: Maybe<ReviewsDocAccessFields_Rating_AdditionalComment_Create>;
-  delete?: Maybe<ReviewsDocAccessFields_Rating_AdditionalComment_Delete>;
-  read?: Maybe<ReviewsDocAccessFields_Rating_AdditionalComment_Read>;
-  update?: Maybe<ReviewsDocAccessFields_Rating_AdditionalComment_Update>;
-};
-
-export type ReviewsDocAccessFields_Rating_AdditionalComment_Create = {
-  __typename?: 'ReviewsDocAccessFields_rating_additionalComment_Create';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsDocAccessFields_Rating_AdditionalComment_Delete = {
-  __typename?: 'ReviewsDocAccessFields_rating_additionalComment_Delete';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsDocAccessFields_Rating_AdditionalComment_Read = {
-  __typename?: 'ReviewsDocAccessFields_rating_additionalComment_Read';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsDocAccessFields_Rating_AdditionalComment_Update = {
-  __typename?: 'ReviewsDocAccessFields_rating_additionalComment_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -7378,6 +7956,34 @@ export type ReviewsDocAccessFields_Rating_Assistance_Read = {
 
 export type ReviewsDocAccessFields_Rating_Assistance_Update = {
   __typename?: 'ReviewsDocAccessFields_rating_assistance_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Comment = {
+  __typename?: 'ReviewsDocAccessFields_rating_comment';
+  create?: Maybe<ReviewsDocAccessFields_Rating_Comment_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Rating_Comment_Delete>;
+  read?: Maybe<ReviewsDocAccessFields_Rating_Comment_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Rating_Comment_Update>;
+};
+
+export type ReviewsDocAccessFields_Rating_Comment_Create = {
+  __typename?: 'ReviewsDocAccessFields_rating_comment_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Comment_Delete = {
+  __typename?: 'ReviewsDocAccessFields_rating_comment_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Comment_Read = {
+  __typename?: 'ReviewsDocAccessFields_rating_comment_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Comment_Update = {
+  __typename?: 'ReviewsDocAccessFields_rating_comment_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -7437,31 +8043,94 @@ export type ReviewsDocAccessFields_Rating_Facility_Update = {
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsDocAccessFields_Rating_IsFlagged = {
-  __typename?: 'ReviewsDocAccessFields_rating_isFlagged';
-  create?: Maybe<ReviewsDocAccessFields_Rating_IsFlagged_Create>;
-  delete?: Maybe<ReviewsDocAccessFields_Rating_IsFlagged_Delete>;
-  read?: Maybe<ReviewsDocAccessFields_Rating_IsFlagged_Read>;
-  update?: Maybe<ReviewsDocAccessFields_Rating_IsFlagged_Update>;
+export type ReviewsDocAccessFields_Rating_Images = {
+  __typename?: 'ReviewsDocAccessFields_rating_images';
+  create?: Maybe<ReviewsDocAccessFields_Rating_Images_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Rating_Images_Delete>;
+  fields?: Maybe<ReviewsDocAccessFields_Rating_Images_Fields>;
+  read?: Maybe<ReviewsDocAccessFields_Rating_Images_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Rating_Images_Update>;
 };
 
-export type ReviewsDocAccessFields_Rating_IsFlagged_Create = {
-  __typename?: 'ReviewsDocAccessFields_rating_isFlagged_Create';
+export type ReviewsDocAccessFields_Rating_Images_Create = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_Create';
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsDocAccessFields_Rating_IsFlagged_Delete = {
-  __typename?: 'ReviewsDocAccessFields_rating_isFlagged_Delete';
+export type ReviewsDocAccessFields_Rating_Images_Delete = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_Delete';
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsDocAccessFields_Rating_IsFlagged_Read = {
-  __typename?: 'ReviewsDocAccessFields_rating_isFlagged_Read';
+export type ReviewsDocAccessFields_Rating_Images_Fields = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_Fields';
+  id?: Maybe<ReviewsDocAccessFields_Rating_Images_Id>;
+  image?: Maybe<ReviewsDocAccessFields_Rating_Images_Image>;
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Read = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_Read';
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsDocAccessFields_Rating_IsFlagged_Update = {
-  __typename?: 'ReviewsDocAccessFields_rating_isFlagged_Update';
+export type ReviewsDocAccessFields_Rating_Images_Update = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Id = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_id';
+  create?: Maybe<ReviewsDocAccessFields_Rating_Images_Id_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Rating_Images_Id_Delete>;
+  read?: Maybe<ReviewsDocAccessFields_Rating_Images_Id_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Rating_Images_Id_Update>;
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Id_Create = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_id_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Id_Delete = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_id_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Id_Read = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_id_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Id_Update = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_id_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Image = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_image';
+  create?: Maybe<ReviewsDocAccessFields_Rating_Images_Image_Create>;
+  delete?: Maybe<ReviewsDocAccessFields_Rating_Images_Image_Delete>;
+  read?: Maybe<ReviewsDocAccessFields_Rating_Images_Image_Read>;
+  update?: Maybe<ReviewsDocAccessFields_Rating_Images_Image_Update>;
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Image_Create = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_image_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Image_Delete = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_image_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Image_Read = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_image_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsDocAccessFields_Rating_Images_Image_Update = {
+  __typename?: 'ReviewsDocAccessFields_rating_images_image_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -7637,6 +8306,7 @@ export type ReviewsFields = {
   __typename?: 'ReviewsFields';
   comment?: Maybe<ReviewsFields_Comment>;
   image?: Maybe<ReviewsFields_Image>;
+  official?: Maybe<ReviewsFields_Official>;
   place?: Maybe<ReviewsFields_Place>;
   rating?: Maybe<ReviewsFields_Rating>;
   user?: Maybe<ReviewsFields_User>;
@@ -7698,6 +8368,126 @@ export type ReviewsFields_Image_Update = {
   permission: Scalars['Boolean'];
 };
 
+export type ReviewsFields_Official = {
+  __typename?: 'ReviewsFields_official';
+  create?: Maybe<ReviewsFields_Official_Create>;
+  delete?: Maybe<ReviewsFields_Official_Delete>;
+  fields?: Maybe<ReviewsFields_Official_Fields>;
+  read?: Maybe<ReviewsFields_Official_Read>;
+  update?: Maybe<ReviewsFields_Official_Update>;
+};
+
+export type ReviewsFields_Official_Create = {
+  __typename?: 'ReviewsFields_official_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Delete = {
+  __typename?: 'ReviewsFields_official_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Fields = {
+  __typename?: 'ReviewsFields_official_Fields';
+  comment?: Maybe<ReviewsFields_Official_Comment>;
+  flagged?: Maybe<ReviewsFields_Official_Flagged>;
+  timestamp?: Maybe<ReviewsFields_Official_Timestamp>;
+};
+
+export type ReviewsFields_Official_Read = {
+  __typename?: 'ReviewsFields_official_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Update = {
+  __typename?: 'ReviewsFields_official_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Comment = {
+  __typename?: 'ReviewsFields_official_comment';
+  create?: Maybe<ReviewsFields_Official_Comment_Create>;
+  delete?: Maybe<ReviewsFields_Official_Comment_Delete>;
+  read?: Maybe<ReviewsFields_Official_Comment_Read>;
+  update?: Maybe<ReviewsFields_Official_Comment_Update>;
+};
+
+export type ReviewsFields_Official_Comment_Create = {
+  __typename?: 'ReviewsFields_official_comment_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Comment_Delete = {
+  __typename?: 'ReviewsFields_official_comment_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Comment_Read = {
+  __typename?: 'ReviewsFields_official_comment_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Comment_Update = {
+  __typename?: 'ReviewsFields_official_comment_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Flagged = {
+  __typename?: 'ReviewsFields_official_flagged';
+  create?: Maybe<ReviewsFields_Official_Flagged_Create>;
+  delete?: Maybe<ReviewsFields_Official_Flagged_Delete>;
+  read?: Maybe<ReviewsFields_Official_Flagged_Read>;
+  update?: Maybe<ReviewsFields_Official_Flagged_Update>;
+};
+
+export type ReviewsFields_Official_Flagged_Create = {
+  __typename?: 'ReviewsFields_official_flagged_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Flagged_Delete = {
+  __typename?: 'ReviewsFields_official_flagged_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Flagged_Read = {
+  __typename?: 'ReviewsFields_official_flagged_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Flagged_Update = {
+  __typename?: 'ReviewsFields_official_flagged_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Timestamp = {
+  __typename?: 'ReviewsFields_official_timestamp';
+  create?: Maybe<ReviewsFields_Official_Timestamp_Create>;
+  delete?: Maybe<ReviewsFields_Official_Timestamp_Delete>;
+  read?: Maybe<ReviewsFields_Official_Timestamp_Read>;
+  update?: Maybe<ReviewsFields_Official_Timestamp_Update>;
+};
+
+export type ReviewsFields_Official_Timestamp_Create = {
+  __typename?: 'ReviewsFields_official_timestamp_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Timestamp_Delete = {
+  __typename?: 'ReviewsFields_official_timestamp_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Timestamp_Read = {
+  __typename?: 'ReviewsFields_official_timestamp_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Official_Timestamp_Update = {
+  __typename?: 'ReviewsFields_official_timestamp_Update';
+  permission: Scalars['Boolean'];
+};
+
 export type ReviewsFields_Place = {
   __typename?: 'ReviewsFields_place';
   create?: Maybe<ReviewsFields_Place_Create>;
@@ -7747,11 +8537,11 @@ export type ReviewsFields_Rating_Delete = {
 
 export type ReviewsFields_Rating_Fields = {
   __typename?: 'ReviewsFields_rating_Fields';
-  additionalComment?: Maybe<ReviewsFields_Rating_AdditionalComment>;
   assistance?: Maybe<ReviewsFields_Rating_Assistance>;
+  comment?: Maybe<ReviewsFields_Rating_Comment>;
   elevator?: Maybe<ReviewsFields_Rating_Elevator>;
   facility?: Maybe<ReviewsFields_Rating_Facility>;
-  isFlagged?: Maybe<ReviewsFields_Rating_IsFlagged>;
+  images?: Maybe<ReviewsFields_Rating_Images>;
   overall?: Maybe<ReviewsFields_Rating_Overall>;
   parking?: Maybe<ReviewsFields_Rating_Parking>;
   ramp?: Maybe<ReviewsFields_Rating_Ramp>;
@@ -7766,34 +8556,6 @@ export type ReviewsFields_Rating_Read = {
 
 export type ReviewsFields_Rating_Update = {
   __typename?: 'ReviewsFields_rating_Update';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsFields_Rating_AdditionalComment = {
-  __typename?: 'ReviewsFields_rating_additionalComment';
-  create?: Maybe<ReviewsFields_Rating_AdditionalComment_Create>;
-  delete?: Maybe<ReviewsFields_Rating_AdditionalComment_Delete>;
-  read?: Maybe<ReviewsFields_Rating_AdditionalComment_Read>;
-  update?: Maybe<ReviewsFields_Rating_AdditionalComment_Update>;
-};
-
-export type ReviewsFields_Rating_AdditionalComment_Create = {
-  __typename?: 'ReviewsFields_rating_additionalComment_Create';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsFields_Rating_AdditionalComment_Delete = {
-  __typename?: 'ReviewsFields_rating_additionalComment_Delete';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsFields_Rating_AdditionalComment_Read = {
-  __typename?: 'ReviewsFields_rating_additionalComment_Read';
-  permission: Scalars['Boolean'];
-};
-
-export type ReviewsFields_Rating_AdditionalComment_Update = {
-  __typename?: 'ReviewsFields_rating_additionalComment_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -7822,6 +8584,34 @@ export type ReviewsFields_Rating_Assistance_Read = {
 
 export type ReviewsFields_Rating_Assistance_Update = {
   __typename?: 'ReviewsFields_rating_assistance_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Comment = {
+  __typename?: 'ReviewsFields_rating_comment';
+  create?: Maybe<ReviewsFields_Rating_Comment_Create>;
+  delete?: Maybe<ReviewsFields_Rating_Comment_Delete>;
+  read?: Maybe<ReviewsFields_Rating_Comment_Read>;
+  update?: Maybe<ReviewsFields_Rating_Comment_Update>;
+};
+
+export type ReviewsFields_Rating_Comment_Create = {
+  __typename?: 'ReviewsFields_rating_comment_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Comment_Delete = {
+  __typename?: 'ReviewsFields_rating_comment_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Comment_Read = {
+  __typename?: 'ReviewsFields_rating_comment_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Comment_Update = {
+  __typename?: 'ReviewsFields_rating_comment_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -7881,31 +8671,94 @@ export type ReviewsFields_Rating_Facility_Update = {
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsFields_Rating_IsFlagged = {
-  __typename?: 'ReviewsFields_rating_isFlagged';
-  create?: Maybe<ReviewsFields_Rating_IsFlagged_Create>;
-  delete?: Maybe<ReviewsFields_Rating_IsFlagged_Delete>;
-  read?: Maybe<ReviewsFields_Rating_IsFlagged_Read>;
-  update?: Maybe<ReviewsFields_Rating_IsFlagged_Update>;
+export type ReviewsFields_Rating_Images = {
+  __typename?: 'ReviewsFields_rating_images';
+  create?: Maybe<ReviewsFields_Rating_Images_Create>;
+  delete?: Maybe<ReviewsFields_Rating_Images_Delete>;
+  fields?: Maybe<ReviewsFields_Rating_Images_Fields>;
+  read?: Maybe<ReviewsFields_Rating_Images_Read>;
+  update?: Maybe<ReviewsFields_Rating_Images_Update>;
 };
 
-export type ReviewsFields_Rating_IsFlagged_Create = {
-  __typename?: 'ReviewsFields_rating_isFlagged_Create';
+export type ReviewsFields_Rating_Images_Create = {
+  __typename?: 'ReviewsFields_rating_images_Create';
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsFields_Rating_IsFlagged_Delete = {
-  __typename?: 'ReviewsFields_rating_isFlagged_Delete';
+export type ReviewsFields_Rating_Images_Delete = {
+  __typename?: 'ReviewsFields_rating_images_Delete';
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsFields_Rating_IsFlagged_Read = {
-  __typename?: 'ReviewsFields_rating_isFlagged_Read';
+export type ReviewsFields_Rating_Images_Fields = {
+  __typename?: 'ReviewsFields_rating_images_Fields';
+  id?: Maybe<ReviewsFields_Rating_Images_Id>;
+  image?: Maybe<ReviewsFields_Rating_Images_Image>;
+};
+
+export type ReviewsFields_Rating_Images_Read = {
+  __typename?: 'ReviewsFields_rating_images_Read';
   permission: Scalars['Boolean'];
 };
 
-export type ReviewsFields_Rating_IsFlagged_Update = {
-  __typename?: 'ReviewsFields_rating_isFlagged_Update';
+export type ReviewsFields_Rating_Images_Update = {
+  __typename?: 'ReviewsFields_rating_images_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Id = {
+  __typename?: 'ReviewsFields_rating_images_id';
+  create?: Maybe<ReviewsFields_Rating_Images_Id_Create>;
+  delete?: Maybe<ReviewsFields_Rating_Images_Id_Delete>;
+  read?: Maybe<ReviewsFields_Rating_Images_Id_Read>;
+  update?: Maybe<ReviewsFields_Rating_Images_Id_Update>;
+};
+
+export type ReviewsFields_Rating_Images_Id_Create = {
+  __typename?: 'ReviewsFields_rating_images_id_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Id_Delete = {
+  __typename?: 'ReviewsFields_rating_images_id_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Id_Read = {
+  __typename?: 'ReviewsFields_rating_images_id_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Id_Update = {
+  __typename?: 'ReviewsFields_rating_images_id_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Image = {
+  __typename?: 'ReviewsFields_rating_images_image';
+  create?: Maybe<ReviewsFields_Rating_Images_Image_Create>;
+  delete?: Maybe<ReviewsFields_Rating_Images_Image_Delete>;
+  read?: Maybe<ReviewsFields_Rating_Images_Image_Read>;
+  update?: Maybe<ReviewsFields_Rating_Images_Image_Update>;
+};
+
+export type ReviewsFields_Rating_Images_Image_Create = {
+  __typename?: 'ReviewsFields_rating_images_image_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Image_Delete = {
+  __typename?: 'ReviewsFields_rating_images_image_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Image_Read = {
+  __typename?: 'ReviewsFields_rating_images_image_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type ReviewsFields_Rating_Images_Image_Update = {
+  __typename?: 'ReviewsFields_rating_images_image_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -8109,6 +8962,7 @@ export type TracedRoute = {
   id?: Maybe<Scalars['String']>;
   route?: Maybe<Scalars['JSON']>;
   updatedAt: Scalars['DateTime'];
+  user?: Maybe<User>;
 };
 
 export type TracedRoute_CreatedAt_Operator = {
@@ -8170,6 +9024,15 @@ export type TracedRoute_UpdatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']>;
 };
 
+export type TracedRoute_User_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
 export type TracedRoute_Where = {
   AND?: InputMaybe<Array<InputMaybe<TracedRoute_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<TracedRoute_Where_Or>>>;
@@ -8179,6 +9042,7 @@ export type TracedRoute_Where = {
   id?: InputMaybe<TracedRoute_Id_Operator>;
   route?: InputMaybe<TracedRoute_Route_Operator>;
   updatedAt?: InputMaybe<TracedRoute_UpdatedAt_Operator>;
+  user?: InputMaybe<TracedRoute_User_Operator>;
 };
 
 export type TracedRoute_Where_And = {
@@ -8188,6 +9052,7 @@ export type TracedRoute_Where_And = {
   id?: InputMaybe<TracedRoute_Id_Operator>;
   route?: InputMaybe<TracedRoute_Route_Operator>;
   updatedAt?: InputMaybe<TracedRoute_UpdatedAt_Operator>;
+  user?: InputMaybe<TracedRoute_User_Operator>;
 };
 
 export type TracedRoute_Where_Or = {
@@ -8197,6 +9062,7 @@ export type TracedRoute_Where_Or = {
   id?: InputMaybe<TracedRoute_Id_Operator>;
   route?: InputMaybe<TracedRoute_Route_Operator>;
   updatedAt?: InputMaybe<TracedRoute_UpdatedAt_Operator>;
+  user?: InputMaybe<TracedRoute_User_Operator>;
 };
 
 export type TracedRoutes = {
@@ -8243,6 +9109,7 @@ export type TracedRoutesDocAccessFields = {
   distance?: Maybe<TracedRoutesDocAccessFields_Distance>;
   duration?: Maybe<TracedRoutesDocAccessFields_Duration>;
   route?: Maybe<TracedRoutesDocAccessFields_Route>;
+  user?: Maybe<TracedRoutesDocAccessFields_User>;
 };
 
 export type TracedRoutesDocAccessFields_Distance = {
@@ -8329,11 +9196,40 @@ export type TracedRoutesDocAccessFields_Route_Update = {
   permission: Scalars['Boolean'];
 };
 
+export type TracedRoutesDocAccessFields_User = {
+  __typename?: 'TracedRoutesDocAccessFields_user';
+  create?: Maybe<TracedRoutesDocAccessFields_User_Create>;
+  delete?: Maybe<TracedRoutesDocAccessFields_User_Delete>;
+  read?: Maybe<TracedRoutesDocAccessFields_User_Read>;
+  update?: Maybe<TracedRoutesDocAccessFields_User_Update>;
+};
+
+export type TracedRoutesDocAccessFields_User_Create = {
+  __typename?: 'TracedRoutesDocAccessFields_user_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type TracedRoutesDocAccessFields_User_Delete = {
+  __typename?: 'TracedRoutesDocAccessFields_user_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type TracedRoutesDocAccessFields_User_Read = {
+  __typename?: 'TracedRoutesDocAccessFields_user_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type TracedRoutesDocAccessFields_User_Update = {
+  __typename?: 'TracedRoutesDocAccessFields_user_Update';
+  permission: Scalars['Boolean'];
+};
+
 export type TracedRoutesFields = {
   __typename?: 'TracedRoutesFields';
   distance?: Maybe<TracedRoutesFields_Distance>;
   duration?: Maybe<TracedRoutesFields_Duration>;
   route?: Maybe<TracedRoutesFields_Route>;
+  user?: Maybe<TracedRoutesFields_User>;
 };
 
 export type TracedRoutesFields_Distance = {
@@ -8417,6 +9313,34 @@ export type TracedRoutesFields_Route_Read = {
 
 export type TracedRoutesFields_Route_Update = {
   __typename?: 'TracedRoutesFields_route_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type TracedRoutesFields_User = {
+  __typename?: 'TracedRoutesFields_user';
+  create?: Maybe<TracedRoutesFields_User_Create>;
+  delete?: Maybe<TracedRoutesFields_User_Delete>;
+  read?: Maybe<TracedRoutesFields_User_Read>;
+  update?: Maybe<TracedRoutesFields_User_Update>;
+};
+
+export type TracedRoutesFields_User_Create = {
+  __typename?: 'TracedRoutesFields_user_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type TracedRoutesFields_User_Delete = {
+  __typename?: 'TracedRoutesFields_user_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type TracedRoutesFields_User_Read = {
+  __typename?: 'TracedRoutesFields_user_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type TracedRoutesFields_User_Update = {
+  __typename?: 'TracedRoutesFields_user_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -9738,6 +10662,7 @@ export type MutationAdminUpdateInput = {
 };
 
 export type MutationAnnouncementInput = {
+  author?: InputMaybe<Scalars['String']>;
   contact?: InputMaybe<MutationAnnouncement_ContactInput>;
   descriptionEN?: InputMaybe<Scalars['String']>;
   descriptionTH?: InputMaybe<Scalars['String']>;
@@ -9750,6 +10675,7 @@ export type MutationAnnouncementInput = {
 };
 
 export type MutationAnnouncementUpdateInput = {
+  author?: InputMaybe<Scalars['String']>;
   contact?: InputMaybe<MutationAnnouncementUpdate_ContactInput>;
   descriptionEN?: InputMaybe<Scalars['String']>;
   descriptionTH?: InputMaybe<Scalars['String']>;
@@ -9916,6 +10842,7 @@ export type MutationPlaceUpdateInput = {
 export type MutationReviewInput = {
   comment?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
+  official?: InputMaybe<MutationReview_OfficialInput>;
   place?: InputMaybe<Scalars['String']>;
   rating?: InputMaybe<MutationReview_RatingInput>;
   user?: InputMaybe<Scalars['String']>;
@@ -9924,17 +10851,24 @@ export type MutationReviewInput = {
 export type MutationReviewUpdateInput = {
   comment?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
+  official?: InputMaybe<MutationReviewUpdate_OfficialInput>;
   place?: InputMaybe<Scalars['String']>;
   rating?: InputMaybe<MutationReviewUpdate_RatingInput>;
   user?: InputMaybe<Scalars['String']>;
 };
 
+export type MutationReviewUpdate_OfficialInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  flagged?: InputMaybe<Scalars['Boolean']>;
+  timestamp?: InputMaybe<Scalars['String']>;
+};
+
 export type MutationReviewUpdate_RatingInput = {
-  additionalComment?: InputMaybe<Scalars['String']>;
   assistance?: InputMaybe<Scalars['Float']>;
+  comment?: InputMaybe<Scalars['String']>;
   elevator?: InputMaybe<Scalars['Float']>;
   facility?: InputMaybe<Array<InputMaybe<ReviewUpdate_Rating_Facility_MutationInput>>>;
-  isFlagged?: InputMaybe<Scalars['Boolean']>;
+  images?: InputMaybe<Array<InputMaybe<MutationReviewUpdate_Rating_ImagesInput>>>;
   overall?: InputMaybe<Scalars['Float']>;
   parking?: InputMaybe<Scalars['Float']>;
   ramp?: InputMaybe<Scalars['Float']>;
@@ -9942,29 +10876,47 @@ export type MutationReviewUpdate_RatingInput = {
   toilet?: InputMaybe<Scalars['Float']>;
 };
 
+export type MutationReviewUpdate_Rating_ImagesInput = {
+  id?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+};
+
+export type MutationReview_OfficialInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  flagged?: InputMaybe<Scalars['Boolean']>;
+  timestamp?: InputMaybe<Scalars['String']>;
+};
+
 export type MutationReview_RatingInput = {
-  additionalComment?: InputMaybe<Scalars['String']>;
   assistance?: InputMaybe<Scalars['Float']>;
+  comment?: InputMaybe<Scalars['String']>;
   elevator?: InputMaybe<Scalars['Float']>;
   facility?: InputMaybe<Array<InputMaybe<Review_Rating_Facility_MutationInput>>>;
-  isFlagged?: InputMaybe<Scalars['Boolean']>;
+  images?: InputMaybe<Array<InputMaybe<MutationReview_Rating_ImagesInput>>>;
   overall?: InputMaybe<Scalars['Float']>;
   parking?: InputMaybe<Scalars['Float']>;
   ramp?: InputMaybe<Scalars['Float']>;
   surface?: InputMaybe<Scalars['Float']>;
   toilet?: InputMaybe<Scalars['Float']>;
+};
+
+export type MutationReview_Rating_ImagesInput = {
+  id?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
 };
 
 export type MutationTracedRouteInput = {
   distance?: InputMaybe<Scalars['Float']>;
   duration?: InputMaybe<Scalars['Float']>;
   route?: InputMaybe<Scalars['JSON']>;
+  user?: InputMaybe<Scalars['String']>;
 };
 
 export type MutationTracedRouteUpdateInput = {
   distance?: InputMaybe<Scalars['Float']>;
   duration?: InputMaybe<Scalars['Float']>;
   route?: InputMaybe<Scalars['JSON']>;
+  user?: InputMaybe<Scalars['String']>;
 };
 
 export type MutationUserInput = {
@@ -10134,6 +11086,13 @@ export type MeProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeProfileQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id?: string | null, email?: any | null, username?: string | null, firstName?: string | null, lastName?: string | null, displayNameType?: User_DisplayNameType | null } | null } | null };
 
+export type CreateReviewMutationVariables = Exact<{
+  input: MutationReviewInput;
+}>;
+
+
+export type CreateReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', id?: string | null } | null };
+
 export type CreateTracedRouteMutationVariables = Exact<{
   input: MutationTracedRouteInput;
 }>;
@@ -10187,7 +11146,7 @@ export type GetReviewByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetReviewByIdQuery = { __typename?: 'Query', Review?: { __typename?: 'Review', id?: string | null, createdAt: any, comment?: string | null, place: { __typename?: 'Place', nameTH: string, nameEN: string, category: Place_Category, image?: { __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null } | null }, rating?: { __typename?: 'Review_Rating', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null, facility?: Array<Review_Rating_Facility> | null, isFlagged?: boolean | null, additionalComment?: string | null } | null } | null };
+export type GetReviewByIdQuery = { __typename?: 'Query', Review?: { __typename?: 'Review', id?: string | null, createdAt: any, place: { __typename?: 'Place', nameTH: string, nameEN: string, category: Place_Category, image?: { __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null } | null }, rating?: { __typename?: 'Review_Rating', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null, facility?: Array<Review_Rating_Facility> | null, comment?: string | null, images?: Array<{ __typename?: 'Review_Rating_Images', image?: { __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null } | null }> | null } | null } | null };
 
 export type GetMyTracedRoutesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10209,6 +11168,7 @@ export type GetUserFavoritePlacesQuery = { __typename?: 'Query', meUser?: { __ty
 
 export const LoginUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"exp"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayNameType"}}]}}]}}]}}]} as unknown as DocumentNode<LoginUserMutation, LoginUserMutationVariables>;
 export const MeProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MeProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayNameType"}}]}}]}}]}}]} as unknown as DocumentNode<MeProfileQuery, MeProfileQueryVariables>;
+export const CreateReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"mutationReviewInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateReviewMutation, CreateReviewMutationVariables>;
 export const CreateTracedRouteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateTracedRoute"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"mutationTracedRouteInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTracedRoute"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateTracedRouteMutation, CreateTracedRouteMutationVariables>;
 export const AllAnnouncementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Announcements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"titleTH"}},{"kind":"Field","name":{"kind":"Name","value":"titleEN"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionTH"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionEN"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<AllAnnouncementsQuery, AllAnnouncementsQueryVariables>;
 export const GetAnnouncementByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAnnouncementById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Announcement"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"titleTH"}},{"kind":"Field","name":{"kind":"Name","value":"titleEN"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionTH"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionEN"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"line"}}]}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetAnnouncementByIdQuery, GetAnnouncementByIdQueryVariables>;
@@ -10216,7 +11176,7 @@ export const AllPlacesDocument = {"kind":"Document","definitions":[{"kind":"Oper
 export const GetPlaceByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlaceById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Place"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"placeAddressTH"}},{"kind":"Field","name":{"kind":"Name","value":"placeAddressEN"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]} as unknown as DocumentNode<GetPlaceByIdQuery, GetPlaceByIdQueryVariables>;
 export const GetNearbyPlacesFromLocationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNearbyPlacesFromLocation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lat"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lng"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"distance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Places"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"geolocation"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"near"},"value":{"kind":"ListValue","values":[{"kind":"Variable","name":{"kind":"Name","value":"lng"}},{"kind":"Variable","name":{"kind":"Name","value":"lat"}},{"kind":"Variable","name":{"kind":"Name","value":"distance"}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}}]}}]}}]}}]} as unknown as DocumentNode<GetNearbyPlacesFromLocationQuery, GetNearbyPlacesFromLocationQueryVariables>;
 export const GetMyReviewsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyReviews"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Reviews"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rating"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"overall"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<GetMyReviewsQuery, GetMyReviewsQueryVariables>;
-export const GetReviewByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetReviewById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Review"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"comment"}},{"kind":"Field","name":{"kind":"Name","value":"rating"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"overall"}},{"kind":"Field","name":{"kind":"Name","value":"ramp"}},{"kind":"Field","name":{"kind":"Name","value":"assistance"}},{"kind":"Field","name":{"kind":"Name","value":"elevator"}},{"kind":"Field","name":{"kind":"Name","value":"toilet"}},{"kind":"Field","name":{"kind":"Name","value":"parking"}},{"kind":"Field","name":{"kind":"Name","value":"surface"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"isFlagged"}},{"kind":"Field","name":{"kind":"Name","value":"additionalComment"}}]}}]}}]}}]} as unknown as DocumentNode<GetReviewByIdQuery, GetReviewByIdQueryVariables>;
+export const GetReviewByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetReviewById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Review"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"rating"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"overall"}},{"kind":"Field","name":{"kind":"Name","value":"ramp"}},{"kind":"Field","name":{"kind":"Name","value":"assistance"}},{"kind":"Field","name":{"kind":"Name","value":"elevator"}},{"kind":"Field","name":{"kind":"Name","value":"toilet"}},{"kind":"Field","name":{"kind":"Name","value":"parking"}},{"kind":"Field","name":{"kind":"Name","value":"surface"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetReviewByIdQuery, GetReviewByIdQueryVariables>;
 export const GetMyTracedRoutesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyTracedRoutes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"TracedRoutes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"route"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<GetMyTracedRoutesQuery, GetMyTracedRoutesQueryVariables>;
 export const GetRouteByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRouteById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"TracedRoute"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"route"}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetRouteByIdQuery, GetRouteByIdQueryVariables>;
 export const GetUserFavoritePlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserFavoritePlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"favoritePlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addedAt"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUserFavoritePlacesQuery, GetUserFavoritePlacesQueryVariables>;

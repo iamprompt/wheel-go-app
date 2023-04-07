@@ -34,7 +34,6 @@ export const GetReviewById = graphql(`
           height
         }
       }
-      comment
       rating {
         overall
         ramp
@@ -44,8 +43,14 @@ export const GetReviewById = graphql(`
         parking
         surface
         facility
-        isFlagged
-        additionalComment
+        comment
+        images {
+          image {
+            url
+            width
+            height
+          }
+        }
       }
     }
   }

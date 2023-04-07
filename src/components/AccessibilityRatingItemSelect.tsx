@@ -37,7 +37,7 @@ export function AccessibilityRatingItemSelect({
         }}
       >
         <MaterialIcons name={icon} size={24} />
-        <VerticalDivider />
+        <VerticalDivider height={24} />
         <View
           style={{
             justifyContent: 'space-between',

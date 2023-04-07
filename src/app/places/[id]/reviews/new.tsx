@@ -1,11 +1,13 @@
-import { Stack } from 'expo-router'
+import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, Pressable, Text, TextInput, View } from 'react-native'
+import { Image, Platform, Pressable, Text, TextInput, View } from 'react-native'
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import type { ImagePickerAsset } from 'expo-image-picker'
 import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker'
+import axios, { isAxiosError } from 'axios'
+import Constants from 'expo-constants'
 import { AccessibilityRatingItemSelect } from '~/components/AccessibilityRatingItemSelect'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { VerticalDivider } from '~/components/VerticalDivider'
@@ -17,10 +19,27 @@ import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import Button from '~/components/Button'
+import { useGraphQL } from '~/utils/useGraphQL'
+import { GetPlaceById } from '~/graphql/query/places'
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { getUserToken } from '~/utils/asyncStorage'
+import { WheelGoGraphQL } from '~/utils/graphql'
+import { CreateReview } from '~/graphql/mutation/reviews'
 
 function Page() {
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
+
+  const router = useRouter()
+
+  const { id: placeId } = useSearchParams<{ id: string }>()
+  const { data: placeData } = useGraphQL(!!placeId, GetPlaceById, {
+    id: placeId!,
+  })
+
+  const place = useMemo(() => {
+    return placeData?.Place || null
+  }, [placeData])
 
   const [overallRating, setOverallRating] = useState<number>(-1)
   const overallRatingDescription = useMemo(() => {
@@ -35,6 +54,7 @@ function Page() {
   )
 
   const [selectedImages, setSelectedImages] = useState<ImagePickerAsset[]>([])
+  const [additionalComment, setAdditionalComment] = useState<string>('')
 
   const handlePickImage = async () => {
     const result = await launchImageLibraryAsync({
@@ -51,8 +71,86 @@ function Page() {
 
   console.log('selectedImages', selectedImages.length)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('submit')
+    // TODO: Implement Upload Images to PayloadCMS
+    const images = selectedImages.map((image) => {
+      return {
+        uri:
+          Platform.OS === 'android'
+            ? image.uri
+            : image.uri.replace('file://', ''),
+        width: image.width,
+        height: image.height,
+        name: image.fileName,
+        type: image.type,
+      }
+    })
+
+    const uploadResults = await Promise.all(
+      images.map(async (image) => {
+        const formData = new FormData()
+        // @ts-expect-error - append image to form data
+        formData.append('file', image)
+
+        console.log('formData', JSON.stringify(formData, null, 2))
+
+        try {
+          const result = await axios.post(
+            `${Constants.expoConfig?.extra?.WHEELGO_CMS_API}/media`,
+            formData,
+            {
+              headers: {
+                Authorization: await getUserToken(),
+              },
+            }
+          )
+
+          return result.data
+        } catch (error) {
+          if (isAxiosError(error)) {
+            console.error(error.response?.data)
+          }
+          throw error
+        }
+      })
+    )
+
+    console.log(
+      'uploadResults',
+      uploadResults.map((result) => result.doc.id)
+    )
+
+    // TODO: Implement Submit Review
+    const payloadResult = await WheelGoGraphQL(CreateReview, {
+      input: {
+        place: placeId,
+        rating: {
+          overall: overallRating,
+          ...Object.entries(facilityRating)
+            .filter(([, value]) => value !== -1)
+            .reduce(
+              (acc, [key, value]) => ({
+                ...acc,
+                [key]: value,
+              }),
+              {}
+            ),
+          comment: additionalComment,
+          images: uploadResults.map((result) => ({
+            image: result.doc.id,
+          })),
+        },
+      },
+    })
+
+    console.log('payloadResult', payloadResult)
+
+    router.replace(`/places/${placeId}`)
+  }
+
+  if (!place) {
+    return null
   }
 
   return (
@@ -106,7 +204,10 @@ function Page() {
                 color: COLORS['french-vanilla'][500],
               }}
             >
-              Office of the President
+              {getDisplayTextFromCurrentLanguage({
+                en: place.nameEN,
+                th: place.nameTH,
+              })}
             </Text>
           </View>
         </View>
@@ -324,6 +425,9 @@ function Page() {
               multiline
               placeholder={t('reviews.details_placeholder') || ''}
               numberOfLines={3}
+              maxLength={200}
+              value={additionalComment}
+              onChangeText={setAdditionalComment}
               style={{
                 borderWidth: 1,
                 borderColor: COLORS['french-vanilla'][300],
