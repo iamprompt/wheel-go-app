@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import { Image } from 'expo-image'
 import { Stack, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,14 +6,18 @@ import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AccessibilityRatingOverall } from '~/components/AccessibilityRatingOverall'
+import { AccessibilityRatingTag } from '~/components/AccessibilityRatingTag'
 import { CategoryLabel } from '~/components/CategoryLabel'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
+import { ReviewOfficialComment } from '~/components/ReviewOfficialComment'
 import { VerticalDivider } from '~/components/VerticalDivider'
+import { FACILITIES } from '~/const/facility'
 import { GetReviewById } from '~/graphql/query/reviews'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { format } from '~/utils/dayjs'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { useGraphQL } from '~/utils/useGraphQL'
 
@@ -61,7 +65,15 @@ function Page() {
 
   console.log('review', review)
 
-  const { createdAt, place, rating } = Review || {}
+  const { createdAt, place, rating, official } = Review || {}
+
+  const shouldShowOfficialComment = useMemo(() => {
+    if (!official) {
+      return false
+    }
+
+    return !!official.comment || !!official.timestamp
+  }, [official])
 
   if (!id || !data?.Review) {
     return null
@@ -73,6 +85,10 @@ function Page() {
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
       style={[GlobalStyle.container]}
+      bounces={false}
+      contentContainerStyle={{
+        paddingBottom: insets.bottom,
+      }}
     >
       <Stack.Screen
         options={{
@@ -125,7 +141,7 @@ function Page() {
               color: COLORS['french-vanilla'][500],
             }}
           >
-            {dayjs(review?.createdAt).format('DD MMM YYYY')}
+            {format(createdAt)}
           </Text>
         </View>
       </View>
@@ -148,15 +164,75 @@ function Page() {
 
         <AccessibilityRatingOverall rating={rating?.overall || 0} />
 
+        {rating ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              gap: 8,
+            }}
+          >
+            {Object.keys(FACILITIES).map((facility) => {
+              return (
+                <AccessibilityRatingTag
+                  key={facility}
+                  type={facility as keyof typeof FACILITIES}
+                  rating={rating[facility as keyof typeof FACILITIES] || 0}
+                />
+              )
+            })}
+          </View>
+        ) : null}
+
         <HorizontalDivider />
 
-        <Text
-          style={{
-            fontFamily: FONTS.LSTH_REGULAR,
-          }}
-        >
-          {rating?.comment}
-        </Text>
+        {rating?.comment ? (
+          <Text
+            style={{
+              fontFamily: FONTS.LSTH_REGULAR,
+            }}
+          >
+            {rating?.comment}
+          </Text>
+        ) : null}
+
+        {rating?.images?.length ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 12,
+            }}
+          >
+            {rating?.images?.map(({ image, id }) => {
+              if (!image) {
+                return null
+              }
+
+              return (
+                <Image
+                  key={id}
+                  source={image?.url}
+                  style={{
+                    flex: 1,
+                    height: 96,
+                    borderRadius: 8,
+                    borderColor: COLORS['french-vanilla'][500],
+                    borderWidth: 1,
+                    aspectRatio: 4 / 3,
+                  }}
+                />
+              )
+            })}
+          </View>
+        ) : null}
+
+        {shouldShowOfficialComment ? (
+          <ReviewOfficialComment
+            date={official?.timestamp}
+            comment={official?.comment || ''}
+            isFlagged={official?.flagged || false}
+          />
+        ) : null}
       </View>
     </ScrollView>
   )

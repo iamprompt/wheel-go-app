@@ -1,3 +1,4 @@
+import type { ImageStyle } from 'expo-image'
 import { Image } from 'expo-image'
 import type { ComponentProps } from 'react'
 import { View } from 'react-native'
@@ -8,8 +9,9 @@ type ImageWithFallbackProps = Omit<
   'source' | 'style'
 > & {
   src?: string | null
-  width: number | string
-  height: number | string
+  width?: number | string
+  height?: number | string
+  style?: ImageStyle
 }
 
 export function ImageWithFallback({
@@ -25,6 +27,7 @@ export function ImageWithFallback({
           width,
           height,
           backgroundColor: COLORS.soap[100],
+          ...props.style,
         }}
       />
     )
@@ -36,6 +39,7 @@ export function ImageWithFallback({
       style={{
         width,
         height,
+        ...props.style,
       }}
       {...props}
     />

@@ -45,12 +45,18 @@ export const GetReviewById = graphql(`
         facility
         comment
         images {
+          id
           image {
             url
             width
             height
           }
         }
+      }
+      official {
+        flagged
+        comment
+        timestamp
       }
     }
   }

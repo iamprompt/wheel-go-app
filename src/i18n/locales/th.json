@@ -115,7 +115,8 @@
     "upload_images": "อัปโหลดรูปภาพ",
     "images_limit_description": "สามารถอัพโหลดได้มากที่สุด 3 ภาพ",
     "submit_review": "ส่งรีวิว",
-    "add_more_images": "เพิ่มรูปภาพ"
+    "add_more_images": "เพิ่มรูปภาพ",
+    "additional_official_comment": "ข้อมูลเพิ่มเติมจากเจ้าหน้าที่"
   },
   "settings": {
     "about": "เกี่ยวกับ",
