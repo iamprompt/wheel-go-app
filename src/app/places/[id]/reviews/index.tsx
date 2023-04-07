@@ -6,16 +6,24 @@ import { HeaderLogo } from '~/components/HeaderLogo'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { ReviewItem } from '~/components/ReviewItem'
+import { FACILITIES } from '~/const/facility'
+import { GetReviewsByPlaceId } from '~/graphql/query/reviews'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const router = useRouter()
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
   const { id: placeId } = useSearchParams<{ id: string }>()
+
+  const { data } = useGraphQL(!!placeId, GetReviewsByPlaceId, {
+    placeId: placeId!,
+  })
+
   return (
     <ScrollView style={[GlobalStyle.container]}>
       <Stack.Screen
@@ -40,7 +48,7 @@ function Page() {
           paddingVertical: 24,
         }}
       >
-        <ReviewHereButton />
+        <ReviewHereButton placeId={placeId!} />
       </View>
 
       <HorizontalDivider height={12} />
@@ -72,60 +80,61 @@ function Page() {
           </Text>
         </View>
 
-        <View
-          style={{
-            borderColor: COLORS.soap[100],
-            borderBottomWidth: 1,
-            paddingVertical: 24,
-          }}
-        >
-          <ReviewItem
-            reviewer="John Doe"
-            additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
-            overallRating={5}
-            date="2021-01-01"
-            facilityTags={[
-              'cleanliness',
-              'nice_facilities',
-              'safety',
-              'great_service',
-            ]}
-            officialComment={{
-              date: '2021-01-01',
-              isFlagged: true,
-              comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl.',
-            }}
-          />
-        </View>
-        <View
-          style={{
-            borderColor: COLORS.soap[100],
-            borderBottomWidth: 1,
-            paddingVertical: 24,
-          }}
-        >
-          <ReviewItem
-            reviewer="John Doe"
-            additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
-            overallRating={5}
-            date="2021-01-01"
-            facilityRatings={{
-              ramp: 5,
-              assistance: 5,
-              elevator: 5,
-              toilet: 5,
-              parking: 4,
-              surface: 5,
-            }}
-            officialComment={{
-              date: '2021-01-01',
-              isFlagged: false,
-              comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl.',
-            }}
-          />
-        </View>
+        {data?.Reviews?.docs?.map((review) => {
+          const { id, user, comment, rating, official, createdAt } =
+            review || {}
+
+          const Facilities = Object.keys(FACILITIES)
+          const isFacilityRating = Facilities.some(
+            (facility) => rating?.[facility as keyof typeof rating]
+          )
+
+          const facilityRatings = isFacilityRating
+            ? Facilities.reduce((acc, key) => {
+                const rate = rating?.[key as keyof typeof rating]
+
+                return {
+                  ...acc,
+                  [key]: rate,
+                }
+              }, {})
+            : undefined
+
+          const officialComment =
+            official && official.comment && official.timestamp
+              ? {
+                  date: official.timestamp,
+                  isFlagged: official.flagged || false,
+                  comment: official.comment,
+                }
+              : undefined
+
+          return (
+            <View
+              key={id}
+              style={{
+                borderColor: COLORS.soap[100],
+                borderBottomWidth: 1,
+                paddingVertical: 24,
+              }}
+            >
+              <ReviewItem
+                reviewer={`${user?.firstName} ${user?.lastName}`}
+                additionalComment={rating?.comment || comment || ''}
+                overallRating={rating?.overall || 0}
+                date={createdAt}
+                facilityRatings={facilityRatings}
+                officialComment={officialComment}
+                images={
+                  rating?.images?.map(({ image, id }) => ({
+                    id: id!,
+                    url: image!.url!,
+                  })) || []
+                }
+              />
+            </View>
+          )
+        })}
       </View>
     </ScrollView>
   )

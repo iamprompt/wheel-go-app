@@ -63,8 +63,6 @@ function Page() {
     })
   }, [contentOffsetY])
 
-  console.log('review', review)
-
   const { createdAt, place, rating, official } = Review || {}
 
   const shouldShowOfficialComment = useMemo(() => {

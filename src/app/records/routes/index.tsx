@@ -18,8 +18,6 @@ export default function Page() {
 
   const { data } = useGraphQL(true, GetMyTracedRoutes)
 
-  console.log(data)
-
   const routes = useMemo(() => data?.TracedRoutes?.docs || [], [data])
 
   return (

@@ -61,3 +61,55 @@ export const GetReviewById = graphql(`
     }
   }
 `)
+
+export const GetReviewsByPlaceId = graphql(`
+  query GetReviewsByPlaceId($placeId: String!, $limit: Int = 100) {
+    Reviews(where: { place: { equals: $placeId } }, limit: $limit) {
+      docs {
+        id
+        createdAt
+        comment
+        user {
+          id
+          firstName
+          lastName
+          displayNameType
+        }
+        place {
+          nameTH
+          nameEN
+          category
+          image {
+            url
+            width
+            height
+          }
+        }
+        rating {
+          overall
+          ramp
+          assistance
+          elevator
+          toilet
+          parking
+          surface
+          facility
+          comment
+          images {
+            id
+            image {
+              url
+              width
+              height
+            }
+          }
+        }
+        official {
+          flagged
+          comment
+          timestamp
+        }
+      }
+    }
+  }
+`)

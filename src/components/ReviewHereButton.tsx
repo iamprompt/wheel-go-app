@@ -1,14 +1,20 @@
+import { useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
-export function ReviewHereButton() {
+interface ReviewHereButtonProps {
+  placeId: string
+}
+
+export function ReviewHereButton({ placeId }: ReviewHereButtonProps) {
+  const router = useRouter()
   const { t } = useTranslation()
 
   return (
-    <View
+    <Pressable
       style={{
         borderRadius: 12,
         gap: 12,
@@ -18,6 +24,9 @@ export function ReviewHereButton() {
         alignItems: 'center',
         borderColor: COLORS['french-vanilla'][300],
         borderWidth: 1,
+      }}
+      onPress={() => {
+        router.push(`/places/${placeId}/reviews/new`)
       }}
     >
       <Text
@@ -43,6 +52,6 @@ export function ReviewHereButton() {
           />
         ))}
       </View>
-    </View>
+    </Pressable>
   )
 }

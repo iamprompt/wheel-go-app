@@ -35,6 +35,8 @@ import { HeaderLogo } from '~/components/HeaderLogo'
 import Button, { ButtonVariant } from '~/components/Button'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
 import { ReviewItem } from '~/components/ReviewItem'
+import { GetReviewsByPlaceId } from '~/graphql/query/reviews'
+import { FACILITIES } from '~/const/facility'
 
 function Page() {
   const { t } = useTranslation()
@@ -70,6 +72,11 @@ function Page() {
       th: Place?.nameTH || '',
     })
   }, [contentOffsetY, Place?.nameEN, Place?.nameTH])
+
+  const { data: reviewsData } = useGraphQL(!!id, GetReviewsByPlaceId, {
+    placeId: id!,
+    limit: 5,
+  })
 
   const {
     nameEN,
@@ -344,7 +351,7 @@ function Page() {
 
           <HorizontalDivider />
 
-          <ReviewHereButton />
+          <ReviewHereButton placeId={id} />
         </View>
 
         <HorizontalDivider height={12} />
@@ -374,63 +381,63 @@ function Page() {
               {t('places.review_text')}
             </Text>
           </View>
+          {reviewsData?.Reviews?.docs?.map((review) => {
+            const { id, user, comment, rating, official, createdAt } =
+              review || {}
 
-          <View
-            style={{
-              borderColor: COLORS.soap[100],
-              borderBottomWidth: 1,
-              paddingVertical: 24,
-            }}
-          >
-            <ReviewItem
-              reviewer="John Doe"
-              additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
-              overallRating={5}
-              date="2021-01-01"
-              facilityTags={[
-                'cleanliness',
-                'nice_facilities',
-                'safety',
-                'great_service',
-              ]}
-              officialComment={{
-                date: '2021-01-01',
-                isFlagged: true,
-                comment:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl.',
-              }}
-            />
-          </View>
-          <View
-            style={{
-              borderColor: COLORS.soap[100],
-              borderBottomWidth: 1,
-              paddingVertical: 24,
-            }}
-          >
-            <ReviewItem
-              reviewer="John Doe"
-              additionalComment="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl."
-              overallRating={5}
-              date="2021-01-01"
-              facilityRatings={{
-                ramp: 5,
-                assistance: 5,
-                elevator: 5,
-                toilet: 5,
-                parking: 4,
-                surface: 5,
-              }}
-              officialComment={{
-                date: '2021-01-01',
-                isFlagged: false,
-                comment:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl. Sed euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nisl nisl eget nisl.',
-              }}
-            />
-          </View>
+            const Facilities = Object.keys(FACILITIES)
+            const isFacilityRating = Facilities.some(
+              (facility) => rating?.[facility as keyof typeof rating]
+            )
+
+            const facilityRatings = isFacilityRating
+              ? Facilities.reduce((acc, key) => {
+                  const rate = rating?.[key as keyof typeof rating]
+
+                  return {
+                    ...acc,
+                    [key]: rate,
+                  }
+                }, {})
+              : undefined
+
+            const officialComment =
+              official && official.comment && official.timestamp
+                ? {
+                    date: official.timestamp,
+                    isFlagged: official.flagged || false,
+                    comment: official.comment,
+                  }
+                : undefined
+
+            return (
+              <View
+                key={id}
+                style={{
+                  borderColor: COLORS.soap[100],
+                  borderBottomWidth: 1,
+                  paddingVertical: 24,
+                }}
+              >
+                <ReviewItem
+                  reviewer={`${user?.firstName} ${user?.lastName}`}
+                  additionalComment={rating?.comment || comment || ''}
+                  overallRating={rating?.overall || 0}
+                  date={createdAt}
+                  facilityRatings={facilityRatings}
+                  officialComment={officialComment}
+                  images={
+                    rating?.images?.map(({ image, id }) => ({
+                      id: id!,
+                      url: image!.url!,
+                    })) || []
+                  }
+                />
+              </View>
+            )
+          })}
           <Button
-            label={t('places.see_all_reviews')}
+            label={t('reviews.see_all_reviews')}
             variant={ButtonVariant.Secondary}
             onPress={() => {
               console.log('see all reviews')

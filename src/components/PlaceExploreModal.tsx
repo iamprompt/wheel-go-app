@@ -65,8 +65,6 @@ export function PlaceExploreModal({
     )
   }, [nearbyPlacesData])
 
-  console.log(JSON.stringify(nearbyPlaces[0], null, 2))
-
   if (!placeData || !placeData.Place) {
     return null
   }

@@ -1,11 +1,12 @@
 import { Text, View } from 'react-native'
+import { Image } from 'expo-image'
 import { AccessibilityRatingOverall } from './AccessibilityRatingOverall'
 import { ReviewOfficialComment } from './ReviewOfficialComment'
 import { Tag } from './common/Tag'
 import { AccessibilityRatingTag } from './AccessibilityRatingTag'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { format } from '~/utils/dayjs'
+import { FormatEnum, format } from '~/utils/dayjs'
 import { FACILITIES } from '~/const/facility'
 
 interface ReviewItemProps {
@@ -18,6 +19,10 @@ interface ReviewItemProps {
     [key in keyof typeof FACILITIES]?: number
   }
   facilityTags?: string[]
+  images?: {
+    id: string
+    url: string
+  }[]
 }
 
 export function ReviewItem({
@@ -28,6 +33,7 @@ export function ReviewItem({
   facilityTags,
   officialComment,
   additionalComment,
+  images = [],
 }: ReviewItemProps) {
   return (
     <View
@@ -57,7 +63,7 @@ export function ReviewItem({
             color: COLORS['french-vanilla'][500],
           }}
         >
-          {format(date)}
+          {format(date, [FormatEnum.DATE, FormatEnum.TIME])}
         </Text>
       </View>
       <AccessibilityRatingOverall rating={overallRating} />
@@ -141,6 +147,31 @@ export function ReviewItem({
           {additionalComment}
         </Text>
       </View>
+      {images.length ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 12,
+          }}
+        >
+          {images.map(({ id, url }) => {
+            return (
+              <Image
+                key={id}
+                source={url}
+                style={{
+                  flex: 1,
+                  height: 96,
+                  borderRadius: 8,
+                  borderColor: COLORS['french-vanilla'][500],
+                  borderWidth: 1,
+                  aspectRatio: 4 / 3,
+                }}
+              />
+            )
+          })}
+        </View>
+      ) : null}
       {officialComment ? <ReviewOfficialComment {...officialComment} /> : null}
     </View>
   )
