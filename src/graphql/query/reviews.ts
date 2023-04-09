@@ -15,6 +15,7 @@ export const GetMyReviews = graphql(`
         }
         createdAt
       }
+      totalDocs
     }
   }
 `)

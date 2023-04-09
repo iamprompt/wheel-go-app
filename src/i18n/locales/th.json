@@ -17,7 +17,9 @@
     "login_to_wheelgo": "ลงชื่อเข้าสู่ วีลโก",
     "logout": "ออกจากระบบ",
     "password": "รหัสผ่าน",
-    "password_placeholder": "********"
+    "password_placeholder": "********",
+    "page_not_signed_in": "คุณยังไม่ได้ลงชื่อเข้าใช้",
+    "sign_in": "ลงชื่อเข้าใช้"
   },
   "button": {
     "cancel": "ยกเลิก",
@@ -148,7 +150,13 @@
     "novice_reviewer": "นักรีวิวมือใหม่",
     "skillful_reviewer": "สุดยอดนักรีวิว",
     "master_reviewer": "เจ้าแห่งการรีวิว",
-    "coming_soon": "เร็ว ๆ นี้"
+    "coming_soon": "เร็ว ๆ นี้",
+    "routes_mission_description": "บันทึกไปทั้งหมด {{count}} เส้นทางที่เข้าถึงได้",
+    "reviews_mission_description": "รีวิวไปทั้งหมด {{count}} รีวิว",
+    "navigator_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการบันทึกเส้นทางที่เข้าถึงได้",
+    "reviewer_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการรีวิวสถานที่",
+    "routes_mission": "เส้นทาง",
+    "reviews_mission": "รีวิว"
   },
   "settings": {
     "about": "เกี่ยวกับ",

@@ -2,15 +2,64 @@ import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { RecordListItems } from '~/const/records'
 import { GlobalStyle } from '~/styles'
 import FONTS from '~/styles/fonts'
 import COLORS from '~/styles/colors'
+import { useAuth } from '~/context/useAuth'
+import { NotSignedIn } from '~/components/NotSignin'
+import { useGraphQL } from '~/utils/useGraphQL'
+import { GetUserFavoritePlaces } from '~/graphql/query/user'
+import { GetMyReviews } from '~/graphql/query/reviews'
+import { GetMyTracedRoutes } from '~/graphql/query/tracedRoute'
 
 export default function App() {
+  const { user } = useAuth()
   const { t } = useTranslation()
   const router = useRouter()
+
+  const { data: favData } = useGraphQL(true, GetUserFavoritePlaces)
+
+  const favPlacesNo = useMemo(() => {
+    if (favData) {
+      return favData?.meUser?.user?.favoritePlaces?.length || 0
+    }
+    return 0
+  }, [favData])
+
+  const { data: reviewData } = useGraphQL(!!user, GetMyReviews, {
+    userId: user!.id!,
+  })
+
+  const reviewNo = useMemo(() => {
+    if (reviewData) {
+      return reviewData?.Reviews?.totalDocs || 0
+    }
+    return 0
+  }, [reviewData])
+
+  const { data: routeData } = useGraphQL(!!user, GetMyTracedRoutes)
+
+  const routeNo = useMemo(() => {
+    if (routeData) {
+      return routeData?.TracedRoutes?.totalDocs || 0
+    }
+    return 0
+  }, [routeData])
+
+  if (!user) {
+    return (
+      <NotSignedIn>
+        <Stack.Screen
+          options={{
+            headerShown: true,
+          }}
+        />
+      </NotSignedIn>
+    )
+  }
 
   return (
     <ScrollView style={[GlobalStyle.container]}>
@@ -85,7 +134,14 @@ export default function App() {
                       color: COLORS['french-vanilla'][500],
                     }}
                   >
-                    3 {t(item.unit.plural)}
+                    {item.label === 'records.favorite_places'
+                      ? favPlacesNo
+                      : item.label === 'records.places_reviews'
+                      ? reviewNo
+                      : item.label === 'records.contributed_routes'
+                      ? routeNo
+                      : 0}{' '}
+                    {t(item.unit.plural)}
                   </Text>
                 </View>
               </View>

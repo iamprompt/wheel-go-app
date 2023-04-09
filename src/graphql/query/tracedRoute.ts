@@ -10,6 +10,7 @@ export const GetMyTracedRoutes = graphql(`
         distance
         createdAt
       }
+      totalDocs
     }
   }
 `)

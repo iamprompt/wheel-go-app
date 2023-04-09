@@ -1,22 +1,16 @@
-import type { FC } from 'react'
 import { Modal as RNModal, View } from 'react-native'
 import COLORS from '~/styles/colors'
 
-interface ModalProps {
+type ModalProps<TModal> = {
   isVisible: boolean
-  onClose: () => void
-  onAction?: () => void
-  modal: FC<{ onClose: () => void; onAction?: () => void }>
-}
+  modal: (props: TModal) => JSX.Element
+} & TModal
 
-export const Modal: FC<ModalProps> = ({
-  isVisible,
-  onClose,
-  onAction,
-  modal: ModalContent,
-}) => {
+export function Modal<TModal>(props: ModalProps<TModal>) {
+  const ModalContent = props.modal
+
   return (
-    <RNModal visible={isVisible} animationType="fade" transparent>
+    <RNModal visible={props.isVisible} animationType="fade" transparent>
       <View
         style={{
           position: 'absolute',
@@ -37,7 +31,7 @@ export const Modal: FC<ModalProps> = ({
           justifyContent: 'center',
         }}
       >
-        <ModalContent onClose={onClose} onAction={onAction} />
+        <ModalContent {...props} />
       </View>
     </RNModal>
   )

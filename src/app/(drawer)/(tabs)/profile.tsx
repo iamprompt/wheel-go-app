@@ -1,9 +1,13 @@
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { BadgeModal } from '~/components/BadgeModal'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
+import { Modal } from '~/components/Modal'
+import { NotSignedIn } from '~/components/NotSignin'
 import { BADGES } from '~/const/badges'
 import { SUMMARY_DETAILS } from '~/const/profile'
 import { useAuth } from '~/context/useAuth'
@@ -17,8 +21,11 @@ export default function App() {
   const { user } = useAuth()
   const { t } = useTranslation()
 
+  const [isBadgeModalVisible, setIsBadgeModalVisible] = useState(false)
+  const [badgeToDisplay, setBadgeToDisplay] = useState<keyof typeof BADGES>()
+
   if (!user) {
-    return null
+    return <NotSignedIn />
   }
 
   return (
@@ -147,10 +154,17 @@ export default function App() {
               }
 
               return (
-                <View
+                <Pressable
                   key={index}
                   style={{
                     alignItems: 'center',
+                  }}
+                  onPress={() => {
+                    console.log('Badge Pressed')
+                    if (badge.modal !== false) {
+                      setBadgeToDisplay(badgeKey)
+                      setIsBadgeModalVisible(true)
+                    }
                   }}
                 >
                   <View
@@ -181,12 +195,18 @@ export default function App() {
                   >
                     {t(`badges.${badgeKey}`)}
                   </Text>
-                </View>
+                </Pressable>
               )
             }
           )}
         </View>
       </View>
+      <Modal
+        modal={BadgeModal}
+        isVisible={isBadgeModalVisible}
+        onClose={() => setIsBadgeModalVisible(false)}
+        badge={BADGES[badgeToDisplay!] || BADGES.coming_soon}
+      />
       <HorizontalDivider />
       <View
         style={{
@@ -287,6 +307,7 @@ export default function App() {
           {SUMMARY_DETAILS.map((detail) => {
             return (
               <View
+                key={detail.label}
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',

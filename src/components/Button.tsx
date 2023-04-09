@@ -66,6 +66,7 @@ const Button: FC<ButtonProps> = ({
         flex: fullWidth ? 1 : 0,
         borderRadius: 12,
         height: 48,
+        paddingHorizontal: 16,
         // Set Content Alignment to Center
         alignItems: 'center',
         alignContent: 'center',
