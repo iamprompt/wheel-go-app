@@ -20,7 +20,7 @@ import { Modal } from '~/components/Modal'
 import { TracingSaveModal } from '~/components/TracingSaveModal'
 import { TracingStatusIndicator } from '~/components/TracingStatusIndicator'
 import { TracingStopModal } from '~/components/TracingStopModal'
-import { MapStyle } from '~/const/map'
+import { MapCameraConfig, MapStyle } from '~/const/map'
 import { TRACING_STATES } from '~/const/trace'
 import { CreateTracedRoute } from '~/graphql/mutation/tracedRoute'
 import COLORS from '~/styles/colors'
@@ -116,6 +116,7 @@ function Page() {
         options={{
           title: 'Tracing',
           headerShown: true,
+          headerBackVisible: false,
           headerTitle: HeaderLogo,
           headerLeft:
             state === TRACING_STATES.READY ? HeaderBackButton : () => null,
@@ -140,22 +141,8 @@ function Page() {
           customMapStyle={MapStyle}
           rotateEnabled={false}
           pitchEnabled={false}
-          initialRegion={{
-            latitude: 13.7952296,
-            longitude: 100.3229328,
-            latitudeDelta: 3.5,
-            longitudeDelta: 3.5,
-          }}
-          initialCamera={{
-            center: {
-              latitude: 13.7952296,
-              longitude: 100.3229328,
-            },
-            pitch: 0,
-            heading: 0,
-            zoom: 16,
-          }}
           onUserLocationChange={handleLocationChange}
+          {...MapCameraConfig}
         >
           <Polyline coordinates={coordinates} />
         </MapView>

@@ -1,12 +1,12 @@
 import dayjs from 'dayjs'
 import { Stack, useSearchParams } from 'expo-router'
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { VerticalDivider } from '~/components/VerticalDivider'
-import { MapStyle } from '~/const/map'
+import { MapCameraConfig, MapStyle } from '~/const/map'
 import { GetRouteById } from '~/graphql/query/tracedRoute'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -40,24 +40,6 @@ function Page() {
     [route]
   )
 
-  const fitPolyline = () => {
-    if (routePoints.length > 0) {
-      mapRef.current?.fitToCoordinates(routePoints, {
-        edgePadding: {
-          top: 100,
-          right: 100,
-          bottom: 100,
-          left: 100,
-        },
-        animated: true,
-      })
-    }
-  }
-
-  useEffect(() => {
-    fitPolyline()
-  }, [routePoints])
-
   if (!id || !route) {
     return null
   }
@@ -83,27 +65,26 @@ function Page() {
           style={{
             flex: 1,
           }}
+          onLayout={() => {
+            if (routePoints.length > 0) {
+              mapRef.current?.fitToCoordinates(routePoints, {
+                edgePadding: {
+                  top: 100,
+                  right: 100,
+                  bottom: 200,
+                  left: 100,
+                },
+                animated: true,
+              })
+            }
+          }}
           provider={PROVIDER_GOOGLE}
           customMapStyle={MapStyle}
           rotateEnabled={false}
           pitchEnabled={false}
-          initialRegion={{
-            latitude: 13.7952296,
-            longitude: 100.3229328,
-            latitudeDelta: 3.5,
-            longitudeDelta: 3.5,
-          }}
-          initialCamera={{
-            center: {
-              latitude: 13.7952296,
-              longitude: 100.3229328,
-            },
-            pitch: 0,
-            heading: 0,
-            zoom: 16,
-          }}
+          {...MapCameraConfig}
         >
-          <Polyline coordinates={routePoints} />
+          <Polyline coordinates={routePoints} strokeWidth={2.5} />
         </MapView>
         <View
           style={{

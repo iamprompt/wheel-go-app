@@ -12,7 +12,7 @@ import {
   getCurrentPositionAsync,
   requestForegroundPermissionsAsync,
 } from 'expo-location'
-import { MapStyle, PinIcon } from '~/const/map'
+import { MapCameraConfig, MapStyle, PinIcon } from '~/const/map'
 import { allPlaces } from '~/graphql/query/places'
 import { useGraphQL } from '~/utils/useGraphQL'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
@@ -108,21 +108,7 @@ export default function App() {
           customMapStyle={MapStyle}
           rotateEnabled={false}
           pitchEnabled={false}
-          initialRegion={{
-            latitude: 13.7952296,
-            longitude: 100.3229328,
-            latitudeDelta: 3.5,
-            longitudeDelta: 3.5,
-          }}
-          initialCamera={{
-            center: {
-              latitude: 13.7952296,
-              longitude: 100.3229328,
-            },
-            pitch: 0,
-            heading: 0,
-            zoom: 16,
-          }}
+          {...MapCameraConfig}
         >
           {data?.Places?.docs?.map((place) => {
             if (!place || !place.geolocation) {

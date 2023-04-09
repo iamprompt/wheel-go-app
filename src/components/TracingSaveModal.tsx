@@ -1,4 +1,3 @@
-import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import Button, { ButtonVariant } from './Button'
@@ -11,10 +10,7 @@ interface TracingSaveModalProps {
   onAction?: () => void
 }
 
-export const TracingSaveModal: FC<TracingSaveModalProps> = ({
-  onClose,
-  onAction,
-}) => {
+export function TracingSaveModal({ onClose, onAction }: TracingSaveModalProps) {
   const { t } = useTranslation()
 
   return (

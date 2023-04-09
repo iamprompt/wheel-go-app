@@ -30,7 +30,7 @@ export default function App() {
   }, [favData])
 
   const { data: reviewData } = useGraphQL(!!user, GetMyReviews, {
-    userId: user!.id!,
+    userId: user?.id || '',
   })
 
   const reviewNo = useMemo(() => {

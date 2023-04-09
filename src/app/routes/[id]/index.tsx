@@ -3,6 +3,7 @@ import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
+import { MapCameraConfig } from '~/const/map'
 import { GetPreDefinedRouteById } from '~/graphql/query/routes'
 import { useGraphQL } from '~/utils/useGraphQL'
 
@@ -57,6 +58,7 @@ function Page() {
           }}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
+          {...MapCameraConfig}
         >
           <Polyline coordinates={routes} strokeWidth={2.5} />
         </MapView>

@@ -1,3 +1,6 @@
+import type { ComponentProps } from 'react'
+import type MapView from 'react-native-maps'
+
 export const MapStyle = [
   {
     elementType: 'labels',
@@ -58,6 +61,24 @@ export const MapStyle = [
     ],
   },
 ]
+
+export const MapCameraConfig: ComponentProps<typeof MapView> = {
+  initialCamera: {
+    center: {
+      latitude: 13.7952296,
+      longitude: 100.3229328,
+    },
+    pitch: 0,
+    heading: 0,
+    zoom: 18,
+  },
+  initialRegion: {
+    latitude: 13.7952296,
+    longitude: 100.3229328,
+    latitudeDelta: 13.795401817195845 - 13.792222587371063,
+    longitudeDelta: 100.32550291424202 - 100.32169503265993,
+  },
+}
 
 export const PinIcon: Record<string, number> = {
   building: require('~/assets/places/building-pin.png'),
