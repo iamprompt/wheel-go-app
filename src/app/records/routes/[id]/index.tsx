@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { Stack, useSearchParams } from 'expo-router'
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
@@ -40,6 +40,20 @@ function Page() {
     [route]
   )
 
+  useEffect(() => {
+    if (routePoints.length > 0) {
+      mapRef.current?.fitToCoordinates(routePoints, {
+        edgePadding: {
+          top: 100,
+          right: 100,
+          bottom: 200,
+          left: 100,
+        },
+        animated: true,
+      })
+    }
+  }, [routePoints])
+
   if (!id || !route) {
     return null
   }
@@ -64,19 +78,6 @@ function Page() {
           ref={mapRef}
           style={{
             flex: 1,
-          }}
-          onLayout={() => {
-            if (routePoints.length > 0) {
-              mapRef.current?.fitToCoordinates(routePoints, {
-                edgePadding: {
-                  top: 100,
-                  right: 100,
-                  bottom: 200,
-                  left: 100,
-                },
-                animated: true,
-              })
-            }
           }}
           provider={PROVIDER_GOOGLE}
           customMapStyle={MapStyle}

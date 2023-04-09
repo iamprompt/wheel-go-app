@@ -1,5 +1,7 @@
-import { useRouter } from 'expo-router'
+import { StackActions } from '@react-navigation/native'
+import { useNavigation, useRouter } from 'expo-router'
 import { useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type {
   ImageSourcePropType,
   NativeScrollEvent,
@@ -14,10 +16,12 @@ import {
   View,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { HOW_TO } from '~/const/howto'
 import { usePreferences } from '~/context/usePreferences'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { getDisplayLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const { width: screenWidth } = Dimensions.get('window')
@@ -71,18 +75,27 @@ function HowToPage({
   )
 }
 
-const noOfPages = 8
-
 function Page() {
   const router = useRouter()
   const { setTutorialShown } = usePreferences()
   const insets = useSafeAreaInsets()
   const scrollRef = useRef<ScrollView>(null)
   const [pageIndex, setPageIndex] = useState(0)
+  const navigation = useNavigation()
+
+  const { i18n, t } = useTranslation()
+
+  const howtoData = useMemo(() => {
+    return HOW_TO[getDisplayLanguage(['th', 'en'], 'th')]
+  }, [i18n.language])
+
+  const noOfPages = useMemo(() => {
+    return howtoData.length
+  }, [i18n.language])
 
   const isLastPage = useMemo(() => {
     return pageIndex === noOfPages - 1
-  }, [pageIndex])
+  }, [pageIndex, noOfPages])
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset } = event.nativeEvent
@@ -116,11 +129,6 @@ function Page() {
       >
         {isLastPage ? null : (
           <Pressable
-            style={
-              {
-                // flex: 0,
-              }
-            }
             onPress={() => {
               scrollRef.current?.scrollToEnd()
               setPageIndex(noOfPages - 1)
@@ -133,7 +141,7 @@ function Page() {
                 fontSize: 16,
               }}
             >
-              Skip
+              {t('button.skip')}
             </Text>
           </Pressable>
         )}
@@ -147,46 +155,14 @@ function Page() {
         showsHorizontalScrollIndicator={false}
         onScrollEndDrag={handleScroll}
       >
-        <HowToPage
-          image={require('~/assets/howto/wheelgo-logo-with-shadow.png')}
-          title="Welcome to Wheel Go 👋"
-          description="Let's find out what you can do with Wheel Go"
-        />
-        <HowToPage
-          image={require('~/assets/howto/nearby-places.png')}
-          title="Nearby Places & Conditions"
-          description="Explore places nearby, and see wheelchair-friendly surrounding conditions and routes"
-        />
-        <HowToPage
-          image={require('~/assets/howto/places-accessibility.png')}
-          title="Check Place's Accessibility"
-          description="Tap to see place info, check the wheelchair-accessible facilities, and see the nearby places"
-        />
-        <HowToPage
-          image={require('~/assets/howto/find-places.png')}
-          title="Find Places, Get Guidelines"
-          description="Tap on the search icon to search places, or get accessible route guidelines"
-        />
-        <HowToPage
-          image={require('~/assets/howto/rate-reviews.png')}
-          title="Rate & Leave a Review"
-          description="Rate the accessibility and wheelchair-friendly facilities, and review the visited places"
-        />
-        <HowToPage
-          image={require('~/assets/howto/trace.png')}
-          title="Trace your journey"
-          description="Contribute back to society through the route tracing of your journey"
-        />
-        <HowToPage
-          image={require('~/assets/howto/records.png')}
-          title="Records of Contribution"
-          description="Tap record to view your record of favorite places, reviews, and contributed routes"
-        />
-        <HowToPage
-          image={require('~/assets/howto/badge.png')}
-          title="Get Recognized !"
-          description="View your achievement and activity summary on the profile page, and get recognized through badge collection"
-        />
+        {howtoData.map((item, index) => (
+          <HowToPage
+            key={`howto-${index}`}
+            image={item.image}
+            title={item.title}
+            description={item.description}
+          />
+        ))}
       </ScrollView>
       <View
         style={{
@@ -268,6 +244,7 @@ function Page() {
             onPress={async () => {
               if (isLastPage) {
                 setTutorialShown(true)
+                navigation.dispatch(StackActions.popToTop())
                 router.replace('/')
               } else {
                 scrollRef.current?.scrollTo({
@@ -286,7 +263,7 @@ function Page() {
                   fontSize: 16,
                 }}
               >
-                Go
+                {t('button.go')}
               </Text>
             ) : (
               <MaterialIcons

@@ -16,10 +16,25 @@
     "login_title": "ลงชื่อเข้าใช้",
     "login_to_wheelgo": "ลงชื่อเข้าสู่ วีลโก",
     "logout": "ออกจากระบบ",
+    "page_not_signed_in": "คุณยังไม่ได้ลงชื่อเข้าใช้",
     "password": "รหัสผ่าน",
     "password_placeholder": "********",
-    "page_not_signed_in": "คุณยังไม่ได้ลงชื่อเข้าใช้",
     "sign_in": "ลงชื่อเข้าใช้"
+  },
+  "badges": {
+    "coming_soon": "เร็ว ๆ นี้",
+    "master_navigator": "เจ้าแห่งการนำทาง",
+    "master_reviewer": "เจ้าแห่งการรีวิว",
+    "navigator_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการบันทึกเส้นทางที่เข้าถึงได้",
+    "novice_navigator": "นักนำทางมือใหม่",
+    "novice_reviewer": "นักรีวิวมือใหม่",
+    "reviewer_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการรีวิวสถานที่",
+    "reviews_mission": "รีวิว",
+    "reviews_mission_description": "รีวิวไปทั้งหมด {{count}} รีวิว",
+    "routes_mission": "เส้นทาง",
+    "routes_mission_description": "บันทึกไปทั้งหมด {{count}} เส้นทางที่เข้าถึงได้",
+    "skillful_navigator": "สุดยอดนักนำทาง",
+    "skillful_reviewer": "สุดยอดนักรีวิว"
   },
   "button": {
     "cancel": "ยกเลิก",
@@ -27,7 +42,8 @@
     "go": "ไป",
     "ok": "ตกลง",
     "save": "บันทึก",
-    "stop": "หยุด"
+    "stop": "หยุด",
+    "skip": "ข้าม"
   },
   "categories": {
     "building": "อาคาร",
@@ -37,9 +53,9 @@
     "incident": "เหตุฉุกเฉิน",
     "park": "สวนสาธารณะ",
     "residence": "ที่พักอาศัย",
+    "sport": "กีฬา",
     "toilet": "ห้องน้ำ",
-    "transport": "การขนส่ง",
-    "sport": "กีฬา"
+    "transport": "การขนส่ง"
   },
   "facilities": {
     "assistance": "ผู้ช่วย",
@@ -53,6 +69,13 @@
     "description": "คุณจะถูกนำไปที่หน่วยบริการสนับสนุนสำหรับนักศึกษาพิการ",
     "title": "ต้องการความช่วยเหลือ?"
   },
+  "impairment_level": {
+    "0": "0 - สามารถช่วยเหลือตัวเองได้",
+    "1": "1 - ต้องอาศัยอุปกรณ์ในการช่วยเหลือ",
+    "2": "2 - ต้องการความช่วยเหลือจากผู้อื่น",
+    "3": "3 - ต้องการความช่วยเหลือจากผู้อื่น/อุปกรณ์",
+    "4": "4 - ไม่สามารถช่วยเหลือตัวเองได้"
+  },
   "page": {
     "announcements": "ประกาศ",
     "explore": "สำรวจ",
@@ -63,6 +86,9 @@
     "profile": "โปรไฟล์",
     "records": "บันทึกของฉัน",
     "settings": "การตั้งค่า"
+  },
+  "explore": {
+    "search_route_placeholder": "ไปที่ไหน ?"
   },
   "places": {
     "accessibility_rating_title": "ระดับความเข้าถึง",
@@ -79,6 +105,17 @@
     "show_on_map": "โชว์บนแผนที่",
     "website": "เว็บไซต์"
   },
+  "profile": {
+    "edit_profile": "แก้ไขโปรไฟล์",
+    "my_summary": "ภาพรวมของฉัน",
+    "summary_details": {
+      "joined_at": "เข้าร่วมเมื่อ",
+      "total_distance": "เดินทางไปแล้ว",
+      "total_places": "ไปเยี่ยมชมมาแล้ว",
+      "total_reviews": "รีวิวมาแล้ว",
+      "total_routes": "บันทึกการเดินทาง"
+    }
+  },
   "records": {
     "contributed_routes": "เส้นทางของฉัน",
     "date": "วันที่",
@@ -93,73 +130,40 @@
     "time": "เวลา"
   },
   "reviews": {
-    "facility_tags": {
-      "cleanliness": "ถูกสุขลักษณะ",
-      "great_service": "บริการดี",
-      "nice_facilities": "สิ่งอำนวยความสะดวกดี",
-      "safety": "ปลอดภัย"
-    },
-    "rate_this_place": "ให้คะแนนที่นี่",
-    "facility": "สิ่งอำนวยความสะดวก",
     "accessibility_rating": {
+      "criteria_title": "เกณฑ์การให้คะแนนระดับความเข้าถึง",
       "description": "ระดับความเข้าถึง",
       "rating_0": "ไม่สามารถเข้าถึงได้เลย",
       "rating_1": "เข้าถึงยากแม้จะมีความช่วยเหลือ",
       "rating_2": "ต้องอาศัยความเหลือจากผู้อื่นและอุปกรณ์",
       "rating_3": "ต้องอาศัยความเหลือจากผู้อื่น",
       "rating_4": "ต้องอาศัยอุปกรณ์ในการช่วยเหลือ",
-      "rating_5": "เข้าถึงง่ายด้วยตนเอง",
-      "criteria_title": "เกณฑ์การให้คะแนนระดับความเข้าถึง"
+      "rating_5": "เข้าถึงง่ายด้วยตนเอง"
     },
-    "details": "รายละเอียด",
-    "details_placeholder": "คิดอย่างไรกับสถานที่แห่งนี้ เจอปัญหาการเข้าถึงบ้างหรือไม่?",
-    "images": "รูปภาพ",
-    "upload_images": "อัปโหลดรูปภาพ",
-    "images_limit_description": "สามารถอัพโหลดได้มากที่สุด 3 ภาพ",
-    "submit_review": "ส่งรีวิว",
     "add_more_images": "เพิ่มรูปภาพ",
     "additional_official_comment": "ข้อมูลเพิ่มเติมจากเจ้าหน้าที่",
-    "see_all_reviews": "ดูรีวิวทั้งหมด"
+    "details": "รายละเอียด",
+    "details_placeholder": "คิดอย่างไรกับสถานที่แห่งนี้ เจอปัญหาการเข้าถึงบ้างหรือไม่?",
+    "facility": "สิ่งอำนวยความสะดวก",
+    "facility_tags": {
+      "cleanliness": "ถูกสุขลักษณะ",
+      "great_service": "บริการดี",
+      "nice_facilities": "สิ่งอำนวยความสะดวกดี",
+      "safety": "ปลอดภัย"
+    },
+    "images": "รูปภาพ",
+    "images_limit_description": "สามารถอัพโหลดได้มากที่สุด 3 ภาพ",
+    "rate_this_place": "ให้คะแนนที่นี่",
+    "see_all_reviews": "ดูรีวิวทั้งหมด",
+    "submit_review": "ส่งรีวิว",
+    "upload_images": "อัปโหลดรูปภาพ"
+  },
+  "routes": {
+    "route_title": "เส้นทาง {{id}}"
   },
   "search": {
     "categories": "ประเภทสถานที่",
     "near_me": "สถานที่ใกล้ฉัน"
-  },
-  "profile": {
-    "edit_profile": "แก้ไขโปรไฟล์",
-    "my_summary": "ภาพรวมของฉัน",
-    "summary_details": {
-      "total_distance": "เดินทางไปแล้ว",
-      "total_routes": "บันทึกการเดินทาง",
-      "total_places": "ไปเยี่ยมชมมาแล้ว",
-      "total_reviews": "รีวิวมาแล้ว",
-      "joined_at": "เข้าร่วมเมื่อ"
-    }
-  },
-  "impairment_level": {
-    "0": "0 - สามารถช่วยเหลือตัวเองได้",
-    "1": "1 - ต้องอาศัยอุปกรณ์ในการช่วยเหลือ",
-    "2": "2 - ต้องการความช่วยเหลือจากผู้อื่น",
-    "3": "3 - ต้องการความช่วยเหลือจากผู้อื่น/อุปกรณ์",
-    "4": "4 - ไม่สามารถช่วยเหลือตัวเองได้"
-  },
-  "badges": {
-    "novice_navigator": "นักนำทางมือใหม่",
-    "skillful_navigator": "สุดยอดนักนำทาง",
-    "master_navigator": "เจ้าแห่งการนำทาง",
-    "novice_reviewer": "นักรีวิวมือใหม่",
-    "skillful_reviewer": "สุดยอดนักรีวิว",
-    "master_reviewer": "เจ้าแห่งการรีวิว",
-    "coming_soon": "เร็ว ๆ นี้",
-    "routes_mission_description": "บันทึกไปทั้งหมด {{count}} เส้นทางที่เข้าถึงได้",
-    "reviews_mission_description": "รีวิวไปทั้งหมด {{count}} รีวิว",
-    "navigator_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการบันทึกเส้นทางที่เข้าถึงได้",
-    "reviewer_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการรีวิวสถานที่",
-    "routes_mission": "เส้นทาง",
-    "reviews_mission": "รีวิว"
-  },
-  "routes": {
-    "route_title": "เส้นทาง {{id}}"
   },
   "settings": {
     "about": "เกี่ยวกับ",

@@ -1,5 +1,5 @@
 import { Stack, useSearchParams } from 'expo-router'
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
@@ -24,6 +24,19 @@ function Page() {
     return data?.Route?.route || []
   }, [data])
 
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.fitToCoordinates(routes, {
+        edgePadding: {
+          top: 150,
+          right: 100,
+          bottom: 100,
+          left: 100,
+        },
+      })
+    }
+  }, [routes])
+
   return (
     <View>
       <Stack.Screen
@@ -41,18 +54,6 @@ function Page() {
       >
         <MapView
           ref={mapRef}
-          onLayout={() => {
-            if (mapRef.current) {
-              mapRef.current.fitToCoordinates(routes, {
-                edgePadding: {
-                  top: 150,
-                  right: 100,
-                  bottom: 100,
-                  left: 100,
-                },
-              })
-            }
-          }}
           style={{
             flex: 1,
           }}

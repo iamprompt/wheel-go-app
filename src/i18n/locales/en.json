@@ -16,8 +16,25 @@
     "login_title": "Sign in",
     "login_to_wheelgo": "Sign in to Wheel Go",
     "logout": "Sign out",
+    "page_not_signed_in": "You are not signed in",
     "password": "Password",
-    "password_placeholder": "********"
+    "password_placeholder": "********",
+    "sign_in": "Sign in"
+  },
+  "badges": {
+    "coming_soon": "Coming Soon",
+    "master_navigator": "Master Navigator",
+    "master_reviewer": "Master Reviewer",
+    "navigator_description": "Award for your contribution on accessible route tracing",
+    "novice_navigator": "Novice Navigator",
+    "novice_reviewer": "Novice Reviewer",
+    "reviewer_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการรีวิวสถานที่",
+    "reviews_mission": "Reviews",
+    "reviews_mission_description": "Contribute {{count}} reviews",
+    "routes_mission": "Routes",
+    "routes_mission_description": "Contribute {{count}} accessible routes tracing",
+    "skillful_navigator": "Skillful Navigator",
+    "skillful_reviewer": "Skillful Reviewer"
   },
   "button": {
     "cancel": "Cancel",
@@ -35,9 +52,9 @@
     "incident": "Incident",
     "park": "Park",
     "residence": "Residence",
+    "sport": "Sport",
     "toilet": "Toilet",
-    "transport": "Transport",
-    "sport": "Sport"
+    "transport": "Transport"
   },
   "facilities": {
     "assistance": "Assistance",
@@ -50,6 +67,13 @@
   "helpModal": {
     "description": "You will be redirected to Mahidol Disability Service Support",
     "title": "Need a help?"
+  },
+  "impairment_level": {
+    "0": "0 - Completely independent",
+    "1": "1 - Requires use of equipment or device",
+    "2": "2 - Requires assistance from another person",
+    "3": "3 - Requires help from person/equipment",
+    "4": "4 - Completely dependent"
   },
   "page": {
     "announcements": "Announcements",
@@ -77,33 +101,51 @@
     "show_on_map": "Show on Map",
     "website": "Website"
   },
+  "profile": {
+    "edit_profile": "Edit Profile",
+    "my_summary": "Total Activity",
+    "summary_details": {
+      "joined_at": "Start Date",
+      "total_distance": "Traveled Distance",
+      "total_places": "Places Visited",
+      "total_reviews": "Reviews",
+      "total_routes": "Contributed Routes"
+    }
+  },
   "records": {
     "contributed_routes": "Contributed Routes",
-    "favorite_places": "Favorite Places",
-    "my_lists": "My Lists",
-    "places_reviews": "Places Reviews",
     "date": "Date",
     "distance": "Distance",
     "elapsed_time": "Elapsed Time",
+    "favorite_places": "Favorite Places",
+    "my_lists": "My Lists",
+    "places_reviews": "Places Reviews",
     "reviews": {
       "my_review": "My Review"
     },
     "time": "Time"
   },
   "reviews": {
-    "facility_tags": {
-      "cleanliness": "ถูกสุขลักษณะ",
-      "great_service": "บริการดี",
-      "nice_facilities": "สิ่งอำนวยความสะดวกดี",
-      "safety": "ปลอดภัย"
-    },
     "accessibility_rating": {
+      "criteria_title": "Accessibility Rating Criteria",
+      "description": "Accessible Level",
       "rating_0": "This place is not accessible",
       "rating_1": "This place is hard to access even got the help",
       "rating_2": "Require help from person and equipment to visit this place",
       "rating_3": "This place can access by assistance from another",
       "rating_4": "This place can access by use of equipment",
       "rating_5": "This place can access without any help"
+    },
+    "add_more_images": "Add more images",
+    "additional_official_comment": "ข้อมูลเพิ่มเติมจากเจ้าหน้าที่",
+    "details": "รายละเอียด",
+    "details_placeholder": "คิดอย่างไรกับสถานที่แห่งนี้ เจอปัญหาการเข้าถึงบ้างหรือไม่?",
+    "facility": "สิ่งอำนวยความสะดวก",
+    "facility_tags": {
+      "cleanliness": "ถูกสุขลักษณะ",
+      "great_service": "บริการดี",
+      "nice_facilities": "สิ่งอำนวยความสะดวกดี",
+      "safety": "ปลอดภัย"
     }
   },
   "settings": {
@@ -118,15 +160,6 @@
     "privacy_policy": "Privacy Policy",
     "support_division": "Supported Division Organizations",
     "version": "Version"
-  },
-  "badges": {
-    "novice_navigator": "Novice Navigator",
-    "skillful_navigator": "Skillful Navigator",
-    "master_navigator": "Master Navigator",
-    "novice_reviewer": "Novice Reviewer",
-    "skillful_reviewer": "Skillful Reviewer",
-    "master_reviewer": "Master Reviewer",
-    "coming_soon": "Coming Soon"
   },
   "trace": {
     "finish_popup": {

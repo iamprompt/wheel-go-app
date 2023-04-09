@@ -1,7 +1,6 @@
 import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useMemo } from 'react'
 import { Pressable, ScrollView, Text, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { GetPlaceById } from '~/graphql/query/places'
 import { SearchRoutes } from '~/graphql/query/routes'
@@ -13,7 +12,6 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
-  const insets = useSafeAreaInsets()
   const router = useRouter()
 
   const params = useSearchParams<{
@@ -63,7 +61,6 @@ function Page() {
 
       <View
         style={{
-          // position: 'absolute',
           paddingTop: 16,
           paddingHorizontal: 16,
           paddingBottom: 16,
@@ -72,8 +69,6 @@ function Page() {
           gap: 12,
           alignItems: 'center',
           backgroundColor: COLORS.white,
-          // zIndex: 1,
-          // width: '100%',
         }}
       >
         <View
@@ -115,6 +110,8 @@ function Page() {
                   ? COLORS.black
                   : COLORS['french-vanilla'][500],
               }}
+              ellipsizeMode="tail"
+              numberOfLines={1}
             >
               {originPlaceName || 'Where are you going from?'}
             </Text>
@@ -213,6 +210,8 @@ function Page() {
                     ? COLORS.black
                     : COLORS['french-vanilla'][500],
                 }}
+                ellipsizeMode="tail"
+                numberOfLines={1}
               >
                 {destinationPlaceName || 'Where are you going to?'}
               </Text>
