@@ -284,7 +284,7 @@ export default function App() {
             gap: 16,
           }}
         >
-          {SUMMARY_DETAILS.map((detail, index) => {
+          {SUMMARY_DETAILS.map((detail) => {
             return (
               <View
                 style={{
