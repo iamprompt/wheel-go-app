@@ -9003,8 +9003,10 @@ export type ReviewsUpdateDocAccess = {
 export type Route = {
   __typename?: 'Route';
   createdAt: Scalars['DateTime'];
+  destination?: Maybe<Place>;
   distance?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['String']>;
+  origin?: Maybe<Place>;
   route?: Maybe<Scalars['JSON']>;
   updatedAt: Scalars['DateTime'];
   user?: Maybe<Route_User_Relationship>;
@@ -9054,6 +9056,15 @@ export type Route_CreatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']>;
 };
 
+export type Route_Destination_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
 export type Route_Distance_Operator = {
   equals?: InputMaybe<Scalars['Float']>;
   exists?: InputMaybe<Scalars['Boolean']>;
@@ -9071,6 +9082,15 @@ export type Route_Id_Operator = {
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
   not_equals?: InputMaybe<Scalars['JSON']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+};
+
+export type Route_Origin_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  equals?: InputMaybe<Scalars['String']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  not_equals?: InputMaybe<Scalars['String']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type Route_Route_Operator = {
@@ -9106,8 +9126,10 @@ export type Route_Where = {
   AND?: InputMaybe<Array<InputMaybe<Route_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Route_Where_Or>>>;
   createdAt?: InputMaybe<Route_CreatedAt_Operator>;
+  destination?: InputMaybe<Route_Destination_Operator>;
   distance?: InputMaybe<Route_Distance_Operator>;
   id?: InputMaybe<Route_Id_Operator>;
+  origin?: InputMaybe<Route_Origin_Operator>;
   route?: InputMaybe<Route_Route_Operator>;
   updatedAt?: InputMaybe<Route_UpdatedAt_Operator>;
   user?: InputMaybe<Route_User_Relation>;
@@ -9115,8 +9137,10 @@ export type Route_Where = {
 
 export type Route_Where_And = {
   createdAt?: InputMaybe<Route_CreatedAt_Operator>;
+  destination?: InputMaybe<Route_Destination_Operator>;
   distance?: InputMaybe<Route_Distance_Operator>;
   id?: InputMaybe<Route_Id_Operator>;
+  origin?: InputMaybe<Route_Origin_Operator>;
   route?: InputMaybe<Route_Route_Operator>;
   updatedAt?: InputMaybe<Route_UpdatedAt_Operator>;
   user?: InputMaybe<Route_User_Relation>;
@@ -9124,8 +9148,10 @@ export type Route_Where_And = {
 
 export type Route_Where_Or = {
   createdAt?: InputMaybe<Route_CreatedAt_Operator>;
+  destination?: InputMaybe<Route_Destination_Operator>;
   distance?: InputMaybe<Route_Distance_Operator>;
   id?: InputMaybe<Route_Id_Operator>;
+  origin?: InputMaybe<Route_Origin_Operator>;
   route?: InputMaybe<Route_Route_Operator>;
   updatedAt?: InputMaybe<Route_UpdatedAt_Operator>;
   user?: InputMaybe<Route_User_Relation>;
@@ -9172,9 +9198,39 @@ export type RoutesDeleteDocAccess = {
 
 export type RoutesDocAccessFields = {
   __typename?: 'RoutesDocAccessFields';
+  destination?: Maybe<RoutesDocAccessFields_Destination>;
   distance?: Maybe<RoutesDocAccessFields_Distance>;
+  origin?: Maybe<RoutesDocAccessFields_Origin>;
   route?: Maybe<RoutesDocAccessFields_Route>;
   user?: Maybe<RoutesDocAccessFields_User>;
+};
+
+export type RoutesDocAccessFields_Destination = {
+  __typename?: 'RoutesDocAccessFields_destination';
+  create?: Maybe<RoutesDocAccessFields_Destination_Create>;
+  delete?: Maybe<RoutesDocAccessFields_Destination_Delete>;
+  read?: Maybe<RoutesDocAccessFields_Destination_Read>;
+  update?: Maybe<RoutesDocAccessFields_Destination_Update>;
+};
+
+export type RoutesDocAccessFields_Destination_Create = {
+  __typename?: 'RoutesDocAccessFields_destination_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Destination_Delete = {
+  __typename?: 'RoutesDocAccessFields_destination_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Destination_Read = {
+  __typename?: 'RoutesDocAccessFields_destination_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Destination_Update = {
+  __typename?: 'RoutesDocAccessFields_destination_Update';
+  permission: Scalars['Boolean'];
 };
 
 export type RoutesDocAccessFields_Distance = {
@@ -9202,6 +9258,34 @@ export type RoutesDocAccessFields_Distance_Read = {
 
 export type RoutesDocAccessFields_Distance_Update = {
   __typename?: 'RoutesDocAccessFields_distance_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Origin = {
+  __typename?: 'RoutesDocAccessFields_origin';
+  create?: Maybe<RoutesDocAccessFields_Origin_Create>;
+  delete?: Maybe<RoutesDocAccessFields_Origin_Delete>;
+  read?: Maybe<RoutesDocAccessFields_Origin_Read>;
+  update?: Maybe<RoutesDocAccessFields_Origin_Update>;
+};
+
+export type RoutesDocAccessFields_Origin_Create = {
+  __typename?: 'RoutesDocAccessFields_origin_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Origin_Delete = {
+  __typename?: 'RoutesDocAccessFields_origin_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Origin_Read = {
+  __typename?: 'RoutesDocAccessFields_origin_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Origin_Update = {
+  __typename?: 'RoutesDocAccessFields_origin_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -9263,9 +9347,39 @@ export type RoutesDocAccessFields_User_Update = {
 
 export type RoutesFields = {
   __typename?: 'RoutesFields';
+  destination?: Maybe<RoutesFields_Destination>;
   distance?: Maybe<RoutesFields_Distance>;
+  origin?: Maybe<RoutesFields_Origin>;
   route?: Maybe<RoutesFields_Route>;
   user?: Maybe<RoutesFields_User>;
+};
+
+export type RoutesFields_Destination = {
+  __typename?: 'RoutesFields_destination';
+  create?: Maybe<RoutesFields_Destination_Create>;
+  delete?: Maybe<RoutesFields_Destination_Delete>;
+  read?: Maybe<RoutesFields_Destination_Read>;
+  update?: Maybe<RoutesFields_Destination_Update>;
+};
+
+export type RoutesFields_Destination_Create = {
+  __typename?: 'RoutesFields_destination_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Destination_Delete = {
+  __typename?: 'RoutesFields_destination_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Destination_Read = {
+  __typename?: 'RoutesFields_destination_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Destination_Update = {
+  __typename?: 'RoutesFields_destination_Update';
+  permission: Scalars['Boolean'];
 };
 
 export type RoutesFields_Distance = {
@@ -9293,6 +9407,34 @@ export type RoutesFields_Distance_Read = {
 
 export type RoutesFields_Distance_Update = {
   __typename?: 'RoutesFields_distance_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Origin = {
+  __typename?: 'RoutesFields_origin';
+  create?: Maybe<RoutesFields_Origin_Create>;
+  delete?: Maybe<RoutesFields_Origin_Delete>;
+  read?: Maybe<RoutesFields_Origin_Read>;
+  update?: Maybe<RoutesFields_Origin_Update>;
+};
+
+export type RoutesFields_Origin_Create = {
+  __typename?: 'RoutesFields_origin_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Origin_Delete = {
+  __typename?: 'RoutesFields_origin_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Origin_Read = {
+  __typename?: 'RoutesFields_origin_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Origin_Update = {
+  __typename?: 'RoutesFields_origin_Update';
   permission: Scalars['Boolean'];
 };
 
@@ -11328,13 +11470,17 @@ export type MutationReview_Rating_ImagesInput = {
 };
 
 export type MutationRouteInput = {
+  destination?: InputMaybe<Scalars['String']>;
   distance?: InputMaybe<Scalars['Float']>;
+  origin?: InputMaybe<Scalars['String']>;
   route?: InputMaybe<Scalars['JSON']>;
   user?: InputMaybe<Route_UserRelationshipInput>;
 };
 
 export type MutationRouteUpdateInput = {
+  destination?: InputMaybe<Scalars['String']>;
   distance?: InputMaybe<Scalars['Float']>;
+  origin?: InputMaybe<Scalars['String']>;
   route?: InputMaybe<Scalars['JSON']>;
   user?: InputMaybe<RouteUpdate_UserRelationshipInput>;
 };
@@ -11589,6 +11735,7 @@ export type GetNearbyPlacesFromLocationQuery = { __typename?: 'Query', Places?: 
 export type SearchPlacesQueryVariables = Exact<{
   query: Scalars['String'];
   limit?: InputMaybe<Scalars['Int']>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['JSON']>> | InputMaybe<Scalars['JSON']>>;
 }>;
 
 
@@ -11615,6 +11762,21 @@ export type GetReviewsByPlaceIdQueryVariables = Exact<{
 
 
 export type GetReviewsByPlaceIdQuery = { __typename?: 'Query', Reviews?: { __typename?: 'Reviews', docs?: Array<{ __typename?: 'Review', id?: string | null, createdAt: any, comment?: string | null, user: { __typename?: 'User', id?: string | null, firstName?: string | null, lastName?: string | null, displayNameType?: User_DisplayNameType | null }, place: { __typename?: 'Place', nameTH: string, nameEN: string, category: Place_Category, image?: { __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null } | null }, rating?: { __typename?: 'Review_Rating', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null, facility?: Array<Review_Rating_Facility> | null, comment?: string | null, images?: Array<{ __typename?: 'Review_Rating_Images', id?: string | null, image?: { __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null } | null }> | null } | null, official?: { __typename?: 'Review_Official', flagged?: boolean | null, comment?: string | null, timestamp?: any | null } | null } | null> | null } | null };
+
+export type SearchRoutesQueryVariables = Exact<{
+  from: Scalars['String'];
+  to: Scalars['String'];
+}>;
+
+
+export type SearchRoutesQuery = { __typename?: 'Query', Routes?: { __typename?: 'Routes', docs?: Array<{ __typename?: 'Route', id?: string | null, distance?: number | null, route?: any | null, origin?: { __typename?: 'Place', id?: string | null, nameTH: string, nameEN: string, category: Place_Category } | null, destination?: { __typename?: 'Place', id?: string | null, nameTH: string, nameEN: string, category: Place_Category } | null } | null> | null } | null };
+
+export type GetPreDefinedRouteByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetPreDefinedRouteByIdQuery = { __typename?: 'Query', Route?: { __typename?: 'Route', id?: string | null, distance?: number | null, route?: any | null, origin?: { __typename?: 'Place', id?: string | null, nameTH: string, nameEN: string, category: Place_Category } | null, destination?: { __typename?: 'Place', id?: string | null, nameTH: string, nameEN: string, category: Place_Category } | null } | null };
 
 export type GetMyTracedRoutesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -11643,10 +11805,12 @@ export const GetAnnouncementByIdDocument = {"kind":"Document","definitions":[{"k
 export const AllPlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllPlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Places"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Facilities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"curbCut"},{"kind":"EnumValue","value":"transportation"},{"kind":"EnumValue","value":"ramp"}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"detailTH"}},{"kind":"Field","name":{"kind":"Name","value":"detailEN"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}}]}}]}}]}}]} as unknown as DocumentNode<AllPlacesQuery, AllPlacesQueryVariables>;
 export const GetPlaceByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlaceById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Place"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"placeAddressTH"}},{"kind":"Field","name":{"kind":"Name","value":"placeAddressEN"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]} as unknown as DocumentNode<GetPlaceByIdQuery, GetPlaceByIdQueryVariables>;
 export const GetNearbyPlacesFromLocationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNearbyPlacesFromLocation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lat"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lng"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"distance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Places"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"geolocation"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"near"},"value":{"kind":"ListValue","values":[{"kind":"Variable","name":{"kind":"Name","value":"lng"}},{"kind":"Variable","name":{"kind":"Name","value":"lat"}},{"kind":"Variable","name":{"kind":"Name","value":"distance"}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"}}]}}]}}]}}]} as unknown as DocumentNode<GetNearbyPlacesFromLocationQuery, GetNearbyPlacesFromLocationQueryVariables>;
-export const SearchPlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPlaces"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"100"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Places"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"OR"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"nameTH"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"like"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"nameEN"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"like"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]}}]} as unknown as DocumentNode<SearchPlacesQuery, SearchPlacesQueryVariables>;
+export const SearchPlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPlaces"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"100"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"exclude"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JSON"}}},"defaultValue":{"kind":"ListValue","values":[]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Places"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"OR"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"nameTH"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"like"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"nameEN"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"like"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}]}}]}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"not_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"exclude"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]}}]} as unknown as DocumentNode<SearchPlacesQuery, SearchPlacesQueryVariables>;
 export const GetMyReviewsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyReviews"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Reviews"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rating"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"overall"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalDocs"}}]}}]}}]} as unknown as DocumentNode<GetMyReviewsQuery, GetMyReviewsQueryVariables>;
 export const GetReviewByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetReviewById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Review"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"rating"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"overall"}},{"kind":"Field","name":{"kind":"Name","value":"ramp"}},{"kind":"Field","name":{"kind":"Name","value":"assistance"}},{"kind":"Field","name":{"kind":"Name","value":"elevator"}},{"kind":"Field","name":{"kind":"Name","value":"toilet"}},{"kind":"Field","name":{"kind":"Name","value":"parking"}},{"kind":"Field","name":{"kind":"Name","value":"surface"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"official"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flagged"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]}}]}}]} as unknown as DocumentNode<GetReviewByIdQuery, GetReviewByIdQueryVariables>;
 export const GetReviewsByPlaceIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetReviewsByPlaceId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"100"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Reviews"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"place"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayNameType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"rating"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"overall"}},{"kind":"Field","name":{"kind":"Name","value":"ramp"}},{"kind":"Field","name":{"kind":"Name","value":"assistance"}},{"kind":"Field","name":{"kind":"Name","value":"elevator"}},{"kind":"Field","name":{"kind":"Name","value":"toilet"}},{"kind":"Field","name":{"kind":"Name","value":"parking"}},{"kind":"Field","name":{"kind":"Name","value":"surface"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"official"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flagged"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetReviewsByPlaceIdQuery, GetReviewsByPlaceIdQueryVariables>;
+export const SearchRoutesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchRoutes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Routes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"OR"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"origin"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"destination"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"origin"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"destination"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from"}}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"origin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"destination"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"route"}}]}}]}}]}}]} as unknown as DocumentNode<SearchRoutesQuery, SearchRoutesQueryVariables>;
+export const GetPreDefinedRouteByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPreDefinedRouteById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Route"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"origin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"destination"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"route"}}]}}]}}]} as unknown as DocumentNode<GetPreDefinedRouteByIdQuery, GetPreDefinedRouteByIdQueryVariables>;
 export const GetMyTracedRoutesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyTracedRoutes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"TracedRoutes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"route"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalDocs"}}]}}]}}]} as unknown as DocumentNode<GetMyTracedRoutesQuery, GetMyTracedRoutesQueryVariables>;
 export const GetRouteByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRouteById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"TracedRoute"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"route"}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetRouteByIdQuery, GetRouteByIdQueryVariables>;
 export const GetUserFavoritePlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserFavoritePlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"favoritePlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addedAt"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUserFavoritePlacesQuery, GetUserFavoritePlacesQueryVariables>;

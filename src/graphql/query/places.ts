@@ -71,11 +71,16 @@ export const GetNearbyPlacesFromLocation = graphql(/* GraphQL */ `
 `)
 
 export const SearchPlacesByKeyword = graphql(/* GraphQL */ `
-  query SearchPlaces($query: String!, $limit: Int = 100) {
+  query SearchPlaces(
+    $query: String!
+    $limit: Int = 100
+    $exclude: [JSON] = []
+  ) {
     Places(
       limit: $limit
       where: {
         OR: [{ nameTH: { like: $query } }, { nameEN: { like: $query } }]
+        id: { not_in: $exclude }
       }
     ) {
       docs {

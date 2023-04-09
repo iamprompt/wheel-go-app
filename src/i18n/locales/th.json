@@ -158,6 +158,9 @@
     "routes_mission": "เส้นทาง",
     "reviews_mission": "รีวิว"
   },
+  "routes": {
+    "route_title": "เส้นทาง {{id}}"
+  },
   "settings": {
     "about": "เกี่ยวกับ",
     "copyright": "ลิขสิทธิ์",
