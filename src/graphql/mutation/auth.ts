@@ -27,6 +27,8 @@ export const MeProfile = graphql(/* GraphQL */ `
         firstName
         lastName
         displayNameType
+        impairmentLevel
+        equipment
       }
     }
   }

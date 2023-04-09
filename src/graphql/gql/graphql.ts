@@ -31,6 +31,7 @@ export type Access = {
   media?: Maybe<MediaAccess>;
   places?: Maybe<PlacesAccess>;
   reviews?: Maybe<ReviewsAccess>;
+  routes?: Maybe<RoutesAccess>;
   traced_routes?: Maybe<Traced_RoutesAccess>;
   users?: Maybe<UsersAccess>;
 };
@@ -4887,6 +4888,7 @@ export type Mutation = {
   createMedia?: Maybe<Media>;
   createPlace?: Maybe<Place>;
   createReview?: Maybe<Review>;
+  createRoute?: Maybe<Route>;
   createTracedRoute?: Maybe<TracedRoute>;
   createUser?: Maybe<User>;
   deleteAdmin?: Maybe<Admin>;
@@ -4896,6 +4898,7 @@ export type Mutation = {
   deletePlace?: Maybe<Place>;
   deletePreference?: Maybe<Preference>;
   deleteReview?: Maybe<Review>;
+  deleteRoute?: Maybe<Route>;
   deleteTracedRoute?: Maybe<TracedRoute>;
   deleteUser?: Maybe<User>;
   forgotPasswordAdmin: Scalars['Boolean'];
@@ -4917,6 +4920,7 @@ export type Mutation = {
   updatePlace?: Maybe<Place>;
   updatePreference?: Maybe<Preference>;
   updateReview?: Maybe<Review>;
+  updateRoute?: Maybe<Route>;
   updateTracedRoute?: Maybe<TracedRoute>;
   updateUser?: Maybe<User>;
   verifyEmailAdmin?: Maybe<Scalars['Boolean']>;
@@ -4956,6 +4960,12 @@ export type MutationCreatePlaceArgs = {
 
 export type MutationCreateReviewArgs = {
   data: MutationReviewInput;
+  draft?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateRouteArgs = {
+  data: MutationRouteInput;
   draft?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -5003,6 +5013,11 @@ export type MutationDeletePreferenceArgs = {
 
 
 export type MutationDeleteReviewArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteRouteArgs = {
   id: Scalars['String'];
 };
 
@@ -5124,6 +5139,14 @@ export type MutationUpdatePreferenceArgs = {
 export type MutationUpdateReviewArgs = {
   autosave?: InputMaybe<Scalars['Boolean']>;
   data: MutationReviewUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+};
+
+
+export type MutationUpdateRouteArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']>;
+  data: MutationRouteUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['String'];
 };
@@ -6412,6 +6435,8 @@ export type Query = {
   Preference?: Maybe<Preference>;
   Review?: Maybe<Review>;
   Reviews?: Maybe<Reviews>;
+  Route?: Maybe<Route>;
+  Routes?: Maybe<Routes>;
   TracedRoute?: Maybe<TracedRoute>;
   TracedRoutes?: Maybe<TracedRoutes>;
   User?: Maybe<User>;
@@ -6423,6 +6448,7 @@ export type Query = {
   docAccessMedia?: Maybe<MediaDocAccess>;
   docAccessPlace?: Maybe<PlacesDocAccess>;
   docAccessReview?: Maybe<ReviewsDocAccess>;
+  docAccessRoute?: Maybe<RoutesDocAccess>;
   docAccessTracedRoute?: Maybe<Traced_RoutesDocAccess>;
   docAccessUser?: Maybe<UsersDocAccess>;
   initializedAdmin?: Maybe<Scalars['Boolean']>;
@@ -6518,6 +6544,21 @@ export type QueryReviewsArgs = {
 };
 
 
+export type QueryRouteArgs = {
+  draft?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+};
+
+
+export type QueryRoutesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Scalars['String']>;
+  where?: InputMaybe<Route_Where>;
+};
+
+
 export type QueryTracedRouteArgs = {
   draft?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['String'];
@@ -6583,6 +6624,11 @@ export type QueryDocAccessPlaceArgs = {
 
 
 export type QueryDocAccessReviewArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryDocAccessRouteArgs = {
   id: Scalars['String'];
 };
 
@@ -8954,6 +9000,382 @@ export type ReviewsUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']>;
 };
 
+export type Route = {
+  __typename?: 'Route';
+  createdAt: Scalars['DateTime'];
+  distance?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['String']>;
+  route?: Maybe<Scalars['JSON']>;
+  updatedAt: Scalars['DateTime'];
+  user?: Maybe<Route_User_Relationship>;
+};
+
+export type RouteUpdate_UserRelationshipInput = {
+  relationTo?: InputMaybe<RouteUpdate_UserRelationshipInputRelationTo>;
+  value?: InputMaybe<Scalars['JSON']>;
+};
+
+export enum RouteUpdate_UserRelationshipInputRelationTo {
+  Admins = 'admins',
+  Users = 'users'
+}
+
+export type Route_User = Admin | User;
+
+export type Route_UserRelationshipInput = {
+  relationTo?: InputMaybe<Route_UserRelationshipInputRelationTo>;
+  value?: InputMaybe<Scalars['JSON']>;
+};
+
+export enum Route_UserRelationshipInputRelationTo {
+  Admins = 'admins',
+  Users = 'users'
+}
+
+export enum Route_User_RelationTo {
+  Admins = 'admins',
+  Users = 'users'
+}
+
+export type Route_User_Relationship = {
+  __typename?: 'Route_User_Relationship';
+  relationTo?: Maybe<Route_User_RelationTo>;
+  value?: Maybe<Route_User>;
+};
+
+export type Route_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['DateTime']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']>;
+  less_than?: InputMaybe<Scalars['DateTime']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']>;
+  like?: InputMaybe<Scalars['DateTime']>;
+  not_equals?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type Route_Distance_Operator = {
+  equals?: InputMaybe<Scalars['Float']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['Float']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']>;
+  less_than?: InputMaybe<Scalars['Float']>;
+  less_than_equal?: InputMaybe<Scalars['Float']>;
+  not_equals?: InputMaybe<Scalars['Float']>;
+};
+
+export type Route_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  equals?: InputMaybe<Scalars['JSON']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+};
+
+export type Route_Route_Operator = {
+  contains?: InputMaybe<Scalars['JSON']>;
+  equals?: InputMaybe<Scalars['JSON']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<Scalars['JSON']>;
+  not_equals?: InputMaybe<Scalars['JSON']>;
+};
+
+export type Route_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  exists?: InputMaybe<Scalars['Boolean']>;
+  greater_than?: InputMaybe<Scalars['DateTime']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']>;
+  less_than?: InputMaybe<Scalars['DateTime']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']>;
+  like?: InputMaybe<Scalars['DateTime']>;
+  not_equals?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type Route_User_Relation = {
+  relationTo?: InputMaybe<Route_User_Relation_RelationTo>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
+export enum Route_User_Relation_RelationTo {
+  Admins = 'admins',
+  Users = 'users'
+}
+
+export type Route_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Route_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Route_Where_Or>>>;
+  createdAt?: InputMaybe<Route_CreatedAt_Operator>;
+  distance?: InputMaybe<Route_Distance_Operator>;
+  id?: InputMaybe<Route_Id_Operator>;
+  route?: InputMaybe<Route_Route_Operator>;
+  updatedAt?: InputMaybe<Route_UpdatedAt_Operator>;
+  user?: InputMaybe<Route_User_Relation>;
+};
+
+export type Route_Where_And = {
+  createdAt?: InputMaybe<Route_CreatedAt_Operator>;
+  distance?: InputMaybe<Route_Distance_Operator>;
+  id?: InputMaybe<Route_Id_Operator>;
+  route?: InputMaybe<Route_Route_Operator>;
+  updatedAt?: InputMaybe<Route_UpdatedAt_Operator>;
+  user?: InputMaybe<Route_User_Relation>;
+};
+
+export type Route_Where_Or = {
+  createdAt?: InputMaybe<Route_CreatedAt_Operator>;
+  distance?: InputMaybe<Route_Distance_Operator>;
+  id?: InputMaybe<Route_Id_Operator>;
+  route?: InputMaybe<Route_Route_Operator>;
+  updatedAt?: InputMaybe<Route_UpdatedAt_Operator>;
+  user?: InputMaybe<Route_User_Relation>;
+};
+
+export type Routes = {
+  __typename?: 'Routes';
+  docs?: Maybe<Array<Maybe<Route>>>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPrevPage?: Maybe<Scalars['Boolean']>;
+  limit?: Maybe<Scalars['Int']>;
+  nextPage?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  page?: Maybe<Scalars['Int']>;
+  pagingCounter?: Maybe<Scalars['Int']>;
+  prevPage?: Maybe<Scalars['Int']>;
+  totalDocs?: Maybe<Scalars['Int']>;
+  totalPages?: Maybe<Scalars['Int']>;
+};
+
+export type RoutesCreateAccess = {
+  __typename?: 'RoutesCreateAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
+export type RoutesCreateDocAccess = {
+  __typename?: 'RoutesCreateDocAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
+export type RoutesDeleteAccess = {
+  __typename?: 'RoutesDeleteAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
+export type RoutesDeleteDocAccess = {
+  __typename?: 'RoutesDeleteDocAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
+export type RoutesDocAccessFields = {
+  __typename?: 'RoutesDocAccessFields';
+  distance?: Maybe<RoutesDocAccessFields_Distance>;
+  route?: Maybe<RoutesDocAccessFields_Route>;
+  user?: Maybe<RoutesDocAccessFields_User>;
+};
+
+export type RoutesDocAccessFields_Distance = {
+  __typename?: 'RoutesDocAccessFields_distance';
+  create?: Maybe<RoutesDocAccessFields_Distance_Create>;
+  delete?: Maybe<RoutesDocAccessFields_Distance_Delete>;
+  read?: Maybe<RoutesDocAccessFields_Distance_Read>;
+  update?: Maybe<RoutesDocAccessFields_Distance_Update>;
+};
+
+export type RoutesDocAccessFields_Distance_Create = {
+  __typename?: 'RoutesDocAccessFields_distance_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Distance_Delete = {
+  __typename?: 'RoutesDocAccessFields_distance_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Distance_Read = {
+  __typename?: 'RoutesDocAccessFields_distance_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Distance_Update = {
+  __typename?: 'RoutesDocAccessFields_distance_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Route = {
+  __typename?: 'RoutesDocAccessFields_route';
+  create?: Maybe<RoutesDocAccessFields_Route_Create>;
+  delete?: Maybe<RoutesDocAccessFields_Route_Delete>;
+  read?: Maybe<RoutesDocAccessFields_Route_Read>;
+  update?: Maybe<RoutesDocAccessFields_Route_Update>;
+};
+
+export type RoutesDocAccessFields_Route_Create = {
+  __typename?: 'RoutesDocAccessFields_route_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Route_Delete = {
+  __typename?: 'RoutesDocAccessFields_route_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Route_Read = {
+  __typename?: 'RoutesDocAccessFields_route_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_Route_Update = {
+  __typename?: 'RoutesDocAccessFields_route_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_User = {
+  __typename?: 'RoutesDocAccessFields_user';
+  create?: Maybe<RoutesDocAccessFields_User_Create>;
+  delete?: Maybe<RoutesDocAccessFields_User_Delete>;
+  read?: Maybe<RoutesDocAccessFields_User_Read>;
+  update?: Maybe<RoutesDocAccessFields_User_Update>;
+};
+
+export type RoutesDocAccessFields_User_Create = {
+  __typename?: 'RoutesDocAccessFields_user_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_User_Delete = {
+  __typename?: 'RoutesDocAccessFields_user_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_User_Read = {
+  __typename?: 'RoutesDocAccessFields_user_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesDocAccessFields_User_Update = {
+  __typename?: 'RoutesDocAccessFields_user_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields = {
+  __typename?: 'RoutesFields';
+  distance?: Maybe<RoutesFields_Distance>;
+  route?: Maybe<RoutesFields_Route>;
+  user?: Maybe<RoutesFields_User>;
+};
+
+export type RoutesFields_Distance = {
+  __typename?: 'RoutesFields_distance';
+  create?: Maybe<RoutesFields_Distance_Create>;
+  delete?: Maybe<RoutesFields_Distance_Delete>;
+  read?: Maybe<RoutesFields_Distance_Read>;
+  update?: Maybe<RoutesFields_Distance_Update>;
+};
+
+export type RoutesFields_Distance_Create = {
+  __typename?: 'RoutesFields_distance_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Distance_Delete = {
+  __typename?: 'RoutesFields_distance_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Distance_Read = {
+  __typename?: 'RoutesFields_distance_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Distance_Update = {
+  __typename?: 'RoutesFields_distance_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Route = {
+  __typename?: 'RoutesFields_route';
+  create?: Maybe<RoutesFields_Route_Create>;
+  delete?: Maybe<RoutesFields_Route_Delete>;
+  read?: Maybe<RoutesFields_Route_Read>;
+  update?: Maybe<RoutesFields_Route_Update>;
+};
+
+export type RoutesFields_Route_Create = {
+  __typename?: 'RoutesFields_route_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Route_Delete = {
+  __typename?: 'RoutesFields_route_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Route_Read = {
+  __typename?: 'RoutesFields_route_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_Route_Update = {
+  __typename?: 'RoutesFields_route_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_User = {
+  __typename?: 'RoutesFields_user';
+  create?: Maybe<RoutesFields_User_Create>;
+  delete?: Maybe<RoutesFields_User_Delete>;
+  read?: Maybe<RoutesFields_User_Read>;
+  update?: Maybe<RoutesFields_User_Update>;
+};
+
+export type RoutesFields_User_Create = {
+  __typename?: 'RoutesFields_user_Create';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_User_Delete = {
+  __typename?: 'RoutesFields_user_Delete';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_User_Read = {
+  __typename?: 'RoutesFields_user_Read';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesFields_User_Update = {
+  __typename?: 'RoutesFields_user_Update';
+  permission: Scalars['Boolean'];
+};
+
+export type RoutesReadAccess = {
+  __typename?: 'RoutesReadAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
+export type RoutesReadDocAccess = {
+  __typename?: 'RoutesReadDocAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
+export type RoutesUpdateAccess = {
+  __typename?: 'RoutesUpdateAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
+export type RoutesUpdateDocAccess = {
+  __typename?: 'RoutesUpdateDocAccess';
+  permission: Scalars['Boolean'];
+  where?: Maybe<Scalars['JSONObject']>;
+};
+
 export type TracedRoute = {
   __typename?: 'TracedRoute';
   createdAt: Scalars['DateTime'];
@@ -10905,6 +11327,18 @@ export type MutationReview_Rating_ImagesInput = {
   image?: InputMaybe<Scalars['String']>;
 };
 
+export type MutationRouteInput = {
+  distance?: InputMaybe<Scalars['Float']>;
+  route?: InputMaybe<Scalars['JSON']>;
+  user?: InputMaybe<Route_UserRelationshipInput>;
+};
+
+export type MutationRouteUpdateInput = {
+  distance?: InputMaybe<Scalars['Float']>;
+  route?: InputMaybe<Scalars['JSON']>;
+  user?: InputMaybe<RouteUpdate_UserRelationshipInput>;
+};
+
 export type MutationTracedRouteInput = {
   distance?: InputMaybe<Scalars['Float']>;
   duration?: InputMaybe<Scalars['Float']>;
@@ -11001,6 +11435,24 @@ export type ReviewsDocAccess = {
   update?: Maybe<ReviewsUpdateDocAccess>;
 };
 
+export type RoutesAccess = {
+  __typename?: 'routesAccess';
+  create?: Maybe<RoutesCreateAccess>;
+  delete?: Maybe<RoutesDeleteAccess>;
+  fields?: Maybe<RoutesFields>;
+  read?: Maybe<RoutesReadAccess>;
+  update?: Maybe<RoutesUpdateAccess>;
+};
+
+export type RoutesDocAccess = {
+  __typename?: 'routesDocAccess';
+  create?: Maybe<RoutesCreateDocAccess>;
+  delete?: Maybe<RoutesDeleteDocAccess>;
+  fields?: Maybe<RoutesDocAccessFields>;
+  read?: Maybe<RoutesReadDocAccess>;
+  update?: Maybe<RoutesUpdateDocAccess>;
+};
+
 export type Traced_RoutesAccess = {
   __typename?: 'traced_routesAccess';
   create?: Maybe<TracedRoutesCreateAccess>;
@@ -11084,7 +11536,7 @@ export type LoginUserMutation = { __typename?: 'Mutation', loginUser?: { __typen
 export type MeProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeProfileQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id?: string | null, email?: any | null, username?: string | null, firstName?: string | null, lastName?: string | null, displayNameType?: User_DisplayNameType | null } | null } | null };
+export type MeProfileQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id?: string | null, email?: any | null, username?: string | null, firstName?: string | null, lastName?: string | null, displayNameType?: User_DisplayNameType | null, impairmentLevel?: User_ImpairmentLevel | null, equipment?: User_Equipment | null } | null } | null };
 
 export type CreateReviewMutationVariables = Exact<{
   input: MutationReviewInput;
@@ -11183,7 +11635,7 @@ export type GetUserFavoritePlacesQuery = { __typename?: 'Query', meUser?: { __ty
 
 
 export const LoginUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"exp"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayNameType"}}]}}]}}]}}]} as unknown as DocumentNode<LoginUserMutation, LoginUserMutationVariables>;
-export const MeProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MeProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayNameType"}}]}}]}}]}}]} as unknown as DocumentNode<MeProfileQuery, MeProfileQueryVariables>;
+export const MeProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MeProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayNameType"}},{"kind":"Field","name":{"kind":"Name","value":"impairmentLevel"}},{"kind":"Field","name":{"kind":"Name","value":"equipment"}}]}}]}}]}}]} as unknown as DocumentNode<MeProfileQuery, MeProfileQueryVariables>;
 export const CreateReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"mutationReviewInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateReviewMutation, CreateReviewMutationVariables>;
 export const CreateTracedRouteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateTracedRoute"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"mutationTracedRouteInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTracedRoute"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateTracedRouteMutation, CreateTracedRouteMutationVariables>;
 export const AllAnnouncementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Announcements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"titleTH"}},{"kind":"Field","name":{"kind":"Name","value":"titleEN"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionTH"}},{"kind":"Field","name":{"kind":"Name","value":"descriptionEN"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameTH"}},{"kind":"Field","name":{"kind":"Name","value":"nameEN"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<AllAnnouncementsQuery, AllAnnouncementsQueryVariables>;

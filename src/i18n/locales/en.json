@@ -119,6 +119,15 @@
     "support_division": "Supported Division Organizations",
     "version": "Version"
   },
+  "badges": {
+    "novice_navigator": "Novice Navigator",
+    "skillful_navigator": "Skillful Navigator",
+    "master_navigator": "Master Navigator",
+    "novice_reviewer": "Novice Reviewer",
+    "skillful_reviewer": "Skillful Reviewer",
+    "master_reviewer": "Master Reviewer",
+    "coming_soon": "Coming Soon"
+  },
   "trace": {
     "finish_popup": {
       "description": "คุณต้องการบันทึกการเดินทางหรือไม่?",

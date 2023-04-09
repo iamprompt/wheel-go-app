@@ -1,6 +1,6 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Image, Pressable, View } from 'react-native'
+import { Image, Pressable, Text, View } from 'react-native'
 import type MapView from 'react-native-maps'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
@@ -21,6 +21,8 @@ import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
 import { PlaceExploreModal } from '~/components/PlaceExploreModal'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 
 export default function App() {
   const { t } = useTranslation()
@@ -42,12 +44,16 @@ export default function App() {
     }
 
     const location = await getCurrentPositionAsync({})
-    mapRef.current?.animateToRegion({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    })
+    mapRef.current?.animateCamera(
+      {
+        center: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+        zoom: 16,
+      },
+      { duration: 500 }
+    )
   }
 
   return (
@@ -202,10 +208,17 @@ export default function App() {
           style={{
             position: 'absolute',
             right: 0,
-            top: 0,
+            top: 72,
             gap: 8,
             marginHorizontal: 16,
             marginVertical: 16,
+            shadowColor: COLORS.black,
+            shadowOffset: {
+              width: 0,
+              height: 0,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 3.84,
           }}
         >
           <View
@@ -260,6 +273,55 @@ export default function App() {
             }}
           >
             <MaterialIcons name="draw" size={24} />
+          </Pressable>
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            marginHorizontal: 16,
+            marginVertical: 16,
+          }}
+        >
+          <Pressable
+            style={{
+              backgroundColor: 'white',
+              height: 48,
+              borderRadius: 8,
+              shadowColor: COLORS.black,
+              shadowOffset: {
+                width: 0,
+                height: 0,
+              },
+              shadowOpacity: 0.2,
+              shadowRadius: 3.84,
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: 12,
+            }}
+            onPress={() => {
+              console.log('Pressed Search')
+              router.push('/routes')
+            }}
+          >
+            <MaterialIcons
+              name="square"
+              size={12}
+              color={COLORS['fruit-punch'][400]}
+            />
+            <Text
+              style={{
+                flex: 1,
+                textAlign: 'center',
+                fontFamily: FONTS.LSTH_REGULAR,
+                fontSize: 16,
+                color: COLORS['french-vanilla'][300],
+              }}
+            >
+              {t('explore.search_route_placeholder')}
+            </Text>
           </Pressable>
         </View>
       </View>

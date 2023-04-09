@@ -23,6 +23,8 @@ interface User {
   lastName: string
   email: string
   image: string
+  impairmentLevel: string
+  equipment?: string
 }
 
 const DefaultAuthContextData = {
@@ -69,6 +71,8 @@ function useAuthProvider() {
         lastName: user.lastName || '',
         email: user.email || '',
         image: getGravatarUrl(user.email || ''),
+        impairmentLevel: user.impairmentLevel?.replace('_', '') || '',
+        equipment: user.equipment || '',
       })
     }
   }
