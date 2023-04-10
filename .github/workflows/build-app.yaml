@@ -51,11 +51,14 @@ jobs:
       - name: Restore Credentials Files
         run: echo "${{ secrets.CREDENTIALS_JSON_BASE64 }}" | base64 -d > credentials.json
 
+      - name: Create Folder for Provisioning Profiles and Distribution Certificates
+        run: mkdir -p ./ios/certs
+
       - name: Restore Provisioning Profiles
-        run: echo "${{ secrets.IOS_PV_PROFILE_BASE64 }}" | base64 -d > ios/certs/profile.mobileprovision
+        run: echo "${{ secrets.IOS_PV_PROFILE_BASE64 }}" | base64 -d > ./ios/certs/profile.mobileprovision
 
       - name: Restore Distribution Certificates
-        run: echo "${{ secrets.IOS_DIST_CERT_BASE64 }}" | base64 -d > ios/certs/dist.p12
+        run: echo "${{ secrets.IOS_DIST_CERT_BASE64 }}" | base64 -d > ./ios/certs/dist.p12
 
       - name: Build Wheel Go iOS App
         run: pnpm run build:ios --non-interactive --output=./app-build
