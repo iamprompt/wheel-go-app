@@ -13,7 +13,7 @@ export enum TRACING_STATES {
 export const TRACING_STATUS_BADGES = {
   [TRACING_STATES.READY]: {
     label: 'trace.status.ready',
-    color: COLORS.magenta[500],
+    color: COLORS['french-vanilla'][400],
     icon: 'backpack',
   },
   [TRACING_STATES.RECORDING]: {

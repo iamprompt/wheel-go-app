@@ -46,7 +46,7 @@ function Page() {
         edgePadding: {
           top: 100,
           right: 100,
-          bottom: 200,
+          bottom: 250,
           left: 100,
         },
         animated: true,
@@ -85,7 +85,11 @@ function Page() {
           pitchEnabled={false}
           {...MapCameraConfig}
         >
-          <Polyline coordinates={routePoints} strokeWidth={2.5} />
+          <Polyline
+            coordinates={routePoints}
+            strokeWidth={5}
+            strokeColor={'rgba(67, 196, 99, 0.8)'}
+          />
         </MapView>
         <View
           style={{
