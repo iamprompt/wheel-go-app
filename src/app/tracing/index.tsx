@@ -1,6 +1,18 @@
+import type { LocationObject, LocationTaskOptions } from 'expo-location'
+import {
+  LocationAccuracy,
+  requestBackgroundPermissionsAsync,
+  startLocationUpdatesAsync,
+  stopLocationUpdatesAsync,
+} from 'expo-location'
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { useMemo, useState } from 'react'
+import type {
+  TaskManagerTaskBody,
+  TaskManagerTaskExecutor,
+} from 'expo-task-manager'
+import { defineTask } from 'expo-task-manager'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
 import type { UserLocationChangeEvent } from 'react-native-maps'
@@ -34,6 +46,18 @@ interface Record {
   timestamp: number
 }
 
+const LOCATION_WATCH_TASK_NAME = 'LOCATION_WATCH_TRACE'
+const LOCATION_WATCH_CONFIG: LocationTaskOptions = {
+  accuracy: LocationAccuracy.Highest,
+  foregroundService: {
+    killServiceOnDestroy: true,
+    notificationTitle: 'Wheel Go',
+    notificationBody: 'Tracing your route',
+  },
+  deferredUpdatesInterval: 1000,
+  deferredUpdatesDistance: 1,
+}
+
 function Page() {
   const router = useRouter()
   const insets = useSafeAreaInsets()
@@ -48,14 +72,15 @@ function Page() {
     [record]
   )
 
+  const mapRef = useRef<MapView>(null)
   const [state, setState] = useState<TRACING_STATES>(TRACING_STATES.READY)
   const [isStopModalVisible, setIsStopModalVisible] = useState(false)
   const [isSaveModalVisible, setIsSaveModalVisible] = useState(false)
 
   const handleLocationChange = (e: UserLocationChangeEvent) => {
-    if (state !== TRACING_STATES.RECORDING) {
-      return
-    }
+    // if (state !== TRACING_STATES.RECORDING) {
+    //   return
+    // }
 
     const { coordinate } = e.nativeEvent
 
@@ -63,23 +88,69 @@ function Page() {
       return
     }
 
-    const { latitude, longitude, timestamp } = coordinate
+    const { latitude, longitude } = coordinate
+
+    // setRecord((prev) => [...prev, { latitude, longitude, timestamp }])
+
+    // console.log('Location Changed', { latitude, longitude, timestamp })
+
+    if (mapRef.current) {
+      mapRef.current.animateCamera({
+        center: {
+          latitude,
+          longitude,
+        },
+      })
+    }
+  }
+
+  const handleLocationWatch: TaskManagerTaskExecutor = (body) => {
+    if (state !== TRACING_STATES.RECORDING) {
+      return
+    }
+
+    const {
+      data: { locations },
+      error,
+    } = body as TaskManagerTaskBody<{ locations: LocationObject[] }>
+
+    console.log('Location Watched', locations)
+
+    const {
+      timestamp,
+      coords: { latitude, longitude },
+    } = locations[0]
 
     setRecord((prev) => [...prev, { latitude, longitude, timestamp }])
   }
 
-  const handleStart = () => {
+  useEffect(() => {
+    defineTask(LOCATION_WATCH_TASK_NAME, handleLocationWatch)
+  }, [])
+
+  const handleStart = async () => {
+    const { status } = await requestBackgroundPermissionsAsync()
+
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied')
+      return
+    }
+
     console.log('Start Recording')
 
     setState(TRACING_STATES.RECORDING)
+
+    startLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME, LOCATION_WATCH_CONFIG)
   }
 
   const handlePause = () => {
     setState(TRACING_STATES.PAUSED)
+    stopLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME)
   }
 
-  const handleResume = () => {
+  const handleResume = async () => {
     setState(TRACING_STATES.RECORDING)
+    startLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME, LOCATION_WATCH_CONFIG)
   }
 
   const handleStop = () => {
@@ -88,6 +159,7 @@ function Page() {
 
   const handleStopAction = () => {
     setState(TRACING_STATES.FINISHED)
+    stopLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME)
   }
 
   const handleSave = () => {
@@ -101,7 +173,7 @@ function Page() {
       },
     })
 
-    console.log(result)
+    console.log(JSON.stringify(result, null, 2))
 
     setState(TRACING_STATES.SAVED)
   }
@@ -135,6 +207,7 @@ function Page() {
           style={{
             flex: 1,
           }}
+          ref={mapRef}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           followsUserLocation={true}

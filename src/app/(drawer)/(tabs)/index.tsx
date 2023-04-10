@@ -1,12 +1,11 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Image, Pressable, Text, View } from 'react-native'
-import type MapView from 'react-native-maps'
-import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
-// eslint-disable-next-line import/default
-import ClusterMapView from 'react-native-map-clustering'
+
+// import ClusterMapView from 'react-native-map-clustering'
 import { useRef, useState } from 'react'
 import {
   getCurrentPositionAsync,
@@ -23,6 +22,7 @@ import { HeaderLogo } from '~/components/HeaderLogo'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { GetPreDefinedRoutes } from '~/graphql/query/routes'
 
 export default function App() {
   const { t } = useTranslation()
@@ -33,6 +33,8 @@ export default function App() {
   const [isModalVisible, setModalVisible] = useState(false)
 
   const { data } = useGraphQL(true, allPlaces)
+
+  const { data: routeData } = useGraphQL(true, GetPreDefinedRoutes, {})
 
   const mapRef = useRef<MapView>(null)
 
@@ -97,7 +99,7 @@ export default function App() {
           width: '100%',
         }}
       >
-        <ClusterMapView
+        <MapView
           ref={mapRef}
           style={{
             flex: 1,
@@ -110,31 +112,43 @@ export default function App() {
           pitchEnabled={false}
           {...MapCameraConfig}
         >
-          {data?.Places?.docs?.map((place) => {
-            if (!place || !place.geolocation) {
-              return null
-            }
+          {data?.Places?.docs
+            ?.filter((place) => place?.category === 'building')
+            .map((place) => {
+              if (!place || !place.geolocation) {
+                return null
+              }
 
+              return (
+                <Marker
+                  key={place.id}
+                  coordinate={{
+                    latitude: place?.geolocation[1],
+                    longitude: place?.geolocation[0],
+                  }}
+                  onPress={() => {
+                    setSelectedPlaceId(place.id as string)
+                    setModalVisible(true)
+                  }}
+                >
+                  <Image
+                    source={PinIcon[place.category]}
+                    style={{ width: 32, height: 42 }}
+                  />
+                </Marker>
+              )
+            })}
+          {routeData?.Routes?.docs?.map((route) => {
             return (
-              <Marker
-                key={place.id}
-                coordinate={{
-                  latitude: place?.geolocation[1],
-                  longitude: place?.geolocation[0],
-                }}
-                onPress={() => {
-                  setSelectedPlaceId(place.id as string)
-                  setModalVisible(true)
-                }}
-              >
-                <Image
-                  source={PinIcon[place.category]}
-                  style={{ width: 32, height: 42 }}
-                />
-              </Marker>
+              <Polyline
+                coordinates={route?.route}
+                strokeWidth={5}
+                key={route?.id}
+                strokeColor={'rgba(67, 196, 99, 0.4)'}
+              />
             )
           })}
-          {data?.Facilities?.docs?.map((facility) => {
+          {/* {data?.Facilities?.docs?.map((facility) => {
             if (!facility || !facility.geolocation) {
               return null
             }
@@ -171,8 +185,8 @@ export default function App() {
                 />
               </Marker>
             )
-          })}
-        </ClusterMapView>
+          })} */}
+        </MapView>
         <View
           style={{
             position: 'absolute',

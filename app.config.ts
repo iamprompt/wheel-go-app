@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    buildNumber: '15',
+    buildNumber: '16',
     supportsTablet: true,
     bundleIdentifier: 'com.nakama.wheelgo',
     config: {
@@ -31,10 +31,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       CFBundleAllowMixedLocalizations: true,
       NSLocationWhenInUseUsageDescription:
         'This app needs access to your location to find the nearest place.',
+      NSLocationAlwaysUsageDescription:
+        'This app needs access to your location to trace your route.',
+      NSLocationAlwaysAndWhenInUseUsageDescription:
+        'This app needs access to your location',
       NSPhotoLibraryUsageDescription:
         'This app needs access to your photo library to upload photo.',
       NSCameraUsageDescription:
         'This app needs access to your camera to take photo.',
+      UIBackgroundModes: ['location', 'fetch'],
     },
   },
   locales: {

@@ -32,6 +32,17 @@ export const SearchRoutes = graphql(/* GraphQL */ `
   }
 `)
 
+export const GetPreDefinedRoutes = graphql(/* GraphQL */ `
+  query GetPreDefinedRoutes($limit: Int = 100) {
+    Routes(limit: $limit) {
+      docs {
+        id
+        route
+      }
+    }
+  }
+`)
+
 export const GetPreDefinedRouteById = graphql(/* GraphQL */ `
   query GetPreDefinedRouteById($id: String!) {
     Route(id: $id) {
