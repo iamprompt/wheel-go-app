@@ -101,7 +101,7 @@ export default function Page() {
                 key={review.id}
                 name={review.place?.name?.th || ''}
                 rating={review.rating?.overall || 0}
-                category={review.place?.type}
+                category={review.place!.type!}
                 date={review.createdAt}
                 onPress={() => {
                   console.log('onPress')

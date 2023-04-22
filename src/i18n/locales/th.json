@@ -52,6 +52,7 @@
     "FOOD": "อาหาร",
     "INCIDENT": "เหตุฉุกเฉิน",
     "PARK": "สวนสาธารณะ",
+    "PARKING": "ที่จอดรถ",
     "RESIDENCE": "ที่พักอาศัย",
     "SPORT": "กีฬา",
     "TOILET": "ห้องน้ำ",
@@ -88,7 +89,8 @@
     "settings": "การตั้งค่า"
   },
   "explore": {
-    "search_route_placeholder": "ไปที่ไหน ?"
+    "search_route_placeholder": "ไปที่ไหน ?",
+    "trace_cta_button": "บันทึกการเดินทาง"
   },
   "places": {
     "accessibility_rating_title": "ระดับความเข้าถึง",

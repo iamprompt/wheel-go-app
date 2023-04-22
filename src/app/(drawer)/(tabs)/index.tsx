@@ -7,25 +7,25 @@ import { useTranslation } from 'react-i18next'
 
 // import ClusterMapView from 'react-native-map-clustering'
 import { useEffect, useRef, useState } from 'react'
-import {
-  getCurrentPositionAsync,
-  requestForegroundPermissionsAsync,
-} from 'expo-location'
-import { MapCameraConfig, MapStyle, PinIcon } from '~/const/map'
+
+import { MapCameraConfig, MapStyle } from '~/const/map'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
 import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
 import { PlaceExploreModal } from '~/components/PlaceExploreModal'
 import { HeaderLogo } from '~/components/HeaderLogo'
-import { HorizontalDivider } from '~/components/HorizontalDivider'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import {
   Place_Types,
   useGetNearbyPlacesLazyQuery,
+  useGetPlaceByIdLazyQuery,
   useGetPlacesQuery,
   useGetPreDefinedRoutesQuery,
 } from '~/generated-types'
+import { TraceCTAButton } from '~/components/TraceCTAButton'
+import { getCurrentPosition } from '~/utils/location'
+import { PLACE_TYPES_META } from '~/const/placeTypes'
 
 export default function App() {
   const { t } = useTranslation()
@@ -38,49 +38,81 @@ export default function App() {
   const { data: placesData } = useGetPlacesQuery()
   const { data: routesData } = useGetPreDefinedRoutesQuery()
 
-  const [getNearbyPlaces, { data: nearbyPlacesData }] =
-    useGetNearbyPlacesLazyQuery()
+  const [getSelectedPlace, { data: place }] = useGetPlaceByIdLazyQuery()
+
+  const [getNearbyPlaces] = useGetNearbyPlacesLazyQuery()
 
   const mapRef = useRef<MapView>(null)
 
   const handleCurrentLocation = async () => {
-    const { status } = await requestForegroundPermissionsAsync()
-    if (status !== 'granted') {
-      // setErrorMsg('Permission to access location was denied');
+    if (!mapRef.current) {
       return
     }
 
-    const location = await getCurrentPositionAsync({})
-    mapRef.current?.animateCamera(
-      {
-        center: {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
+    try {
+      const {
+        coords: { latitude, longitude },
+      } = await getCurrentPosition()
+
+      mapRef.current.animateCamera({
+        center: { latitude, longitude },
+        zoom: 18,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleSelectPlace = async (placeId: string) => {
+    setSelectedPlaceId(placeId)
+
+    try {
+      const { data } = await getSelectedPlace({
+        variables: {
+          id: placeId,
         },
-        zoom: 16,
-      },
-      { duration: 500 }
-    )
+      })
+
+      if (data && data.getPlaceById) {
+        mapRef.current?.animateCamera(
+          {
+            center: {
+              latitude: data.getPlaceById.location!.lat,
+              longitude: data.getPlaceById.location!.lng,
+            },
+            zoom: 18,
+          },
+          { duration: 250 }
+        )
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleGetNearbyPlaces = async () => {
-    const { status } = await requestForegroundPermissionsAsync()
-    if (status !== 'granted') {
-      // setErrorMsg('Permission to access location was denied');
-      return
+    try {
+      const {
+        coords: { latitude, longitude },
+      } = await getCurrentPosition()
+
+      const { data } = await getNearbyPlaces({
+        variables: {
+          lat: latitude,
+          lng: longitude,
+          radius: 2000,
+          limit: 1,
+          type: [Place_Types.Building, Place_Types.Food, Place_Types.Cafe],
+        },
+      })
+
+      if (data && data.getPlaces?.[0]) {
+        const { id } = data.getPlaces[0]
+        handleSelectPlace(id)
+      }
+    } catch (error) {
+      console.log(error)
     }
-
-    const location = await getCurrentPositionAsync({})
-
-    getNearbyPlaces({
-      variables: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-        radius: 2000,
-        limit: 1,
-        type: [Place_Types.Building, Place_Types.Food, Place_Types.Cafe],
-      },
-    })
   }
 
   useEffect(() => {
@@ -146,6 +178,14 @@ export default function App() {
               return null
             }
 
+            const typeMeta =
+              PLACE_TYPES_META[place.type!] || PLACE_TYPES_META.BUILDING
+
+            const isPlaceSelected = selectedPlaceId === place.id
+            const stateIcon = isPlaceSelected
+              ? typeMeta.mapIcon.selected
+              : typeMeta.mapIcon.default
+
             return (
               <Marker
                 key={place.id}
@@ -154,113 +194,50 @@ export default function App() {
                   longitude: place.location.lng,
                 }}
                 onPress={() => {
-                  setSelectedPlaceId(place.id as string)
-                  setModalVisible(true)
+                  if (isPlaceSelected || place.type === Place_Types.Curbcut) {
+                    return
+                  }
+
+                  handleSelectPlace(place.id)
                 }}
+                anchor={stateIcon.centerOffset}
               >
-                <Image
-                  source={PinIcon[place.type!]}
-                  style={{ width: 32, height: 42 }}
-                />
+                <Image source={stateIcon.file} style={stateIcon.size} />
               </Marker>
             )
           })}
-          {/* {data?.Places?.docs
-            ?.filter((place) => place?.category === 'building')
-            .map((place) => {
-              if (!place || !place.geolocation) {
-                return null
-              }
-
-              return (
-                <Marker
-                  key={place.id}
-                  coordinate={{
-                    latitude: place?.geolocation[1],
-                    longitude: place?.geolocation[0],
-                  }}
-                  onPress={() => {
-                    setSelectedPlaceId(place.id as string)
-                    setModalVisible(true)
-                  }}
-                >
-                  <Image
-                    source={PinIcon[place.category]}
-                    style={{ width: 32, height: 42 }}
-                  />
-                </Marker>
-              )
-            })} */}
-          {/* {routeData?.Routes?.docs?.map((route) => {
-            return (
-              <Polyline
-                coordinates={route?.route}
-                strokeWidth={5}
-                key={route?.id}
-                strokeColor={'rgba(67, 196, 99, 0.4)'}
-              />
-            )
-          })} */}
-          {/* {data?.Facilities?.docs?.map((facility) => {
-            if (!facility || !facility.geolocation) {
-              return null
-            }
-
-            const type =
-              facility.type === 'curbCut'
-                ? 'curbcut'
-                : facility.type === 'transportation'
-                ? 'bus-stop'
-                : facility.type === 'ramp'
-                ? 'ramp'
-                : null
-
-            if (!type) {
-              return null
-            }
-
-            return (
-              <Marker
-                key={facility.id}
-                coordinate={{
-                  latitude: facility?.geolocation[1],
-                  longitude: facility?.geolocation[0],
-                }}
-                anchor={type === 'curbcut' ? { x: 0.5, y: 0.5 } : undefined}
-              >
-                <Image
-                  source={PinIcon[type]}
-                  style={{
-                    ...(type === 'bus-stop'
-                      ? { width: 32, height: 42 }
-                      : { width: 32, height: 32 }),
-                  }}
-                />
-              </Marker>
-            )
-          })} */}
         </MapView>
-        {(nearbyPlacesData?.getPlaces || []).length > 0 ? (
+        <View
+          style={{
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            left: 0,
+            marginHorizontal: 16,
+          }}
+        >
           <View
             style={{
-              position: 'absolute',
-              right: 0,
-              bottom: 0,
-              left: 0,
-              marginHorizontal: 16,
+              alignSelf: 'center',
+              marginBottom: 16,
             }}
           >
-            <NearbyPlaceBlock
-              name={nearbyPlacesData?.getPlaces?.[0]?.name?.th || ''}
-              category={
-                nearbyPlacesData?.getPlaces?.[0]?.type || Place_Types.Building
-              }
+            <TraceCTAButton
               onPress={() => {
-                console.log('Pressed NearbyPlaceBlock')
+                router.push('/tracing')
               }}
             />
           </View>
-        ) : null}
+
+          <NearbyPlaceBlock
+            name={place?.getPlaceById.name || undefined}
+            category={place?.getPlaceById.type || undefined}
+            onPress={() => {
+              console.log('Pressed NearbyPlaceBlock')
+              setModalVisible(true)
+            }}
+          />
+        </View>
         <View
           style={{
             position: 'absolute',
@@ -278,46 +255,6 @@ export default function App() {
             shadowRadius: 3.84,
           }}
         >
-          <View
-            style={{
-              borderRadius: 8,
-            }}
-          >
-            <Pressable
-              style={{
-                backgroundColor: 'white',
-                padding: 8,
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-              }}
-              onPress={() => {
-                console.log('Pressed Route')
-              }}
-            >
-              <MaterialIcons name="route" size={24} />
-            </Pressable>
-            <HorizontalDivider />
-            <View
-              style={{
-                borderRadius: 8,
-              }}
-            >
-              <Pressable
-                style={{
-                  backgroundColor: 'white',
-                  padding: 8,
-                  borderBottomLeftRadius: 8,
-                  borderBottomRightRadius: 8,
-                }}
-                onPress={() => {
-                  console.log('Pressed MyLocation')
-                  handleCurrentLocation()
-                }}
-              >
-                <MaterialIcons name="near_me" size={24} />
-              </Pressable>
-            </View>
-          </View>
           <Pressable
             style={{
               backgroundColor: 'white',
@@ -325,11 +262,20 @@ export default function App() {
               borderRadius: 8,
             }}
             onPress={() => {
-              console.log('Pressed MyLocation')
-              router.push('/tracing')
+              console.log('Pressed Preferences')
             }}
           >
-            <MaterialIcons name="draw" size={24} />
+            <MaterialIcons name="tune" size={24} />
+          </Pressable>
+          <Pressable
+            style={{
+              backgroundColor: 'white',
+              padding: 8,
+              borderRadius: 8,
+            }}
+            onPress={() => handleCurrentLocation()}
+          >
+            <MaterialIcons name="near_me" size={24} />
           </Pressable>
         </View>
         <View

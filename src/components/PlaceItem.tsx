@@ -5,7 +5,8 @@ import { ListCategoryIcon } from '~/const/category'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import type { Place_Types } from '~/generated-types'
+import type { LanguageObject, Place_Types } from '~/generated-types'
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 
 export function PlaceItem({
   name,
@@ -16,7 +17,7 @@ export function PlaceItem({
   borderTop,
   borderBottom,
 }: {
-  name: string
+  name: LanguageObject | string
   rating: number
   category: Place_Types
   date: string
@@ -58,7 +59,9 @@ export function PlaceItem({
             marginBottom: 4,
           }}
         >
-          {name}
+          {typeof name === 'object'
+            ? getDisplayTextFromCurrentLanguage(name)
+            : name}
         </Text>
         <View
           style={{

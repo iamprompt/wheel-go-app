@@ -83,8 +83,20 @@ export const GetNearbyPlaces = gql`
 `
 
 export const SearchPlaces = gql`
-  query SearchPlaces($query: String!, $limit: Float = 100) {
-    getPlaces(options: { keyword: $query, limit: $limit }) {
+  query SearchPlaces(
+    $query: String!
+    $limit: Float = 100
+    $type: [PLACE_TYPES!] = []
+    $exclude: [String!] = []
+  ) {
+    getPlaces(
+      options: {
+        keyword: $query
+        limit: $limit
+        types: $type
+        exclude: $exclude
+      }
+    ) {
       id
       name {
         th

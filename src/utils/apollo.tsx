@@ -28,8 +28,6 @@ const client = new ApolloClient({
 const authLink = setContext(async (_, { headers }) => {
   const { accessToken: token } = await getUserToken()
 
-  console.log('token', token)
-
   return {
     headers: {
       ...headers,

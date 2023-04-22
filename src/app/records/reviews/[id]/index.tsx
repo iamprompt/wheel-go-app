@@ -131,7 +131,7 @@ function Page() {
             alignItems: 'center',
           }}
         >
-          <CategoryLabel name={place?.type} />
+          <CategoryLabel name={place!.type!} />
           <VerticalDivider />
           <Text
             style={{

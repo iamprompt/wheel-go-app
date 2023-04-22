@@ -51,6 +51,7 @@
     "FOOD": "Food",
     "INCIDENT": "Incident",
     "PARK": "Park",
+    "PARKING": "Parking",
     "RESIDENCE": "Residence",
     "SPORT": "Sport",
     "TOILET": "Toilet",
@@ -85,6 +86,10 @@
     "profile": "Profile",
     "records": "Records",
     "settings": "Settings"
+  },
+  "explore": {
+    "search_route_placeholder": "Find accessible routes?",
+    "trace_cta_button": "Trace your journey"
   },
   "places": {
     "accessibility_rating_title": "Accessibility Rating",

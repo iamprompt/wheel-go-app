@@ -1,16 +1,18 @@
 import { Image, Pressable, Text, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 import { BrandGradient } from './BrandGradient'
 import { ListCategoryIcon } from '~/const/category'
 import FONTS from '~/styles/fonts'
 import COLORS from '~/styles/colors'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import type { Place_Types } from '~/generated-types'
+import type { LanguageObject, Place_Types } from '~/generated-types'
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 
 interface NearbyPlaceBlockProps {
   onPress?: () => void
-  category: Place_Types
-  name: string
+  category: Place_Types | undefined
+  name: LanguageObject | string | undefined
 }
 
 export function NearbyPlaceBlock({
@@ -29,44 +31,80 @@ export function NearbyPlaceBlock({
           width: '100%',
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
+          gap: 8,
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
       >
-        <View>
+        {category && name ? (
           <View
             style={{
-              flexDirection: 'row',
-              gap: 8,
+              flex: 1,
             }}
           >
-            <Image
-              source={ListCategoryIcon[category]}
+            <View
               style={{
-                width: 24,
-                height: 24,
+                flexDirection: 'row',
+                gap: 8,
               }}
-            />
+            >
+              <Image
+                source={ListCategoryIcon[category]}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 14,
+                  color: COLORS.white,
+                }}
+              >
+                {t(`categories.${category}`)}
+              </Text>
+            </View>
             <Text
               style={{
                 fontFamily: FONTS.LSTH_BOLD,
-                fontSize: 14,
+                fontSize: 20,
                 color: COLORS.white,
               }}
+              numberOfLines={1}
+              ellipsizeMode="tail"
             >
-              {t(`categories.${category}`)}
+              {typeof name === 'object'
+                ? getDisplayTextFromCurrentLanguage(name)
+                : name}
             </Text>
           </View>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 20,
-              color: COLORS.white,
-            }}
-          >
-            {name}
-          </Text>
-        </View>
+        ) : (
+          <SkeletonPlaceholder>
+            <SkeletonPlaceholder.Item flexDirection="column" gap={8}>
+              <SkeletonPlaceholder.Item
+                flexDirection="row"
+                gap={8}
+                alignItems="center"
+              >
+                <SkeletonPlaceholder.Item
+                  marginTop={2}
+                  marginLeft={4}
+                  width={18}
+                  height={18}
+                  borderRadius={100}
+                />
+                <SkeletonPlaceholder.Item width={150} height={16} />
+              </SkeletonPlaceholder.Item>
+              <SkeletonPlaceholder.Item
+                width={240}
+                height={24}
+                opacity={50}
+                marginBottom={4}
+              />
+            </SkeletonPlaceholder.Item>
+          </SkeletonPlaceholder>
+        )}
         <View>
           <MaterialIcons name="info_outline" size={24} color={COLORS.white} />
         </View>

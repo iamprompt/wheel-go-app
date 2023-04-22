@@ -1,7 +1,6 @@
 import { StackActions } from '@react-navigation/native'
 import { useNavigation, useRouter, useSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import type {
   NativeSyntheticEvent,
   TextInputSubmitEditingEventData,
@@ -18,7 +17,6 @@ import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
-  const { t } = useTranslation()
   const insets = useSafeAreaInsets()
   const router = useRouter()
   const navigation = useNavigation()
@@ -44,14 +42,10 @@ function Page() {
 
   const toExclude = field === 'from' ? params.to : params.from
 
-  // const { data } = useGraphQL(!!query, SearchPlacesByKeyword, {
-  //   query,
-  //   exclude: [toExclude],
-  // })
-
   const { data } = useSearchPlacesQuery({
     variables: {
       query,
+      exclude: toExclude ? [toExclude] : undefined,
     },
   })
 

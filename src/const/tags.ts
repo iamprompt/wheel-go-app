@@ -10,47 +10,47 @@ interface TagLabel {
 
 export const TagsLabel: Record<string, TagLabel> = {
   building: {
-    label: 'categories.building',
+    label: 'categories.BUILDING',
     icon: 'apartment',
     color: COLORS.info[400],
   },
   incident: {
-    label: 'categories.incident',
+    label: 'categories.INCIDENT',
     icon: 'warning',
     color: COLORS.error[400],
   },
   transport: {
-    label: 'categories.transport',
+    label: 'categories.TRANSPORT',
     icon: 'directions_bus',
     color: COLORS.indigo[500],
   },
   cafe: {
-    label: 'categories.cafe',
+    label: 'categories.CAFE',
     icon: 'coffee',
     color: COLORS.toast[500],
   },
   food: {
-    label: 'categories.food',
+    label: 'categories.FOOD',
     icon: 'restaurant_menu',
     color: COLORS.pomegranate[400],
   },
   toilet: {
-    label: 'categories.toilet',
+    label: 'categories.TOILET',
     icon: 'wc',
     color: COLORS['fruit-punch'][600],
   },
   park: {
-    label: 'categories.park',
+    label: 'categories.PARK',
     icon: 'park',
     color: COLORS.lime[400],
   },
   residence: {
-    label: 'categories.residence',
+    label: 'categories.RESIDENCE',
     icon: 'cottage',
     color: COLORS.mint[600],
   },
   'curb-cut': {
-    label: 'categories.curb-cut',
+    label: 'categories.CURBCUT',
     icon: 'accessible',
     color: COLORS.magenta[500],
   },

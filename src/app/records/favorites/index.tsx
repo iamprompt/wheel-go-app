@@ -73,7 +73,7 @@ export default function Page() {
               color: COLORS['french-vanilla'][500],
             }}
           >
-            {favoritePlaces.length} {t('units.places')}
+            {data?.me.metadata?.favorites?.length} {t('units.places')}
           </Text>
         </View>
         <View
@@ -93,7 +93,7 @@ export default function Page() {
                 key={`favoritePlace-${place.id}-${i}`}
                 name={place.name?.th || place.name?.en || ''}
                 rating={4.5}
-                category={place.type}
+                category={place.type!}
                 date={favoritePlace.addedAt}
                 onPress={() => {
                   router.push(`/places/${place.id}`)

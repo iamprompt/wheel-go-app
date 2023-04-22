@@ -1,9 +1,10 @@
-import type { FC } from 'react'
+import type { ComponentProps, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { PressableProps } from 'react-native'
 import { Pressable, Text } from 'react-native'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export enum ButtonVariant {
   Primary = 'primary',
@@ -17,17 +18,28 @@ type ButtonProps = {
   variant?: ButtonVariant
   label: string
   fullWidth?: boolean
+  backgroundColor?: string
+  borderColor?: string
+  textColor?: string
+  icon?: ComponentProps<typeof MaterialIcons>['name']
+  iconPosition?: 'left' | 'right'
 } & Omit<PressableProps, 'style'>
 
 const Button: FC<ButtonProps> = ({
   variant = ButtonVariant.Primary,
   label,
   fullWidth = false,
+  backgroundColor,
+  borderColor,
+  textColor,
+  icon,
+  iconPosition = 'left',
   ...props
 }) => {
   const { t } = useTranslation()
   const BackgroundColor =
-    variant === ButtonVariant.Primary
+    backgroundColor ||
+    (variant === ButtonVariant.Primary
       ? COLORS.magenta[500]
       : variant === ButtonVariant.Secondary
       ? COLORS['french-vanilla'][100]
@@ -35,10 +47,11 @@ const Button: FC<ButtonProps> = ({
       ? COLORS['french-vanilla'][100]
       : variant === ButtonVariant.Danger
       ? COLORS['french-vanilla'][100]
-      : undefined
+      : undefined)
 
   const BorderColor =
-    variant === ButtonVariant.Primary
+    borderColor ||
+    (variant === ButtonVariant.Primary
       ? COLORS.magenta[500]
       : variant === ButtonVariant.Secondary
       ? COLORS['french-vanilla'][300]
@@ -48,22 +61,29 @@ const Button: FC<ButtonProps> = ({
       ? COLORS.error[500]
       : variant === ButtonVariant.Text
       ? 'transparent'
-      : undefined
+      : undefined)
 
   const TextColor =
-    variant === ButtonVariant.Primary
+    textColor ||
+    (variant === ButtonVariant.Primary
       ? COLORS.white
       : variant === ButtonVariant.Danger
       ? COLORS.error[500]
-      : COLORS.magenta[600]
+      : COLORS.magenta[600])
 
   const BorderStyle = variant === ButtonVariant.Dash ? 'dashed' : 'solid'
+
+  const IconElement = icon ? (
+    <MaterialIcons name={icon} size={24} color={TextColor} />
+  ) : null
 
   return (
     <Pressable
       {...props}
       style={{
         flex: fullWidth ? 1 : 0,
+        flexDirection: 'row',
+        gap: 8,
         borderRadius: 12,
         height: 48,
         paddingHorizontal: 16,
@@ -78,6 +98,7 @@ const Button: FC<ButtonProps> = ({
         borderStyle: BorderStyle,
       }}
     >
+      {icon && iconPosition === 'left' && IconElement}
       <Text
         style={{
           fontFamily: FONTS.LSTH_BOLD,
@@ -87,6 +108,7 @@ const Button: FC<ButtonProps> = ({
       >
         {t(label)}
       </Text>
+      {icon && iconPosition === 'right' && IconElement}
     </Pressable>
   )
 }

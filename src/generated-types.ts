@@ -686,6 +686,8 @@ export type GetNearbyPlacesQuery = { __typename?: 'Query', getPlaces: Array<{ __
 export type SearchPlacesQueryVariables = Exact<{
   query: Scalars['String'];
   limit?: InputMaybe<Scalars['Float']>;
+  type?: InputMaybe<Array<Place_Types> | Place_Types>;
+  exclude?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
@@ -1184,8 +1186,10 @@ export type GetNearbyPlacesQueryHookResult = ReturnType<typeof useGetNearbyPlace
 export type GetNearbyPlacesLazyQueryHookResult = ReturnType<typeof useGetNearbyPlacesLazyQuery>;
 export type GetNearbyPlacesQueryResult = Apollo.QueryResult<GetNearbyPlacesQuery, GetNearbyPlacesQueryVariables>;
 export const SearchPlacesDocument = gql`
-    query SearchPlaces($query: String!, $limit: Float = 100) {
-  getPlaces(options: {keyword: $query, limit: $limit}) {
+    query SearchPlaces($query: String!, $limit: Float = 100, $type: [PLACE_TYPES!] = [], $exclude: [String!] = []) {
+  getPlaces(
+    options: {keyword: $query, limit: $limit, types: $type, exclude: $exclude}
+  ) {
     id
     name {
       th
@@ -1210,6 +1214,8 @@ export const SearchPlacesDocument = gql`
  *   variables: {
  *      query: // value for 'query'
  *      limit: // value for 'limit'
+ *      type: // value for 'type'
+ *      exclude: // value for 'exclude'
  *   },
  * });
  */
