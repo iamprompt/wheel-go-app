@@ -26,6 +26,8 @@ import {
 import { TraceCTAButton } from '~/components/TraceCTAButton'
 import { getCurrentPosition } from '~/utils/location'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
+import { MapPrefsModal } from '~/components/MapPrefsModal'
+import { Modal } from '~/components/Modal'
 
 export default function App() {
   const { t } = useTranslation()
@@ -229,14 +231,16 @@ export default function App() {
             />
           </View>
 
-          <NearbyPlaceBlock
-            name={place?.getPlaceById.name || undefined}
-            category={place?.getPlaceById.type || undefined}
-            onPress={() => {
-              console.log('Pressed NearbyPlaceBlock')
-              setModalVisible(true)
-            }}
-          />
+          {selectedPlaceId !== null ? (
+            <NearbyPlaceBlock
+              name={place?.getPlaceById.name || undefined}
+              category={place?.getPlaceById.type || undefined}
+              onPress={() => {
+                console.log('Pressed NearbyPlaceBlock')
+                setModalVisible(true)
+              }}
+            />
+          ) : null}
         </View>
         <View
           style={{
@@ -246,13 +250,6 @@ export default function App() {
             gap: 8,
             marginHorizontal: 16,
             marginVertical: 16,
-            shadowColor: COLORS.black,
-            shadowOffset: {
-              width: 0,
-              height: 0,
-            },
-            shadowOpacity: 0.2,
-            shadowRadius: 3.84,
           }}
         >
           <Pressable
@@ -260,22 +257,24 @@ export default function App() {
               backgroundColor: 'white',
               padding: 8,
               borderRadius: 8,
+              ...GlobalStyle.shadow,
             }}
             onPress={() => {
               console.log('Pressed Preferences')
             }}
           >
-            <MaterialIcons name="tune" size={24} />
+            <MaterialIcons name="tune" size={24} color={COLORS.magenta[500]} />
           </Pressable>
           <Pressable
             style={{
               backgroundColor: 'white',
               padding: 8,
               borderRadius: 8,
+              ...GlobalStyle.shadow,
             }}
             onPress={() => handleCurrentLocation()}
           >
-            <MaterialIcons name="near_me" size={24} />
+            <MaterialIcons name="near_me" size={24} color={COLORS.info[400]} />
           </Pressable>
         </View>
         <View
@@ -293,16 +292,10 @@ export default function App() {
               backgroundColor: 'white',
               height: 48,
               borderRadius: 8,
-              shadowColor: COLORS.black,
-              shadowOffset: {
-                width: 0,
-                height: 0,
-              },
-              shadowOpacity: 0.2,
-              shadowRadius: 3.84,
               flexDirection: 'row',
               alignItems: 'center',
               padding: 12,
+              ...GlobalStyle.shadow,
             }}
             onPress={() => {
               console.log('Pressed Search')
@@ -339,6 +332,8 @@ export default function App() {
           }}
         />
       ) : null}
+
+      <Modal isVisible={true} modal={MapPrefsModal} onClose={() => {}} />
     </View>
   )
 }

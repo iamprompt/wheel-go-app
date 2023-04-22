@@ -3,7 +3,7 @@ import COLORS from '~/styles/colors'
 
 type ModalProps<TModal> = {
   isVisible: boolean
-  modal: (props: TModal) => JSX.Element
+  modal: (props: TModal) => JSX.Element | null
 } & TModal
 
 export function Modal<TModal>(props: ModalProps<TModal>) {

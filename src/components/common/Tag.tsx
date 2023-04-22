@@ -62,6 +62,7 @@ export function Tag({
         borderWidth,
         borderRadius,
         gap: 4,
+        paddingHorizontal: 8,
       }}
     >
       {iconPosition === 'left' && IconElement}

@@ -48,7 +48,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   [Place_Types.Incident]: {
     label: 'categories.INCIDENT',
     icon: 'warning',
-    color: COLORS.error[400],
+    color: COLORS.warning[400],
     mapIcon: {
       default: {
         file: require('~/assets/places/incident-pin.png'),
@@ -116,7 +116,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   [Place_Types.Toilet]: {
     label: 'categories.TOILET',
     icon: 'wc',
-    color: COLORS.pomegranate[400],
+    color: COLORS['fruit-punch'][400],
     mapIcon: {
       default: {
         file: require('~/assets/places/toilet-pin.png'),
@@ -150,7 +150,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   [Place_Types.Residence]: {
     label: 'categories.RESIDENCE',
     icon: 'cottage',
-    color: COLORS.mint[400],
+    color: COLORS.mint[600],
     mapIcon: {
       default: {
         file: require('~/assets/places/residence-pin.png'),
@@ -184,7 +184,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   [Place_Types.Parking]: {
     label: 'categories.PARKING',
     icon: 'local_parking',
-    color: COLORS.magenta[400],
+    color: COLORS.jewel[600],
     mapIcon: {
       default: {
         file: require('~/assets/places/parking-pin.png'),
