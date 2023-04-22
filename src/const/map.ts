@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react'
 import type MapView from 'react-native-maps'
+import { Place_Types } from '~/generated-types'
 
 export const MapStyle = [
   {
@@ -80,17 +81,17 @@ export const MapCameraConfig: ComponentProps<typeof MapView> = {
   },
 }
 
-export const PinIcon: Record<string, number> = {
-  building: require('~/assets/places/building-pin.png'),
-  sport: require('~/assets/places/building-pin.png'),
-  cafe: require('~/assets/places/cafe-pin.png'),
-  food: require('~/assets/places/food-pin.png'),
-  'bus-stop': require('~/assets/places/bus-stop-pin.png'),
-  curbcut: require('~/assets/places/curbcut-pin.png'),
-  incident: require('~/assets/places/incident-pin.png'),
-  park: require('~/assets/places/park-pin.png'),
-  parking: require('~/assets/places/parking-pin.png'),
-  toilet: require('~/assets/places/toilet-pin.png'),
-  residence: require('~/assets/places/residence-pin.png'),
-  ramp: require('~/assets/places/ramp-pin.png'),
+export const PinIcon: Record<Place_Types, number> = {
+  [Place_Types.Building]: require('~/assets/places/building-pin.png'),
+  [Place_Types.Sport]: require('~/assets/places/building-pin.png'),
+  [Place_Types.Cafe]: require('~/assets/places/cafe-pin.png'),
+  [Place_Types.Food]: require('~/assets/places/food-pin.png'),
+  [Place_Types.Transport]: require('~/assets/places/bus-stop-pin.png'),
+  [Place_Types.Curbcut]: require('~/assets/places/curbcut-pin.png'),
+  [Place_Types.Incident]: require('~/assets/places/incident-pin.png'),
+  [Place_Types.Park]: require('~/assets/places/park-pin.png'),
+  [Place_Types.Parking]: require('~/assets/places/parking-pin.png'),
+  [Place_Types.Toilet]: require('~/assets/places/toilet-pin.png'),
+  [Place_Types.Residence]: require('~/assets/places/residence-pin.png'),
+  // [Place_Types]: require('~/assets/places/ramp-pin.png'),
 }

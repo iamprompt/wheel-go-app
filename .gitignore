@@ -21,6 +21,8 @@ web-build/
 
 *.apk
 *.ipa
+*.aab
+*.tar.gz
 
 ios/certs/*
 credentials.json

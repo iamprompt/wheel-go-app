@@ -3,19 +3,18 @@ import { Stack, useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { CategoryLabel } from '~/components/CategoryLabel'
-import { AllAnnouncements } from '~/graphql/query/announcements'
+import { useGetAnnouncementsQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const { data } = useGraphQL(true, AllAnnouncements)
+  const { data } = useGetAnnouncementsQuery()
 
   return (
     <ScrollView style={[GlobalStyle.container]}>
@@ -27,7 +26,7 @@ function Page() {
       />
 
       <View>
-        {data?.Announcements?.docs?.map((item, i) => {
+        {data?.getAnnouncements?.map((item, i) => {
           if (!item) {
             return null
           }
@@ -72,8 +71,8 @@ function Page() {
                     }}
                   >
                     {getDisplayTextFromCurrentLanguage({
-                      th: item.titleTH,
-                      en: item.titleEN,
+                      th: item.title?.th,
+                      en: item.title?.en,
                     })}
                   </Text>
                   {item.place ? (
@@ -85,8 +84,8 @@ function Page() {
                       }}
                     >
                       {getDisplayTextFromCurrentLanguage({
-                        th: item.place?.nameTH,
-                        en: item.place?.nameEN,
+                        th: item.place?.name?.th,
+                        en: item.place?.name?.en,
                       })}
                     </Text>
                   ) : null}

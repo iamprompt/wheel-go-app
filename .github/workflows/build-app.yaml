@@ -64,7 +64,7 @@ jobs:
         run: pnpm run build:ios --non-interactive --output=./app-build
         env:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-          WHEELGO_CMS_API: ${{ secrets.WHEELGO_CMS_API }}
+          WHEELGO_API: ${{ secrets.WHEELGO_API }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2

@@ -14,12 +14,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import { Image } from 'expo-image'
 import { StatusBar } from 'expo-status-bar'
-import { GetPlaceById } from '~/graphql/query/places'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { useGraphQL } from '~/utils/useGraphQL'
 import { IconActionButton } from '~/components/IconActionButton'
 import { ListCategoryIcon } from '~/const/category'
 import { BrandGradient } from '~/components/BrandGradient'
@@ -34,9 +32,7 @@ import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import Button, { ButtonVariant } from '~/components/Button'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
-import { ReviewItem } from '~/components/ReviewItem'
-import { GetReviewsByPlaceId } from '~/graphql/query/reviews'
-import { FACILITIES } from '~/const/facility'
+import { useGetMyReviewsQuery, useGetPlaceByIdQuery } from '~/generated-types'
 
 function Page() {
   const { t } = useTranslation()
@@ -44,10 +40,11 @@ function Page() {
   const { id } = useSearchParams<{ id: string }>()
   const router = useRouter()
 
-  const { data = {} } = useGraphQL(true, GetPlaceById, {
-    id: id!,
+  const { data } = useGetPlaceByIdQuery({
+    variables: {
+      id: id!,
+    },
   })
-  const { Place } = data
 
   const [contentOffsetY, setContentOffsetY] = useState(0)
   const handlePageScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -68,29 +65,17 @@ function Page() {
     }
 
     return getDisplayTextFromCurrentLanguage({
-      en: Place?.nameEN || '',
-      th: Place?.nameTH || '',
+      en: data?.getPlaceById?.name?.en || '',
+      th: data?.getPlaceById?.name?.th || '',
     })
-  }, [contentOffsetY, Place?.nameEN, Place?.nameTH])
+  }, [contentOffsetY, data?.getPlaceById?.name])
 
-  const { data: reviewsData } = useGraphQL(!!id, GetReviewsByPlaceId, {
-    placeId: id!,
-    limit: 5,
-  })
+  const { data: reviewsData } = useGetMyReviewsQuery()
 
-  const {
-    nameEN,
-    nameTH,
-    placeAddressEN,
-    placeAddressTH,
-    category,
-    image,
-    website,
-    phone,
-    geolocation,
-  } = Place || {}
+  const { name, address, type, images, metadata, location } =
+    data?.getPlaceById || {}
 
-  if (!id || !Place) {
+  if (!id || !data?.getPlaceById) {
     return null
   }
 
@@ -119,7 +104,7 @@ function Page() {
         }}
       >
         <ImageWithFallback
-          src={image?.url}
+          src={images?.[0]?.url}
           width="100%"
           height={insets.top + 44 + 150}
         />
@@ -137,7 +122,7 @@ function Page() {
               }}
             >
               <Image
-                source={ListCategoryIcon[category!]}
+                source={ListCategoryIcon[type!]}
                 style={{
                   width: 24,
                   height: 24,
@@ -150,7 +135,7 @@ function Page() {
                   color: COLORS.white,
                 }}
               >
-                {t(`categories.${category}`)}
+                {t(`categories.${type}`)}
               </Text>
             </View>
 
@@ -162,8 +147,8 @@ function Page() {
               }}
             >
               {getDisplayTextFromCurrentLanguage({
-                en: nameEN,
-                th: nameTH,
+                en: name?.en,
+                th: name?.th,
               })}
             </Text>
           </View>
@@ -173,7 +158,7 @@ function Page() {
             paddingHorizontal: 16,
           }}
         >
-          {placeAddressEN || placeAddressTH ? (
+          {address ? (
             <View
               style={{
                 paddingVertical: 24,
@@ -198,8 +183,8 @@ function Page() {
                 }}
               >
                 {getDisplayTextFromCurrentLanguage({
-                  en: placeAddressEN || '',
-                  th: placeAddressTH || '',
+                  en: address.en || '',
+                  th: address.th || '',
                 })}
               </Text>
             </View>
@@ -215,7 +200,7 @@ function Page() {
               label={t('places.show_on_map')}
               icon="place"
               onPress={() => {
-                const address = geolocation?.reverse().join(',')
+                const address = [location?.lat, location?.lng].join(',')
                 const url = Platform.select({
                   ios: `maps:0,0?q=${address}`,
                   android: `geo:0,0?q=${address}`,
@@ -228,14 +213,14 @@ function Page() {
               label={t('places.contact')}
               icon="call"
               onPress={() => {
-                phone && Linking.openURL(`tel:${phone}`)
+                metadata?.phone && Linking.openURL(`tel:${metadata.phone}`)
               }}
             />
             <IconActionButton
               label={t('places.website')}
               icon="link"
               onPress={() => {
-                website && Linking.openURL(website)
+                metadata?.website && Linking.openURL(metadata.website)
               }}
             />
             <IconActionButton
@@ -243,7 +228,7 @@ function Page() {
               icon="share"
               onPress={async () => {
                 const result = await Share.share({
-                  message: website || '',
+                  message: metadata?.website || '',
                 })
 
                 result.action === Share.sharedAction && console.log('shared')
@@ -381,7 +366,7 @@ function Page() {
               {t('places.review_text')}
             </Text>
           </View>
-          {reviewsData?.Reviews?.docs?.map((review) => {
+          {/* {reviewsData?.getReviews?.map((review) => {
             const { id, user, comment, rating, official, createdAt } =
               review || {}
 
@@ -435,7 +420,7 @@ function Page() {
                 />
               </View>
             )
-          })}
+          })} */}
           <Button
             label={t('reviews.see_all_reviews')}
             variant={ButtonVariant.Secondary}

@@ -1,28 +1,20 @@
 import { Stack, useRouter } from 'expo-router'
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { PlaceItem } from '~/components/PlaceItem'
-import { GetUserFavoritePlaces } from '~/graphql/query/user'
+import { useGetMyFavoritePlacesQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 export default function Page() {
   const router = useRouter()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
 
-  const { data } = useGraphQL(true, GetUserFavoritePlaces)
-  const favoritePlaces = useMemo(
-    () =>
-      data?.meUser?.user?.favoritePlaces?.filter((place) => !!place.place) ||
-      [],
-    [data?.meUser?.user?.favoritePlaces]
-  )
+  const { data } = useGetMyFavoritePlacesQuery()
 
   return (
     <ScrollView style={[GlobalStyle.container]}>
@@ -89,7 +81,7 @@ export default function Page() {
             marginTop: 24,
           }}
         >
-          {favoritePlaces.map((favoritePlace, i) => {
+          {data?.me.metadata?.favorites?.map((favoritePlace, i) => {
             if (!favoritePlace.place) {
               return null
             }
@@ -99,9 +91,9 @@ export default function Page() {
             return (
               <PlaceItem
                 key={`favoritePlace-${place.id}-${i}`}
-                name={place.nameTH}
+                name={place.name?.th || place.name?.en || ''}
                 rating={4.5}
-                category={place.category}
+                category={place.type}
                 date={favoritePlace.addedAt}
                 onPress={() => {
                   router.push(`/places/${place.id}`)

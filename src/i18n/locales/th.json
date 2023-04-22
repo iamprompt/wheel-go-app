@@ -46,16 +46,16 @@
     "skip": "ข้าม"
   },
   "categories": {
-    "building": "อาคาร",
-    "cafe": "คาเฟ่",
-    "curb-cut": "ทางลาดขนาดย่อม",
-    "food": "อาหาร",
-    "incident": "เหตุฉุกเฉิน",
-    "park": "สวนสาธารณะ",
-    "residence": "ที่พักอาศัย",
-    "sport": "กีฬา",
-    "toilet": "ห้องน้ำ",
-    "transport": "การขนส่ง"
+    "BUILDING": "อาคาร",
+    "CAFE": "คาเฟ่",
+    "CURBCUT": "ทางลาดขนาดย่อม",
+    "FOOD": "อาหาร",
+    "INCIDENT": "เหตุฉุกเฉิน",
+    "PARK": "สวนสาธารณะ",
+    "RESIDENCE": "ที่พักอาศัย",
+    "SPORT": "กีฬา",
+    "TOILET": "ห้องน้ำ",
+    "TRANSPORT": "การขนส่ง"
   },
   "facilities": {
     "assistance": "ผู้ช่วย",

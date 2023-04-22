@@ -11,6 +11,7 @@ import FONTS, { loadFonts } from '~/styles/fonts'
 import { PreferencesProvider } from '~/context/usePreferences'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { AuthProvider } from '~/context/useAuth'
+import { WheelGoApolloProvider } from '~/utils/apollo'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -32,26 +33,28 @@ function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <QueryClientProvider client={new QueryClient()}>
-        <PreferencesProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-              headerTitleStyle: {
-                fontFamily: FONTS.LSTH_BOLD,
-                fontSize: 20,
-              },
-              headerBackTitleStyle: {
-                fontFamily: FONTS.LSTH_BOLD,
-              },
-              headerBackTitleVisible: false,
-              headerLeft: HeaderBackButton,
-            }}
-          />
-        </PreferencesProvider>
-      </QueryClientProvider>
-    </AuthProvider>
+    <WheelGoApolloProvider>
+      <AuthProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <PreferencesProvider>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                headerTitleStyle: {
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 20,
+                },
+                headerBackTitleStyle: {
+                  fontFamily: FONTS.LSTH_BOLD,
+                },
+                headerBackTitleVisible: false,
+                headerLeft: HeaderBackButton,
+              }}
+            />
+          </PreferencesProvider>
+        </QueryClientProvider>
+      </AuthProvider>
+    </WheelGoApolloProvider>
   )
 }
 

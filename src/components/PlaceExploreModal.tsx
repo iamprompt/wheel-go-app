@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Image, Modal, Text, View } from 'react-native'
 import { useRouter } from 'expo-router'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { getDistance } from 'geolib'
 import { BrandGradient } from './BrandGradient'
 import { HorizontalDivider } from './HorizontalDivider'
 import Button, { ButtonVariant } from './Button'
@@ -14,12 +15,11 @@ import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { ListCategoryIcon } from '~/const/category'
-import { useGraphQL } from '~/utils/useGraphQL'
 import {
-  GetNearbyPlacesFromLocation,
-  GetPlaceById,
-} from '~/graphql/query/places'
-import { getNearestPlaces } from '~/utils/geo'
+  Place_Types,
+  useGetNearbyPlacesLazyQuery,
+  useGetPlaceByIdQuery,
+} from '~/generated-types'
 
 interface PlaceExploreModalProps {
   isVisible: boolean
@@ -35,37 +35,56 @@ export function PlaceExploreModal({
   const { t } = useTranslation()
   const router = useRouter()
 
-  const { data: placeData } = useGraphQL(true, GetPlaceById, {
-    id: placeId,
+  const { data: placeData } = useGetPlaceByIdQuery({
+    variables: {
+      id: placeId,
+    },
   })
 
-  const { data: nearbyPlacesData = {} } = useGraphQL(
-    !!placeData?.Place,
-    GetNearbyPlacesFromLocation,
-    {
-      lat: placeData?.Place?.geolocation?.[1] || 0,
-      lng: placeData?.Place?.geolocation?.[0] || 0,
-      distance: 5000,
-      limit: 1000,
+  const [getNearbyPlaces, { data: nearbyPlacesData }] =
+    useGetNearbyPlacesLazyQuery()
+
+  useEffect(() => {
+    if (!placeData?.getPlaceById.location) {
+      return
     }
-  )
+
+    getNearbyPlaces({
+      variables: {
+        lat: placeData.getPlaceById.location.lat,
+        lng: placeData.getPlaceById.location.lng,
+        radius: 1000,
+        limit: 3,
+        exclude: [placeId],
+        type: [
+          Place_Types.Building,
+          Place_Types.Food,
+          Place_Types.Cafe,
+          Place_Types.Park,
+          Place_Types.Residence,
+        ],
+      },
+    })
+  }, [placeData])
 
   const nearbyPlaces = useMemo(() => {
-    if (!nearbyPlacesData?.Places || !placeData?.Place?.geolocation) {
+    if (!nearbyPlacesData?.getPlaces) {
       return []
     }
 
-    return (
-      getNearestPlaces(nearbyPlacesData, {
-        lat: placeData.Place.geolocation[1],
-        lng: placeData.Place.geolocation[0],
-        limit: 3,
-        exclude: [placeData.Place.id!],
-      }) || []
-    )
+    return nearbyPlacesData.getPlaces.map((place) => ({
+      ...place,
+      distance: getDistance(
+        {
+          latitude: placeData!.getPlaceById.location!.lat!,
+          longitude: placeData!.getPlaceById.location!.lng!,
+        },
+        { latitude: place.location!.lat!, longitude: place.location!.lng! }
+      ),
+    }))
   }, [nearbyPlacesData])
 
-  if (!placeData || !placeData.Place) {
+  if (!placeData || !placeData.getPlaceById) {
     return null
   }
 
@@ -124,7 +143,7 @@ export function PlaceExploreModal({
                 }}
               >
                 <Image
-                  source={ListCategoryIcon[placeData.Place.category]}
+                  source={ListCategoryIcon[placeData.getPlaceById.type!]}
                   style={{
                     width: 24,
                     height: 24,
@@ -137,7 +156,7 @@ export function PlaceExploreModal({
                     color: COLORS.white,
                   }}
                 >
-                  {t(`categories.${placeData.Place.category}`)}
+                  {t(`categories.${placeData.getPlaceById.type}`)}
                 </Text>
               </View>
               <Text
@@ -147,7 +166,7 @@ export function PlaceExploreModal({
                   color: COLORS.white,
                 }}
               >
-                {placeData.Place.nameTH}
+                {placeData.getPlaceById.name?.th}
               </Text>
             </View>
             <View
@@ -258,7 +277,7 @@ export function PlaceExploreModal({
                       }}
                     >
                       <Image
-                        source={ListCategoryIcon[place.category!]}
+                        source={ListCategoryIcon[place.type!]}
                         style={{
                           width: 24,
                           height: 24,
@@ -273,7 +292,7 @@ export function PlaceExploreModal({
                         numberOfLines={1}
                         ellipsizeMode="tail"
                       >
-                        {place.nameTH}
+                        {place.name?.th}
                       </Text>
                     </View>
                     <View>

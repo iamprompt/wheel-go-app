@@ -1,13 +1,12 @@
 import { useRouter } from 'expo-router'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { LoginUser, MeProfile } from '~/graphql/mutation/auth'
+import { useGetMyProfileLazyQuery, useLoginMutation } from '~/generated-types'
 import {
   getUserToken,
   removeUserToken,
   setUserToken,
 } from '~/utils/asyncStorage'
-import { WheelGoGraphQL } from '~/utils/graphql'
 import { getGravatarUrl } from '~/utils/gravatar'
 
 interface AuthContextData {
@@ -47,6 +46,9 @@ function useAuthProvider() {
   const router = useRouter()
   const [user, setUser] = useState<null | User>(null)
 
+  const [getProfile, { data: profileData }] = useGetMyProfileLazyQuery()
+  const [loginUser, { data: loginData }] = useLoginMutation()
+
   const handleUserChange = async () => {
     const token = await getUserToken()
 
@@ -55,24 +57,24 @@ function useAuthProvider() {
       return
     }
 
-    const result = await WheelGoGraphQL(MeProfile, {})
+    const result = await getProfile()
 
-    if (!result || !result.meUser) {
-      throw new Error('Login failed')
+    if (!result || !result.data?.me) {
+      throw new Error('Get User Profile Failed')
     }
 
-    const { user } = result.meUser
+    const { me } = result.data
 
-    if (user) {
+    if (me) {
       setUser({
-        id: user.id || '',
-        username: user.username || '',
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        email: user.email || '',
-        image: getGravatarUrl(user.email || ''),
-        impairmentLevel: user.impairmentLevel?.replace('_', '') || '',
-        equipment: user.equipment || '',
+        id: me.id || '',
+        username: me.username || '',
+        firstName: me.firstname || '',
+        lastName: me.lastname || '',
+        email: '',
+        image: getGravatarUrl(''),
+        impairmentLevel: '',
+        equipment: '',
       })
     }
   }
@@ -82,18 +84,22 @@ function useAuthProvider() {
   }, [])
 
   const signin = async (email: string, password: string) => {
-    const result = await WheelGoGraphQL(LoginUser, {
-      email,
-      password,
+    const { data, errors } = await loginUser({
+      variables: {
+        email,
+        password,
+      },
     })
 
-    if (!result || !result.loginUser) {
+    console.log(data, errors)
+
+    if (!data) {
       throw new Error('Login failed')
     }
 
-    const { token } = result.loginUser
+    const { accessToken, refreshToken } = data.login
 
-    await setUserToken(token!)
+    await setUserToken(accessToken, refreshToken)
     await handleUserChange()
 
     router.replace('/')

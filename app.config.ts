@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 // React Native Maps: https://docs.expo.dev/versions/latest/sdk/map-view/
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY
-const WHEELGO_CMS_API = process.env.WHEELGO_CMS_API
+const WHEELGO_API = process.env.WHEELGO_API
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -59,7 +59,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   extra: {
-    WHEELGO_CMS_API,
+    WHEELGO_API,
     eas: {
       projectId: '5fad5236-a703-4ae6-ba12-3f09eab47475',
     },

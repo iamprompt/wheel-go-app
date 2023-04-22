@@ -1,51 +1,63 @@
-import { graphql } from '../gql'
+import { gql } from '@apollo/client'
 
-export const AllAnnouncements = graphql(/* GraphQL */ `
-  query AllAnnouncements {
-    Announcements(limit: 1000) {
-      docs {
-        id
-        titleTH
-        titleEN
-        descriptionTH
-        descriptionEN
-        tags
-        place {
-          id
-          nameTH
-          nameEN
-        }
-        createdAt
+export const GetAnnouncements = gql`
+  query GetAnnouncements {
+    getAnnouncements {
+      id
+      title {
+        th
+        en
       }
+      content {
+        th
+        en
+      }
+      tags
+      place {
+        id
+        name {
+          th
+          en
+        }
+      }
+      createdAt
     }
   }
-`)
+`
 
-export const GetAnnouncementById = graphql(/* GraphQL */ `
+export const GetAnnouncementById = gql`
   query GetAnnouncementById($id: String!) {
-    Announcement(id: $id) {
+    getAnnouncementById(id: $id) {
       id
-      titleTH
-      titleEN
-      descriptionTH
-      descriptionEN
+      title {
+        th
+        en
+      }
+      content {
+        th
+        en
+      }
       tags
-      image {
+      images {
+        id
         url
         width
         height
       }
-      contact {
+      metadata {
         phone
         email
         line
       }
       place {
         id
-        nameTH
-        nameEN
+        name {
+          th
+          en
+        }
+        type
       }
       createdAt
     }
   }
-`)
+`

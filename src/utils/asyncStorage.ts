@@ -17,13 +17,23 @@ export async function setAppLanguage(language: string) {
 }
 
 export async function getUserToken() {
-  return AsyncStorage.getItem('userToken')
+  const accessToken = await AsyncStorage.getItem('accessToken')
+  const refreshToken = await AsyncStorage.getItem('refreshToken')
+
+  return {
+    accessToken,
+    refreshToken,
+  }
 }
 
-export async function setUserToken(token: string) {
-  await AsyncStorage.setItem('userToken', token)
+export async function setUserToken(accessToken: string, refreshToken: string) {
+  await AsyncStorage.setItem('accessToken', accessToken)
+  await AsyncStorage.setItem('refreshToken', refreshToken)
+
+  console.log('Set user token')
 }
 
 export async function removeUserToken() {
-  await AsyncStorage.removeItem('userToken')
+  await AsyncStorage.removeItem('accessToken')
+  await AsyncStorage.removeItem('refreshToken')
 }

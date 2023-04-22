@@ -1,6 +1,6 @@
 {
   "extends": ["@antfu", "plugin:prettier/recommended"],
-  "ignorePatterns": ["src/graphql/gql/**/*"],
+  "ignorePatterns": ["src/graphql/gql/**/*", "src/generated-types.ts"],
   "rules": {
     "no-console": "off"
   }

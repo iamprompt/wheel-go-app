@@ -7,12 +7,11 @@ import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { ReviewItem } from '~/components/ReviewItem'
 import { FACILITIES } from '~/const/facility'
-import { GetReviewsByPlaceId } from '~/graphql/query/reviews'
+import { useGetReviewsByPlaceIdQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const router = useRouter()
@@ -20,8 +19,10 @@ function Page() {
   const insets = useSafeAreaInsets()
   const { id: placeId } = useSearchParams<{ id: string }>()
 
-  const { data } = useGraphQL(!!placeId, GetReviewsByPlaceId, {
-    placeId: placeId!,
+  const { data } = useGetReviewsByPlaceIdQuery({
+    variables: {
+      placeId: placeId!,
+    },
   })
 
   return (
@@ -80,8 +81,8 @@ function Page() {
           </Text>
         </View>
 
-        {data?.Reviews?.docs?.map((review) => {
-          const { id, user, comment, rating, official, createdAt } =
+        {data?.getReviewsByPlaceId?.map((review) => {
+          const { id, user, comment, rating, official, images, createdAt } =
             review || {}
 
           const Facilities = Object.keys(FACILITIES)
@@ -104,7 +105,7 @@ function Page() {
             official && official.comment && official.timestamp
               ? {
                   date: official.timestamp,
-                  isFlagged: official.flagged || false,
+                  isFlagged: official.isFlagged || false,
                   comment: official.comment,
                 }
               : undefined
@@ -119,16 +120,16 @@ function Page() {
               }}
             >
               <ReviewItem
-                reviewer={`${user?.firstName} ${user?.lastName}`}
-                additionalComment={rating?.comment || comment || ''}
+                reviewer={`${user?.firstname} ${user?.lastname}`}
+                additionalComment={comment || ''}
                 overallRating={rating?.overall || 0}
                 date={createdAt}
                 facilityRatings={facilityRatings}
                 officialComment={officialComment}
                 images={
-                  rating?.images?.map(({ image, id }) => ({
+                  images?.map(({ url, id }) => ({
                     id: id!,
-                    url: image!.url!,
+                    url: url!,
                   })) || []
                 }
               />

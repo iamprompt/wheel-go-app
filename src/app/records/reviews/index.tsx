@@ -5,12 +5,11 @@ import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { PlaceItem } from '~/components/PlaceItem'
 import { useAuth } from '~/context/useAuth'
-import { GetMyReviews } from '~/graphql/query/reviews'
+import { useGetMyReviewsQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 export default function Page() {
   const { user } = useAuth()
@@ -18,15 +17,13 @@ export default function Page() {
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
 
-  const { data: reviewsData } = useGraphQL(!!user?.id, GetMyReviews, {
-    userId: user?.id || '',
-  })
+  const { data: reviewsData } = useGetMyReviewsQuery()
 
   const reviews = useMemo(() => {
-    if (!reviewsData || !reviewsData.Reviews) {
+    if (!reviewsData || !reviewsData.getReviews) {
       return []
     }
-    return reviewsData.Reviews?.docs || []
+    return reviewsData.getReviews || []
   }, [reviewsData])
 
   return (
@@ -102,9 +99,9 @@ export default function Page() {
             return (
               <PlaceItem
                 key={review.id}
-                name={review.place.nameTH}
+                name={review.place?.name?.th || ''}
                 rating={review.rating?.overall || 0}
-                category={review.place.category}
+                category={review.place?.type}
                 date={review.createdAt}
                 onPress={() => {
                   console.log('onPress')

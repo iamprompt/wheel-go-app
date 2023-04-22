@@ -3,15 +3,13 @@ import {
   requestForegroundPermissionsAsync,
 } from 'expo-location'
 import { useRouter } from 'expo-router'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { PlaceItem } from './PlaceItem'
-import { allPlaces } from '~/graphql/query/places'
 import FONTS from '~/styles/fonts'
-import { getNearestPlaces } from '~/utils/geo'
-import { useGraphQL } from '~/utils/useGraphQL'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { Place_Types, useGetNearbyPlacesLazyQuery } from '~/generated-types'
 
 export function NearbyPlaces() {
   const { t } = useTranslation()
@@ -20,7 +18,7 @@ export function NearbyPlaces() {
 
   const [[lat, lng], setLatlng] = useState([0, 0])
 
-  const { data } = useGraphQL(true, allPlaces)
+  const [getNearbyPlaces, { data }] = useGetNearbyPlacesLazyQuery()
 
   const getCurrentLocation = async () => {
     const { status } = await requestForegroundPermissionsAsync()
@@ -31,22 +29,20 @@ export function NearbyPlaces() {
 
     const location = await getCurrentPositionAsync({})
     setLatlng([location.coords.latitude, location.coords.longitude])
+    getNearbyPlaces({
+      variables: {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+        radius: 2000,
+        type: [
+          Place_Types.Building,
+          Place_Types.Food,
+          Place_Types.Cafe,
+          Place_Types.Park,
+        ],
+      },
+    })
   }
-
-  const nearbyPlaces = useMemo(() => {
-    if (!data?.Places || !lat || !lng) {
-      return []
-    }
-
-    return (
-      getNearestPlaces(data, {
-        lat,
-        lng,
-        limit: 3,
-        exclude: [],
-      }) || []
-    )
-  }, [data, data?.Places, lat, lng])
 
   useEffect(() => {
     getCurrentLocation()
@@ -69,15 +65,15 @@ export function NearbyPlaces() {
       </Text>
 
       <View>
-        {nearbyPlaces.map((place) => (
+        {data?.getPlaces.map((place) => (
           <PlaceItem
             key={`nearby-${place.id}`}
             name={getDisplayTextFromCurrentLanguage({
-              th: place.nameTH,
-              en: place.nameEN,
+              th: place.name?.th,
+              en: place.name?.en,
             })}
             rating={4.5}
-            category={place.category!}
+            category={place.type!}
             date="2021-08-01"
             onPress={() => {
               router.push(`/places/${place.id}`)

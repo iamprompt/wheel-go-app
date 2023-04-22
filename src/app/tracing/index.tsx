@@ -34,10 +34,9 @@ import { TracingStatusIndicator } from '~/components/TracingStatusIndicator'
 import { TracingStopModal } from '~/components/TracingStopModal'
 import { MapCameraConfig, MapStyle } from '~/const/map'
 import { TRACING_STATES } from '~/const/trace'
-import { CreateTracedRoute } from '~/graphql/mutation/tracedRoute'
+import { useCreateRoutesMutation } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { WheelGoGraphQL } from '~/utils/graphql'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface Record {
@@ -76,6 +75,8 @@ function Page() {
   const [state, setState] = useState<TRACING_STATES>(TRACING_STATES.READY)
   const [isStopModalVisible, setIsStopModalVisible] = useState(false)
   const [isSaveModalVisible, setIsSaveModalVisible] = useState(false)
+
+  const [createRoute, { data }] = useCreateRoutesMutation()
 
   const handleLocationChange = (e: UserLocationChangeEvent) => {
     // if (state !== TRACING_STATES.RECORDING) {
@@ -167,9 +168,14 @@ function Page() {
   }
 
   const handleSaveAction = async () => {
-    const result = await WheelGoGraphQL(CreateTracedRoute, {
-      input: {
-        route: [...record],
+    const result = await createRoute({
+      variables: {
+        input: {
+          paths: record.map((rec) => ({
+            lat: rec.latitude,
+            lng: rec.longitude,
+          })),
+        },
       },
     })
 

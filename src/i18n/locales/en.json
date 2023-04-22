@@ -45,16 +45,16 @@
     "stop": "Stop"
   },
   "categories": {
-    "building": "Building",
-    "cafe": "Cafe",
-    "curb-cut": "Curb Cut",
-    "food": "Food",
-    "incident": "Incident",
-    "park": "Park",
-    "residence": "Residence",
-    "sport": "Sport",
-    "toilet": "Toilet",
-    "transport": "Transport"
+    "BUILDING": "Building",
+    "CAFE": "Cafe",
+    "CURBCUT": "Curb Cut",
+    "FOOD": "Food",
+    "INCIDENT": "Incident",
+    "PARK": "Park",
+    "RESIDENCE": "Residence",
+    "SPORT": "Sport",
+    "TOILET": "Toilet",
+    "TRANSPORT": "Transport"
   },
   "facilities": {
     "assistance": "Assistance",

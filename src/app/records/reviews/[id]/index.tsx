@@ -13,13 +13,12 @@ import { ImageWithFallback } from '~/components/ImageWithFallback'
 import { ReviewOfficialComment } from '~/components/ReviewOfficialComment'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { FACILITIES } from '~/const/facility'
-import { GetReviewById } from '~/graphql/query/reviews'
+import { useGetReviewByIdQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { format } from '~/utils/dayjs'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const { id } = useSearchParams<{ id: string }>()
@@ -27,17 +26,18 @@ function Page() {
   const [contentOffsetY, setContentOffsetY] = useState(0)
   const insets = useSafeAreaInsets()
 
-  const { data = {} } = useGraphQL(!!id, GetReviewById, {
-    id: id!,
+  const { data } = useGetReviewByIdQuery({
+    variables: {
+      id: id!,
+    },
   })
-  const { Review } = data
 
   const review = useMemo(() => {
-    if (!data?.Review) {
+    if (!data?.getReviewById) {
       return null
     }
 
-    return data?.Review
+    return data?.getReviewById
   }, [])
 
   const handlePageScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -58,12 +58,13 @@ function Page() {
     }
 
     return getDisplayTextFromCurrentLanguage({
-      th: review?.place.nameTH || '',
-      en: review?.place.nameEN || '',
+      th: review?.place?.name?.th || '',
+      en: review?.place?.name?.en || '',
     })
   }, [contentOffsetY])
 
-  const { createdAt, place, rating, official } = Review || {}
+  const { createdAt, place, rating, official, comment, images } =
+    data?.getReviewById || {}
 
   const shouldShowOfficialComment = useMemo(() => {
     if (!official) {
@@ -73,7 +74,7 @@ function Page() {
     return !!official.comment || !!official.timestamp
   }, [official])
 
-  if (!id || !data?.Review) {
+  if (!id || !data?.getReviewById) {
     return null
   }
 
@@ -100,7 +101,7 @@ function Page() {
       />
 
       <ImageWithFallback
-        src={place?.image?.url}
+        src={place?.images?.[0].url}
         width="100%"
         height={insets.top + 44 + 150}
       />
@@ -119,8 +120,8 @@ function Page() {
           }}
         >
           {getDisplayTextFromCurrentLanguage({
-            th: place?.nameTH || '',
-            en: place?.nameEN || '',
+            th: place?.name?.th || '',
+            en: place?.name?.en || '',
           })}
         </Text>
         <View
@@ -130,7 +131,7 @@ function Page() {
             alignItems: 'center',
           }}
         >
-          <CategoryLabel name={place?.category} />
+          <CategoryLabel name={place?.type} />
           <VerticalDivider />
           <Text
             style={{
@@ -184,32 +185,32 @@ function Page() {
 
         <HorizontalDivider />
 
-        {rating?.comment ? (
+        {comment ? (
           <Text
             style={{
               fontFamily: FONTS.LSTH_REGULAR,
             }}
           >
-            {rating?.comment}
+            {comment}
           </Text>
         ) : null}
 
-        {rating?.images?.length ? (
+        {images?.length ? (
           <View
             style={{
               flexDirection: 'row',
               gap: 12,
             }}
           >
-            {rating?.images?.map(({ image, id }) => {
-              if (!image) {
+            {images?.map(({ url, id }) => {
+              if (!id || !url) {
                 return null
               }
 
               return (
                 <Image
                   key={id}
-                  source={image?.url}
+                  source={url}
                   style={{
                     flex: 1,
                     height: 96,
@@ -228,7 +229,7 @@ function Page() {
           <ReviewOfficialComment
             date={official?.timestamp}
             comment={official?.comment || ''}
-            isFlagged={official?.flagged || false}
+            isFlagged={official?.isFlagged || false}
           />
         ) : null}
       </View>

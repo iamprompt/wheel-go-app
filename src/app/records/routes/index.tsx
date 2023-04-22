@@ -4,21 +4,20 @@ import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { RouteItem } from '~/components/RouteItem'
-import { GetMyTracedRoutes } from '~/graphql/query/tracedRoute'
+import { useGetMyTracedRoutesQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 export default function Page() {
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
   const router = useRouter()
 
-  const { data } = useGraphQL(true, GetMyTracedRoutes)
+  const { data } = useGetMyTracedRoutesQuery()
 
-  const routes = useMemo(() => data?.TracedRoutes?.docs || [], [data])
+  const routes = useMemo(() => data?.getRoutes || [], [data])
 
   return (
     <ScrollView style={[GlobalStyle.container]}>

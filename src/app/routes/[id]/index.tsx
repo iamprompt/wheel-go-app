@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { MapCameraConfig } from '~/const/map'
-import { GetPreDefinedRouteById } from '~/graphql/query/routes'
-import { useGraphQL } from '~/utils/useGraphQL'
+import { useGetRouteByIdQuery } from '~/generated-types'
 
 function Page() {
   const { t } = useTranslation()
@@ -16,12 +15,19 @@ function Page() {
 
   console.log(id)
 
-  const { data } = useGraphQL(!!id, GetPreDefinedRouteById, {
-    id: id!,
+  const { data } = useGetRouteByIdQuery({
+    variables: {
+      id: id!,
+    },
   })
 
   const routes = useMemo(() => {
-    return data?.Route?.route || []
+    return (
+      data?.getRouteById?.paths?.map(({ lat, lng }) => ({
+        latitude: lat,
+        longitude: lng,
+      })) || []
+    )
   }, [data])
 
   useEffect(() => {

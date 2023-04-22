@@ -1,17 +1,19 @@
+import { Place_Types } from '~/generated-types'
+
 interface CategoryIcon {
   [key: string]: any
 }
 
 export const ListCategoryIcon = {
-  building: require('~/assets/places/building-icon.png'),
-  'bus-stop': require('~/assets/places/bus-stop-icon.png'),
-  cafe: require('~/assets/places/cafe-icon.png'),
-  curbCut: require('~/assets/places/curbcut-icon.png'),
-  food: require('~/assets/places/food-icon.png'),
-  incident: require('~/assets/places/incident-icon.png'),
-  park: require('~/assets/places/park-icon.png'),
-  parking: require('~/assets/places/parking-icon.png'),
-  residence: require('~/assets/places/residence-icon.png'),
-  toilet: require('~/assets/places/toilet-icon.png'),
-  sport: require('~/assets/places/building-icon.png'),
+  [Place_Types.Building]: require('~/assets/places/building-icon.png'),
+  [Place_Types.Transport]: require('~/assets/places/bus-stop-icon.png'),
+  [Place_Types.Cafe]: require('~/assets/places/cafe-icon.png'),
+  [Place_Types.Curbcut]: require('~/assets/places/curbcut-icon.png'),
+  [Place_Types.Food]: require('~/assets/places/food-icon.png'),
+  [Place_Types.Incident]: require('~/assets/places/incident-icon.png'),
+  [Place_Types.Park]: require('~/assets/places/park-icon.png'),
+  [Place_Types.Parking]: require('~/assets/places/parking-icon.png'),
+  [Place_Types.Residence]: require('~/assets/places/residence-icon.png'),
+  [Place_Types.Toilet]: require('~/assets/places/toilet-icon.png'),
+  [Place_Types.Sport]: require('~/assets/places/building-icon.png'),
 } satisfies CategoryIcon

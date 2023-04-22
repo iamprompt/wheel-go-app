@@ -1,35 +1,35 @@
-import { graphql } from '../gql'
+import { gql } from '@apollo/client'
 
-export const GetMyReviews = graphql(`
-  query GetMyReviews($userId: String!) {
-    Reviews(where: { user: { equals: $userId } }) {
-      docs {
-        id
-        place {
-          nameTH
-          nameEN
-          category
+export const GetMyReviews = gql`
+  query GetMyReviews {
+    getReviews {
+      id
+      place {
+        name {
+          th
+          en
         }
-        rating {
-          overall
-        }
-        createdAt
+        type
       }
-      totalDocs
+      rating {
+        overall
+      }
+      createdAt
     }
   }
-`)
+`
 
-export const GetReviewById = graphql(`
-  query GetReviewById($id: String!) {
-    Review(id: $id) {
+export const GetReviewById = gql`
+  query GetReviewById($id: ID!) {
+    getReviewById(id: $id) {
       id
-      createdAt
       place {
-        nameTH
-        nameEN
-        category
-        image {
+        name {
+          th
+          en
+        }
+        type
+        images {
           url
           width
           height
@@ -43,74 +43,57 @@ export const GetReviewById = graphql(`
         toilet
         parking
         surface
-        facility
-        comment
-        images {
-          id
-          image {
-            url
-            width
-            height
-          }
-        }
       }
+      comment
+      images {
+        url
+        width
+        height
+        id
+      }
+      tags
       official {
-        flagged
+        isFlagged
         comment
         timestamp
       }
+      createdAt
     }
   }
-`)
+`
 
-export const GetReviewsByPlaceId = graphql(`
-  query GetReviewsByPlaceId($placeId: String!, $limit: Int = 100) {
-    Reviews(where: { place: { equals: $placeId } }, limit: $limit) {
-      docs {
+export const GetReviewsByPlaceId = gql`
+  query GetReviewsByPlaceId($placeId: ID!) {
+    getReviewsByPlaceId(placeId: $placeId) {
+      id
+      user {
         id
-        createdAt
-        comment
-        user {
-          id
-          firstName
-          lastName
-          displayNameType
-        }
-        place {
-          nameTH
-          nameEN
-          category
-          image {
-            url
-            width
-            height
-          }
-        }
-        rating {
-          overall
-          ramp
-          assistance
-          elevator
-          toilet
-          parking
-          surface
-          facility
-          comment
-          images {
-            id
-            image {
-              url
-              width
-              height
-            }
-          }
-        }
-        official {
-          flagged
-          comment
-          timestamp
-        }
+        firstname
+        lastname
       }
+      rating {
+        overall
+        ramp
+        assistance
+        elevator
+        toilet
+        parking
+        surface
+      }
+      comment
+      images {
+        url
+        width
+        height
+        id
+      }
+      tags
+      official {
+        isFlagged
+        comment
+        timestamp
+      }
+      createdAt
     }
   }
-`)
+`

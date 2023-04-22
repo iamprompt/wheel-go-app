@@ -1,94 +1,96 @@
-import { graphql } from '../gql'
+import { gql } from '@apollo/client'
 
-export const allPlaces = graphql(/* GraphQL */ `
-  query AllPlaces {
-    Places(limit: 1000) {
-      docs {
-        id
-        nameTH
-        nameEN
-        category
-        geolocation
+export const GetPlaces = gql`
+  query GetPlaces {
+    getPlaces {
+      id
+      name {
+        th
+        en
       }
-    }
-
-    Facilities(
-      limit: 1000
-      where: { type: { in: [curbCut, transportation, ramp] } }
-    ) {
-      docs {
-        id
-        type
-        detailTH
-        detailEN
-        geolocation
+      type
+      location {
+        lat
+        lng
       }
     }
   }
-`)
+`
 
-export const GetPlaceById = graphql(/* GraphQL */ `
+export const GetPlaceById = gql`
   query GetPlaceById($id: String!) {
-    Place(id: $id) {
+    getPlaceById(id: $id) {
       id
-      nameTH
-      nameEN
-      category
-      placeAddressTH
-      placeAddressEN
-      geolocation
-      phone
-      website
-      image {
+      name {
+        th
+        en
+      }
+      type
+      address {
+        th
+        en
+      }
+      location {
+        lat
+        lng
+      }
+      images {
+        id
         url
         width
         height
       }
+      metadata {
+        phone
+        website
+        busLines
+        tramLines
+      }
     }
   }
-`)
+`
 
-export const GetNearbyPlacesFromLocation = graphql(/* GraphQL */ `
-  query GetNearbyPlacesFromLocation(
+export const GetNearbyPlaces = gql`
+  query GetNearbyPlaces(
     $lat: Float!
     $lng: Float!
-    $distance: Float!
-    $limit: Int
+    $radius: Float!
+    $limit: Float = 100
+    $type: [PLACE_TYPES!]
+    $exclude: [String!]
   ) {
-    Places(
-      limit: $limit
-      where: { geolocation: { near: [$lng, $lat, $distance] } }
+    getPlaces(
+      options: {
+        location: { lat: $lat, lng: $lng }
+        radius: $radius
+        limit: $limit
+        types: $type
+        exclude: $exclude
+      }
     ) {
-      docs {
-        id
-        nameTH
-        nameEN
-        category
-        geolocation
+      id
+      name {
+        th
+        en
+      }
+      type
+      location {
+        lat
+        lng
       }
     }
   }
-`)
+`
 
-export const SearchPlacesByKeyword = graphql(/* GraphQL */ `
-  query SearchPlaces(
-    $query: String!
-    $limit: Int = 100
-    $exclude: [JSON] = []
-  ) {
-    Places(
-      limit: $limit
-      where: {
-        OR: [{ nameTH: { like: $query } }, { nameEN: { like: $query } }]
-        id: { not_in: $exclude }
+export const SearchPlaces = gql`
+  query SearchPlaces($query: String!, $limit: Float = 100) {
+    getPlaces(options: { keyword: $query, limit: $limit }) {
+      id
+      name {
+        th
+        en
       }
-    ) {
-      docs {
-        id
-        nameTH
-        nameEN
-        category
-      }
+      type
     }
   }
-`)
+`

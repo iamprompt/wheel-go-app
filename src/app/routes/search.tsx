@@ -10,13 +10,12 @@ import { ScrollView, TextInput, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { PlaceItem } from '~/components/PlaceItem'
-import { SearchPlacesByKeyword } from '~/graphql/query/places'
+import { useSearchPlacesQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const { t } = useTranslation()
@@ -45,9 +44,15 @@ function Page() {
 
   const toExclude = field === 'from' ? params.to : params.from
 
-  const { data } = useGraphQL(!!query, SearchPlacesByKeyword, {
-    query,
-    exclude: [toExclude],
+  // const { data } = useGraphQL(!!query, SearchPlacesByKeyword, {
+  //   query,
+  //   exclude: [toExclude],
+  // })
+
+  const { data } = useSearchPlacesQuery({
+    variables: {
+      query,
+    },
   })
 
   useEffect(() => {
@@ -135,7 +140,7 @@ function Page() {
               flex: 1,
             }}
           >
-            {data?.Places?.docs?.map((place) => {
+            {data?.getPlaces?.map((place) => {
               if (!place) {
                 return null
               }
@@ -144,11 +149,11 @@ function Page() {
                 <PlaceItem
                   key={`place-${place.id}`}
                   name={getDisplayTextFromCurrentLanguage({
-                    th: place.nameTH,
-                    en: place.nameEN,
+                    th: place.name?.th,
+                    en: place.name?.en,
                   })}
                   rating={4.5}
-                  category={place.category!}
+                  category={place.type!}
                   date="2021-08-01"
                   onPress={() => {
                     navigation.dispatch(StackActions.pop(1))

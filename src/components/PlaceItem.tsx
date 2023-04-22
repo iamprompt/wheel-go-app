@@ -5,6 +5,7 @@ import { ListCategoryIcon } from '~/const/category'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import type { Place_Types } from '~/generated-types'
 
 export function PlaceItem({
   name,
@@ -17,7 +18,7 @@ export function PlaceItem({
 }: {
   name: string
   rating: number
-  category: keyof typeof ListCategoryIcon
+  category: Place_Types
   date: string
   onPress: () => void
   borderTop?: boolean

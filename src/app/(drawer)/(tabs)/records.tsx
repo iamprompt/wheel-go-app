@@ -10,41 +10,40 @@ import FONTS from '~/styles/fonts'
 import COLORS from '~/styles/colors'
 import { useAuth } from '~/context/useAuth'
 import { NotSignedIn } from '~/components/NotSignin'
-import { useGraphQL } from '~/utils/useGraphQL'
-import { GetUserFavoritePlaces } from '~/graphql/query/user'
-import { GetMyReviews } from '~/graphql/query/reviews'
-import { GetMyTracedRoutes } from '~/graphql/query/tracedRoute'
+import {
+  useGetMyFavoritePlacesQuery,
+  useGetMyReviewsQuery,
+  useGetMyTracedRoutesQuery,
+} from '~/generated-types'
 
 export default function App() {
   const { user } = useAuth()
   const { t } = useTranslation()
   const router = useRouter()
 
-  const { data: favData } = useGraphQL(true, GetUserFavoritePlaces)
+  const { data: favData } = useGetMyFavoritePlacesQuery()
 
   const favPlacesNo = useMemo(() => {
     if (favData) {
-      return favData?.meUser?.user?.favoritePlaces?.length || 0
+      return favData?.me.metadata?.favorites?.length || 0
     }
     return 0
   }, [favData])
 
-  const { data: reviewData } = useGraphQL(!!user, GetMyReviews, {
-    userId: user?.id || '',
-  })
+  const { data: reviewData } = useGetMyReviewsQuery()
 
   const reviewNo = useMemo(() => {
     if (reviewData) {
-      return reviewData?.Reviews?.totalDocs || 0
+      return reviewData?.getReviews.length || 0
     }
     return 0
   }, [reviewData])
 
-  const { data: routeData } = useGraphQL(!!user, GetMyTracedRoutes)
+  const { data: routeData } = useGetMyTracedRoutesQuery()
 
   const routeNo = useMemo(() => {
     if (routeData) {
-      return routeData?.TracedRoutes?.totalDocs || 0
+      return routeData?.getRoutes.length || 0
     }
     return 0
   }, [routeData])

@@ -5,10 +5,11 @@ import { ListCategoryIcon } from '~/const/category'
 import FONTS from '~/styles/fonts'
 import COLORS from '~/styles/colors'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import type { Place_Types } from '~/generated-types'
 
 interface NearbyPlaceBlockProps {
   onPress?: () => void
-  category: keyof typeof ListCategoryIcon
+  category: Place_Types
   name: string
 }
 

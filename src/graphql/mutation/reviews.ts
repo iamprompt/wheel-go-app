@@ -1,9 +1,9 @@
-import { graphql } from '../gql'
+import { gql } from '@apollo/client'
 
-export const CreateReview = graphql(`
-  mutation CreateReview($input: mutationReviewInput!) {
-    createReview(data: $input) {
+export const CreateReview = gql`
+  mutation CreateReview($input: CreateReviewInput!) {
+    createReview(review: $input) {
       id
     }
   }
-`)
+`

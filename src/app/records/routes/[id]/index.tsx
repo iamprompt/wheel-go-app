@@ -7,11 +7,10 @@ import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { MapCameraConfig, MapStyle } from '~/const/map'
-import { GetRouteById } from '~/graphql/query/tracedRoute'
+import { useGetRouteByIdQuery } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const insets = useSafeAreaInsets()
@@ -21,22 +20,22 @@ function Page() {
 
   const { id } = useSearchParams<{ id: string }>()
 
-  const { data } = useGraphQL(!!id, GetRouteById, {
-    id: id!,
+  const { data } = useGetRouteByIdQuery({
+    variables: {
+      id: id!,
+    },
   })
 
-  const route = useMemo(() => data?.TracedRoute || null, [data])
+  const route = useMemo(() => data?.getRouteById || null, [data])
 
   const routePoints = useMemo(
     () =>
-      route?.route.map(
-        (point: { latitude: number; longitude: number; timestamp: number }) => {
-          return {
-            latitude: point.latitude,
-            longitude: point.longitude,
-          }
+      route?.paths?.map(({ lat, lng }) => {
+        return {
+          latitude: lat,
+          longitude: lng,
         }
-      ) || [],
+      }) || [],
     [route]
   )
 

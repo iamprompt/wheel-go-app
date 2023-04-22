@@ -1,19 +1,33 @@
-import { graphql } from '../gql'
+import { gql } from '@apollo/client'
 
-export const GetUserFavoritePlaces = graphql(/* GraphQL */ `
-  query GetUserFavoritePlaces {
-    meUser {
-      user {
-        favoritePlaces {
+export const GetMyProfile = gql`
+  query GetMyProfile {
+    me {
+      id
+      firstname
+      lastname
+      username
+      role
+    }
+  }
+`
+
+export const GetMyFavoritePlaces = gql`
+  query GetMyFavoritePlaces {
+    me {
+      metadata {
+        favorites {
           addedAt
           place {
             id
-            nameTH
-            nameEN
-            category
+            name {
+              th
+              en
+            }
+            type
           }
         }
       }
     }
   }
-`)
+`

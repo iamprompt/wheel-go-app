@@ -1,35 +1,19 @@
-import { graphql } from '../gql'
+import { gql } from '@apollo/client'
 
-export const LoginUser = graphql(/* GraphQL */ `
-  mutation LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
-      token
-      exp
-      user {
-        id
-        email
-        username
-        firstName
-        lastName
-        displayNameType
-      }
+export const Login = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      accessToken
+      refreshToken
     }
   }
-`)
+`
 
-export const MeProfile = graphql(/* GraphQL */ `
-  query MeProfile {
-    meUser {
-      user {
-        id
-        email
-        username
-        firstName
-        lastName
-        displayNameType
-        impairmentLevel
-        equipment
-      }
+export const RefreshToken = gql`
+  mutation RefreshToken($refreshToken: String!) {
+    refresh(refreshToken: $refreshToken) {
+      accessToken
+      refreshToken
     }
   }
-`)
+`

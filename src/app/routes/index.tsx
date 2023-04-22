@@ -2,14 +2,12 @@ import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useMemo } from 'react'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { VerticalDivider } from '~/components/VerticalDivider'
-import { GetPlaceById } from '~/graphql/query/places'
-import { SearchRoutes } from '~/graphql/query/routes'
+import { useGetPlaceByIdQuery, useSearchRoutesQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 
 function Page() {
   const router = useRouter()
@@ -19,34 +17,36 @@ function Page() {
     to?: string
   }>()
 
-  const { data: placeOrigin } = useGraphQL(!!params.from, GetPlaceById, {
-    id: params.from!,
+  const { data: placeOrigin } = useGetPlaceByIdQuery({
+    variables: {
+      id: params.from!,
+    },
   })
 
-  const { data: placeDestination } = useGraphQL(!!params.to, GetPlaceById, {
-    id: params.to!,
+  const { data: placeDestination } = useGetPlaceByIdQuery({
+    variables: {
+      id: params.to!,
+    },
   })
 
-  const { data: availableRoutes } = useGraphQL(
-    !!params.from && !!params.to,
-    SearchRoutes,
-    {
+  const { data: availableRoutes } = useSearchRoutesQuery({
+    variables: {
       from: params.from!,
       to: params.to!,
-    }
-  )
+    },
+  })
 
   const originPlaceName = useMemo(() => {
     return getDisplayTextFromCurrentLanguage({
-      en: placeOrigin?.Place?.nameEN,
-      th: placeOrigin?.Place?.nameTH,
+      en: placeOrigin?.getPlaceById?.name?.en,
+      th: placeOrigin?.getPlaceById?.name?.th,
     })
   }, [placeOrigin])
 
   const destinationPlaceName = useMemo(() => {
     return getDisplayTextFromCurrentLanguage({
-      en: placeDestination?.Place?.nameEN,
-      th: placeDestination?.Place?.nameTH,
+      en: placeDestination?.getPlaceById?.name?.en,
+      th: placeDestination?.getPlaceById?.name?.th,
     })
   }, [placeDestination])
 
@@ -106,7 +106,7 @@ function Page() {
               style={{
                 fontFamily: FONTS.LSTH_REGULAR,
                 fontSize: 16,
-                color: placeOrigin?.Place
+                color: placeOrigin?.getPlaceById
                   ? COLORS.black
                   : COLORS['french-vanilla'][500],
               }}
@@ -206,7 +206,7 @@ function Page() {
                 style={{
                   fontFamily: FONTS.LSTH_REGULAR,
                   fontSize: 16,
-                  color: placeDestination?.Place
+                  color: placeDestination?.getPlaceById
                     ? COLORS.black
                     : COLORS['french-vanilla'][500],
                 }}
@@ -242,7 +242,7 @@ function Page() {
       </View>
 
       <ScrollView>
-        {availableRoutes?.Routes?.docs?.map((route) => {
+        {availableRoutes?.getRoutes?.map((route) => {
           if (!route) {
             return null
           }

@@ -1,66 +1,59 @@
-import { graphql } from '../gql'
+import { gql } from '@apollo/client'
 
-export const SearchRoutes = graphql(/* GraphQL */ `
+export const SearchRoutes = gql`
   query SearchRoutes($from: String!, $to: String!) {
-    Routes(
-      limit: 1000
-      where: {
-        OR: [
-          { origin: { equals: $from }, destination: { equals: $to } }
-          { origin: { equals: $to }, destination: { equals: $from } }
-        ]
-      }
-    ) {
-      docs {
-        id
-        origin {
-          id
-          nameTH
-          nameEN
-          category
-        }
-        destination {
-          id
-          nameTH
-          nameEN
-          category
-        }
-        distance
-        route
-      }
-    }
-  }
-`)
-
-export const GetPreDefinedRoutes = graphql(/* GraphQL */ `
-  query GetPreDefinedRoutes($limit: Int = 100) {
-    Routes(limit: $limit) {
-      docs {
-        id
-        route
-      }
-    }
-  }
-`)
-
-export const GetPreDefinedRouteById = graphql(/* GraphQL */ `
-  query GetPreDefinedRouteById($id: String!) {
-    Route(id: $id) {
+    getRoutes(options: { origin: $from, destination: $to }) {
       id
-      origin {
-        id
-        nameTH
-        nameEN
-        category
-      }
-      destination {
-        id
-        nameTH
-        nameEN
-        category
+      type
+      distance
+      duration
+    }
+  }
+`
+
+export const GetPreDefinedRoutes = gql`
+  query GetPreDefinedRoutes {
+    getRoutes {
+      id
+      type
+      paths {
+        lat
+        lng
       }
       distance
-      route
+      duration
+      createdAt
     }
   }
-`)
+`
+export const GetMyTracedRoutes = gql`
+  query GetMyTracedRoutes {
+    getRoutes {
+      id
+      type
+      paths {
+        lat
+        lng
+      }
+      distance
+      duration
+      createdAt
+    }
+  }
+`
+
+export const GetRouteById = gql`
+  query GetRouteById($id: String!) {
+    getRouteById(id: $id) {
+      id
+      type
+      paths {
+        lat
+        lng
+      }
+      distance
+      duration
+      createdAt
+    }
+  }
+`

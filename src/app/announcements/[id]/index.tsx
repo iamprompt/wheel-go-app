@@ -7,14 +7,13 @@ import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import { TagsLabel } from '~/const/tags'
-import { GetAnnouncementById } from '~/graphql/query/announcements'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useGraphQL } from '~/utils/useGraphQL'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
+import { useGetAnnouncementByIdQuery } from '~/generated-types'
 
 function Page() {
   const { t } = useTranslation()
@@ -23,8 +22,10 @@ function Page() {
 
   const [contentOffsetY, setContentOffsetY] = useState(0)
 
-  const { data } = useGraphQL(true, GetAnnouncementById, {
-    id: id!,
+  const { data } = useGetAnnouncementByIdQuery({
+    variables: {
+      id: id!,
+    },
   })
 
   const handlePageScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -45,19 +46,19 @@ function Page() {
     }
 
     return getDisplayTextFromCurrentLanguage({
-      en: data?.Announcement?.titleEN || '',
-      th: data?.Announcement?.titleTH || '',
+      en: data?.getAnnouncementById?.title?.en || '',
+      th: data?.getAnnouncementById?.title?.th || '',
     })
-  }, [contentOffsetY, data?.Announcement?.titleEN, data?.Announcement?.titleTH])
+  }, [contentOffsetY, data?.getAnnouncementById.title])
 
   const contacts = useMemo(() => {
-    if (!data?.Announcement?.contact) {
+    if (!data?.getAnnouncementById?.metadata) {
       return null
     }
 
     const contactData = []
 
-    const { phone, line, email } = data?.Announcement?.contact
+    const { phone, line, email } = data?.getAnnouncementById.metadata
 
     if (email) {
       contactData.push({
@@ -84,7 +85,7 @@ function Page() {
     }
 
     return contactData
-  }, [data?.Announcement?.contact])
+  }, [data?.getAnnouncementById?.metadata])
 
   const shouldShowContact = useMemo(() => {
     if (!contacts) {
@@ -117,7 +118,7 @@ function Page() {
       />
 
       <ImageWithFallback
-        src={data.Announcement?.image?.url}
+        src={data.getAnnouncementById?.images?.[0].url}
         width="100%"
         height={insets.top + 44 + 150}
       />
@@ -146,11 +147,11 @@ function Page() {
               }}
             >
               {getDisplayTextFromCurrentLanguage({
-                th: data?.Announcement?.titleTH,
-                en: data?.Announcement?.titleEN,
+                th: data?.getAnnouncementById?.title?.th,
+                en: data?.getAnnouncementById?.title?.en,
               })}
             </Text>
-            {data.Announcement?.place ? (
+            {data.getAnnouncementById?.place ? (
               <Text
                 style={{
                   fontSize: 14,
@@ -158,8 +159,8 @@ function Page() {
                 }}
               >
                 {getDisplayTextFromCurrentLanguage({
-                  th: data.Announcement?.place?.nameTH,
-                  en: data.Announcement?.place?.nameEN,
+                  th: data.getAnnouncementById?.place?.name?.th,
+                  en: data.getAnnouncementById?.place?.name?.en,
                 })}
               </Text>
             ) : null}
@@ -178,7 +179,9 @@ function Page() {
                 color: COLORS['french-vanilla'][500],
               }}
             >
-              {dayjs(data.Announcement?.createdAt).format('DD MMMM YYYY')}
+              {dayjs(data.getAnnouncementById?.createdAt).format(
+                'DD MMMM YYYY'
+              )}
             </Text>
             <View
               style={{
@@ -194,7 +197,7 @@ function Page() {
                 color: COLORS['french-vanilla'][500],
               }}
             >
-              {dayjs(data.Announcement?.createdAt).format('HH:mm')}
+              {dayjs(data.getAnnouncementById?.createdAt).format('HH:mm')}
             </Text>
           </View>
           <View
@@ -204,7 +207,7 @@ function Page() {
               flexWrap: 'wrap',
             }}
           >
-            {data.Announcement?.tags?.map((tag, index) => {
+            {data.getAnnouncementById?.tags?.map((tag, index) => {
               return (
                 <View
                   key={`announcement-${id}-tag-${index}`}
@@ -261,8 +264,8 @@ function Page() {
             }}
           >
             {getDisplayTextFromCurrentLanguage({
-              th: data.Announcement?.descriptionTH,
-              en: data.Announcement?.descriptionEN,
+              th: data.getAnnouncementById?.content?.th,
+              en: data.getAnnouncementById?.content?.en,
             })}
           </Text>
         </View>

@@ -1,19 +1,17 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Image, Pressable, Text, View } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
 
 // import ClusterMapView from 'react-native-map-clustering'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   getCurrentPositionAsync,
   requestForegroundPermissionsAsync,
 } from 'expo-location'
 import { MapCameraConfig, MapStyle, PinIcon } from '~/const/map'
-import { allPlaces } from '~/graphql/query/places'
-import { useGraphQL } from '~/utils/useGraphQL'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
 import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
@@ -22,7 +20,12 @@ import { HeaderLogo } from '~/components/HeaderLogo'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { GetPreDefinedRoutes } from '~/graphql/query/routes'
+import {
+  Place_Types,
+  useGetNearbyPlacesLazyQuery,
+  useGetPlacesQuery,
+  useGetPreDefinedRoutesQuery,
+} from '~/generated-types'
 
 export default function App() {
   const { t } = useTranslation()
@@ -32,9 +35,11 @@ export default function App() {
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
   const [isModalVisible, setModalVisible] = useState(false)
 
-  const { data } = useGraphQL(true, allPlaces)
+  const { data: placesData } = useGetPlacesQuery()
+  const { data: routesData } = useGetPreDefinedRoutesQuery()
 
-  const { data: routeData } = useGraphQL(true, GetPreDefinedRoutes, {})
+  const [getNearbyPlaces, { data: nearbyPlacesData }] =
+    useGetNearbyPlacesLazyQuery()
 
   const mapRef = useRef<MapView>(null)
 
@@ -57,6 +62,30 @@ export default function App() {
       { duration: 500 }
     )
   }
+
+  const handleGetNearbyPlaces = async () => {
+    const { status } = await requestForegroundPermissionsAsync()
+    if (status !== 'granted') {
+      // setErrorMsg('Permission to access location was denied');
+      return
+    }
+
+    const location = await getCurrentPositionAsync({})
+
+    getNearbyPlaces({
+      variables: {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+        radius: 2000,
+        limit: 1,
+        type: [Place_Types.Building, Place_Types.Food, Place_Types.Cafe],
+      },
+    })
+  }
+
+  useEffect(() => {
+    handleGetNearbyPlaces()
+  }, [])
 
   return (
     <View style={[GlobalStyle.container]}>
@@ -112,7 +141,31 @@ export default function App() {
           pitchEnabled={false}
           {...MapCameraConfig}
         >
-          {data?.Places?.docs
+          {placesData?.getPlaces.map((place) => {
+            if (!place || !place.location) {
+              return null
+            }
+
+            return (
+              <Marker
+                key={place.id}
+                coordinate={{
+                  latitude: place.location.lat,
+                  longitude: place.location.lng,
+                }}
+                onPress={() => {
+                  setSelectedPlaceId(place.id as string)
+                  setModalVisible(true)
+                }}
+              >
+                <Image
+                  source={PinIcon[place.type!]}
+                  style={{ width: 32, height: 42 }}
+                />
+              </Marker>
+            )
+          })}
+          {/* {data?.Places?.docs
             ?.filter((place) => place?.category === 'building')
             .map((place) => {
               if (!place || !place.geolocation) {
@@ -137,8 +190,8 @@ export default function App() {
                   />
                 </Marker>
               )
-            })}
-          {routeData?.Routes?.docs?.map((route) => {
+            })} */}
+          {/* {routeData?.Routes?.docs?.map((route) => {
             return (
               <Polyline
                 coordinates={route?.route}
@@ -147,7 +200,7 @@ export default function App() {
                 strokeColor={'rgba(67, 196, 99, 0.4)'}
               />
             )
-          })}
+          })} */}
           {/* {data?.Facilities?.docs?.map((facility) => {
             if (!facility || !facility.geolocation) {
               return null
@@ -187,23 +240,27 @@ export default function App() {
             )
           })} */}
         </MapView>
-        <View
-          style={{
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            left: 0,
-            marginHorizontal: 16,
-          }}
-        >
-          <NearbyPlaceBlock
-            name="Siam Paragon"
-            category="building"
-            onPress={() => {
-              console.log('Pressed NearbyPlaceBlock')
+        {(nearbyPlacesData?.getPlaces || []).length > 0 ? (
+          <View
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              left: 0,
+              marginHorizontal: 16,
             }}
-          />
-        </View>
+          >
+            <NearbyPlaceBlock
+              name={nearbyPlacesData?.getPlaces?.[0]?.name?.th || ''}
+              category={
+                nearbyPlacesData?.getPlaces?.[0]?.type || Place_Types.Building
+              }
+              onPress={() => {
+                console.log('Pressed NearbyPlaceBlock')
+              }}
+            />
+          </View>
+        ) : null}
         <View
           style={{
             position: 'absolute',
