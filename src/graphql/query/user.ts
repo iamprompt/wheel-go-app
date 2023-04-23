@@ -31,3 +31,25 @@ export const GetMyFavoritePlaces = gql`
     }
   }
 `
+
+export const AddPlaceToFavorites = gql`
+  mutation AddPlaceToFavorites($placeId: String!) {
+    addFavoritePlace(placeId: $placeId) {
+      id
+    }
+  }
+`
+
+export const RemovePlaceFromFavorites = gql`
+  mutation RemovePlaceFromFavorites($placeId: String!) {
+    removeFavoritePlace(placeId: $placeId) {
+      id
+    }
+  }
+`
+
+export const IsFavoritePlace = gql`
+  query IsFavoritePlace($placeId: String!) {
+    isFavoritePlace(placeId: $placeId)
+  }
+`

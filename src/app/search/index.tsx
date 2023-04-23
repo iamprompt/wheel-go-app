@@ -12,9 +12,8 @@ import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { NearbyPlaces } from '~/components/NearbyPlaces'
 import { PlaceItem } from '~/components/PlaceItem'
-import type { ListCategoryIcon } from '~/const/category'
-import { TagsLabel } from '~/const/tags'
-import { useSearchPlacesQuery } from '~/generated-types'
+import { PLACE_TYPES_META } from '~/const/placeTypes'
+import { Place_Types, useSearchPlacesLazyQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -31,22 +30,33 @@ function Page() {
   const [query, setQuery] = useState<string>(q || '')
   const [searchText, setSearchText] = useState<string>(q || '')
 
+  const [searchOperation, { data }] = useSearchPlacesLazyQuery()
+
   const handleSearch = async (
     e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
   ) => {
     router.setParams({ q: e.nativeEvent.text })
     setQuery(e.nativeEvent.text)
-  }
 
-  const { data } = useSearchPlacesQuery({
-    variables: {
-      query,
-    },
-  })
+    console.log(e.nativeEvent.text)
+
+    searchOperation({
+      variables: {
+        query: e.nativeEvent.text,
+        excludeTypes: [Place_Types.Curbcut, Place_Types.Transport],
+      },
+    })
+  }
 
   useEffect(() => {
     if (q) {
       setQuery(q)
+      searchOperation({
+        variables: {
+          query: q,
+          excludeTypes: [Place_Types.Curbcut, Place_Types.Transport],
+        },
+      })
       setSearchText(q)
     }
   }, [q])
@@ -135,14 +145,14 @@ function Page() {
                 gap: 12,
               }}
             >
-              {Object.keys(TagsLabel).map((key) => (
+              {Object.keys(PLACE_TYPES_META).map((key) => (
                 <Pressable
                   key={key}
                   onPress={() => {
                     console.log(key)
                   }}
                 >
-                  <CategoryLabel name={key as keyof typeof ListCategoryIcon} />
+                  <CategoryLabel name={key as keyof typeof PLACE_TYPES_META} />
                 </Pressable>
               ))}
             </View>

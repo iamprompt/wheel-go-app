@@ -213,6 +213,7 @@ export type GetAnnouncementsInput = {
 
 export type GetFacilitiesInput = {
   exclude?: InputMaybe<Array<Scalars['String']>>;
+  excludeTypes?: InputMaybe<Array<Facility_Types>>;
   keyword?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Float']>;
   location?: InputMaybe<LocationInput>;
@@ -222,6 +223,7 @@ export type GetFacilitiesInput = {
 
 export type GetPlacesInput = {
   exclude?: InputMaybe<Array<Scalars['String']>>;
+  excludeTypes?: InputMaybe<Array<Place_Types>>;
   keyword?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Float']>;
   location?: InputMaybe<LocationInput>;
@@ -278,6 +280,7 @@ export type Media = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addFavoritePlace: User;
   createAnnouncement: Announcement;
   createFacility: Facility;
   createPlace: Place;
@@ -286,6 +289,7 @@ export type Mutation = {
   createUser: User;
   login: AuthResponse;
   refresh: AuthResponse;
+  removeFavoritePlace: User;
   updateAnnouncement: Announcement;
   updateFacility: Facility;
   updatePlace: Place;
@@ -293,6 +297,11 @@ export type Mutation = {
   updateRoute: Route;
   updateUser: User;
   uploadMedia: Media;
+};
+
+
+export type MutationAddFavoritePlaceArgs = {
+  placeId: Scalars['String'];
 };
 
 
@@ -334,6 +343,11 @@ export type MutationLoginArgs = {
 
 export type MutationRefreshArgs = {
   refreshToken: Scalars['String'];
+};
+
+
+export type MutationRemoveFavoritePlaceArgs = {
+  placeId: Scalars['String'];
 };
 
 
@@ -453,6 +467,7 @@ export type Query = {
   getRoutes: Array<Route>;
   getUserById: User;
   getUsers: Array<User>;
+  isFavoritePlace: Scalars['Boolean'];
   me: User;
 };
 
@@ -529,6 +544,11 @@ export type QueryGetRoutesArgs = {
 
 export type QueryGetUserByIdArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryIsFavoritePlaceArgs = {
+  placeId: Scalars['String'];
 };
 
 /** Roles of the user */
@@ -724,6 +744,7 @@ export type SearchPlacesQueryVariables = Exact<{
   query: Scalars['String'];
   limit?: InputMaybe<Scalars['Float']>;
   type?: InputMaybe<Array<Place_Types> | Place_Types>;
+  excludeTypes?: InputMaybe<Array<Place_Types> | Place_Types>;
   exclude?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
@@ -783,6 +804,27 @@ export type GetMyFavoritePlacesQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type GetMyFavoritePlacesQuery = { __typename?: 'Query', me: { __typename?: 'User', metadata?: { __typename?: 'UserMetadata', favorites?: Array<{ __typename?: 'FavoritePlace', addedAt?: any | null, place?: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null } | null }> | null } | null } };
+
+export type AddPlaceToFavoritesMutationVariables = Exact<{
+  placeId: Scalars['String'];
+}>;
+
+
+export type AddPlaceToFavoritesMutation = { __typename?: 'Mutation', addFavoritePlace: { __typename?: 'User', id: string } };
+
+export type RemovePlaceFromFavoritesMutationVariables = Exact<{
+  placeId: Scalars['String'];
+}>;
+
+
+export type RemovePlaceFromFavoritesMutation = { __typename?: 'Mutation', removeFavoritePlace: { __typename?: 'User', id: string } };
+
+export type IsFavoritePlaceQueryVariables = Exact<{
+  placeId: Scalars['String'];
+}>;
+
+
+export type IsFavoritePlaceQuery = { __typename?: 'Query', isFavoritePlace: boolean };
 
 
 export const LoginDocument = gql`
@@ -1254,9 +1296,9 @@ export type GetNearbyPlacesQueryHookResult = ReturnType<typeof useGetNearbyPlace
 export type GetNearbyPlacesLazyQueryHookResult = ReturnType<typeof useGetNearbyPlacesLazyQuery>;
 export type GetNearbyPlacesQueryResult = Apollo.QueryResult<GetNearbyPlacesQuery, GetNearbyPlacesQueryVariables>;
 export const SearchPlacesDocument = gql`
-    query SearchPlaces($query: String!, $limit: Float = 100, $type: [PLACE_TYPES!] = [], $exclude: [String!] = []) {
+    query SearchPlaces($query: String!, $limit: Float = 100, $type: [PLACE_TYPES!], $excludeTypes: [PLACE_TYPES!], $exclude: [String!]) {
   getPlaces(
-    options: {keyword: $query, limit: $limit, types: $type, exclude: $exclude}
+    options: {keyword: $query, limit: $limit, types: $type, exclude: $exclude, excludeTypes: $excludeTypes}
   ) {
     id
     name {
@@ -1283,6 +1325,7 @@ export const SearchPlacesDocument = gql`
  *      query: // value for 'query'
  *      limit: // value for 'limit'
  *      type: // value for 'type'
+ *      excludeTypes: // value for 'excludeTypes'
  *      exclude: // value for 'exclude'
  *   },
  * });
@@ -1726,3 +1769,102 @@ export function useGetMyFavoritePlacesLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetMyFavoritePlacesQueryHookResult = ReturnType<typeof useGetMyFavoritePlacesQuery>;
 export type GetMyFavoritePlacesLazyQueryHookResult = ReturnType<typeof useGetMyFavoritePlacesLazyQuery>;
 export type GetMyFavoritePlacesQueryResult = Apollo.QueryResult<GetMyFavoritePlacesQuery, GetMyFavoritePlacesQueryVariables>;
+export const AddPlaceToFavoritesDocument = gql`
+    mutation AddPlaceToFavorites($placeId: String!) {
+  addFavoritePlace(placeId: $placeId) {
+    id
+  }
+}
+    `;
+export type AddPlaceToFavoritesMutationFn = Apollo.MutationFunction<AddPlaceToFavoritesMutation, AddPlaceToFavoritesMutationVariables>;
+
+/**
+ * __useAddPlaceToFavoritesMutation__
+ *
+ * To run a mutation, you first call `useAddPlaceToFavoritesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPlaceToFavoritesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPlaceToFavoritesMutation, { data, loading, error }] = useAddPlaceToFavoritesMutation({
+ *   variables: {
+ *      placeId: // value for 'placeId'
+ *   },
+ * });
+ */
+export function useAddPlaceToFavoritesMutation(baseOptions?: Apollo.MutationHookOptions<AddPlaceToFavoritesMutation, AddPlaceToFavoritesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddPlaceToFavoritesMutation, AddPlaceToFavoritesMutationVariables>(AddPlaceToFavoritesDocument, options);
+      }
+export type AddPlaceToFavoritesMutationHookResult = ReturnType<typeof useAddPlaceToFavoritesMutation>;
+export type AddPlaceToFavoritesMutationResult = Apollo.MutationResult<AddPlaceToFavoritesMutation>;
+export type AddPlaceToFavoritesMutationOptions = Apollo.BaseMutationOptions<AddPlaceToFavoritesMutation, AddPlaceToFavoritesMutationVariables>;
+export const RemovePlaceFromFavoritesDocument = gql`
+    mutation RemovePlaceFromFavorites($placeId: String!) {
+  removeFavoritePlace(placeId: $placeId) {
+    id
+  }
+}
+    `;
+export type RemovePlaceFromFavoritesMutationFn = Apollo.MutationFunction<RemovePlaceFromFavoritesMutation, RemovePlaceFromFavoritesMutationVariables>;
+
+/**
+ * __useRemovePlaceFromFavoritesMutation__
+ *
+ * To run a mutation, you first call `useRemovePlaceFromFavoritesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemovePlaceFromFavoritesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removePlaceFromFavoritesMutation, { data, loading, error }] = useRemovePlaceFromFavoritesMutation({
+ *   variables: {
+ *      placeId: // value for 'placeId'
+ *   },
+ * });
+ */
+export function useRemovePlaceFromFavoritesMutation(baseOptions?: Apollo.MutationHookOptions<RemovePlaceFromFavoritesMutation, RemovePlaceFromFavoritesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemovePlaceFromFavoritesMutation, RemovePlaceFromFavoritesMutationVariables>(RemovePlaceFromFavoritesDocument, options);
+      }
+export type RemovePlaceFromFavoritesMutationHookResult = ReturnType<typeof useRemovePlaceFromFavoritesMutation>;
+export type RemovePlaceFromFavoritesMutationResult = Apollo.MutationResult<RemovePlaceFromFavoritesMutation>;
+export type RemovePlaceFromFavoritesMutationOptions = Apollo.BaseMutationOptions<RemovePlaceFromFavoritesMutation, RemovePlaceFromFavoritesMutationVariables>;
+export const IsFavoritePlaceDocument = gql`
+    query IsFavoritePlace($placeId: String!) {
+  isFavoritePlace(placeId: $placeId)
+}
+    `;
+
+/**
+ * __useIsFavoritePlaceQuery__
+ *
+ * To run a query within a React component, call `useIsFavoritePlaceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsFavoritePlaceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIsFavoritePlaceQuery({
+ *   variables: {
+ *      placeId: // value for 'placeId'
+ *   },
+ * });
+ */
+export function useIsFavoritePlaceQuery(baseOptions: Apollo.QueryHookOptions<IsFavoritePlaceQuery, IsFavoritePlaceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IsFavoritePlaceQuery, IsFavoritePlaceQueryVariables>(IsFavoritePlaceDocument, options);
+      }
+export function useIsFavoritePlaceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsFavoritePlaceQuery, IsFavoritePlaceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IsFavoritePlaceQuery, IsFavoritePlaceQueryVariables>(IsFavoritePlaceDocument, options);
+        }
+export type IsFavoritePlaceQueryHookResult = ReturnType<typeof useIsFavoritePlaceQuery>;
+export type IsFavoritePlaceLazyQueryHookResult = ReturnType<typeof useIsFavoritePlaceLazyQuery>;
+export type IsFavoritePlaceQueryResult = Apollo.QueryResult<IsFavoritePlaceQuery, IsFavoritePlaceQueryVariables>;

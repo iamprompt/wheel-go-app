@@ -1,5 +1,5 @@
 import { Stack, useRouter, useSearchParams } from 'expo-router'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 import {
@@ -30,11 +30,15 @@ import { HeaderLogo } from '~/components/HeaderLogo'
 import Button, { ButtonVariant } from '~/components/Button'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
 import {
+  useAddPlaceToFavoritesMutation,
   useGetPlaceByIdQuery,
   useGetReviewsByPlaceIdQuery,
+  useIsFavoritePlaceLazyQuery,
+  useRemovePlaceFromFavoritesMutation,
 } from '~/generated-types'
 import { FACILITIES } from '~/const/facility'
 import { ReviewItem } from '~/components/ReviewItem'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const { t } = useTranslation()
@@ -47,6 +51,30 @@ function Page() {
       id: id!,
     },
   })
+
+  const [addFavorites] = useAddPlaceToFavoritesMutation({
+    refetchQueries: ['GetMyProfile', 'GetMyFavoritePlaces', 'IsFavoritePlace'],
+  })
+  const [removeFavorites] = useRemovePlaceFromFavoritesMutation({
+    refetchQueries: ['GetMyProfile', 'GetMyFavoritePlaces', 'IsFavoritePlace'],
+  })
+
+  const [getIsFavorites] = useIsFavoritePlaceLazyQuery({
+    variables: {
+      placeId: id!,
+    },
+  })
+
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  const setInitialIsFavorite = async () => {
+    const { data } = await getIsFavorites()
+    setIsFavorite(data?.isFavoritePlace || false)
+  }
+
+  useEffect(() => {
+    setInitialIsFavorite()
+  }, [])
 
   const [contentOffsetY, setContentOffsetY] = useState(0)
   const handlePageScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -99,6 +127,34 @@ function Page() {
           headerStyle: {
             backgroundColor: headerColor,
           },
+          headerRight: () => (
+            <Pressable
+              onPress={async () => {
+                setIsFavorite(!isFavorite)
+                if (isFavorite) {
+                  await removeFavorites({
+                    variables: {
+                      placeId: id!,
+                    },
+                  })
+                  console.log(`${id} removed from favorites`)
+                } else {
+                  await addFavorites({
+                    variables: {
+                      placeId: id!,
+                    },
+                  })
+                  console.log(`${id} added to favorites`)
+                }
+              }}
+            >
+              <MaterialIcons
+                name={isFavorite ? 'favorite' : 'favorite_border'}
+                size={24}
+                color={COLORS.black}
+              />
+            </Pressable>
+          ),
         }}
       />
 

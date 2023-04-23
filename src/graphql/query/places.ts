@@ -118,8 +118,9 @@ export const SearchPlaces = gql`
   query SearchPlaces(
     $query: String!
     $limit: Float = 100
-    $type: [PLACE_TYPES!] = []
-    $exclude: [String!] = []
+    $type: [PLACE_TYPES!]
+    $excludeTypes: [PLACE_TYPES!]
+    $exclude: [String!]
   ) {
     getPlaces(
       options: {
@@ -127,6 +128,7 @@ export const SearchPlaces = gql`
         limit: $limit
         types: $type
         exclude: $exclude
+        excludeTypes: $excludeTypes
       }
     ) {
       id
