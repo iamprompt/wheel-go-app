@@ -14,9 +14,10 @@ import type {
 import { defineTask } from 'expo-task-manager'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import type { UserLocationChangeEvent } from 'react-native-maps'
-import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
+import type MapView from 'react-native-maps'
+import { Polyline } from 'react-native-maps'
 import Animated, {
   FadeIn,
   FadeOut,
@@ -32,7 +33,7 @@ import { Modal } from '~/components/Modal'
 import { TracingSaveModal } from '~/components/TracingSaveModal'
 import { TracingStatusIndicator } from '~/components/TracingStatusIndicator'
 import { TracingStopModal } from '~/components/TracingStopModal'
-import { MapCameraConfig, MapStyle } from '~/const/map'
+import { WGMapView } from '~/components/WGMapView'
 import { TRACING_STATES } from '~/const/trace'
 import { useCreateRoutesMutation } from '~/generated-types'
 import COLORS from '~/styles/colors'
@@ -203,31 +204,15 @@ function Page() {
 
       <StatusBar style="auto" />
 
-      <View
-        style={{
-          height: '100%',
-          width: '100%',
-        }}
+      <WGMapView
+        ref={mapRef}
+        onUserLocationChange={handleLocationChange}
+        mapElements={
+          <>
+            <Polyline coordinates={coordinates} />
+          </>
+        }
       >
-        <MapView
-          style={{
-            flex: 1,
-          }}
-          ref={mapRef}
-          provider={PROVIDER_GOOGLE}
-          showsUserLocation
-          followsUserLocation={true}
-          customMapStyle={MapStyle}
-          rotateEnabled={false}
-          pitchEnabled={false}
-          onUserLocationChange={handleLocationChange}
-          {...MapCameraConfig}
-        >
-          <Polyline coordinates={coordinates} />
-        </MapView>
-
-        {/* Map Overlay */}
-
         {/* Status Indicator */}
         <TracingStatusIndicator
           status={state}
@@ -241,41 +226,6 @@ function Page() {
             zIndex: 1,
           }}
         />
-
-        {/* Map Action Button Group */}
-        <View
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 41.7 + 16,
-            margin: 16,
-            backgroundColor: COLORS.white,
-            borderRadius: 12,
-            zIndex: 1,
-          }}
-        >
-          <Pressable
-            style={{
-              padding: 12,
-            }}
-            onPress={() => {
-              console.log('Press to show route')
-            }}
-          >
-            <MaterialIcons name="route" size={24} />
-          </Pressable>
-          <HorizontalDivider />
-          <Pressable
-            style={{
-              padding: 12,
-            }}
-            onPress={() => {
-              console.log('Pressed to my location')
-            }}
-          >
-            <MaterialIcons name="near_me" size={24} />
-          </Pressable>
-        </View>
 
         {/* Background Overlay */}
         {[
@@ -553,7 +503,7 @@ function Page() {
             ) : null}
           </View>
         </View>
-      </View>
+      </WGMapView>
     </View>
   )
 }
