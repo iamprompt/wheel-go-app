@@ -1,19 +1,17 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { Pressable, View } from 'react-native'
+import { View } from 'react-native'
 import { useRouter } from 'expo-router'
-import { TraceCTAButton } from './TraceCTAButton'
 import { Modal } from './Modal'
 import { MapPrefsModal } from './MapPrefsModal'
 import { WGMapMarker } from './WGMapMarker'
+import { WGMapControlButton } from './WGMapControlButton'
 import { MapCameraConfig, MapStyle } from '~/const/map'
 import {
   Place_Types,
   useGetPlacesQuery,
   useGetPreDefinedRoutesQuery,
 } from '~/generated-types'
-import { GlobalStyle } from '~/styles'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { getCurrentPosition } from '~/utils/location'
 import COLORS from '~/styles/colors'
 
@@ -96,28 +94,7 @@ export const WGMapView = forwardRef<
           )
         })}
       </MapView>
-      <View
-        style={{
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-          left: 0,
-          marginHorizontal: 16,
-        }}
-      >
-        <View
-          style={{
-            alignSelf: 'center',
-            marginBottom: 16,
-          }}
-        >
-          <TraceCTAButton
-            onPress={() => {
-              router.push('/tracing')
-            }}
-          />
-        </View>
-      </View>
+
       <View
         style={{
           position: 'absolute',
@@ -128,31 +105,16 @@ export const WGMapView = forwardRef<
           marginVertical: 16,
         }}
       >
-        <Pressable
-          style={{
-            backgroundColor: 'white',
-            padding: 8,
-            borderRadius: 8,
-            ...GlobalStyle.shadow,
-          }}
-          onPress={() => {
-            console.log('Pressed Preferences')
-            setPrefsModalVisible(true)
-          }}
-        >
-          <MaterialIcons name="tune" size={24} color={COLORS.magenta[500]} />
-        </Pressable>
-        <Pressable
-          style={{
-            backgroundColor: 'white',
-            padding: 8,
-            borderRadius: 8,
-            ...GlobalStyle.shadow,
-          }}
+        <WGMapControlButton
+          icon="tune"
+          iconColor={COLORS.magenta[500]}
+          onPress={() => setPrefsModalVisible(true)}
+        />
+        <WGMapControlButton
+          icon="near_me"
+          iconColor={COLORS.info[400]}
           onPress={() => handleCurrentLocation()}
-        >
-          <MaterialIcons name="near_me" size={24} color={COLORS.info[400]} />
-        </Pressable>
+        />
       </View>
       {children}
       <Modal
