@@ -82,6 +82,7 @@ export type CreateAnnouncementInput = {
 export type CreateFacilityInput = {
   concern?: InputMaybe<Concern_Types>;
   detail?: InputMaybe<LanguageObjectInput>;
+  isWarning?: InputMaybe<Scalars['Boolean']>;
   location?: InputMaybe<LocationInput>;
   metadata?: InputMaybe<FacilityMetaInput>;
   parent: Scalars['String'];
@@ -147,6 +148,7 @@ export type Facility = {
   createdAt?: Maybe<Scalars['DateTime']>;
   detail?: Maybe<LanguageObject>;
   id: Scalars['ID'];
+  isWarning?: Maybe<Scalars['Boolean']>;
   location?: Maybe<Location>;
   metadata?: Maybe<FacilityMetadata>;
   parent?: Maybe<Place>;
@@ -370,11 +372,9 @@ export enum Place_Types {
   Cafe = 'CAFE',
   Curbcut = 'CURBCUT',
   Food = 'FOOD',
-  Incident = 'INCIDENT',
   Park = 'PARK',
   Parking = 'PARKING',
   Residence = 'RESIDENCE',
-  Sport = 'SPORT',
   Toilet = 'TOILET',
   Transport = 'TRANSPORT'
 }

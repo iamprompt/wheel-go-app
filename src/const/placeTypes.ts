@@ -45,23 +45,23 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
       },
     },
   },
-  [Place_Types.Incident]: {
-    label: 'categories.INCIDENT',
-    icon: 'warning',
-    color: COLORS.warning[400],
-    mapIcon: {
-      default: {
-        file: require('~/assets/places/incident-pin.png'),
-        size: { width: 24, height: 32 },
-        centerOffset: { x: 0.5, y: 1 },
-      },
-      selected: {
-        file: require('~/assets/places/incident-selected.png'),
-        size: { width: 40, height: 46 },
-        centerOffset: { x: 0.5, y: 1 },
-      },
-    },
-  },
+  // [Place_Types.Incident]: {
+  //   label: 'categories.INCIDENT',
+  //   icon: 'warning',
+  //   color: COLORS.warning[400],
+  //   mapIcon: {
+  //     default: {
+  //       file: require('~/assets/places/incident-pin.png'),
+  //       size: { width: 24, height: 32 },
+  //       centerOffset: { x: 0.5, y: 1 },
+  //     },
+  //     selected: {
+  //       file: require('~/assets/places/incident-selected.png'),
+  //       size: { width: 40, height: 46 },
+  //       centerOffset: { x: 0.5, y: 1 },
+  //     },
+  //   },
+  // },
   [Place_Types.Transport]: {
     label: 'categories.TRANSPORT',
     icon: 'directions_bus',
@@ -193,23 +193,6 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
       },
       selected: {
         file: require('~/assets/places/parking-selected.png'),
-        size: { width: 40, height: 46 },
-        centerOffset: { x: 0.5, y: 1 },
-      },
-    },
-  },
-  [Place_Types.Sport]: {
-    label: 'categories.SPORT',
-    icon: 'sports_soccer',
-    color: COLORS.magenta[400],
-    mapIcon: {
-      default: {
-        file: require('~/assets/places/building-pin.png'),
-        size: { width: 24, height: 32 },
-        centerOffset: { x: 0.5, y: 1 },
-      },
-      selected: {
-        file: require('~/assets/places/building-selected.png'),
         size: { width: 40, height: 46 },
         centerOffset: { x: 0.5, y: 1 },
       },

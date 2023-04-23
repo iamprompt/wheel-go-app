@@ -1,14 +1,13 @@
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Image, Pressable, Text, View } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import { Pressable, Text, View } from 'react-native'
+import type MapView from 'react-native-maps'
 import { DrawerActions } from '@react-navigation/routers'
 import { useTranslation } from 'react-i18next'
 
 // import ClusterMapView from 'react-native-map-clustering'
 import { useEffect, useRef, useState } from 'react'
 
-import { MapCameraConfig, MapStyle } from '~/const/map'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
 import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
@@ -20,14 +19,10 @@ import {
   Place_Types,
   useGetNearbyPlacesLazyQuery,
   useGetPlaceByIdLazyQuery,
-  useGetPlacesQuery,
-  useGetPreDefinedRoutesQuery,
 } from '~/generated-types'
 import { TraceCTAButton } from '~/components/TraceCTAButton'
 import { getCurrentPosition } from '~/utils/location'
-import { PLACE_TYPES_META } from '~/const/placeTypes'
-import { MapPrefsModal } from '~/components/MapPrefsModal'
-import { Modal } from '~/components/Modal'
+import { WGMapView } from '~/components/WGMapView'
 
 export default function App() {
   const { t } = useTranslation()
@@ -37,33 +32,11 @@ export default function App() {
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
   const [isModalVisible, setModalVisible] = useState(false)
 
-  const { data: placesData } = useGetPlacesQuery()
-  const { data: routesData } = useGetPreDefinedRoutesQuery()
-
   const [getSelectedPlace, { data: place }] = useGetPlaceByIdLazyQuery()
 
   const [getNearbyPlaces] = useGetNearbyPlacesLazyQuery()
 
   const mapRef = useRef<MapView>(null)
-
-  const handleCurrentLocation = async () => {
-    if (!mapRef.current) {
-      return
-    }
-
-    try {
-      const {
-        coords: { latitude, longitude },
-      } = await getCurrentPosition()
-
-      mapRef.current.animateCamera({
-        center: { latitude, longitude },
-        zoom: 18,
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const handleSelectPlace = async (placeId: string) => {
     setSelectedPlaceId(placeId)
@@ -156,59 +129,11 @@ export default function App() {
       />
 
       <StatusBar style="auto" />
-      <View
-        style={{
-          height: '100%',
-          width: '100%',
-        }}
+      <WGMapView
+        ref={mapRef}
+        selectedPlaceId={selectedPlaceId}
+        onSelectPlace={handleSelectPlace}
       >
-        <MapView
-          ref={mapRef}
-          style={{
-            flex: 1,
-          }}
-          provider={PROVIDER_GOOGLE}
-          showsUserLocation
-          followsUserLocation={true}
-          customMapStyle={MapStyle}
-          rotateEnabled={false}
-          pitchEnabled={false}
-          {...MapCameraConfig}
-        >
-          {placesData?.getPlaces.map((place) => {
-            if (!place || !place.location) {
-              return null
-            }
-
-            const typeMeta =
-              PLACE_TYPES_META[place.type!] || PLACE_TYPES_META.BUILDING
-
-            const isPlaceSelected = selectedPlaceId === place.id
-            const stateIcon = isPlaceSelected
-              ? typeMeta.mapIcon.selected
-              : typeMeta.mapIcon.default
-
-            return (
-              <Marker
-                key={place.id}
-                coordinate={{
-                  latitude: place.location.lat,
-                  longitude: place.location.lng,
-                }}
-                onPress={() => {
-                  if (isPlaceSelected || place.type === Place_Types.Curbcut) {
-                    return
-                  }
-
-                  handleSelectPlace(place.id)
-                }}
-                anchor={stateIcon.centerOffset}
-              >
-                <Image source={stateIcon.file} style={stateIcon.size} />
-              </Marker>
-            )
-          })}
-        </MapView>
         <View
           style={{
             position: 'absolute',
@@ -241,41 +166,6 @@ export default function App() {
               }}
             />
           ) : null}
-        </View>
-        <View
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 72,
-            gap: 8,
-            marginHorizontal: 16,
-            marginVertical: 16,
-          }}
-        >
-          <Pressable
-            style={{
-              backgroundColor: 'white',
-              padding: 8,
-              borderRadius: 8,
-              ...GlobalStyle.shadow,
-            }}
-            onPress={() => {
-              console.log('Pressed Preferences')
-            }}
-          >
-            <MaterialIcons name="tune" size={24} color={COLORS.magenta[500]} />
-          </Pressable>
-          <Pressable
-            style={{
-              backgroundColor: 'white',
-              padding: 8,
-              borderRadius: 8,
-              ...GlobalStyle.shadow,
-            }}
-            onPress={() => handleCurrentLocation()}
-          >
-            <MaterialIcons name="near_me" size={24} color={COLORS.info[400]} />
-          </Pressable>
         </View>
         <View
           style={{
@@ -320,7 +210,7 @@ export default function App() {
             </Text>
           </Pressable>
         </View>
-      </View>
+      </WGMapView>
 
       {selectedPlaceId ? (
         <PlaceExploreModal
@@ -332,8 +222,6 @@ export default function App() {
           }}
         />
       ) : null}
-
-      <Modal isVisible={true} modal={MapPrefsModal} onClose={() => {}} />
     </View>
   )
 }
