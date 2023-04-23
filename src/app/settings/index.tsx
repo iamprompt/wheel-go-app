@@ -213,11 +213,11 @@ export default function App() {
             />
             <Image
               source={require('~/assets/logo/physical-system.png')}
-              style={{ height: 24, width: 90, marginHorizontal: 12 }}
+              style={{ height: 24, width: 115, marginHorizontal: 12 }}
             />
             <Image
-              source={require('~/assets/logo/dss-mahidol.png')}
-              style={{ height: 24, width: 24, marginHorizontal: 12 }}
+              source={require('~/assets/logo/mu-ics.png')}
+              style={{ height: 24, width: 80, marginHorizontal: 12 }}
             />
           </View>
         </View>

@@ -38,10 +38,12 @@
   },
   "button": {
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "done": "Done",
     "go": "Go",
     "ok": "OK",
     "save": "Save",
+    "skip": "Skip",
     "stop": "Stop"
   },
   "categories": {
@@ -56,6 +58,10 @@
     "SPORT": "Sport",
     "TOILET": "Toilet",
     "TRANSPORT": "Transport"
+  },
+  "explore": {
+    "search_route_placeholder": "Find accessible routes?",
+    "trace_cta_button": "Trace your journey"
   },
   "facilities": {
     "assistance": "Assistance",
@@ -76,6 +82,13 @@
     "3": "3 - Requires help from person/equipment",
     "4": "4 - Completely dependent"
   },
+  "map_prefs_modal": {
+    "conditions": "Surrounding Conditions",
+    "description": "ON/OFF by tapping on the tag",
+    "places": "Places",
+    "show_all": "Show All",
+    "title": "Display Setting"
+  },
   "page": {
     "announcements": "Announcements",
     "explore": "Explore",
@@ -83,13 +96,10 @@
     "faq_short": "FAQ",
     "help": "Help",
     "how_to_use": "How to use",
+    "privacy_policy": "Privacy Policy",
     "profile": "Profile",
     "records": "Records",
     "settings": "Settings"
-  },
-  "explore": {
-    "search_route_placeholder": "Find accessible routes?",
-    "trace_cta_button": "Trace your journey"
   },
   "places": {
     "accessibility_rating_title": "Accessibility Rating",
@@ -151,7 +161,20 @@
       "great_service": "บริการดี",
       "nice_facilities": "สิ่งอำนวยความสะดวกดี",
       "safety": "ปลอดภัย"
-    }
+    },
+    "images": "Images",
+    "images_limit_description": "Maximum 3 images.",
+    "rate_this_place": "Rate this place",
+    "see_all_reviews": "See all reviews",
+    "submit_review": "Submit",
+    "upload_images": "Upload images"
+  },
+  "routes": {
+    "route_title": "Route {{id}}"
+  },
+  "search": {
+    "categories": "Categories",
+    "near_me": "Near Me"
   },
   "settings": {
     "about": "About",

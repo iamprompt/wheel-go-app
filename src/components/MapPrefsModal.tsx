@@ -87,7 +87,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
               textAlign: 'center',
             }}
           >
-            {t('MapPrefsModal.title')}
+            {t('map_prefs_modal.title')}
           </Text>
         </View>
         <Text
@@ -98,7 +98,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
             color: COLORS['french-vanilla'][500],
           }}
         >
-          {t('MapPrefsModal.description')}
+          {t('map_prefs_modal.description')}
         </Text>
       </View>
       <HorizontalDivider />
@@ -114,7 +114,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
               fontSize: 14,
             }}
           >
-            Surrounding Conditions
+            {t('map_prefs_modal.conditions')}
           </Text>
         </View>
         <View>
@@ -124,7 +124,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
               fontSize: 14,
             }}
           >
-            Places
+            {t('map_prefs_modal.places')}
           </Text>
           <View
             style={{
@@ -166,10 +166,18 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
             alignItems: 'center',
             justifyContent: 'flex-end',
             flexDirection: 'row',
-            gap: 12,
+            gap: 8,
           }}
         >
-          <Text>{t('MapPrefsModal.selectAll')}</Text>
+          <Text
+            style={{
+              fontFamily: FONTS.LSTH_REGULAR,
+              fontSize: 12,
+              color: COLORS['french-vanilla'][500],
+            }}
+          >
+            {t('map_prefs_modal.show_all')}
+          </Text>
           <Switch
             value={isSelectAll}
             onValueChange={(value) => handleSelectAll(value)}

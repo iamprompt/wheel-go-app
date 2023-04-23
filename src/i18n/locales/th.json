@@ -38,12 +38,13 @@
   },
   "button": {
     "cancel": "ยกเลิก",
+    "confirm": "ยืนยัน",
     "done": "เสร็จสิ้น",
     "go": "ไป",
     "ok": "ตกลง",
     "save": "บันทึก",
-    "stop": "หยุด",
-    "skip": "ข้าม"
+    "skip": "ข้าม",
+    "stop": "หยุด"
   },
   "categories": {
     "BUILDING": "อาคาร",
@@ -57,6 +58,10 @@
     "SPORT": "กีฬา",
     "TOILET": "ห้องน้ำ",
     "TRANSPORT": "การขนส่ง"
+  },
+  "explore": {
+    "search_route_placeholder": "ไปที่ไหน ?",
+    "trace_cta_button": "บันทึกการเดินทาง"
   },
   "facilities": {
     "assistance": "ผู้ช่วย",
@@ -77,6 +82,13 @@
     "3": "3 - ต้องการความช่วยเหลือจากผู้อื่น/อุปกรณ์",
     "4": "4 - ไม่สามารถช่วยเหลือตัวเองได้"
   },
+  "map_prefs_modal": {
+    "conditions": "วัตถุแวดล้อม",
+    "description": "เปิด/ปิด โดยกดที่ชื่อตัวเลือก",
+    "places": "สถานที่",
+    "show_all": "แสดงทั้งหมด",
+    "title": "การตั้งค่าการแสดงผลแผนที่"
+  },
   "page": {
     "announcements": "ประกาศ",
     "explore": "สำรวจ",
@@ -84,13 +96,10 @@
     "faq_short": "คำถามที่พบบ่อย",
     "help": "ช่วยเหลือ",
     "how_to_use": "วิธีใช้",
+    "privacy_policy": "ข้อกำหนดและเงื่อนไข",
     "profile": "โปรไฟล์",
     "records": "บันทึกของฉัน",
     "settings": "การตั้งค่า"
-  },
-  "explore": {
-    "search_route_placeholder": "ไปที่ไหน ?",
-    "trace_cta_button": "บันทึกการเดินทาง"
   },
   "places": {
     "accessibility_rating_title": "ระดับความเข้าถึง",
