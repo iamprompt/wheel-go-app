@@ -47,6 +47,38 @@ export const GetPlaceById = gql`
         tramLines
       }
     }
+
+    getRatingSummaryByPlaceId(id: $id) {
+      id
+      overall
+      reviewCount
+      facilities {
+        RAMP {
+          status
+          rating
+        }
+        ASSISTANCE {
+          status
+          rating
+        }
+        TOILET {
+          status
+          rating
+        }
+        ELEVATOR {
+          status
+          rating
+        }
+        PARKING {
+          status
+          rating
+        }
+        SURFACE {
+          status
+          rating
+        }
+      }
+    }
   }
 `
 

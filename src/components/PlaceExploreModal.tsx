@@ -6,10 +6,7 @@ import { getDistance } from 'geolib'
 import { BrandGradient } from './BrandGradient'
 import { HorizontalDivider } from './HorizontalDivider'
 import Button, { ButtonVariant } from './Button'
-import {
-  AvailabilityStatus,
-  FacilitiesAvailabilityStatus,
-} from './FacilitiesAvailabilityStatus'
+import { FacilitiesAvailabilityStatus } from './FacilitiesAvailabilityStatus'
 import { AccessibilityRatingOverall } from './AccessibilityRatingOverall'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -199,7 +196,9 @@ export function PlaceExploreModal({
               >
                 {t('level.accessibility_level')}
               </Text>
-              <AccessibilityRatingOverall rating={5} />
+              <AccessibilityRatingOverall
+                rating={placeData.getRatingSummaryByPlaceId.overall}
+              />
             </View>
             <HorizontalDivider />
             <View>
@@ -212,12 +211,26 @@ export function PlaceExploreModal({
                 {t('places.facilities_title')}
               </Text>
               <FacilitiesAvailabilityStatus
-                ramp={AvailabilityStatus.AVAILABLE}
-                assistance={AvailabilityStatus.UNAVAILABLE}
-                elevator={AvailabilityStatus.AVAILABLE}
-                toilet={AvailabilityStatus.AVAILABLE}
-                parking={AvailabilityStatus.WARNING}
-                surface={AvailabilityStatus.AVAILABLE}
+                ramp={
+                  placeData.getRatingSummaryByPlaceId.facilities.RAMP?.status
+                }
+                assistance={
+                  placeData.getRatingSummaryByPlaceId.facilities.ASSISTANCE
+                    ?.status
+                }
+                elevator={
+                  placeData.getRatingSummaryByPlaceId.facilities.ELEVATOR
+                    ?.status
+                }
+                toilet={
+                  placeData.getRatingSummaryByPlaceId.facilities.TOILET?.status
+                }
+                parking={
+                  placeData.getRatingSummaryByPlaceId.facilities.PARKING?.status
+                }
+                surface={
+                  placeData.getRatingSummaryByPlaceId.facilities.SURFACE?.status
+                }
               />
             </View>
             <View>

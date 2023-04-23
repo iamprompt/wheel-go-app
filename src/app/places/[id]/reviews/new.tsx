@@ -1,11 +1,12 @@
 import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, Platform, Pressable, Text, TextInput, View } from 'react-native'
+import { Image, Pressable, Text, TextInput, View } from 'react-native'
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import type { ImagePickerAsset } from 'expo-image-picker'
 import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker'
+import { ReactNativeFile } from 'apollo-upload-client'
 import { AccessibilityRatingItemSelect } from '~/components/AccessibilityRatingItemSelect'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { VerticalDivider } from '~/components/VerticalDivider'
@@ -72,48 +73,32 @@ function Page() {
 
   const handleSubmit = async () => {
     console.log('submit')
-    // TODO: Implement Upload Images to PayloadCMS
     const images = selectedImages.map((image) => {
-      return {
-        uri:
-          Platform.OS === 'android'
-            ? image.uri
-            : image.uri.replace('file://', ''),
-        width: image.width,
-        height: image.height,
-        name: image.fileName,
+      return new ReactNativeFile({
+        uri: image.uri,
         type: image.type,
-      }
+        name: image.fileName || 'image.jpg',
+      })
     })
 
-    // const uploadResults = await Promise.all(
-    //   images.map(async (image) => {
-    //     const formData = new FormData()
-    //     // @ts-expect-error - append image to form data
-    //     formData.append('file', image)
+    const uploadResults = await Promise.all(
+      images.map(async (image) => {
+        try {
+          const result = await uploadMedia({
+            variables: {
+              file: image,
+            },
+          })
 
-    //     console.log('formData', JSON.stringify(formData, null, 2))
+          console.log('result', result)
 
-    //     try {
-    //       const result = await axios.post(
-    //         `${Constants.expoConfig?.extra?.WHEELGO_API}/media`,
-    //         formData,
-    //         {
-    //           headers: {
-    //             Authorization: await getUserToken(),
-    //           },
-    //         }
-    //       )
-
-    //       return result.data
-    //     } catch (error) {
-    //       if (isAxiosError(error)) {
-    //         console.error(error.response?.data)
-    //       }
-    //       throw error
-    //     }
-    //   })
-    // )
+          return result.data
+        } catch (error) {
+          console.log('error', error)
+          throw error
+        }
+      })
+    )
 
     // console.log(
     //   'uploadResults',
@@ -130,7 +115,10 @@ function Page() {
             overall: overallRating,
             ...facilityRating,
           },
-          images: [],
+          images:
+            uploadResults
+              .filter((r) => r?.uploadMedia.id)
+              .map((result) => result!.uploadMedia.id) || [],
         },
       },
     })

@@ -133,6 +133,13 @@ export type CreateUserInput = {
   username?: InputMaybe<Scalars['String']>;
 };
 
+export enum Facility_Status {
+  Available = 'AVAILABLE',
+  Unavailable = 'UNAVAILABLE',
+  Unknown = 'UNKNOWN',
+  Warning = 'WARNING'
+}
+
 export enum Facility_Types {
   Assistance = 'ASSISTANCE',
   Elevator = 'ELEVATOR',
@@ -141,6 +148,16 @@ export enum Facility_Types {
   Surface = 'SURFACE',
   Toilet = 'TOILET'
 }
+
+export type FacilitiesAvailability = {
+  __typename?: 'FacilitiesAvailability';
+  ASSISTANCE?: Maybe<FacilityAvailability>;
+  ELEVATOR?: Maybe<FacilityAvailability>;
+  PARKING?: Maybe<FacilityAvailability>;
+  RAMP?: Maybe<FacilityAvailability>;
+  SURFACE?: Maybe<FacilityAvailability>;
+  TOILET?: Maybe<FacilityAvailability>;
+};
 
 export type Facility = {
   __typename?: 'Facility';
@@ -155,6 +172,12 @@ export type Facility = {
   status?: Maybe<Status>;
   type?: Maybe<Facility_Types>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type FacilityAvailability = {
+  __typename?: 'FacilityAvailability';
+  rating: Scalars['Float'];
+  status: Facility_Status;
 };
 
 export type FacilityMetaInput = {
@@ -422,6 +445,7 @@ export type Query = {
   getMediaById: Media;
   getPlaceById: Place;
   getPlaces: Array<Place>;
+  getRatingSummaryByPlaceId: RatingSummary;
   getReviewById: Review;
   getReviews: Array<Review>;
   getReviewsByPlaceId: Array<Review>;
@@ -470,6 +494,11 @@ export type QueryGetPlaceByIdArgs = {
 
 export type QueryGetPlacesArgs = {
   options?: InputMaybe<GetPlacesInput>;
+};
+
+
+export type QueryGetRatingSummaryByPlaceIdArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -537,6 +566,14 @@ export type RatingObjectInput = {
   ramp?: InputMaybe<Scalars['Float']>;
   surface?: InputMaybe<Scalars['Float']>;
   toilet?: InputMaybe<Scalars['Float']>;
+};
+
+export type RatingSummary = {
+  __typename?: 'RatingSummary';
+  facilities: FacilitiesAvailability;
+  id: Scalars['ID'];
+  overall: Scalars['Float'];
+  reviewCount: Scalars['Int'];
 };
 
 export type Review = {
@@ -669,7 +706,7 @@ export type GetPlaceByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetPlaceByIdQuery = { __typename?: 'Query', getPlaceById: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, address?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'PlaceMetadata', phone?: string | null, website?: string | null, busLines?: Array<string> | null, tramLines?: Array<string> | null } | null } };
+export type GetPlaceByIdQuery = { __typename?: 'Query', getPlaceById: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, address?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'PlaceMetadata', phone?: string | null, website?: string | null, busLines?: Array<string> | null, tramLines?: Array<string> | null } | null }, getRatingSummaryByPlaceId: { __typename?: 'RatingSummary', id: string, overall: number, reviewCount: number, facilities: { __typename?: 'FacilitiesAvailability', RAMP?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ASSISTANCE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, TOILET?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ELEVATOR?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, PARKING?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, SURFACE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null } } };
 
 export type GetNearbyPlacesQueryVariables = Exact<{
   lat: Scalars['Float'];
@@ -1102,6 +1139,37 @@ export const GetPlaceByIdDocument = gql`
       website
       busLines
       tramLines
+    }
+  }
+  getRatingSummaryByPlaceId(id: $id) {
+    id
+    overall
+    reviewCount
+    facilities {
+      RAMP {
+        status
+        rating
+      }
+      ASSISTANCE {
+        status
+        rating
+      }
+      TOILET {
+        status
+        rating
+      }
+      ELEVATOR {
+        status
+        rating
+      }
+      PARKING {
+        status
+        rating
+      }
+      SURFACE {
+        status
+        rating
+      }
     }
   }
 }

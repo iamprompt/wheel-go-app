@@ -44,9 +44,7 @@ export function AccessibilityRatingItem({
               name="star"
               size={24}
               color={
-                i + 1 < rating
-                  ? COLORS.warning[300]
-                  : COLORS['french-vanilla'][300]
+                i < rating ? COLORS.warning[300] : COLORS['french-vanilla'][300]
               }
             />
           )

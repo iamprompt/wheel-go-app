@@ -5,9 +5,9 @@ import {
   ApolloProvider,
   InMemoryCache,
   Observable,
-  createHttpLink,
   from,
 } from '@apollo/client'
+import { createUploadLink } from 'apollo-upload-client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 
@@ -16,12 +16,15 @@ import { GraphQLError } from 'graphql'
 import { getUserToken, setUserToken } from './asyncStorage'
 import { RefreshToken } from '~/graphql/mutation/auth'
 
-const httpLink = createHttpLink({
+// const httpLink = createHttpLink({
+// })
+
+const uploadLink = createUploadLink({
   uri: `${Constant.expoConfig?.extra?.WHEELGO_API}/graphql`,
 })
 
 const client = new ApolloClient({
-  link: httpLink,
+  link: uploadLink,
   cache: new InMemoryCache(),
 })
 
@@ -94,7 +97,7 @@ const errorLink = onError(
   }
 )
 
-const apolloLinks = from([errorLink, authLink, httpLink])
+const apolloLinks = from([errorLink, authLink, uploadLink])
 client.setLink(apolloLinks)
 
 export function WheelGoApolloProvider({ children }: { children: ReactNode }) {

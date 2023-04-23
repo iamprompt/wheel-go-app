@@ -46,7 +46,7 @@ export function AccessibilityRatingOverall({
           </Text>
           <MaterialIcons name="star" size={24} color={COLORS.warning[300]} />
         </View>
-        {reviews ? (
+        {reviews !== undefined ? (
           <Text
             style={{
               fontFamily: FONTS.LSTH_REGULAR,

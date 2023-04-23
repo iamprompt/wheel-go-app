@@ -3,26 +3,28 @@ import { HorizontalDivider } from './HorizontalDivider'
 import COLORS from '~/styles/colors'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { FACILITIES } from '~/const/facility'
+import type { Facility_Status } from '~/generated-types'
 
 export enum AvailabilityStatus {
   AVAILABLE = 'AVAILABLE',
   UNAVAILABLE = 'UNAVAILABLE',
   WARNING = 'WARNING',
+  UNKNOWN = 'UNKNOWN',
 }
 
 interface FacilitiesAvailabilityStatusProps {
-  ramp: AvailabilityStatus
-  assistance: AvailabilityStatus
-  elevator: AvailabilityStatus
-  toilet: AvailabilityStatus
-  parking: AvailabilityStatus
-  surface: AvailabilityStatus
+  ramp?: AvailabilityStatus | Facility_Status
+  assistance?: AvailabilityStatus | Facility_Status
+  elevator?: AvailabilityStatus | Facility_Status
+  toilet?: AvailabilityStatus | Facility_Status
+  parking?: AvailabilityStatus | Facility_Status
+  surface?: AvailabilityStatus | Facility_Status
 }
 
 export function AvailabilityIcon({
-  availability,
+  availability = AvailabilityStatus.UNKNOWN,
 }: {
-  availability: AvailabilityStatus
+  availability?: AvailabilityStatus | Facility_Status
 }) {
   switch (availability) {
     case AvailabilityStatus.AVAILABLE:
@@ -39,6 +41,8 @@ export function AvailabilityIcon({
       return (
         <MaterialIcons name="warning" size={16} color={COLORS.warning[300]} />
       )
+    default:
+      return <MaterialIcons name="help" size={16} color={COLORS.info[500]} />
   }
 }
 

@@ -21,10 +21,7 @@ import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { IconActionButton } from '~/components/IconActionButton'
 import { ListCategoryIcon } from '~/const/category'
 import { BrandGradient } from '~/components/BrandGradient'
-import {
-  AvailabilityStatus,
-  FacilitiesAvailabilityStatus,
-} from '~/components/FacilitiesAvailabilityStatus'
+import { FacilitiesAvailabilityStatus } from '~/components/FacilitiesAvailabilityStatus'
 import { AccessibilityRatingOverall } from '~/components/AccessibilityRatingOverall'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { AccessibilityRatingContainer } from '~/components/AccessibilityRatingContainer'
@@ -32,7 +29,12 @@ import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import Button, { ButtonVariant } from '~/components/Button'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
-import { useGetMyReviewsQuery, useGetPlaceByIdQuery } from '~/generated-types'
+import {
+  useGetPlaceByIdQuery,
+  useGetReviewsByPlaceIdQuery,
+} from '~/generated-types'
+import { FACILITIES } from '~/const/facility'
+import { ReviewItem } from '~/components/ReviewItem'
 
 function Page() {
   const { t } = useTranslation()
@@ -70,7 +72,11 @@ function Page() {
     })
   }, [contentOffsetY, data?.getPlaceById?.name])
 
-  const { data: reviewsData } = useGetMyReviewsQuery()
+  const { data: reviewsData } = useGetReviewsByPlaceIdQuery({
+    variables: {
+      placeId: id!,
+    },
+  })
 
   const { name, address, type, images, metadata, location } =
     data?.getPlaceById || {}
@@ -282,10 +288,26 @@ function Page() {
                 </Text>
               </Pressable>
             </View>
-            <AccessibilityRatingOverall rating={5} reviews={10} />
+            <AccessibilityRatingOverall
+              rating={data.getRatingSummaryByPlaceId.overall}
+              reviews={data.getRatingSummaryByPlaceId.reviewCount || 0}
+            />
             <AccessibilityRatingContainer
               style={{
                 marginTop: 24,
+              }}
+              ratings={{
+                RAMP: data.getRatingSummaryByPlaceId.facilities.RAMP?.rating,
+                ASSISTANCE:
+                  data.getRatingSummaryByPlaceId.facilities.ASSISTANCE?.rating,
+                ELEVATOR:
+                  data.getRatingSummaryByPlaceId.facilities.ELEVATOR?.rating,
+                TOILET:
+                  data.getRatingSummaryByPlaceId.facilities.TOILET?.rating,
+                PARKING:
+                  data.getRatingSummaryByPlaceId.facilities.PARKING?.rating,
+                SURFACE:
+                  data.getRatingSummaryByPlaceId.facilities.SURFACE?.rating,
               }}
             />
           </View>
@@ -325,12 +347,20 @@ function Page() {
               </Pressable>
             </View>
             <FacilitiesAvailabilityStatus
-              ramp={AvailabilityStatus.AVAILABLE}
-              assistance={AvailabilityStatus.UNAVAILABLE}
-              elevator={AvailabilityStatus.AVAILABLE}
-              toilet={AvailabilityStatus.AVAILABLE}
-              parking={AvailabilityStatus.WARNING}
-              surface={AvailabilityStatus.AVAILABLE}
+              ramp={data.getRatingSummaryByPlaceId.facilities.RAMP?.status}
+              assistance={
+                data.getRatingSummaryByPlaceId.facilities.ASSISTANCE?.status
+              }
+              elevator={
+                data.getRatingSummaryByPlaceId.facilities.ELEVATOR?.status
+              }
+              toilet={data.getRatingSummaryByPlaceId.facilities.TOILET?.status}
+              parking={
+                data.getRatingSummaryByPlaceId.facilities.PARKING?.status
+              }
+              surface={
+                data.getRatingSummaryByPlaceId.facilities.SURFACE?.status
+              }
             />
           </View>
 
@@ -366,8 +396,8 @@ function Page() {
               {t('places.review_text')}
             </Text>
           </View>
-          {/* {reviewsData?.getReviews?.map((review) => {
-            const { id, user, comment, rating, official, createdAt } =
+          {reviewsData?.getReviewsByPlaceId?.map((review) => {
+            const { id, user, comment, rating, official, images, createdAt } =
               review || {}
 
             const Facilities = Object.keys(FACILITIES)
@@ -390,7 +420,7 @@ function Page() {
               official && official.comment && official.timestamp
                 ? {
                     date: official.timestamp,
-                    isFlagged: official.flagged || false,
+                    isFlagged: official.isFlagged || false,
                     comment: official.comment,
                   }
                 : undefined
@@ -405,22 +435,22 @@ function Page() {
                 }}
               >
                 <ReviewItem
-                  reviewer={`${user?.firstName} ${user?.lastName}`}
-                  additionalComment={rating?.comment || comment || ''}
+                  reviewer={`${user?.firstname} ${user?.lastname}`}
+                  additionalComment={comment || ''}
                   overallRating={rating?.overall || 0}
                   date={createdAt}
                   facilityRatings={facilityRatings}
                   officialComment={officialComment}
                   images={
-                    rating?.images?.map(({ image, id }) => ({
+                    images?.map(({ url, id }) => ({
                       id: id!,
-                      url: image!.url!,
+                      url: url!,
                     })) || []
                   }
                 />
               </View>
             )
-          })} */}
+          })}
           <Button
             label={t('reviews.see_all_reviews')}
             variant={ButtonVariant.Secondary}

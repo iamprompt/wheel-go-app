@@ -7,9 +7,17 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 
+type AccessibilityRatingContainerProps = Omit<
+  ComponentProps<typeof View>,
+  'children'
+> & {
+  ratings: Record<keyof typeof FACILITIES | string, number | undefined>
+}
+
 export function AccessibilityRatingContainer({
+  ratings,
   ...props
-}: Omit<ComponentProps<typeof View>, 'children'>) {
+}: AccessibilityRatingContainerProps) {
   const { t } = useTranslation()
 
   return (
@@ -44,7 +52,11 @@ export function AccessibilityRatingContainer({
                 size={16}
               />
             </View>
-            <AccessibilityRatingItem name={key} icon={icon} rating={3.5} />
+            <AccessibilityRatingItem
+              name={key}
+              icon={icon}
+              rating={ratings[key.toUpperCase()] || 0}
+            />
           </View>
         )
       })}

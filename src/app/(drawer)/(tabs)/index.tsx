@@ -218,7 +218,6 @@ export default function App() {
           isVisible={isModalVisible}
           onClose={() => {
             setModalVisible(false)
-            setSelectedPlaceId(null)
           }}
         />
       ) : null}
