@@ -10,7 +10,7 @@
     "codegen": "graphql-codegen",
     "codegen:watch": "graphql-codegen --watch",
     "build:android": "eas build --platform android --profile preview --local",
-    "build:ios": "eas build --platform ios --local",
+    "build:ios": "eas build --platform ios --local --non-interactive",
     "build:dev-android": "eas build --profile development --platform android --local",
     "build:dev-ios": "eas build --profile development-simulator --platform ios --local",
     "build:dev-phys-ios": "eas build --profile development --platform ios --local"
