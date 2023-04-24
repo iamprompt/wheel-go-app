@@ -194,7 +194,7 @@ export function PlaceExploreModal({
                   fontSize: 14,
                 }}
               >
-                {t('level.accessibility_level')}
+                {t('accessibility_level.title')}
               </Text>
               <AccessibilityRatingOverall
                 rating={placeData.getRatingSummaryByPlaceId.overall}

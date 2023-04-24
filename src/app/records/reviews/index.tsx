@@ -20,10 +20,10 @@ export default function Page() {
   const { data: reviewsData } = useGetMyReviewsQuery()
 
   const reviews = useMemo(() => {
-    if (!reviewsData || !reviewsData.getReviews) {
+    if (!reviewsData || !reviewsData.getMyReviews) {
       return []
     }
-    return reviewsData.getReviews || []
+    return reviewsData.getMyReviews || []
   }, [reviewsData])
 
   return (
@@ -83,7 +83,7 @@ export default function Page() {
               color: COLORS['french-vanilla'][500],
             }}
           >
-            3 {t('units.reviews')}
+            {reviews.length} {t('units.reviews')}
           </Text>
         </View>
         <View

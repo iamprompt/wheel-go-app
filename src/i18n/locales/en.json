@@ -1,4 +1,15 @@
 {
+  "accessibility_level": {
+    "level_0": "This place is not accessible",
+    "level_1": "This place is hard to access even got the help",
+    "level_2": "Require help from person and equipment to visit this place",
+    "level_3": "This place can access with assistance from another",
+    "level_4": "This place can access by use of equipment or assistance from another",
+    "level_5": "This place can access by use of equipment",
+    "level_6": "This place can access by use of equipment or by yourself",
+    "level_7": "This place can access without any help",
+    "title": "Accessible Rating"
+  },
   "announcements": {
     "contact": {
       "email": "Email",
@@ -233,5 +244,9 @@
     "route": "Route",
     "routes": "Routes",
     "seconds": "Seconds"
+  },
+  "faq": {
+    "contact_us": "Can't find an answer to your questions? Feel free to contact us at",
+    "contact_us_email": "wheelgo.ict.mahidol@gmail.com"
   }
 }

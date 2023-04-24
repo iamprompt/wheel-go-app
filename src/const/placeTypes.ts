@@ -198,4 +198,21 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
       },
     },
   },
+  [Place_Types.Sport]: {
+    label: 'categories.SPORT',
+    icon: 'sports_basketball',
+    color: COLORS.cantaloupe[500],
+    mapIcon: {
+      default: {
+        file: require('~/assets/places/sport-pin.png'),
+        size: { width: 24, height: 24 },
+        centerOffset: { x: 0.5, y: 0.5 },
+      },
+      selected: {
+        file: require('~/assets/places/sport-selected.png'),
+        size: { width: 40, height: 40 },
+        centerOffset: { x: 0.5, y: 0.5 },
+      },
+    },
+  },
 }

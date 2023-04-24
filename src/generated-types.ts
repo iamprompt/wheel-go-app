@@ -287,6 +287,11 @@ export type Mutation = {
   createReview: Review;
   createRoute: Route;
   createUser: User;
+  deleteAnnouncement: Scalars['Boolean'];
+  deleteFacility: Scalars['Boolean'];
+  deletePlace: Scalars['Boolean'];
+  deleteReview: Scalars['Boolean'];
+  deleteRoute: Scalars['Boolean'];
   login: AuthResponse;
   refresh: AuthResponse;
   removeFavoritePlace: User;
@@ -332,6 +337,31 @@ export type MutationCreateRouteArgs = {
 
 export type MutationCreateUserArgs = {
   data: CreateUserInput;
+};
+
+
+export type MutationDeleteAnnouncementArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteFacilityArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeletePlaceArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteReviewArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteRouteArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -412,6 +442,7 @@ export enum Place_Types {
   Park = 'PARK',
   Parking = 'PARKING',
   Residence = 'RESIDENCE',
+  Sport = 'SPORT',
   Toilet = 'TOILET',
   Transport = 'TRANSPORT'
 }
@@ -457,6 +488,8 @@ export type Query = {
   getFacilityById: Facility;
   getMedia: Array<Media>;
   getMediaById: Media;
+  getMyReviews: Array<Review>;
+  getMyTracedRoutes: Array<Route>;
   getPlaceById: Place;
   getPlaces: Array<Place>;
   getRatingSummaryByPlaceId: RatingSummary;
@@ -668,6 +701,18 @@ export type UserMetadata = {
   impairmentLevel?: Maybe<Scalars['String']>;
 };
 
+export type LanguageFieldsFragment = { __typename?: 'LanguageObject', th?: string | null, en?: string | null };
+
+export type LocationFieldsFragment = { __typename?: 'Location', lat: number, lng: number };
+
+export type MediaFieldsFragment = { __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null };
+
+export type PlaceBriefFieldsFragment = { __typename?: 'Place', type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null };
+
+export type RatingFieldsFragment = { __typename?: 'RatingObject', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null };
+
+export type RouteFieldsFragment = { __typename?: 'Route', id: string, type?: Route_Types | null, distance?: number | null, duration?: number | null, createdAt?: any | null, paths?: Array<{ __typename?: 'Location', lat: number, lng: number }> | null };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -754,21 +799,21 @@ export type SearchPlacesQuery = { __typename?: 'Query', getPlaces: Array<{ __typ
 export type GetMyReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyReviewsQuery = { __typename?: 'Query', getReviews: Array<{ __typename?: 'Review', id: string, createdAt?: any | null, place?: { __typename?: 'Place', type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null } | null, rating?: { __typename?: 'RatingObject', overall?: number | null } | null }> };
+export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'Review', id: string, createdAt?: any | null, place?: { __typename?: 'Place', type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null } | null, rating?: { __typename?: 'RatingObject', overall?: number | null } | null }> };
 
 export type GetReviewByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetReviewByIdQuery = { __typename?: 'Query', getReviewById: { __typename?: 'Review', id: string, comment?: string | null, tags?: Array<string> | null, createdAt?: any | null, place?: { __typename?: 'Place', type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, images?: Array<{ __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null }> | null } | null, rating?: { __typename?: 'RatingObject', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null } | null, images?: Array<{ __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null, id: string }> | null, official?: { __typename?: 'OfficialReviewObject', isFlagged?: boolean | null, comment?: string | null, timestamp?: any | null } | null } };
+export type GetReviewByIdQuery = { __typename?: 'Query', getReviewById: { __typename?: 'Review', id: string, comment?: string | null, tags?: Array<string> | null, createdAt?: any | null, place?: { __typename?: 'Place', type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null } | null, rating?: { __typename?: 'RatingObject', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, official?: { __typename?: 'OfficialReviewObject', isFlagged?: boolean | null, comment?: string | null, timestamp?: any | null } | null } };
 
 export type GetReviewsByPlaceIdQueryVariables = Exact<{
   placeId: Scalars['ID'];
 }>;
 
 
-export type GetReviewsByPlaceIdQuery = { __typename?: 'Query', getReviewsByPlaceId: Array<{ __typename?: 'Review', id: string, comment?: string | null, tags?: Array<string> | null, createdAt?: any | null, user?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null } | null, rating?: { __typename?: 'RatingObject', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null } | null, images?: Array<{ __typename?: 'Media', url?: string | null, width?: number | null, height?: number | null, id: string }> | null, official?: { __typename?: 'OfficialReviewObject', isFlagged?: boolean | null, comment?: string | null, timestamp?: any | null } | null }> };
+export type GetReviewsByPlaceIdQuery = { __typename?: 'Query', getReviewsByPlaceId: Array<{ __typename?: 'Review', id: string, comment?: string | null, tags?: Array<string> | null, createdAt?: any | null, user?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null } | null, rating?: { __typename?: 'RatingObject', overall?: number | null, ramp?: number | null, assistance?: number | null, elevator?: number | null, toilet?: number | null, parking?: number | null, surface?: number | null } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, official?: { __typename?: 'OfficialReviewObject', isFlagged?: boolean | null, comment?: string | null, timestamp?: any | null } | null }> };
 
 export type SearchRoutesQueryVariables = Exact<{
   from: Scalars['String'];
@@ -786,7 +831,7 @@ export type GetPreDefinedRoutesQuery = { __typename?: 'Query', getRoutes: Array<
 export type GetMyTracedRoutesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyTracedRoutesQuery = { __typename?: 'Query', getRoutes: Array<{ __typename?: 'Route', id: string, type?: Route_Types | null, distance?: number | null, duration?: number | null, createdAt?: any | null, paths?: Array<{ __typename?: 'Location', lat: number, lng: number }> | null }> };
+export type GetMyTracedRoutesQuery = { __typename?: 'Query', getMyTracedRoutes: Array<{ __typename?: 'Route', id: string, type?: Route_Types | null, distance?: number | null, duration?: number | null, createdAt?: any | null, paths?: Array<{ __typename?: 'Location', lat: number, lng: number }> | null }> };
 
 export type GetRouteByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -826,7 +871,61 @@ export type IsFavoritePlaceQueryVariables = Exact<{
 
 export type IsFavoritePlaceQuery = { __typename?: 'Query', isFavoritePlace: boolean };
 
-
+export const LanguageFieldsFragmentDoc = gql`
+    fragment LanguageFields on LanguageObject {
+  th
+  en
+}
+    `;
+export const MediaFieldsFragmentDoc = gql`
+    fragment MediaFields on Media {
+  id
+  url
+  width
+  height
+}
+    `;
+export const PlaceBriefFieldsFragmentDoc = gql`
+    fragment PlaceBriefFields on Place {
+  name {
+    ...LanguageFields
+  }
+  type
+  images {
+    ...MediaFields
+  }
+}
+    ${LanguageFieldsFragmentDoc}
+${MediaFieldsFragmentDoc}`;
+export const RatingFieldsFragmentDoc = gql`
+    fragment RatingFields on RatingObject {
+  overall
+  ramp
+  assistance
+  elevator
+  toilet
+  parking
+  surface
+}
+    `;
+export const LocationFieldsFragmentDoc = gql`
+    fragment LocationFields on Location {
+  lat
+  lng
+}
+    `;
+export const RouteFieldsFragmentDoc = gql`
+    fragment RouteFields on Route {
+  id
+  type
+  paths {
+    ...LocationFields
+  }
+  distance
+  duration
+  createdAt
+}
+    ${LocationFieldsFragmentDoc}`;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -1115,17 +1214,16 @@ export const GetPlacesDocument = gql`
   getPlaces {
     id
     name {
-      th
-      en
+      ...LanguageFields
     }
     type
     location {
-      lat
-      lng
+      ...LocationFields
     }
   }
 }
-    `;
+    ${LanguageFieldsFragmentDoc}
+${LocationFieldsFragmentDoc}`;
 
 /**
  * __useGetPlacesQuery__
@@ -1158,23 +1256,17 @@ export const GetPlaceByIdDocument = gql`
   getPlaceById(id: $id) {
     id
     name {
-      th
-      en
+      ...LanguageFields
     }
     type
     address {
-      th
-      en
+      ...LanguageFields
     }
     location {
-      lat
-      lng
+      ...LocationFields
     }
     images {
-      id
-      url
-      width
-      height
+      ...MediaFields
     }
     metadata {
       phone
@@ -1215,7 +1307,9 @@ export const GetPlaceByIdDocument = gql`
     }
   }
 }
-    `;
+    ${LanguageFieldsFragmentDoc}
+${LocationFieldsFragmentDoc}
+${MediaFieldsFragmentDoc}`;
 
 /**
  * __useGetPlaceByIdQuery__
@@ -1251,17 +1345,16 @@ export const GetNearbyPlacesDocument = gql`
   ) {
     id
     name {
-      th
-      en
+      ...LanguageFields
     }
     type
     location {
-      lat
-      lng
+      ...LocationFields
     }
   }
 }
-    `;
+    ${LanguageFieldsFragmentDoc}
+${LocationFieldsFragmentDoc}`;
 
 /**
  * __useGetNearbyPlacesQuery__
@@ -1302,13 +1395,12 @@ export const SearchPlacesDocument = gql`
   ) {
     id
     name {
-      th
-      en
+      ...LanguageFields
     }
     type
   }
 }
-    `;
+    ${LanguageFieldsFragmentDoc}`;
 
 /**
  * __useSearchPlacesQuery__
@@ -1343,14 +1435,10 @@ export type SearchPlacesLazyQueryHookResult = ReturnType<typeof useSearchPlacesL
 export type SearchPlacesQueryResult = Apollo.QueryResult<SearchPlacesQuery, SearchPlacesQueryVariables>;
 export const GetMyReviewsDocument = gql`
     query GetMyReviews {
-  getReviews {
+  getMyReviews {
     id
     place {
-      name {
-        th
-        en
-      }
-      type
+      ...PlaceBriefFields
     }
     rating {
       overall
@@ -1358,7 +1446,7 @@ export const GetMyReviewsDocument = gql`
     createdAt
   }
 }
-    `;
+    ${PlaceBriefFieldsFragmentDoc}`;
 
 /**
  * __useGetMyReviewsQuery__
@@ -1391,32 +1479,14 @@ export const GetReviewByIdDocument = gql`
   getReviewById(id: $id) {
     id
     place {
-      name {
-        th
-        en
-      }
-      type
-      images {
-        url
-        width
-        height
-      }
+      ...PlaceBriefFields
     }
     rating {
-      overall
-      ramp
-      assistance
-      elevator
-      toilet
-      parking
-      surface
+      ...RatingFields
     }
     comment
     images {
-      url
-      width
-      height
-      id
+      ...MediaFields
     }
     tags
     official {
@@ -1427,7 +1497,9 @@ export const GetReviewByIdDocument = gql`
     createdAt
   }
 }
-    `;
+    ${PlaceBriefFieldsFragmentDoc}
+${RatingFieldsFragmentDoc}
+${MediaFieldsFragmentDoc}`;
 
 /**
  * __useGetReviewByIdQuery__
@@ -1466,20 +1538,11 @@ export const GetReviewsByPlaceIdDocument = gql`
       lastname
     }
     rating {
-      overall
-      ramp
-      assistance
-      elevator
-      toilet
-      parking
-      surface
+      ...RatingFields
     }
     comment
     images {
-      url
-      width
-      height
-      id
+      ...MediaFields
     }
     tags
     official {
@@ -1490,7 +1553,8 @@ export const GetReviewsByPlaceIdDocument = gql`
     createdAt
   }
 }
-    `;
+    ${RatingFieldsFragmentDoc}
+${MediaFieldsFragmentDoc}`;
 
 /**
  * __useGetReviewsByPlaceIdQuery__
@@ -1561,18 +1625,10 @@ export type SearchRoutesQueryResult = Apollo.QueryResult<SearchRoutesQuery, Sear
 export const GetPreDefinedRoutesDocument = gql`
     query GetPreDefinedRoutes {
   getRoutes {
-    id
-    type
-    paths {
-      lat
-      lng
-    }
-    distance
-    duration
-    createdAt
+    ...RouteFields
   }
 }
-    `;
+    ${RouteFieldsFragmentDoc}`;
 
 /**
  * __useGetPreDefinedRoutesQuery__
@@ -1602,19 +1658,11 @@ export type GetPreDefinedRoutesLazyQueryHookResult = ReturnType<typeof useGetPre
 export type GetPreDefinedRoutesQueryResult = Apollo.QueryResult<GetPreDefinedRoutesQuery, GetPreDefinedRoutesQueryVariables>;
 export const GetMyTracedRoutesDocument = gql`
     query GetMyTracedRoutes {
-  getRoutes {
-    id
-    type
-    paths {
-      lat
-      lng
-    }
-    distance
-    duration
-    createdAt
+  getMyTracedRoutes {
+    ...RouteFields
   }
 }
-    `;
+    ${RouteFieldsFragmentDoc}`;
 
 /**
  * __useGetMyTracedRoutesQuery__
@@ -1645,18 +1693,10 @@ export type GetMyTracedRoutesQueryResult = Apollo.QueryResult<GetMyTracedRoutesQ
 export const GetRouteByIdDocument = gql`
     query GetRouteById($id: String!) {
   getRouteById(id: $id) {
-    id
-    type
-    paths {
-      lat
-      lng
-    }
-    distance
-    duration
-    createdAt
+    ...RouteFields
   }
 }
-    `;
+    ${RouteFieldsFragmentDoc}`;
 
 /**
  * __useGetRouteByIdQuery__

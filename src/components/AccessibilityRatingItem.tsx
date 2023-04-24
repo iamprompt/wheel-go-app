@@ -58,7 +58,7 @@ export function AccessibilityRatingItem({
             color: COLORS.magenta[500],
           }}
         >
-          {rating}
+          {(rating || 0).toFixed(1)}
         </Text>
       </View>
     </View>

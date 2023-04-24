@@ -1,15 +1,16 @@
 import { gql } from '@apollo/client'
+import { MEDIA_FIELDS } from '../fragment/media'
+import { PLACE_BRIEF_FIELDS } from '../fragment/place'
+import { RATING_FIELDS } from '../fragment/rating'
 
 export const GetMyReviews = gql`
+  ${PLACE_BRIEF_FIELDS}
+
   query GetMyReviews {
-    getReviews {
+    getMyReviews {
       id
       place {
-        name {
-          th
-          en
-        }
-        type
+        ...PlaceBriefFields
       }
       rating {
         overall
@@ -20,36 +21,21 @@ export const GetMyReviews = gql`
 `
 
 export const GetReviewById = gql`
+  ${MEDIA_FIELDS}
+  ${PLACE_BRIEF_FIELDS}
+
   query GetReviewById($id: ID!) {
     getReviewById(id: $id) {
       id
       place {
-        name {
-          th
-          en
-        }
-        type
-        images {
-          url
-          width
-          height
-        }
+        ...PlaceBriefFields
       }
       rating {
-        overall
-        ramp
-        assistance
-        elevator
-        toilet
-        parking
-        surface
+        ...RatingFields
       }
       comment
       images {
-        url
-        width
-        height
-        id
+        ...MediaFields
       }
       tags
       official {
@@ -63,6 +49,9 @@ export const GetReviewById = gql`
 `
 
 export const GetReviewsByPlaceId = gql`
+  ${RATING_FIELDS}
+  ${MEDIA_FIELDS}
+
   query GetReviewsByPlaceId($placeId: ID!) {
     getReviewsByPlaceId(placeId: $placeId) {
       id
@@ -72,20 +61,11 @@ export const GetReviewsByPlaceId = gql`
         lastname
       }
       rating {
-        overall
-        ramp
-        assistance
-        elevator
-        toilet
-        parking
-        surface
+        ...RatingFields
       }
       comment
       images {
-        url
-        width
-        height
-        id
+        ...MediaFields
       }
       tags
       official {

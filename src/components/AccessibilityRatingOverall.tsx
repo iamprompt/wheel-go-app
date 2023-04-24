@@ -4,6 +4,7 @@ import { VerticalDivider } from './VerticalDivider'
 import COLORS from '~/styles/colors'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import FONTS from '~/styles/fonts'
+import { AccessibilityLevels } from '~/const/accessibilityLevels'
 
 interface AccessibilityRatingOverallProps {
   rating: number
@@ -15,6 +16,12 @@ export function AccessibilityRatingOverall({
   reviews,
 }: AccessibilityRatingOverallProps) {
   const { t } = useTranslation()
+
+  const ratingValue = parseFloat(rating.toFixed(1))
+
+  const ratingText = AccessibilityLevels.find((level) => {
+    return ratingValue >= level.min && ratingValue <= level.max
+  })?.label
 
   return (
     <View
@@ -42,7 +49,7 @@ export function AccessibilityRatingOverall({
               fontSize: 24,
             }}
           >
-            {rating}
+            {(rating || 0).toFixed(1)}
           </Text>
           <MaterialIcons name="star" size={24} color={COLORS.warning[300]} />
         </View>
@@ -52,6 +59,7 @@ export function AccessibilityRatingOverall({
               fontFamily: FONTS.LSTH_REGULAR,
               fontSize: 12,
               color: COLORS['french-vanilla'][500],
+              textAlign: 'center',
             }}
           >
             {reviews} {t('units.reviews')}
@@ -67,7 +75,7 @@ export function AccessibilityRatingOverall({
             color: COLORS['french-vanilla'][500],
           }}
         >
-          {t('level.accessibility_level_description.1')}
+          {t(ratingText || '')}
         </Text>
       </View>
     </View>

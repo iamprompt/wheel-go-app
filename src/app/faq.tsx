@@ -122,7 +122,7 @@ function Page() {
               fontSize: 12,
             }}
           >
-            Can't find an answer to your questions? Feel free to contact us at{' '}
+            {t('faq.contact_us')}{' '}
             <Text
               style={{
                 color: COLORS.magenta[500],
@@ -130,7 +130,7 @@ function Page() {
                 fontSize: 12,
               }}
             >
-              wheelgo.muict@gmail.com
+              {t('faq.contact_us_email')}
             </Text>
           </Text>
         </View>

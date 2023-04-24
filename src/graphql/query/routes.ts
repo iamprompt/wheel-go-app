@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { ROUTE_FIELDS } from '../fragment/route'
 
 export const SearchRoutes = gql`
   query SearchRoutes($from: String!, $to: String!) {
@@ -12,48 +13,30 @@ export const SearchRoutes = gql`
 `
 
 export const GetPreDefinedRoutes = gql`
+  ${ROUTE_FIELDS}
+
   query GetPreDefinedRoutes {
     getRoutes {
-      id
-      type
-      paths {
-        lat
-        lng
-      }
-      distance
-      duration
-      createdAt
+      ...RouteFields
     }
   }
 `
 export const GetMyTracedRoutes = gql`
+  ${ROUTE_FIELDS}
+
   query GetMyTracedRoutes {
-    getRoutes {
-      id
-      type
-      paths {
-        lat
-        lng
-      }
-      distance
-      duration
-      createdAt
+    getMyTracedRoutes {
+      ...RouteFields
     }
   }
 `
 
 export const GetRouteById = gql`
+  ${ROUTE_FIELDS}
+
   query GetRouteById($id: String!) {
     getRouteById(id: $id) {
-      id
-      type
-      paths {
-        lat
-        lng
-      }
-      distance
-      duration
-      createdAt
+      ...RouteFields
     }
   }
 `

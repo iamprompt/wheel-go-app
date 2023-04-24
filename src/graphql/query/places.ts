@@ -1,17 +1,21 @@
 import { gql } from '@apollo/client'
+import { LANGUAGE_FIELDS } from '../fragment/language'
+import { LOCATION_FIELDS } from '../fragment/location'
+import { MEDIA_FIELDS } from '../fragment/media'
 
 export const GetPlaces = gql`
   query GetPlaces {
+    ${LANGUAGE_FIELDS}
+    ${LOCATION_FIELDS}
+
     getPlaces {
       id
       name {
-        th
-        en
+        ...LanguageFields
       }
       type
       location {
-        lat
-        lng
+        ...LocationFields
       }
     }
   }
@@ -19,26 +23,24 @@ export const GetPlaces = gql`
 
 export const GetPlaceById = gql`
   query GetPlaceById($id: String!) {
+    ${LANGUAGE_FIELDS}
+    ${LOCATION_FIELDS}
+    ${MEDIA_FIELDS}
+
     getPlaceById(id: $id) {
       id
       name {
-        th
-        en
+        ...LanguageFields
       }
       type
       address {
-        th
-        en
+        ...LanguageFields
       }
       location {
-        lat
-        lng
+        ...LocationFields
       }
       images {
-        id
-        url
-        width
-        height
+        ...MediaFields
       }
       metadata {
         phone
@@ -83,6 +85,9 @@ export const GetPlaceById = gql`
 `
 
 export const GetNearbyPlaces = gql`
+  ${LANGUAGE_FIELDS}
+  ${LOCATION_FIELDS}
+
   query GetNearbyPlaces(
     $lat: Float!
     $lng: Float!
@@ -102,19 +107,19 @@ export const GetNearbyPlaces = gql`
     ) {
       id
       name {
-        th
-        en
+        ...LanguageFields
       }
       type
       location {
-        lat
-        lng
+        ...LocationFields
       }
     }
   }
 `
 
 export const SearchPlaces = gql`
+  ${LANGUAGE_FIELDS}
+
   query SearchPlaces(
     $query: String!
     $limit: Float = 100
@@ -133,8 +138,7 @@ export const SearchPlaces = gql`
     ) {
       id
       name {
-        th
-        en
+        ...LanguageFields
       }
       type
     }

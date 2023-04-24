@@ -34,7 +34,7 @@ export default function App() {
 
   const reviewNo = useMemo(() => {
     if (reviewData) {
-      return reviewData?.getReviews.length || 0
+      return reviewData?.getMyReviews.length || 0
     }
     return 0
   }, [reviewData])
@@ -43,7 +43,7 @@ export default function App() {
 
   const routeNo = useMemo(() => {
     if (routeData) {
-      return routeData?.getRoutes.length || 0
+      return routeData?.getMyTracedRoutes.length || 0
     }
     return 0
   }, [routeData])
