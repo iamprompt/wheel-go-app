@@ -55,7 +55,8 @@
     "ok": "ตกลง",
     "save": "บันทึก",
     "skip": "ข้าม",
-    "stop": "หยุด"
+    "stop": "หยุด",
+    "close": "ปิด"
   },
   "categories": {
     "BUILDING": "อาคาร",
@@ -72,7 +73,26 @@
   },
   "explore": {
     "search_route_placeholder": "ไปที่ไหน ?",
-    "trace_cta_button": "บันทึกการเดินทาง"
+    "trace_cta_button": "บันทึกการเดินทาง",
+    "transport_modal": {
+      "accessible_label": "จุดรอรถนี้สามารถเข้าถึงได้",
+      "inaccessible_label": "จุดรอรถนี้ไม่สามารถเข้าถึงได้",
+      "bus_lines": {
+        "title": "สายรถโดยสารประจำทาง"
+      },
+      "tram_lines": {
+        "title": "สายรถราง",
+        "red": "สีแดง",
+        "blue": "สีน้ำเงิน",
+        "green": "สีเขียว",
+        "yellow": "สีเหลือง"
+      }
+    },
+    "curbcut_modal": {
+      "accessible_label": "ทางลาดขนาดย่อมนี้สามารถเข้าถึงได้อย่างง่ายดาย",
+      "need_assistance_label": "ต้องอาศัยความช่วยเหลือเพื่อที่จะใช้ทางลาดขนาดย่อมนี้",
+      "inaccessible_label": "ทางลาดขนาดย่อมนี้ชำรุดโปรดระมัดระวังในการใช้งาน"
+    }
   },
   "facilities": {
     "assistance": "ผู้ช่วย",

@@ -55,7 +55,8 @@
     "ok": "OK",
     "save": "Save",
     "skip": "Skip",
-    "stop": "Stop"
+    "stop": "Stop",
+    "close": "Close"
   },
   "categories": {
     "BUILDING": "Building",
@@ -72,7 +73,26 @@
   },
   "explore": {
     "search_route_placeholder": "Find accessible routes?",
-    "trace_cta_button": "Trace your journey"
+    "trace_cta_button": "Trace your journey",
+    "transport_modal": {
+      "accessible_label": "จุดรอรถนี้สามารถเข้าถึงได้",
+      "inaccessible_label": "จุดรอรถนี้ไม่สามารถเข้าถึงได้",
+      "bus_lines": {
+        "title": "สายรถโดยสารประจำทาง"
+      },
+      "tram_lines": {
+        "title": "สายรถราง",
+        "red": "สีแดง",
+        "blue": "สีน้ำเงิน",
+        "green": "สีเขียว",
+        "yellow": "สีเหลือง"
+      }
+    },
+    "curbcut_modal": {
+      "accessible_label": "This curb cut is easy to access",
+      "need_assistance_label": "You need help to use this curb cut",
+      "inaccessible_label": "This curb cut is broken"
+    }
   },
   "facilities": {
     "assistance": "Assistance",

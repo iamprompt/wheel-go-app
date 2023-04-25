@@ -11,7 +11,6 @@ import { useEffect, useRef, useState } from 'react'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { GlobalStyle } from '~/styles'
 import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
-import { PlaceExploreModal } from '~/components/PlaceExploreModal'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -23,6 +22,10 @@ import {
 import { TraceCTAButton } from '~/components/TraceCTAButton'
 import { getCurrentPosition } from '~/utils/location'
 import { WGMapView } from '~/components/WGMapView'
+import { Modal } from '~/components/Modal'
+import { TransportExploreModal } from '~/components/TransportExploreModal'
+import { PlaceExploreModal } from '~/components/PlaceExploreModal'
+import { CurbcutExploreModal } from '~/components/CurbcutExploreModal'
 
 export default function App() {
   const { t } = useTranslation()
@@ -30,6 +33,7 @@ export default function App() {
   const router = useRouter()
 
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
+  const [selectedPlaceType, setSelectedPlaceType] = useState<Place_Types>()
   const [isModalVisible, setModalVisible] = useState(false)
 
   const [getSelectedPlace, { data: place }] = useGetPlaceByIdLazyQuery()
@@ -39,8 +43,6 @@ export default function App() {
   const mapRef = useRef<MapView>(null)
 
   const handleSelectPlace = async (placeId: string) => {
-    setSelectedPlaceId(placeId)
-
     try {
       const { data } = await getSelectedPlace({
         variables: {
@@ -49,6 +51,8 @@ export default function App() {
       })
 
       if (data && data.getPlaceById) {
+        setSelectedPlaceId(data.getPlaceById.id)
+        setSelectedPlaceType(data.getPlaceById.type!)
         mapRef.current?.animateCamera(
           {
             center: {
@@ -212,9 +216,26 @@ export default function App() {
         </View>
       </WGMapView>
 
-      {selectedPlaceId ? (
+      {/* {selectedPlaceId ? (
         <PlaceExploreModal
           placeId={selectedPlaceId}
+          isVisible={isModalVisible}
+          onClose={() => {
+            setModalVisible(false)
+          }}
+        />
+      ) : null} */}
+
+      {selectedPlaceId ? (
+        <Modal
+          modal={
+            selectedPlaceType === Place_Types.Transport
+              ? TransportExploreModal
+              : selectedPlaceType === Place_Types.Curbcut
+              ? CurbcutExploreModal
+              : PlaceExploreModal
+          }
+          placeId={selectedPlaceId!}
           isVisible={isModalVisible}
           onClose={() => {
             setModalVisible(false)

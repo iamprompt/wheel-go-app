@@ -47,6 +47,7 @@ export const GetPlaceById = gql`
         website
         busLines
         tramLines
+        accessibility
       }
     }
 

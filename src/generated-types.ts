@@ -771,7 +771,7 @@ export type GetPlaceByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetPlaceByIdQuery = { __typename?: 'Query', getPlaceById: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, address?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'PlaceMetadata', phone?: string | null, website?: string | null, busLines?: Array<string> | null, tramLines?: Array<string> | null } | null }, getRatingSummaryByPlaceId: { __typename?: 'RatingSummary', id: string, overall: number, reviewCount: number, facilities: { __typename?: 'FacilitiesAvailability', RAMP?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ASSISTANCE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, TOILET?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ELEVATOR?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, PARKING?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, SURFACE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null } } };
+export type GetPlaceByIdQuery = { __typename?: 'Query', getPlaceById: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, address?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'PlaceMetadata', phone?: string | null, website?: string | null, busLines?: Array<string> | null, tramLines?: Array<string> | null, accessibility?: Accessibility_Status | null } | null }, getRatingSummaryByPlaceId: { __typename?: 'RatingSummary', id: string, overall: number, reviewCount: number, facilities: { __typename?: 'FacilitiesAvailability', RAMP?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ASSISTANCE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, TOILET?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ELEVATOR?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, PARKING?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, SURFACE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null } } };
 
 export type GetNearbyPlacesQueryVariables = Exact<{
   lat: Scalars['Float'];
@@ -1273,6 +1273,7 @@ export const GetPlaceByIdDocument = gql`
       website
       busLines
       tramLines
+      accessibility
     }
   }
   getRatingSummaryByPlaceId(id: $id) {

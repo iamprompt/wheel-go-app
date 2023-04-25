@@ -88,7 +88,7 @@ export const WGMapView = forwardRef<
                 key={place.id}
                 coordinate={place.location}
                 onPress={() => {
-                  if (isPlaceSelected || place.type === Place_Types.Curbcut) {
+                  if (isPlaceSelected) {
                     return
                   }
                   onSelectPlace?.(place.id)
