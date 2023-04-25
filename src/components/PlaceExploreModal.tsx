@@ -177,35 +177,43 @@ export function PlaceExploreModal({
             rating={placeData.getRatingSummaryByPlaceId.overall}
           />
         </View>
-        <HorizontalDivider />
-        <View>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 14,
-            }}
-          >
-            {t('places.facilities_title')}
-          </Text>
-          <FacilitiesAvailabilityStatus
-            ramp={placeData.getRatingSummaryByPlaceId.facilities.RAMP?.status}
-            assistance={
-              placeData.getRatingSummaryByPlaceId.facilities.ASSISTANCE?.status
-            }
-            elevator={
-              placeData.getRatingSummaryByPlaceId.facilities.ELEVATOR?.status
-            }
-            toilet={
-              placeData.getRatingSummaryByPlaceId.facilities.TOILET?.status
-            }
-            parking={
-              placeData.getRatingSummaryByPlaceId.facilities.PARKING?.status
-            }
-            surface={
-              placeData.getRatingSummaryByPlaceId.facilities.SURFACE?.status
-            }
-          />
-        </View>
+        {placeData.getPlaceById.type === Place_Types.Building ? (
+          <>
+            <HorizontalDivider />
+            <View>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 14,
+                }}
+              >
+                {t('places.facilities_title')}
+              </Text>
+              <FacilitiesAvailabilityStatus
+                ramp={
+                  placeData.getRatingSummaryByPlaceId.facilities.RAMP?.status
+                }
+                assistance={
+                  placeData.getRatingSummaryByPlaceId.facilities.ASSISTANCE
+                    ?.status
+                }
+                elevator={
+                  placeData.getRatingSummaryByPlaceId.facilities.ELEVATOR
+                    ?.status
+                }
+                toilet={
+                  placeData.getRatingSummaryByPlaceId.facilities.TOILET?.status
+                }
+                parking={
+                  placeData.getRatingSummaryByPlaceId.facilities.PARKING?.status
+                }
+                surface={
+                  placeData.getRatingSummaryByPlaceId.facilities.SURFACE?.status
+                }
+              />
+            </View>
+          </>
+        ) : null}
         <View>
           <Button
             variant={ButtonVariant.Secondary}
