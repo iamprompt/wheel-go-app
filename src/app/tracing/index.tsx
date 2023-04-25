@@ -11,7 +11,7 @@ import type {
   TaskManagerTaskBody,
   TaskManagerTaskExecutor,
 } from 'expo-task-manager'
-import { defineTask } from 'expo-task-manager'
+import { defineTask, isTaskRegisteredAsync } from 'expo-task-manager'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
@@ -130,6 +130,21 @@ function Page() {
     defineTask(LOCATION_WATCH_TASK_NAME, handleLocationWatch)
   }, [])
 
+  const startTask = async () => {
+    await startLocationUpdatesAsync(
+      LOCATION_WATCH_TASK_NAME,
+      LOCATION_WATCH_CONFIG
+    )
+  }
+
+  const stopTask = async () => {
+    const isRegistered = await isTaskRegisteredAsync(LOCATION_WATCH_TASK_NAME)
+
+    if (isRegistered) {
+      await stopLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME)
+    }
+  }
+
   const handleStart = async () => {
     const { status } = await requestBackgroundPermissionsAsync()
 
@@ -142,26 +157,29 @@ function Page() {
 
     setState(TRACING_STATES.RECORDING)
 
-    startLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME, LOCATION_WATCH_CONFIG)
+    await startTask()
   }
 
-  const handlePause = () => {
+  const handlePause = async () => {
     setState(TRACING_STATES.PAUSED)
-    stopLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME)
+
+    await stopTask()
   }
 
   const handleResume = async () => {
     setState(TRACING_STATES.RECORDING)
-    startLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME, LOCATION_WATCH_CONFIG)
+
+    await startTask()
   }
 
   const handleStop = () => {
     setIsStopModalVisible(true)
   }
 
-  const handleStopAction = () => {
+  const handleStopAction = async () => {
     setState(TRACING_STATES.FINISHED)
-    stopLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME)
+
+    await stopTask()
   }
 
   const handleSave = () => {
