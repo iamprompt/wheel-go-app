@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import type { LocationObject, LocationTaskOptions } from 'expo-location'
 import {
   LocationAccuracy,
@@ -12,6 +13,7 @@ import type {
   TaskManagerTaskExecutor,
 } from 'expo-task-manager'
 import { defineTask, isTaskRegisteredAsync } from 'expo-task-manager'
+import { getPathLength } from 'geolib'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
@@ -35,7 +37,7 @@ import { TracingStatusIndicator } from '~/components/TracingStatusIndicator'
 import { TracingStopModal } from '~/components/TracingStopModal'
 import { WGMapView } from '~/components/WGMapView'
 import { TRACING_STATES } from '~/const/trace'
-import { useCreateRoutesMutation } from '~/generated-types'
+import { Route_Types, useCreateRoutesMutation } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
@@ -71,13 +73,30 @@ function Page() {
       })),
     [record]
   )
+  const duration = useMemo(() => {
+    if (record.length < 2) {
+      return 0
+    }
+    return record[record.length - 1].timestamp - record[0].timestamp
+  }, [record])
+
+  const distance = useMemo(() => {
+    if (record.length < 2) {
+      return 0
+    }
+
+    const length = getPathLength(coordinates)
+    return length
+  }, [record])
 
   const mapRef = useRef<MapView>(null)
   const [state, setState] = useState<TRACING_STATES>(TRACING_STATES.READY)
   const [isStopModalVisible, setIsStopModalVisible] = useState(false)
   const [isSaveModalVisible, setIsSaveModalVisible] = useState(false)
 
-  const [createRoute, { data }] = useCreateRoutesMutation()
+  const [createRoute, { data }] = useCreateRoutesMutation({
+    refetchQueries: ['GetMyTracedRoutes'],
+  })
 
   const handleLocationChange = (e: UserLocationChangeEvent) => {
     // if (state !== TRACING_STATES.RECORDING) {
@@ -194,6 +213,7 @@ function Page() {
             lat: rec.latitude,
             lng: rec.longitude,
           })),
+          type: Route_Types.Traced,
         },
       },
     })
@@ -434,7 +454,8 @@ function Page() {
                         fontSize: 20,
                       }}
                     >
-                      5:00 {t('units.minutes')}
+                      {dayjs.duration(duration, 'millisecond').asMinutes()}{' '}
+                      {t('units.minutes')}
                     </Text>
                   </View>
                   <View
@@ -458,7 +479,7 @@ function Page() {
                         fontSize: 20,
                       }}
                     >
-                      20 {t('units.meters')}
+                      {distance} {t('units.meters')}
                     </Text>
                   </View>
                 </View>

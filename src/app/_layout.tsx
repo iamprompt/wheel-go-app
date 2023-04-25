@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Stack } from 'expo-router'
-import { useEffect } from 'react'
+import { SplashScreen, Stack } from 'expo-router'
+import { useEffect, useState } from 'react'
 
-import * as SplashScreen from 'expo-splash-screen'
+// import * as SplashScreen from 'expo-splash-screen'
 
 import '~/i18n'
 import '~/utils/dayjs'
@@ -13,23 +13,20 @@ import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { AuthProvider } from '~/context/useAuth'
 import { WheelGoApolloProvider } from '~/utils/apollo'
 
-SplashScreen.preventAutoHideAsync()
+// SplashScreen.preventAutoHideAsync()
 
 function RootLayout() {
+  const [isReady, setIsReady] = useState(false)
   const [fontsLoaded] = loadFonts()
 
   useEffect(() => {
-    const hideSplashScreen = async () => {
-      await SplashScreen.hideAsync()
-    }
-
     if (fontsLoaded) {
-      hideSplashScreen()
+      setIsReady(true)
     }
   }, [fontsLoaded])
 
-  if (!fontsLoaded) {
-    return null
+  if (!isReady) {
+    return <SplashScreen />
   }
 
   return (

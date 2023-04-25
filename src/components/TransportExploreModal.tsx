@@ -56,8 +56,6 @@ export function TransportExploreModal({
     <View
       style={{
         backgroundColor: COLORS.white,
-        // paddingHorizontal: 16,
-        // paddingVertical: 24,
         borderRadius: 12,
         width: '100%',
         maxWidth: 512,

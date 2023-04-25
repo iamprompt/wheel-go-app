@@ -53,6 +53,11 @@ export default function App() {
       if (data && data.getPlaceById) {
         setSelectedPlaceId(data.getPlaceById.id)
         setSelectedPlaceType(data.getPlaceById.type!)
+
+        if (data.getPlaceById.type === Place_Types.Curbcut) {
+          setModalVisible(true)
+        }
+
         mapRef.current?.animateCamera(
           {
             center: {
@@ -160,7 +165,8 @@ export default function App() {
             />
           </View>
 
-          {selectedPlaceId !== null ? (
+          {selectedPlaceId !== null &&
+          selectedPlaceType !== Place_Types.Curbcut ? (
             <NearbyPlaceBlock
               name={place?.getPlaceById.name || undefined}
               category={place?.getPlaceById.type || undefined}
@@ -215,16 +221,6 @@ export default function App() {
           </Pressable>
         </View>
       </WGMapView>
-
-      {/* {selectedPlaceId ? (
-        <PlaceExploreModal
-          placeId={selectedPlaceId}
-          isVisible={isModalVisible}
-          onClose={() => {
-            setModalVisible(false)
-          }}
-        />
-      ) : null} */}
 
       {selectedPlaceId ? (
         <Modal

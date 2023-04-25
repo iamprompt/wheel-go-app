@@ -17,7 +17,7 @@ export default function Page() {
 
   const { data } = useGetMyTracedRoutesQuery()
 
-  const routes = useMemo(() => data?.getRoutes || [], [data])
+  const routes = useMemo(() => data?.getMyTracedRoutes || [], [data])
 
   return (
     <ScrollView style={[GlobalStyle.container]}>

@@ -91,7 +91,7 @@
     "curbcut_modal": {
       "accessible_label": "This curb cut is easy to access",
       "need_assistance_label": "You need help to use this curb cut",
-      "inaccessible_label": "This curb cut is broken"
+      "broken_label": "This curb cut is broken"
     }
   },
   "facilities": {
