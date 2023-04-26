@@ -159,6 +159,9 @@
       "total_places": "ไปเยี่ยมชมมาแล้ว",
       "total_reviews": "รีวิวมาแล้ว",
       "total_routes": "บันทึกการเดินทาง"
+    },
+    "edit": {
+      "title": "แก้ไขโปรไฟล์"
     }
   },
   "records": {

@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,6 +20,8 @@ export default function App() {
   const insets = useSafeAreaInsets()
   const { user } = useAuth()
   const { t } = useTranslation()
+
+  const router = useRouter()
 
   const [isBadgeModalVisible, setIsBadgeModalVisible] = useState(false)
   const [badgeToDisplay, setBadgeToDisplay] = useState<keyof typeof BADGES>()
@@ -123,6 +125,7 @@ export default function App() {
           <Pressable
             onPress={() => {
               console.log('Edit Profile')
+              router.push('/profile/edit')
             }}
           >
             <Text

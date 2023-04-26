@@ -159,6 +159,9 @@
       "total_places": "Places Visited",
       "total_reviews": "Reviews",
       "total_routes": "Contributed Routes"
+    },
+    "edit": {
+      "title": "Edit Profile"
     }
   },
   "records": {
