@@ -147,7 +147,8 @@
     "share": "Share",
     "show_on_map": "Show on Map",
     "website": "Website",
-    "facilities_details": "Facilities Details"
+    "facilities_details": "Facilities Details",
+    "all_reviews": "Reviews"
   },
   "profile": {
     "edit_profile": "Edit Profile",
@@ -200,7 +201,8 @@
     "rate_this_place": "Rate this place",
     "see_all_reviews": "See all reviews",
     "submit_review": "Submit",
-    "upload_images": "Upload images"
+    "upload_images": "Upload images",
+    "no_reviews": "This place has no reviews yet."
   },
   "routes": {
     "route_title": "Route {{id}}"

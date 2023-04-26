@@ -4,11 +4,11 @@ import { LOCATION_FIELDS } from '../fragment/location'
 import { MEDIA_FIELDS } from '../fragment/media'
 
 export const GetPlaces = gql`
-  query GetPlaces {
+  query GetPlaces($type: [PLACE_TYPES!]) {
     ${LANGUAGE_FIELDS}
     ${LOCATION_FIELDS}
 
-    getPlaces {
+    getPlaces(options: { types: $type }) {
       id
       name {
         ...LanguageFields

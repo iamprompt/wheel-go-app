@@ -147,7 +147,8 @@
     "share": "แชร์",
     "show_on_map": "โชว์บนแผนที่",
     "website": "เว็บไซต์",
-    "facilities_details": "ข้อมูลสิ่งอำนวยความสะดวก"
+    "facilities_details": "ข้อมูลสิ่งอำนวยความสะดวก",
+    "all_reviews": "รีวิวทั้งหมด"
   },
   "profile": {
     "edit_profile": "แก้ไขโปรไฟล์",
@@ -200,7 +201,8 @@
     "rate_this_place": "ให้คะแนนที่นี่",
     "see_all_reviews": "ดูรีวิวทั้งหมด",
     "submit_review": "ส่งรีวิว",
-    "upload_images": "อัปโหลดรูปภาพ"
+    "upload_images": "อัปโหลดรูปภาพ",
+    "no_reviews": "ยังไม่มีรีวิว"
   },
   "routes": {
     "route_title": "เส้นทาง {{id}}"

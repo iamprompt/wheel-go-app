@@ -1,5 +1,5 @@
-import type { FC, Reducer } from 'react'
-import { useMemo, useReducer } from 'react'
+import type { FC } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Switch, Text, View } from 'react-native'
 import Button, { ButtonVariant } from './Button'
@@ -8,6 +8,8 @@ import { Tag } from './common/Tag'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
+import { usePreferences } from '~/context/usePreferences'
+import type { Place_Types } from '~/generated-types'
 
 interface MapPrefsModalProps {
   onClose: () => void
@@ -15,49 +17,33 @@ interface MapPrefsModalProps {
 }
 
 export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
+  const { mapViewPreferences, setMapViewPreferences } = usePreferences()
   const { t } = useTranslation()
-  const [selectedPrefs, dispatch] = useReducer<
-    Reducer<
-      Record<string, boolean>,
-      {
-        type: 'toggle' | 'setAll' | 'resetAll'
-        payload?: string
-      }
-    >
-  >((state, action) => {
-    switch (action.type) {
-      case 'toggle':
-        if (!action.payload) {
-          return state
-        }
 
-        return {
-          ...state,
-          [action.payload]: !state[action.payload],
-        }
-      case 'setAll':
-        return {
-          ...state,
-          ...Object.keys(PLACE_TYPES_META).reduce((acc, key) => {
-            acc[key] = true
-            return acc
-          }, {} as Record<string, boolean>),
-        }
-      case 'resetAll':
-        return {}
-      default:
-        return state
-    }
-  }, {})
+  const [selectedPlaceTypes, setSelectedPlaceTypes] = useState<string[]>(
+    mapViewPreferences.places
+  )
 
   const isSelectAll = useMemo(() => {
-    return Object.keys(PLACE_TYPES_META).every((key) => selectedPrefs[key])
-  }, [selectedPrefs])
+    return Object.keys(PLACE_TYPES_META).every((key) =>
+      selectedPlaceTypes.includes(key)
+    )
+  }, [selectedPlaceTypes])
 
   const handleSelectAll = (value: boolean) => {
-    dispatch({
-      type: value ? 'setAll' : 'resetAll',
+    if (value) {
+      setSelectedPlaceTypes(Object.keys(PLACE_TYPES_META))
+    } else {
+      setSelectedPlaceTypes([])
+    }
+  }
+
+  const handleSave = () => {
+    setMapViewPreferences({
+      ...mapViewPreferences,
+      places: selectedPlaceTypes as Place_Types[],
     })
+    onClose()
   }
 
   return (
@@ -139,10 +125,13 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
               <Pressable
                 key={`map-prefs-place-type-${key}`}
                 onPress={() => {
-                  dispatch({
-                    type: 'toggle',
-                    payload: key,
-                  })
+                  if (selectedPlaceTypes.includes(key as Place_Types)) {
+                    setSelectedPlaceTypes(
+                      selectedPlaceTypes.filter((type) => type !== key)
+                    )
+                  } else {
+                    setSelectedPlaceTypes([...selectedPlaceTypes, key])
+                  }
                 }}
               >
                 <Tag
@@ -152,7 +141,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
                   iconPosition="left"
                   iconSize={24}
                   textColor={
-                    selectedPrefs[key]
+                    selectedPlaceTypes.includes(key)
                       ? value.color
                       : COLORS['french-vanilla'][300]
                   }
@@ -204,13 +193,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
           onPress={onClose}
           fullWidth
         />
-        <Button
-          label={t('button.confirm')}
-          onPress={() => {
-            onClose()
-          }}
-          fullWidth
-        />
+        <Button label={t('button.confirm')} onPress={handleSave} fullWidth />
       </View>
     </View>
   )

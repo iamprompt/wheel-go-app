@@ -29,7 +29,7 @@ function Page() {
     <ScrollView style={[GlobalStyle.container]}>
       <Stack.Screen
         options={{
-          title: 'Reviews',
+          title: t('places.all_reviews') || '',
           headerShown: true,
           headerRight: () => (
             <Pressable
@@ -81,70 +81,97 @@ function Page() {
           </Text>
         </View>
 
-        {data?.getReviewsByPlaceId?.map((review) => {
-          const {
-            id,
-            user,
-            comment,
-            rating,
-            official,
-            images,
-            createdAt,
-            tags,
-          } = review || {}
+        {(data?.getReviewsByPlaceId?.length || 0) > 0 ? (
+          <>
+            {data?.getReviewsByPlaceId?.map((review) => {
+              const {
+                id,
+                user,
+                comment,
+                rating,
+                official,
+                images,
+                createdAt,
+                tags,
+              } = review || {}
 
-          const Facilities = Object.keys(FACILITIES)
-          const isFacilityRating = Facilities.some(
-            (facility) => rating?.[facility as keyof typeof rating]
-          )
+              const Facilities = Object.keys(FACILITIES)
+              const isFacilityRating = Facilities.some(
+                (facility) => rating?.[facility as keyof typeof rating]
+              )
 
-          const facilityRatings = isFacilityRating
-            ? Facilities.reduce((acc, key) => {
-                const rate = rating?.[key as keyof typeof rating]
+              const facilityRatings = isFacilityRating
+                ? Facilities.reduce((acc, key) => {
+                    const rate = rating?.[key as keyof typeof rating]
 
-                return {
-                  ...acc,
-                  [key]: rate,
-                }
-              }, {})
-            : undefined
+                    return {
+                      ...acc,
+                      [key]: rate,
+                    }
+                  }, {})
+                : undefined
 
-          const officialComment =
-            official && official.comment && official.timestamp
-              ? {
-                  date: official.timestamp,
-                  isFlagged: official.isFlagged || false,
-                  comment: official.comment,
-                }
-              : undefined
+              const officialComment =
+                official && official.comment && official.timestamp
+                  ? {
+                      date: official.timestamp,
+                      isFlagged: official.isFlagged || false,
+                      comment: official.comment,
+                    }
+                  : undefined
 
-          return (
+              return (
+                <View
+                  key={id}
+                  style={{
+                    borderColor: COLORS.soap[100],
+                    borderBottomWidth: 1,
+                    paddingVertical: 24,
+                  }}
+                >
+                  <ReviewItem
+                    reviewer={`${user?.firstname} ${user?.lastname}`}
+                    additionalComment={comment || ''}
+                    overallRating={rating?.overall || 0}
+                    date={createdAt}
+                    facilityRatings={facilityRatings}
+                    facilityTags={tags || []}
+                    officialComment={officialComment}
+                    images={
+                      images?.map(({ url, id }) => ({
+                        id: id!,
+                        url: url!,
+                      })) || []
+                    }
+                  />
+                </View>
+              )
+            })}
+          </>
+        ) : (
+          <>
             <View
-              key={id}
               style={{
-                borderColor: COLORS.soap[100],
-                borderBottomWidth: 1,
-                paddingVertical: 24,
+                paddingHorizontal: 16,
+                paddingVertical: 32,
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
-              <ReviewItem
-                reviewer={`${user?.firstname} ${user?.lastname}`}
-                additionalComment={comment || ''}
-                overallRating={rating?.overall || 0}
-                date={createdAt}
-                facilityRatings={facilityRatings}
-                facilityTags={tags || []}
-                officialComment={officialComment}
-                images={
-                  images?.map(({ url, id }) => ({
-                    id: id!,
-                    url: url!,
-                  })) || []
-                }
-              />
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_REGULAR,
+                  fontSize: 20,
+                  textAlign: 'center',
+                  color: COLORS['french-vanilla'][500],
+                }}
+              >
+                {t('reviews.no_reviews')}
+              </Text>
             </View>
-          )
-        })}
+          </>
+        )}
       </View>
     </ScrollView>
   )

@@ -775,7 +775,9 @@ export type GetFacilitiesByPlaceIdQueryVariables = Exact<{
 
 export type GetFacilitiesByPlaceIdQuery = { __typename?: 'Query', getFacilitiesByPlaceId: Array<{ __typename?: 'Facility', id: string, type?: Facility_Types | null, detail?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null }> };
 
-export type GetPlacesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetPlacesQueryVariables = Exact<{
+  type?: InputMaybe<Array<Place_Types> | Place_Types>;
+}>;
 
 
 export type GetPlacesQuery = { __typename?: 'Query', getPlaces: Array<{ __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null }> };
@@ -1264,8 +1266,8 @@ export type GetFacilitiesByPlaceIdQueryHookResult = ReturnType<typeof useGetFaci
 export type GetFacilitiesByPlaceIdLazyQueryHookResult = ReturnType<typeof useGetFacilitiesByPlaceIdLazyQuery>;
 export type GetFacilitiesByPlaceIdQueryResult = Apollo.QueryResult<GetFacilitiesByPlaceIdQuery, GetFacilitiesByPlaceIdQueryVariables>;
 export const GetPlacesDocument = gql`
-    query GetPlaces {
-  getPlaces {
+    query GetPlaces($type: [PLACE_TYPES!]) {
+  getPlaces(options: {types: $type}) {
     id
     name {
       ...LanguageFields
@@ -1291,6 +1293,7 @@ ${LocationFieldsFragmentDoc}`;
  * @example
  * const { data, loading, error } = useGetPlacesQuery({
  *   variables: {
+ *      type: // value for 'type'
  *   },
  * });
  */
