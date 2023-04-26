@@ -82,8 +82,16 @@ function Page() {
         </View>
 
         {data?.getReviewsByPlaceId?.map((review) => {
-          const { id, user, comment, rating, official, images, createdAt } =
-            review || {}
+          const {
+            id,
+            user,
+            comment,
+            rating,
+            official,
+            images,
+            createdAt,
+            tags,
+          } = review || {}
 
           const Facilities = Object.keys(FACILITIES)
           const isFacilityRating = Facilities.some(
@@ -125,6 +133,7 @@ function Page() {
                 overallRating={rating?.overall || 0}
                 date={createdAt}
                 facilityRatings={facilityRatings}
+                facilityTags={tags || []}
                 officialComment={officialComment}
                 images={
                   images?.map(({ url, id }) => ({

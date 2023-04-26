@@ -261,8 +261,8 @@ export type Location = {
 };
 
 export type LocationInput = {
-  lat: Scalars['Float'];
-  lng: Scalars['Float'];
+  lat?: InputMaybe<Scalars['Float']>;
+  lng?: InputMaybe<Scalars['Float']>;
 };
 
 export type Media = {
@@ -627,6 +627,13 @@ export type RatingSummary = {
   id: Scalars['ID'];
   overall: Scalars['Float'];
   reviewCount: Scalars['Int'];
+  tags: Array<RatingTagCount>;
+};
+
+export type RatingTagCount = {
+  __typename?: 'RatingTagCount';
+  count: Scalars['Float'];
+  tag: Scalars['String'];
 };
 
 export type Review = {
@@ -761,6 +768,13 @@ export type GetAnnouncementByIdQueryVariables = Exact<{
 
 export type GetAnnouncementByIdQuery = { __typename?: 'Query', getAnnouncementById: { __typename?: 'Announcement', id: string, tags?: Array<string> | null, createdAt?: any | null, title?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, content?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'AnnouncementMetadata', phone?: string | null, email?: string | null, line?: string | null } | null, place?: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null } | null } };
 
+export type GetFacilitiesByPlaceIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetFacilitiesByPlaceIdQuery = { __typename?: 'Query', getFacilitiesByPlaceId: Array<{ __typename?: 'Facility', id: string, type?: Facility_Types | null, detail?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null }> };
+
 export type GetPlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -771,7 +785,7 @@ export type GetPlaceByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetPlaceByIdQuery = { __typename?: 'Query', getPlaceById: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, address?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'PlaceMetadata', phone?: string | null, website?: string | null, busLines?: Array<string> | null, tramLines?: Array<string> | null, accessibility?: Accessibility_Status | null } | null }, getRatingSummaryByPlaceId: { __typename?: 'RatingSummary', id: string, overall: number, reviewCount: number, facilities: { __typename?: 'FacilitiesAvailability', RAMP?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ASSISTANCE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, TOILET?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ELEVATOR?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, PARKING?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, SURFACE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null } } };
+export type GetPlaceByIdQuery = { __typename?: 'Query', getPlaceById: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, address?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'PlaceMetadata', phone?: string | null, website?: string | null, busLines?: Array<string> | null, tramLines?: Array<string> | null, accessibility?: Accessibility_Status | null } | null }, getRatingSummaryByPlaceId: { __typename?: 'RatingSummary', id: string, overall: number, reviewCount: number, tags: Array<{ __typename?: 'RatingTagCount', tag: string, count: number }>, facilities: { __typename?: 'FacilitiesAvailability', RAMP?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ASSISTANCE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, TOILET?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ELEVATOR?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, PARKING?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, SURFACE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null } } };
 
 export type GetNearbyPlacesQueryVariables = Exact<{
   lat: Scalars['Float'];
@@ -1209,6 +1223,46 @@ export function useGetAnnouncementByIdLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetAnnouncementByIdQueryHookResult = ReturnType<typeof useGetAnnouncementByIdQuery>;
 export type GetAnnouncementByIdLazyQueryHookResult = ReturnType<typeof useGetAnnouncementByIdLazyQuery>;
 export type GetAnnouncementByIdQueryResult = Apollo.QueryResult<GetAnnouncementByIdQuery, GetAnnouncementByIdQueryVariables>;
+export const GetFacilitiesByPlaceIdDocument = gql`
+    query GetFacilitiesByPlaceId($id: String!) {
+  getFacilitiesByPlaceId(placeId: $id) {
+    id
+    type
+    detail {
+      th
+      en
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFacilitiesByPlaceIdQuery__
+ *
+ * To run a query within a React component, call `useGetFacilitiesByPlaceIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFacilitiesByPlaceIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFacilitiesByPlaceIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetFacilitiesByPlaceIdQuery(baseOptions: Apollo.QueryHookOptions<GetFacilitiesByPlaceIdQuery, GetFacilitiesByPlaceIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFacilitiesByPlaceIdQuery, GetFacilitiesByPlaceIdQueryVariables>(GetFacilitiesByPlaceIdDocument, options);
+      }
+export function useGetFacilitiesByPlaceIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFacilitiesByPlaceIdQuery, GetFacilitiesByPlaceIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFacilitiesByPlaceIdQuery, GetFacilitiesByPlaceIdQueryVariables>(GetFacilitiesByPlaceIdDocument, options);
+        }
+export type GetFacilitiesByPlaceIdQueryHookResult = ReturnType<typeof useGetFacilitiesByPlaceIdQuery>;
+export type GetFacilitiesByPlaceIdLazyQueryHookResult = ReturnType<typeof useGetFacilitiesByPlaceIdLazyQuery>;
+export type GetFacilitiesByPlaceIdQueryResult = Apollo.QueryResult<GetFacilitiesByPlaceIdQuery, GetFacilitiesByPlaceIdQueryVariables>;
 export const GetPlacesDocument = gql`
     query GetPlaces {
   getPlaces {
@@ -1280,6 +1334,10 @@ export const GetPlaceByIdDocument = gql`
     id
     overall
     reviewCount
+    tags {
+      tag
+      count
+    }
     facilities {
       RAMP {
         status

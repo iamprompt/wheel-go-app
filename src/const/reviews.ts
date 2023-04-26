@@ -1,9 +1,10 @@
-export const AccessibilityRating: Record<
-  number,
-  {
+interface IAccessibilityRating {
+  [key: number]: {
     description: string
   }
-> = {
+}
+
+export const AccessibilityRating: IAccessibilityRating = {
   0: {
     description: 'reviews.accessibility_rating.rating_0',
   },
@@ -22,4 +23,11 @@ export const AccessibilityRating: Record<
   5: {
     description: 'reviews.accessibility_rating.rating_5',
   },
+}
+
+export const FacilityRatingTag: Record<string, string> = {
+  cleanliness: 'reviews.facility_tags.cleanliness',
+  goodService: 'reviews.facility_tags.good_service',
+  niceFacilities: 'reviews.facility_tags.nice_facilities',
+  safety: 'reviews.facility_tags.safety',
 }

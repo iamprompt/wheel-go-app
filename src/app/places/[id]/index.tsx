@@ -30,6 +30,7 @@ import { HeaderLogo } from '~/components/HeaderLogo'
 import Button, { ButtonVariant } from '~/components/Button'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
 import {
+  Place_Types,
   useAddPlaceToFavoritesMutation,
   useGetPlaceByIdQuery,
   useGetReviewsByPlaceIdQuery,
@@ -39,6 +40,9 @@ import {
 import { FACILITIES } from '~/const/facility'
 import { ReviewItem } from '~/components/ReviewItem'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { chunk } from '~/utils/array'
+import { FacilityRatingTag } from '~/const/reviews'
+import { Tag } from '~/components/common/Tag'
 
 function Page() {
   const { t } = useTranslation()
@@ -220,7 +224,7 @@ function Page() {
             paddingHorizontal: 16,
           }}
         >
-          {address ? (
+          {address?.th || address?.en ? (
             <View
               style={{
                 paddingVertical: 24,
@@ -332,7 +336,11 @@ function Page() {
               >
                 {t('places.accessibility_rating_title')}
               </Text>
-              <Pressable>
+              <Pressable
+                onPress={() => {
+                  router.push(`/places/${id}/reviews`)
+                }}
+              >
                 <Text
                   style={{
                     color: COLORS.info[400],
@@ -348,78 +356,137 @@ function Page() {
               rating={data.getRatingSummaryByPlaceId.overall}
               reviews={data.getRatingSummaryByPlaceId.reviewCount || 0}
             />
-            <AccessibilityRatingContainer
-              style={{
-                marginTop: 24,
-              }}
-              ratings={{
-                RAMP: data.getRatingSummaryByPlaceId.facilities.RAMP?.rating,
-                ASSISTANCE:
-                  data.getRatingSummaryByPlaceId.facilities.ASSISTANCE?.rating,
-                ELEVATOR:
-                  data.getRatingSummaryByPlaceId.facilities.ELEVATOR?.rating,
-                TOILET:
-                  data.getRatingSummaryByPlaceId.facilities.TOILET?.rating,
-                PARKING:
-                  data.getRatingSummaryByPlaceId.facilities.PARKING?.rating,
-                SURFACE:
-                  data.getRatingSummaryByPlaceId.facilities.SURFACE?.rating,
-              }}
-            />
+            {data.getPlaceById.type === Place_Types.Building ? (
+              <AccessibilityRatingContainer
+                style={{
+                  marginTop: 24,
+                }}
+                ratings={{
+                  RAMP: data.getRatingSummaryByPlaceId.facilities.RAMP?.rating,
+                  ASSISTANCE:
+                    data.getRatingSummaryByPlaceId.facilities.ASSISTANCE
+                      ?.rating,
+                  ELEVATOR:
+                    data.getRatingSummaryByPlaceId.facilities.ELEVATOR?.rating,
+                  TOILET:
+                    data.getRatingSummaryByPlaceId.facilities.TOILET?.rating,
+                  PARKING:
+                    data.getRatingSummaryByPlaceId.facilities.PARKING?.rating,
+                  SURFACE:
+                    data.getRatingSummaryByPlaceId.facilities.SURFACE?.rating,
+                }}
+              />
+            ) : null}
           </View>
 
           <HorizontalDivider />
 
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 12,
-              }}
-            >
-              <Text
+          {data.getPlaceById.type === Place_Types.Building ? (
+            <View>
+              <View
                 style={{
-                  fontFamily: FONTS.LSTH_BOLD,
-                  fontSize: 16,
-                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 12,
                 }}
-                numberOfLines={1}
-                ellipsizeMode="tail"
               >
-                {t('places.facilities_title')}
-              </Text>
-              <Pressable>
                 <Text
                   style={{
-                    color: COLORS.info[400],
-                    fontFamily: FONTS.LSTH_REGULAR,
-                    fontSize: 12,
+                    fontFamily: FONTS.LSTH_BOLD,
+                    fontSize: 16,
+                    flex: 1,
+                  }}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {t('places.facilities_title')}
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    router.push(`/places/${id}/facilities`)
                   }}
                 >
-                  {t('places.see_more_details')}
-                </Text>
-              </Pressable>
+                  <Text
+                    style={{
+                      color: COLORS.info[400],
+                      fontFamily: FONTS.LSTH_REGULAR,
+                      fontSize: 12,
+                    }}
+                  >
+                    {t('places.see_more_details')}
+                  </Text>
+                </Pressable>
+              </View>
+              <FacilitiesAvailabilityStatus
+                ramp={data.getRatingSummaryByPlaceId.facilities.RAMP?.status}
+                assistance={
+                  data.getRatingSummaryByPlaceId.facilities.ASSISTANCE?.status
+                }
+                elevator={
+                  data.getRatingSummaryByPlaceId.facilities.ELEVATOR?.status
+                }
+                toilet={
+                  data.getRatingSummaryByPlaceId.facilities.TOILET?.status
+                }
+                parking={
+                  data.getRatingSummaryByPlaceId.facilities.PARKING?.status
+                }
+                surface={
+                  data.getRatingSummaryByPlaceId.facilities.SURFACE?.status
+                }
+              />
             </View>
-            <FacilitiesAvailabilityStatus
-              ramp={data.getRatingSummaryByPlaceId.facilities.RAMP?.status}
-              assistance={
-                data.getRatingSummaryByPlaceId.facilities.ASSISTANCE?.status
-              }
-              elevator={
-                data.getRatingSummaryByPlaceId.facilities.ELEVATOR?.status
-              }
-              toilet={data.getRatingSummaryByPlaceId.facilities.TOILET?.status}
-              parking={
-                data.getRatingSummaryByPlaceId.facilities.PARKING?.status
-              }
-              surface={
-                data.getRatingSummaryByPlaceId.facilities.SURFACE?.status
-              }
-            />
-          </View>
-
+          ) : (
+            <View
+              style={{
+                gap: 12,
+              }}
+            >
+              {chunk(Object.entries(FacilityRatingTag), 2).map((row, i) => {
+                return (
+                  <View
+                    key={`accessibility-rating-row-${i}`}
+                    style={{
+                      flexDirection: 'row',
+                      gap: 12,
+                    }}
+                  >
+                    {row.map(([key, value]) => {
+                      return (
+                        <Tag
+                          fullWidth
+                          textSize={12}
+                          height={32}
+                          justifyContent="space-between"
+                        >
+                          <Text
+                            style={{
+                              fontFamily: FONTS.LSTH_REGULAR,
+                              fontSize: 12,
+                              flex: 1,
+                            }}
+                          >
+                            {t(value)}
+                          </Text>
+                          <Text
+                            style={{
+                              fontFamily: FONTS.LSTH_BOLD,
+                              fontSize: 14,
+                            }}
+                          >
+                            {data.getRatingSummaryByPlaceId.tags.find((tag) => {
+                              return tag.tag === key
+                            })?.count || 0}
+                          </Text>
+                        </Tag>
+                      )
+                    })}
+                  </View>
+                )
+              })}
+            </View>
+          )}
           <HorizontalDivider />
 
           <ReviewHereButton placeId={id} />
@@ -453,8 +520,16 @@ function Page() {
             </Text>
           </View>
           {reviewsData?.getReviewsByPlaceId?.map((review) => {
-            const { id, user, comment, rating, official, images, createdAt } =
-              review || {}
+            const {
+              id,
+              user,
+              comment,
+              rating,
+              official,
+              images,
+              tags,
+              createdAt,
+            } = review || {}
 
             const Facilities = Object.keys(FACILITIES)
             const isFacilityRating = Facilities.some(
@@ -496,6 +571,7 @@ function Page() {
                   overallRating={rating?.overall || 0}
                   date={createdAt}
                   facilityRatings={facilityRatings}
+                  facilityTags={tags || []}
                   officialComment={officialComment}
                   images={
                     images?.map(({ url, id }) => ({

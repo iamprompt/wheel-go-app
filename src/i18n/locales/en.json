@@ -100,7 +100,8 @@
     "parking": "Parking",
     "ramp": "Ramp",
     "surface": "Surface",
-    "toilet": "Toilet"
+    "toilet": "Toilet",
+    "spot_no": "Spot {{number}}:"
   },
   "helpModal": {
     "description": "You will be redirected to Mahidol Disability Service Support",
@@ -145,7 +146,8 @@
     "see_reviews": "See Reviews",
     "share": "Share",
     "show_on_map": "Show on Map",
-    "website": "Website"
+    "website": "Website",
+    "facilities_details": "Facilities Details"
   },
   "profile": {
     "edit_profile": "Edit Profile",
@@ -189,7 +191,7 @@
     "facility": "สิ่งอำนวยความสะดวก",
     "facility_tags": {
       "cleanliness": "ถูกสุขลักษณะ",
-      "great_service": "บริการดี",
+      "good_service": "บริการดี",
       "nice_facilities": "สิ่งอำนวยความสะดวกดี",
       "safety": "ปลอดภัย"
     },

@@ -100,7 +100,8 @@
     "parking": "ที่จอดรถ",
     "ramp": "ทางลาด",
     "surface": "พื้นผิว",
-    "toilet": "ห้องน้ำ"
+    "toilet": "ห้องน้ำ",
+    "spot_no": "จุดที่ {{number}}:"
   },
   "helpModal": {
     "description": "คุณจะถูกนำไปที่หน่วยบริการสนับสนุนสำหรับนักศึกษาพิการ",
@@ -145,7 +146,8 @@
     "see_reviews": "ดูรีวิว",
     "share": "แชร์",
     "show_on_map": "โชว์บนแผนที่",
-    "website": "เว็บไซต์"
+    "website": "เว็บไซต์",
+    "facilities_details": "ข้อมูลสิ่งอำนวยความสะดวก"
   },
   "profile": {
     "edit_profile": "แก้ไขโปรไฟล์",
@@ -189,7 +191,7 @@
     "facility": "สิ่งอำนวยความสะดวก",
     "facility_tags": {
       "cleanliness": "ถูกสุขลักษณะ",
-      "great_service": "บริการดี",
+      "good_service": "บริการดี",
       "nice_facilities": "สิ่งอำนวยความสะดวกดี",
       "safety": "ปลอดภัย"
     },

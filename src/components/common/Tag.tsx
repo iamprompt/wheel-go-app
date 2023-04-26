@@ -1,12 +1,13 @@
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ViewStyle } from 'react-native'
 import { Text, View } from 'react-native'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface TagProps {
-  label: string
+  label?: string | null
   height?: number | string
   width?: number | string
   fullWidth?: boolean
@@ -17,9 +18,12 @@ interface TagProps {
   backgroundColor?: string
   textColor?: string
   textSize?: number
+  textWeight?: 'bold' | 'normal'
   borderColor?: string
   borderWidth?: number
   borderRadius?: number
+  justifyContent?: ViewStyle['justifyContent']
+  children?: ReactNode
 }
 
 export function Tag({
@@ -34,9 +38,12 @@ export function Tag({
   backgroundColor = COLORS['french-vanilla'][100],
   textColor,
   textSize = 14,
+  textWeight = 'bold',
   borderColor = COLORS['french-vanilla'][300],
   borderWidth = 1,
   borderRadius = 12,
+  justifyContent = 'center',
+  children,
 }: TagProps) {
   const { t } = useTranslation()
 
@@ -53,7 +60,7 @@ export function Tag({
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent,
         backgroundColor,
         height,
         width,
@@ -66,15 +73,20 @@ export function Tag({
       }}
     >
       {iconPosition === 'left' && IconElement}
-      <Text
-        style={{
-          fontFamily: FONTS.LSTH_BOLD,
-          fontSize: textSize,
-          color: textColor || COLORS['french-vanilla'][300],
-        }}
-      >
-        {t(label)}
-      </Text>
+      {children ? (
+        <>{children}</>
+      ) : (
+        <Text
+          style={{
+            fontFamily:
+              textWeight === 'bold' ? FONTS.LSTH_BOLD : FONTS.LSTH_REGULAR,
+            fontSize: textSize,
+            color: textColor || COLORS['french-vanilla'][300],
+          }}
+        >
+          {label ? t(label) : ''}
+        </Text>
+      )}
       {iconPosition === 'right' && IconElement}
     </View>
   )

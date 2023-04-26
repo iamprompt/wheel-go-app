@@ -8,6 +8,8 @@ import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { FormatEnum, format } from '~/utils/dayjs'
 import { FACILITIES } from '~/const/facility'
+import { chunk } from '~/utils/array'
+import { FacilityRatingTag } from '~/const/reviews'
 
 interface ReviewItemProps {
   reviewer: string
@@ -89,52 +91,58 @@ export function ReviewItem({
         </View>
       ) : null}
       {facilityTags ? (
-        <View
-          style={{
-            gap: 8,
-          }}
-        >
-          {Array.from({ length: Math.ceil(facilityTags.length / 2) }).map(
-            (_, i) => {
-              return (
-                <View
-                  key={`tag-${i}`}
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    gap: 8,
-                  }}
-                >
-                  {Array.from({ length: 2 }).map((_, index) => {
-                    const tagIndex = i * 2 + index
-                    const tag = facilityTags[tagIndex]
+        <>
+          {facilityTags.length !== 0 ? (
+            <View
+              style={{
+                gap: 8,
+              }}
+            >
+              {chunk(facilityTags, 2).map((row, i) => {
+                console.log(row)
 
-                    if (!tag) {
+                return (
+                  <View
+                    key={`facility-tag-${i}`}
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      gap: 8,
+                    }}
+                  >
+                    {row.map((item, index) => {
+                      const tag = FacilityRatingTag[item]
+
+                      console.log(`tag`, tag)
+
+                      if (!tag) {
+                        return (
+                          <View
+                            style={{
+                              flex: 1,
+                              padding: 1,
+                            }}
+                          />
+                        )
+                      }
+
                       return (
-                        <View
-                          style={{
-                            flex: 1,
-                            padding: 1,
-                          }}
+                        <Tag
+                          key={`tag-${i}-${index}`}
+                          label={tag}
+                          fullWidth
+                          height={28}
+                          textColor={COLORS.magenta[500]}
+                          textWeight="normal"
                         />
                       )
-                    }
-
-                    return (
-                      <Tag
-                        key={`tag-${i}-${index}`}
-                        label={`reviews.facility_tags.${tag}`}
-                        fullWidth
-                        height={28}
-                        textColor={COLORS.magenta[500]}
-                      />
-                    )
-                  })}
-                </View>
-              )
-            }
-          )}
-        </View>
+                    })}
+                  </View>
+                )
+              })}
+            </View>
+          ) : null}
+        </>
       ) : null}
       <View>
         <Text

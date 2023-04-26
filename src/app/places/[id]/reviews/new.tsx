@@ -12,7 +12,7 @@ import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { ListCategoryIcon } from '~/const/category'
 import { FACILITIES } from '~/const/facility'
-import { AccessibilityRating } from '~/const/reviews'
+import { AccessibilityRating, FacilityRatingTag } from '~/const/reviews'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -20,10 +20,13 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import Button from '~/components/Button'
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import {
+  Place_Types,
   useCreateReviewMutation,
   useGetPlaceByIdQuery,
   useUploadMediaMutation,
 } from '~/generated-types'
+import { Tag } from '~/components/common/Tag'
+import { chunk } from '~/utils/array'
 
 function Page() {
   const { t } = useTranslation()
@@ -38,7 +41,9 @@ function Page() {
     },
   })
 
-  const [createReview] = useCreateReviewMutation()
+  const [createReview] = useCreateReviewMutation({
+    refetchQueries: ['GetMyReviews', 'GetReviewsByPlaceId', 'GetPlaceById'],
+  })
   const [uploadMedia] = useUploadMediaMutation()
 
   const [overallRating, setOverallRating] = useState<number>(-1)
@@ -52,6 +57,8 @@ function Page() {
   const [facilityRating, setFacilityRating] = useState<Record<string, number>>(
     {}
   )
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
 
   const [selectedImages, setSelectedImages] = useState<ImagePickerAsset[]>([])
   const [additionalComment, setAdditionalComment] = useState<string>('')
@@ -115,6 +122,7 @@ function Page() {
             overall: overallRating,
             ...facilityRating,
           },
+          tags: selectedTags,
           images:
             uploadResults
               .filter((r) => r?.uploadMedia.id)
@@ -310,72 +318,127 @@ function Page() {
 
         <HorizontalDivider />
 
-        <View>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 16,
-              marginBottom: 12,
-            }}
-          >
-            {t('reviews.facility')}
-          </Text>
+        {placeData.getPlaceById.type === Place_Types.Building ? (
           <View>
-            {Object.entries(FACILITIES).map(([key, { label, icon }]) => {
-              return (
-                <View
-                  key={`accessibility-rating-${key}`}
-                  style={{
-                    paddingVertical: 8,
-                  }}
-                >
+            <Text
+              style={{
+                fontFamily: FONTS.LSTH_BOLD,
+                fontSize: 16,
+                marginBottom: 12,
+              }}
+            >
+              {t('reviews.facility')}
+            </Text>
+            <View>
+              {Object.entries(FACILITIES).map(([key, { label, icon }]) => {
+                return (
                   <View
+                    key={`accessibility-rating-${key}`}
                     style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 4,
-                      marginBottom: 8,
+                      paddingVertical: 8,
                     }}
                   >
-                    <Text
+                    <View
                       style={{
-                        fontFamily: FONTS.LSTH_BOLD,
-                        fontSize: 12,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 4,
+                        marginBottom: 8,
                       }}
                     >
-                      {t(`facilities.${label}`)}
-                    </Text>
-                    <MaterialIcons
-                      name="info_outline"
-                      color={COLORS['french-vanilla'][300]}
-                      size={16}
-                    />
-                  </View>
-                  <AccessibilityRatingItemSelect
-                    name={key}
-                    icon={icon}
-                    rating={facilityRating[key]}
-                    onSelected={(rating) => {
-                      if (rating === facilityRating[key]) {
+                      <Text
+                        style={{
+                          fontFamily: FONTS.LSTH_BOLD,
+                          fontSize: 12,
+                        }}
+                      >
+                        {t(`facilities.${label}`)}
+                      </Text>
+                      <MaterialIcons
+                        name="info_outline"
+                        color={COLORS['french-vanilla'][300]}
+                        size={16}
+                      />
+                    </View>
+                    <AccessibilityRatingItemSelect
+                      name={key}
+                      icon={icon}
+                      rating={facilityRating[key]}
+                      onSelected={(rating) => {
+                        if (rating === facilityRating[key]) {
+                          setFacilityRating((prev) => ({
+                            ...prev,
+                            [key]: -1,
+                          }))
+
+                          return
+                        }
+
                         setFacilityRating((prev) => ({
                           ...prev,
-                          [key]: -1,
+                          [key]: rating,
                         }))
+                      }}
+                    />
+                  </View>
+                )
+              })}
+            </View>
+          </View>
+        ) : (
+          <View
+            style={{
+              gap: 12,
+            }}
+          >
+            {chunk(Object.entries(FacilityRatingTag), 2).map((row, i) => {
+              return (
+                <View
+                  key={`accessibility-rating-row-${i}`}
+                  style={{
+                    flexDirection: 'row',
+                    gap: 12,
+                  }}
+                >
+                  {row.map(([key, value]) => {
+                    const isSelected = selectedTags.includes(key)
 
-                        return
-                      }
+                    return (
+                      <Pressable
+                        key={`accessibility-rating-${key}`}
+                        style={{
+                          flex: 1,
+                        }}
+                        onPress={() => {
+                          if (isSelected) {
+                            setSelectedTags((prev) =>
+                              prev.filter((tag) => tag !== key)
+                            )
+                            return
+                          }
 
-                      setFacilityRating((prev) => ({
-                        ...prev,
-                        [key]: rating,
-                      }))
-                    }}
-                  />
+                          setSelectedTags((prev) => [...prev, key])
+                        }}
+                      >
+                        <Tag
+                          label={t(value)}
+                          fullWidth
+                          textSize={12}
+                          height={32}
+                          borderColor={
+                            isSelected
+                              ? COLORS.magenta[500]
+                              : COLORS['french-vanilla'][300]
+                          }
+                        />
+                      </Pressable>
+                    )
+                  })}
                 </View>
               )
             })}
           </View>
-        </View>
+        )}
       </View>
 
       <HorizontalDivider height={12} />

@@ -55,6 +55,10 @@ export const GetPlaceById = gql`
       id
       overall
       reviewCount
+      tags {
+        tag
+        count
+      }
       facilities {
         RAMP {
           status

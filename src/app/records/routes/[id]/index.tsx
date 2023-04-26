@@ -3,10 +3,11 @@ import { Stack, useSearchParams } from 'expo-router'
 import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
-import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
+import type MapView from 'react-native-maps'
+import { Polyline } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { VerticalDivider } from '~/components/VerticalDivider'
-import { MapCameraConfig, MapStyle } from '~/const/map'
+import { WGMapView } from '~/components/WGMapView'
 import { useGetRouteByIdQuery } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -73,23 +74,13 @@ function Page() {
           height: '100%',
         }}
       >
-        <MapView
-          ref={mapRef}
-          style={{
-            flex: 1,
-          }}
-          provider={PROVIDER_GOOGLE}
-          customMapStyle={MapStyle}
-          rotateEnabled={false}
-          pitchEnabled={false}
-          {...MapCameraConfig}
-        >
+        <WGMapView ref={mapRef}>
           <Polyline
             coordinates={routePoints}
             strokeWidth={5}
             strokeColor={'rgba(67, 196, 99, 0.8)'}
           />
-        </MapView>
+        </WGMapView>
         <View
           style={{
             position: 'absolute',
