@@ -16,9 +16,6 @@ import { GraphQLError } from 'graphql'
 import { getUserToken, setUserToken } from './asyncStorage'
 import { RefreshToken } from '~/graphql/mutation/auth'
 
-// const httpLink = createHttpLink({
-// })
-
 const uploadLink = createUploadLink({
   uri: `${Constant.expoConfig?.extra?.WHEELGO_API}/graphql`,
 })

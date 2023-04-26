@@ -128,6 +128,7 @@ export function TransportExploreModal({
                   style={{
                     flexDirection: 'row',
                     gap: 8,
+                    flexWrap: 'wrap',
                   }}
                 >
                   {busLines.map((line) => (
@@ -156,6 +157,7 @@ export function TransportExploreModal({
                   style={{
                     flexDirection: 'row',
                     gap: 8,
+                    flexWrap: 'wrap',
                   }}
                 >
                   {tramLines.map((line) => (

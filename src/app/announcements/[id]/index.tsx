@@ -118,7 +118,7 @@ function Page() {
       />
 
       <ImageWithFallback
-        src={data.getAnnouncementById?.images?.[0].url}
+        src={data.getAnnouncementById?.images?.[0]?.url}
         width="100%"
         height={insets.top + 44 + 150}
       />

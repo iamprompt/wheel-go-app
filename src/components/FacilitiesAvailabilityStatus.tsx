@@ -56,6 +56,10 @@ export function FacilitiesAvailabilityStatus({
       }}
     >
       {Object.entries(FACILITIES).map(([key, { icon }]) => {
+        if (key === 'surface' && !props[key]) {
+          return null
+        }
+
         return (
           <View
             key={key}
