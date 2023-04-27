@@ -3,6 +3,7 @@ import { Stack, useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { CategoryLabel } from '~/components/CategoryLabel'
+import type { Place_Types } from '~/generated-types'
 import { useGetAnnouncementsQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -41,6 +42,7 @@ function Page() {
                 borderTopWidth: i === 0 ? 1 : 0,
                 borderBottomWidth: 1,
                 justifyContent: 'space-between',
+                alignItems: 'center',
                 flexDirection: 'row',
                 gap: 12,
               })}
@@ -134,7 +136,7 @@ function Page() {
                     return (
                       <CategoryLabel
                         key={`announcement-${item.id}-tag-${index}`}
-                        name={tag}
+                        name={tag as Place_Types}
                       />
                     )
                   })}

@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    buildNumber: '22',
+    buildNumber: '23',
     supportsTablet: true,
     bundleIdentifier: 'com.nakama.wheelgo',
     config: {
@@ -65,5 +65,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   scheme: 'wheelgo',
-  plugins: ['expo-localization', 'expo-location', 'expo-image-picker'],
+  plugins: [
+    'expo-localization',
+    'expo-location',
+    'expo-image-picker',
+    [
+      'expo-build-properties',
+      {
+        ios: {
+          deploymentTarget: '13.0',
+        },
+      },
+    ],
+  ],
 })

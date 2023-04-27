@@ -161,7 +161,17 @@
       "total_routes": "บันทึกการเดินทาง"
     },
     "edit": {
-      "title": "แก้ไขโปรไฟล์"
+      "title": "แก้ไขโปรไฟล์",
+      "username": "ชื่อผู้ใช้",
+      "email": "อีเมล",
+      "firstname": "ชื่อ",
+      "lastname": "นามสกุล",
+      "impairment_level": "ระดับความบกพร่อง",
+      "equipment": "อุปกรณ์ช่วยเหลือ",
+      "birthdate": "วันเกิด",
+      "basic_info": "ข้อมูลพื้นฐาน",
+      "account": "บัญชี",
+      "success": "แก้ไขโปรไฟล์สำเร็จ"
     }
   },
   "records": {

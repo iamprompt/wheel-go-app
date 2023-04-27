@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
+import * as Burnt from 'burnt'
 import { useGetMyProfileLazyQuery, useLoginMutation } from '~/generated-types'
 import {
   getUserToken,
@@ -8,6 +9,7 @@ import {
   setUserToken,
 } from '~/utils/asyncStorage'
 import { getGravatarUrl } from '~/utils/gravatar'
+import COLORS from '~/styles/colors'
 
 interface AuthContextData {
   signin: (email: string, password: string) => Promise<void>
@@ -65,18 +67,25 @@ function useAuthProvider() {
 
     const { me } = result.data
 
-    if (me) {
-      setUser({
-        id: me.id || '',
-        username: me.username || '',
-        firstName: me.firstname || '',
-        lastName: me.lastname || '',
-        email: '',
-        image: getGravatarUrl(''),
-        impairmentLevel: '',
-        equipment: '',
-      })
+    if (!me) {
+      setUser(null)
+      return
     }
+
+    const userFormat = {
+      id: me.id || '',
+      username: me.username || '',
+      firstName: me.firstname || '',
+      lastName: me.lastname || '',
+      email: '',
+      image: getGravatarUrl(''),
+      impairmentLevel: '',
+      equipment: '',
+    }
+
+    setUser(userFormat)
+
+    return userFormat
   }
 
   useEffect(() => {
@@ -100,7 +109,18 @@ function useAuthProvider() {
     const { accessToken, refreshToken } = data.login
 
     await setUserToken(accessToken, refreshToken)
-    await handleUserChange()
+    const u = await handleUserChange()
+
+    Burnt.toast({
+      title: "You're logged in!", // required
+      message: `Welcome back ${u?.firstName}!`,
+      preset: 'custom',
+      haptic: 'success',
+      duration: 2,
+      icon: {
+        ios: { name: 'person.fill', color: COLORS.magenta[500] },
+      },
+    })
 
     router.replace('/')
   }

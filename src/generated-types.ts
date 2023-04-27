@@ -129,6 +129,7 @@ export type CreateUserInput = {
   lastname?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<UserMetaInput>;
   password: Scalars['String'];
+  profileImage?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Roles>;
   username?: InputMaybe<Scalars['String']>;
 };
@@ -678,6 +679,7 @@ export type UpdateUserInput = {
   firstname?: InputMaybe<Scalars['String']>;
   lastname?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<UserMetaInput>;
+  profileImage?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Roles>;
   username?: InputMaybe<Scalars['String']>;
 };
@@ -690,6 +692,7 @@ export type User = {
   id: Scalars['ID'];
   lastname?: Maybe<Scalars['String']>;
   metadata?: Maybe<UserMetadata>;
+  profileImage?: Maybe<Media>;
   role?: Maybe<Roles>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   username?: Maybe<Scalars['String']>;
@@ -740,7 +743,7 @@ export type UploadMediaMutationVariables = Exact<{
 }>;
 
 
-export type UploadMediaMutation = { __typename?: 'Mutation', uploadMedia: { __typename?: 'Media', id: string } };
+export type UploadMediaMutation = { __typename?: 'Mutation', uploadMedia: { __typename?: 'Media', id: string, url?: string | null } };
 
 export type CreateReviewMutationVariables = Exact<{
   input: CreateReviewInput;
@@ -755,6 +758,13 @@ export type CreateRoutesMutationVariables = Exact<{
 
 
 export type CreateRoutesMutation = { __typename?: 'Mutation', createRoute: { __typename?: 'Route', id: string } };
+
+export type UpdateProfileMutationVariables = Exact<{
+  input: UpdateUserInput;
+}>;
+
+
+export type UpdateProfileMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string } };
 
 export type GetAnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -859,7 +869,7 @@ export type GetRouteByIdQuery = { __typename?: 'Query', getRouteById: { __typena
 export type GetMyProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyProfileQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, username?: string | null, role?: Roles | null } };
+export type GetMyProfileQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, username?: string | null, role?: Roles | null, email?: string | null, profileImage?: { __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null } | null, metadata?: { __typename?: 'UserMetadata', impairmentLevel?: string | null, equipment?: string | null } | null } };
 
 export type GetMyFavoritePlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1015,6 +1025,7 @@ export const UploadMediaDocument = gql`
     mutation UploadMedia($file: Upload!) {
   uploadMedia(file: $file) {
     id
+    url
   }
 }
     `;
@@ -1110,6 +1121,39 @@ export function useCreateRoutesMutation(baseOptions?: Apollo.MutationHookOptions
 export type CreateRoutesMutationHookResult = ReturnType<typeof useCreateRoutesMutation>;
 export type CreateRoutesMutationResult = Apollo.MutationResult<CreateRoutesMutation>;
 export type CreateRoutesMutationOptions = Apollo.BaseMutationOptions<CreateRoutesMutation, CreateRoutesMutationVariables>;
+export const UpdateProfileDocument = gql`
+    mutation UpdateProfile($input: UpdateUserInput!) {
+  updateUser(data: $input) {
+    id
+  }
+}
+    `;
+export type UpdateProfileMutationFn = Apollo.MutationFunction<UpdateProfileMutation, UpdateProfileMutationVariables>;
+
+/**
+ * __useUpdateProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProfileMutation, { data, loading, error }] = useUpdateProfileMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateProfileMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProfileMutation, UpdateProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProfileMutation, UpdateProfileMutationVariables>(UpdateProfileDocument, options);
+      }
+export type UpdateProfileMutationHookResult = ReturnType<typeof useUpdateProfileMutation>;
+export type UpdateProfileMutationResult = Apollo.MutationResult<UpdateProfileMutation>;
+export type UpdateProfileMutationOptions = Apollo.BaseMutationOptions<UpdateProfileMutation, UpdateProfileMutationVariables>;
 export const GetAnnouncementsDocument = gql`
     query GetAnnouncements {
   getAnnouncements {
@@ -1795,9 +1839,17 @@ export const GetMyProfileDocument = gql`
     lastname
     username
     role
+    email
+    profileImage {
+      ...MediaFields
+    }
+    metadata {
+      impairmentLevel
+      equipment
+    }
   }
 }
-    `;
+    ${MediaFieldsFragmentDoc}`;
 
 /**
  * __useGetMyProfileQuery__

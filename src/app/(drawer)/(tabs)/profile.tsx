@@ -11,6 +11,7 @@ import { NotSignedIn } from '~/components/NotSignin'
 import { BADGES } from '~/const/badges'
 import { SUMMARY_DETAILS } from '~/const/profile'
 import { useAuth } from '~/context/useAuth'
+import { useGetMyProfileQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -21,14 +22,18 @@ export default function App() {
   const { user } = useAuth()
   const { t } = useTranslation()
 
+  const { data: profileData } = useGetMyProfileQuery()
+
   const router = useRouter()
 
   const [isBadgeModalVisible, setIsBadgeModalVisible] = useState(false)
   const [badgeToDisplay, setBadgeToDisplay] = useState<keyof typeof BADGES>()
 
-  if (!user) {
+  if (!user || !profileData || (profileData && !profileData.me)) {
     return <NotSignedIn />
   }
+
+  const { firstname, lastname, metadata, profileImage } = profileData.me
 
   return (
     <ScrollView
@@ -36,10 +41,8 @@ export default function App() {
         GlobalStyle.container,
         {
           paddingTop: insets.top + 16,
-          // paddingHorizontal: 16,
         },
       ]}
-      // bounces={false}
     >
       <Stack.Screen
         options={{
@@ -62,7 +65,7 @@ export default function App() {
         >
           <Image
             source={{
-              uri: user.image,
+              uri: profileImage?.url || user.image,
               width: 128,
               height: 128,
             }}
@@ -104,18 +107,20 @@ export default function App() {
             fontFamily: FONTS.LSTH_BOLD,
           }}
         >
-          {user.firstName} {user.lastName}
+          {firstname} {lastname}
         </Text>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontFamily: FONTS.LSTH_REGULAR,
-            fontSize: 14,
-            color: COLORS['french-vanilla'][500],
-          }}
-        >
-          {t(`impairment_level.${user.impairmentLevel}`)}
-        </Text>
+        {metadata?.impairmentLevel ? (
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: FONTS.LSTH_REGULAR,
+              fontSize: 14,
+              color: COLORS['french-vanilla'][500],
+            }}
+          >
+            {t(`impairment_level.${user.impairmentLevel}`)}
+          </Text>
+        ) : null}
         <View
           style={{
             marginTop: 12,

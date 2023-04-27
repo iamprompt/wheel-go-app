@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client'
+import { MEDIA_FIELDS } from '../fragment/media'
 
 export const GetMyProfile = gql`
+  ${MEDIA_FIELDS}
+
   query GetMyProfile {
     me {
       id
@@ -8,6 +11,14 @@ export const GetMyProfile = gql`
       lastname
       username
       role
+      email
+      profileImage {
+        ...MediaFields
+      }
+      metadata {
+        impairmentLevel
+        equipment
+      }
     }
   }
 `
