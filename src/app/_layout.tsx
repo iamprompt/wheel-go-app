@@ -12,6 +12,10 @@ import { PreferencesProvider } from '~/context/usePreferences'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { AuthProvider } from '~/context/useAuth'
 import { WheelGoApolloProvider } from '~/utils/apollo'
+import { StoreonProvider } from '~/context/useStoreon'
+
+// TaskManager
+import '~/tasks'
 
 // SplashScreen.preventAutoHideAsync()
 
@@ -31,26 +35,28 @@ function RootLayout() {
 
   return (
     <WheelGoApolloProvider>
-      <AuthProvider>
-        <QueryClientProvider client={new QueryClient()}>
-          <PreferencesProvider>
-            <Stack
-              screenOptions={{
-                headerShown: false,
-                headerTitleStyle: {
-                  fontFamily: FONTS.LSTH_BOLD,
-                  fontSize: 20,
-                },
-                headerBackTitleStyle: {
-                  fontFamily: FONTS.LSTH_BOLD,
-                },
-                headerBackTitleVisible: false,
-                headerLeft: HeaderBackButton,
-              }}
-            />
-          </PreferencesProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <StoreonProvider>
+        <AuthProvider>
+          <QueryClientProvider client={new QueryClient()}>
+            <PreferencesProvider>
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                  headerTitleStyle: {
+                    fontFamily: FONTS.LSTH_BOLD,
+                    fontSize: 20,
+                  },
+                  headerBackTitleStyle: {
+                    fontFamily: FONTS.LSTH_BOLD,
+                  },
+                  headerBackTitleVisible: false,
+                  headerLeft: HeaderBackButton,
+                }}
+              />
+            </PreferencesProvider>
+          </QueryClientProvider>
+        </AuthProvider>
+      </StoreonProvider>
     </WheelGoApolloProvider>
   )
 }

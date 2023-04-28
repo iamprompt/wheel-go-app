@@ -74,13 +74,19 @@ function Page() {
           height: '100%',
         }}
       >
-        <WGMapView ref={mapRef}>
-          <Polyline
-            coordinates={routePoints}
-            strokeWidth={5}
-            strokeColor={'rgba(67, 196, 99, 0.8)'}
-          />
-        </WGMapView>
+        <WGMapView
+          ref={mapRef}
+          mapElements={
+            <>
+              <Polyline
+                coordinates={routePoints}
+                strokeWidth={5}
+                strokeColor={'rgba(67, 196, 99, 0.8)'}
+              />
+            </>
+          }
+        />
+
         <View
           style={{
             position: 'absolute',

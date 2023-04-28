@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'burnt'
 import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker'
 import { ReactNativeFile } from 'apollo-upload-client'
-import { ProfileEditSection } from './editSection'
+import { ProfileEditSection } from '../../../const/editSection'
 import { useAuth } from '~/context/useAuth'
 import {
   useGetMyProfileLazyQuery,

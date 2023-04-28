@@ -1,20 +1,15 @@
 import dayjs from 'dayjs'
-import type { LocationObject, LocationTaskOptions } from 'expo-location'
 import {
-  LocationAccuracy,
   requestBackgroundPermissionsAsync,
   startLocationUpdatesAsync,
   stopLocationUpdatesAsync,
 } from 'expo-location'
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import type {
-  TaskManagerTaskBody,
-  TaskManagerTaskExecutor,
-} from 'expo-task-manager'
-import { defineTask, isTaskRegisteredAsync } from 'expo-task-manager'
+
+import { isTaskRegisteredAsync } from 'expo-task-manager'
 import { getPathLength } from 'geolib'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import type { UserLocationChangeEvent } from 'react-native-maps'
@@ -37,57 +32,44 @@ import { TracingStatusIndicator } from '~/components/TracingStatusIndicator'
 import { TracingStopModal } from '~/components/TracingStopModal'
 import { WGMapView } from '~/components/WGMapView'
 import { TRACING_STATES } from '~/const/trace'
+import { useStoreon } from '~/context/useStoreon'
 import { Route_Types, useCreateRoutesMutation } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
-interface Record {
-  latitude: number
-  longitude: number
-  timestamp: number
-}
-
-const LOCATION_WATCH_TASK_NAME = 'LOCATION_WATCH_TRACE'
-const LOCATION_WATCH_CONFIG: LocationTaskOptions = {
-  accuracy: LocationAccuracy.Highest,
-  foregroundService: {
-    killServiceOnDestroy: true,
-    notificationTitle: 'Wheel Go',
-    notificationBody: 'Tracing your route',
-  },
-  deferredUpdatesInterval: 1000,
-  deferredUpdatesDistance: 1,
-}
+import { LOCATION_TRACE_CONFIG, LOCATION_TRACE_TASK_NAME } from '~/tasks/trace'
 
 function Page() {
+  const { trace, dispatch } = useStoreon('trace')
   const router = useRouter()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
-  const [record, setRecord] = useState<Record[]>([])
   const coordinates = useMemo(
     () =>
-      record.map((rec) => ({
-        latitude: rec.latitude,
-        longitude: rec.longitude,
+      trace.paths.map((rec) => ({
+        latitude: rec.lat,
+        longitude: rec.lng,
       })),
-    [record]
+    [trace.paths]
   )
   const duration = useMemo(() => {
-    if (record.length < 2) {
+    if (trace.paths.length < 2) {
       return 0
     }
-    return record[record.length - 1].timestamp - record[0].timestamp
-  }, [record])
+    return (
+      trace.paths[trace.paths.length - 1].timestamp - trace.paths[0].timestamp
+    )
+  }, [trace.paths])
 
   const distance = useMemo(() => {
-    if (record.length < 2) {
+    if (coordinates.length < 2) {
       return 0
     }
 
     const length = getPathLength(coordinates)
     return length
-  }, [record])
+  }, [coordinates])
 
   const mapRef = useRef<MapView>(null)
   const [state, setState] = useState<TRACING_STATES>(TRACING_STATES.READY)
@@ -99,10 +81,6 @@ function Page() {
   })
 
   const handleLocationChange = (e: UserLocationChangeEvent) => {
-    // if (state !== TRACING_STATES.RECORDING) {
-    //   return
-    // }
-
     const { coordinate } = e.nativeEvent
 
     if (!coordinate) {
@@ -110,10 +88,6 @@ function Page() {
     }
 
     const { latitude, longitude } = coordinate
-
-    // setRecord((prev) => [...prev, { latitude, longitude, timestamp }])
-
-    // console.log('Location Changed', { latitude, longitude, timestamp })
 
     if (mapRef.current) {
       mapRef.current.animateCamera({
@@ -125,42 +99,18 @@ function Page() {
     }
   }
 
-  const handleLocationWatch: TaskManagerTaskExecutor = (body) => {
-    if (state !== TRACING_STATES.RECORDING) {
-      return
-    }
-
-    const {
-      data: { locations },
-      error,
-    } = body as TaskManagerTaskBody<{ locations: LocationObject[] }>
-
-    console.log('Location Watched', locations)
-
-    const {
-      timestamp,
-      coords: { latitude, longitude },
-    } = locations[0]
-
-    setRecord((prev) => [...prev, { latitude, longitude, timestamp }])
-  }
-
-  useEffect(() => {
-    defineTask(LOCATION_WATCH_TASK_NAME, handleLocationWatch)
-  }, [])
-
   const startTask = async () => {
     await startLocationUpdatesAsync(
-      LOCATION_WATCH_TASK_NAME,
-      LOCATION_WATCH_CONFIG
+      LOCATION_TRACE_TASK_NAME,
+      LOCATION_TRACE_CONFIG
     )
   }
 
   const stopTask = async () => {
-    const isRegistered = await isTaskRegisteredAsync(LOCATION_WATCH_TASK_NAME)
+    const isRegistered = await isTaskRegisteredAsync(LOCATION_TRACE_TASK_NAME)
 
     if (isRegistered) {
-      await stopLocationUpdatesAsync(LOCATION_WATCH_TASK_NAME)
+      await stopLocationUpdatesAsync(LOCATION_TRACE_TASK_NAME)
     }
   }
 
@@ -209,16 +159,20 @@ function Page() {
     const result = await createRoute({
       variables: {
         input: {
-          paths: record.map((rec) => ({
-            lat: rec.latitude,
-            lng: rec.longitude,
+          paths: trace.paths.map((rec) => ({
+            lat: rec.lat,
+            lng: rec.lng,
           })),
+          duration,
+          distance,
           type: Route_Types.Traced,
         },
       },
     })
 
     console.log(JSON.stringify(result, null, 2))
+
+    dispatch('trace/clear')
 
     setState(TRACING_STATES.SAVED)
   }
@@ -454,7 +408,7 @@ function Page() {
                         fontSize: 20,
                       }}
                     >
-                      {dayjs.duration(duration, 'millisecond').asMinutes()}{' '}
+                      {dayjs.duration(duration, 'millisecond').format('mm:ss')}{' '}
                       {t('units.minutes')}
                     </Text>
                   </View>

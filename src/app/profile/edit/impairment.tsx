@@ -6,7 +6,7 @@ import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { usePreferences } from '~/context/usePreferences'
-import { languageOptions } from '~/const/languageOptions'
+import { ImpairmentLevels } from '~/const/impairmentLevels'
 
 function Page() {
   const { t } = useTranslation()
@@ -22,9 +22,9 @@ function Page() {
       />
 
       <View>
-        {languageOptions.map((option, i) => (
+        {Object.entries(ImpairmentLevels).map(([key, level], i) => (
           <Pressable
-            key={`language-option-${option.value}`}
+            key={`language-option-${level.label}`}
             style={{
               paddingVertical: 16,
               paddingHorizontal: 16,
@@ -36,16 +36,16 @@ function Page() {
               alignItems: 'center',
             }}
             onPress={() => {
-              setLanguage(option.value)
+              setLanguage(level.label)
             }}
           >
             <Text style={{ fontFamily: FONTS.LSTH_BOLD, fontSize: 14 }}>
-              {option.label}
+              {level.label}
             </Text>
             <View>
               <MaterialIcons
                 name={
-                  appLanguage === option.value
+                  appLanguage === key
                     ? 'radio_button_checked'
                     : 'radio_button_unchecked'
                 }
