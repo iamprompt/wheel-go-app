@@ -108,11 +108,16 @@
     "title": "Need a help?"
   },
   "impairment_level": {
-    "0": "0 - Completely independent",
-    "1": "1 - Requires use of equipment or device",
-    "2": "2 - Requires assistance from another person",
-    "3": "3 - Requires help from person/equipment",
-    "4": "4 - Completely dependent"
+    "independent": "0 - Completely independent",
+    "require_equipment": "1 - Requires use of equipment or device",
+    "require_assistance": "2 - Requires assistance from another person",
+    "require_equipment_and_assistance": "3 - Requires help from person/equipment",
+    "dependent": "4 - Completely dependent"
+  },
+  "equipment": {
+    "none": "None",
+    "manual_wheelchair": "Manual Wheelchair",
+    "electric_wheelchair": "Electric Wheelchair"
   },
   "map_prefs_modal": {
     "conditions": "Surrounding Conditions",

@@ -35,6 +35,8 @@ export default function App() {
 
   const { firstname, lastname, metadata, profileImage } = profileData.me
 
+  console.log('profileData', profileData)
+
   return (
     <ScrollView
       style={[
@@ -118,7 +120,7 @@ export default function App() {
               color: COLORS['french-vanilla'][500],
             }}
           >
-            {t(`impairment_level.${user.impairmentLevel}`)}
+            {t(`impairment_level.${metadata.impairmentLevel}`)}
           </Text>
         ) : null}
         <View

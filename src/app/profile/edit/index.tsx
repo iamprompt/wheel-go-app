@@ -1,5 +1,5 @@
 import { Image } from 'expo-image'
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, Pressable, Text, TextInput, View } from 'react-native'
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
@@ -18,6 +18,8 @@ import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useStoreon } from '~/context/useStoreon'
+import { HeaderBackButton } from '~/components/HeaderBackButton'
 
 interface ProfileForm {
   [key: string]: string | undefined
@@ -31,9 +33,14 @@ interface ProfileForm {
 }
 
 export default function Page() {
+  const router = useRouter()
   const { t } = useTranslation()
   const { user } = useAuth()
-  const [getProfile, { data }] = useGetMyProfileLazyQuery()
+
+  const { profileEdit, dispatch } = useStoreon('profileEdit')
+
+  const [getProfile] = useGetMyProfileLazyQuery()
+
   const [updateProfile] = useUpdateProfileMutation({
     refetchQueries: ['GetMyProfile'],
   })
@@ -51,14 +58,18 @@ export default function Page() {
     profileImage: '',
   })
 
+  // Initialize profile edit session
   const initProfile = async () => {
-    const { data: profile } = await getProfile()
-    console.log('profile', profile)
+    // If edit session is already started, do not fetch profile
+    if (profileEdit) {
+      return
+    }
 
+    const { data: profile } = await getProfile()
     if (profile) {
       const { me } = profile
 
-      setProfileForm({
+      dispatch('profileEdit/setProfile', {
         firstname: me.firstname || '',
         lastname: me.lastname || '',
         email: me.email || '',
@@ -74,17 +85,19 @@ export default function Page() {
     console.log('FORM SUBMIT')
 
     try {
+      const profile = {
+        firstname: profileEdit?.firstname,
+        lastname: profileEdit?.lastname,
+        username: profileEdit?.username,
+        metadata: {
+          impairmentLevel: profileEdit?.impairmentLevel,
+          equipment: profileEdit?.equipment,
+        },
+      }
+
       await updateProfile({
         variables: {
-          input: {
-            firstname: profileForm?.firstname,
-            lastname: profileForm?.lastname,
-            username: profileForm?.username,
-            metadata: {
-              impairmentLevel: profileForm?.impairmentLevel,
-              equipment: profileForm?.equipment,
-            },
-          },
+          input: profile,
         },
       })
 
@@ -102,6 +115,9 @@ export default function Page() {
           },
         },
       })
+
+      router.back()
+      dispatch('profileEdit/reset')
     } catch (error) {
       console.log('error', error)
     }
@@ -130,8 +146,6 @@ export default function Page() {
           },
         })
 
-        console.log('uploadData', uploadData)
-
         if (uploadData) {
           const { uploadMedia } = uploadData
 
@@ -143,10 +157,9 @@ export default function Page() {
             },
           })
 
-          setProfileForm((prev) => ({
-            ...prev,
+          dispatch('profileEdit/setField', {
             profileImage: uploadMedia.url || '',
-          }))
+          })
 
           toast({
             title: t('profile.edit.success'),
@@ -171,7 +184,7 @@ export default function Page() {
     initProfile()
   }, [user])
 
-  if (!user) {
+  if (!user || !profileEdit) {
     return null
   }
 
@@ -183,6 +196,12 @@ export default function Page() {
         options={{
           title: t('profile.edit.title') || '',
           headerShown: true,
+          headerLeft: HeaderBackButton({
+            onPress: () => {
+              router.back()
+              dispatch('profileEdit/reset')
+            },
+          }),
           headerRight: () => {
             return (
               <Pressable
@@ -220,7 +239,7 @@ export default function Page() {
         >
           <Image
             source={{
-              uri: profileForm.profileImage || user.image || '',
+              uri: profileEdit.profileImage || user.image || '',
               width: 128,
               height: 128,
             }}
@@ -266,7 +285,7 @@ export default function Page() {
                   {t(section.label)}
                 </Text>
                 <View>
-                  {section.items.map((item, index) => {
+                  {section.items.map(({ editable = true, ...item }, index) => {
                     return (
                       <Pressable
                         key={`setting-sections-${sectionIndex}-${section.name}-item-${item.name}`}
@@ -280,7 +299,13 @@ export default function Page() {
                           borderTopWidth: index === 0 ? 1 : 0,
                           gap: 32,
                         }}
-                        onPress={() => {}}
+                        {...(item.href
+                          ? {
+                              onPress: () => {
+                                router.push(`/profile/edit${item.href}`)
+                              },
+                            }
+                          : {})}
                       >
                         <Text
                           style={{
@@ -296,25 +321,56 @@ export default function Page() {
                             flex: 1,
                           }}
                         >
-                          <TextInput
-                            style={{
-                              fontFamily: FONTS.LSTH_REGULAR,
-                              color: COLORS['french-vanilla'][500],
-                              fontSize: 14,
-                              flex: 1,
-                              textAlign: 'right',
-                            }}
-                            value={profileForm[item.key]}
-                            onChange={(e) => {
-                              setProfileForm({
-                                ...profileForm,
-                                [item.key]: e.nativeEvent.text,
-                              })
-                            }}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            editable={!(item.editable === false)}
-                          />
+                          {item.href ? (
+                            <>
+                              <Text
+                                style={{
+                                  fontFamily: FONTS.LSTH_REGULAR,
+                                  color: COLORS['french-vanilla'][500],
+                                  fontSize: 14,
+                                  flex: 1,
+                                  textAlign: 'right',
+                                }}
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                              >
+                                {t(
+                                  item.i18nPrefix
+                                    ? `${item.i18nPrefix}${
+                                        profileEdit[item.key]
+                                      }`
+                                    : profileEdit[item.key] || ''
+                                )}
+                              </Text>
+                              <MaterialIcons
+                                name="chevron_right"
+                                size={24}
+                                color={COLORS['french-vanilla'][300]}
+                                style={{
+                                  marginLeft: 12,
+                                }}
+                              />
+                            </>
+                          ) : (
+                            <TextInput
+                              style={{
+                                fontFamily: FONTS.LSTH_REGULAR,
+                                color: COLORS['french-vanilla'][500],
+                                fontSize: 14,
+                                flex: 1,
+                                textAlign: 'right',
+                              }}
+                              value={profileEdit[item.key]}
+                              onChange={(e) => {
+                                dispatch('profileEdit/setField', {
+                                  [item.key]: e.nativeEvent.text,
+                                })
+                              }}
+                              autoCapitalize="none"
+                              autoCorrect={false}
+                              editable={editable}
+                            />
+                          )}
                           {/* {item.value ? (
                             <Text
                               style={{

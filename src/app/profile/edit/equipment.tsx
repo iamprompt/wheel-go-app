@@ -5,8 +5,8 @@ import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { ImpairmentLevels } from '~/const/impairmentLevels'
 import { useStoreon } from '~/context/useStoreon'
+import { Equipments } from '~/const/equipment'
 
 function Page() {
   const { t } = useTranslation()
@@ -18,14 +18,14 @@ function Page() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: t('profile.edit.impairment_level')!,
+          title: t('profile.edit.equipment')!,
         }}
       />
 
       <View>
-        {Object.entries(ImpairmentLevels).map(([key, level], i) => (
+        {Object.entries(Equipments).map(([key, equipment], i) => (
           <Pressable
-            key={`impairment_level-${level.label}`}
+            key={`equipment-${equipment.label}`}
             style={{
               paddingVertical: 16,
               paddingHorizontal: 16,
@@ -38,17 +38,17 @@ function Page() {
             }}
             onPress={() => {
               dispatch('profileEdit/setField', {
-                impairmentLevel: key,
+                equipment: key,
               })
             }}
           >
             <Text style={{ fontFamily: FONTS.LSTH_BOLD, fontSize: 14 }}>
-              {t(level.label)}
+              {t(equipment.label)}
             </Text>
             <View>
               <MaterialIcons
                 name={
-                  profileEdit.impairmentLevel === key
+                  profileEdit.equipment === key
                     ? 'radio_button_checked'
                     : 'radio_button_unchecked'
                 }

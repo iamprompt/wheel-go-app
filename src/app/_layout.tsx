@@ -50,7 +50,7 @@ function RootLayout() {
                     fontFamily: FONTS.LSTH_BOLD,
                   },
                   headerBackTitleVisible: false,
-                  headerLeft: HeaderBackButton,
+                  headerLeft: HeaderBackButton(),
                 }}
               />
             </PreferencesProvider>

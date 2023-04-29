@@ -1,8 +1,15 @@
 import { createStoreon } from 'storeon'
+
 import type { TracingEvent, TracingState } from './trace'
 import { tracingModule } from './trace'
 
-type States = TracingState
-type Events = TracingEvent
+import type { ProfileEditEvent, ProfileEditState } from './profileEdit'
+import { profileEditModule } from './profileEdit'
 
-export const store = createStoreon<States, Events>([tracingModule])
+type States = TracingState & ProfileEditState
+type Events = TracingEvent & ProfileEditEvent
+
+export const store = createStoreon<States, Events>([
+  tracingModule,
+  profileEditModule,
+])

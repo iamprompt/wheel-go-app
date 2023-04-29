@@ -2,7 +2,10 @@ interface EditItem {
   name: string
   label: string
   key: string
+  href?: string
   editable?: boolean
+  showValue?: boolean
+  i18nPrefix?: string
 }
 
 interface EditSection {
@@ -24,12 +27,18 @@ export const ProfileEditSection: EditSection[] = [
       {
         name: 'impairment_level',
         label: 'profile.edit.impairment_level',
-        key: 'impairment_level',
+        key: 'impairmentLevel',
+        editable: false,
+        href: '/impairment',
+        i18nPrefix: 'impairment_level.',
       },
       {
         name: 'equipment',
         label: 'profile.edit.equipment',
         key: 'equipment',
+        editable: false,
+        href: '/equipment',
+        i18nPrefix: 'equipment.',
       },
       {
         name: 'firstname',
