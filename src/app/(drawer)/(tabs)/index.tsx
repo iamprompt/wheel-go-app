@@ -171,7 +171,6 @@ export default function App() {
               name={place?.getPlaceById.name || undefined}
               category={place?.getPlaceById.type || undefined}
               onPress={() => {
-                console.log('Pressed NearbyPlaceBlock')
                 setModalVisible(true)
               }}
             />
@@ -198,7 +197,6 @@ export default function App() {
               ...GlobalStyle.shadow,
             }}
             onPress={() => {
-              console.log('Pressed Search')
               router.push('/routes')
             }}
           >

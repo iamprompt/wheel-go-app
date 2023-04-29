@@ -64,8 +64,6 @@ export const WGMapView = forwardRef<
     }
 
     useEffect(() => {
-      console.log('mapViewPreferences.places', mapViewPreferences.places)
-
       getPlaces({
         variables: {
           type: mapViewPreferences.places,

@@ -27,9 +27,6 @@ function Page() {
     from?: string
     to?: string
   }>()
-
-  console.log(params, q, field)
-
   const [query, setQuery] = useState<string>(q || '')
   const [searchText, setSearchText] = useState<string>(q || '')
 

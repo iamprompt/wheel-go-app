@@ -141,14 +141,12 @@ function Page() {
                       placeId: id!,
                     },
                   })
-                  console.log(`${id} removed from favorites`)
                 } else {
                   await addFavorites({
                     variables: {
                       placeId: id!,
                     },
                   })
-                  console.log(`${id} added to favorites`)
                 }
               }}
             >
@@ -296,8 +294,6 @@ function Page() {
                 const result = await Share.share({
                   message: metadata?.website || '',
                 })
-
-                result.action === Share.sharedAction && console.log('shared')
               }}
             />
           </View>
@@ -614,7 +610,6 @@ function Page() {
             label={t('reviews.see_all_reviews')}
             variant={ButtonVariant.Secondary}
             onPress={() => {
-              console.log('see all reviews')
               router.push(`/places/${id}/reviews`)
             }}
           />

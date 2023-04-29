@@ -260,7 +260,6 @@ function Page() {
                 borderBottomWidth: 1,
               }}
               onPress={() => {
-                console.log(`Pressed on route ${route.id}`)
                 router.push(`/routes/${route.id}`)
               }}
             >

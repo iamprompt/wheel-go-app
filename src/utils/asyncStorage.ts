@@ -29,8 +29,6 @@ export async function getUserToken() {
 export async function setUserToken(accessToken: string, refreshToken: string) {
   await AsyncStorage.setItem('accessToken', accessToken)
   await AsyncStorage.setItem('refreshToken', refreshToken)
-
-  console.log('Set user token')
 }
 
 export async function removeUserToken() {

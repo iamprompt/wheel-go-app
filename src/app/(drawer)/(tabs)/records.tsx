@@ -98,7 +98,6 @@ export default function App() {
                 alignItems: 'center',
               })}
               onPress={() => {
-                console.log(`Pressed! ${item.label}`)
                 router.push(item.href)
               }}
             >

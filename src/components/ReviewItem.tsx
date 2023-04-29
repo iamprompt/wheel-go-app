@@ -99,8 +99,6 @@ export function ReviewItem({
               }}
             >
               {chunk(facilityTags, 2).map((row, i) => {
-                console.log(row)
-
                 return (
                   <View
                     key={`facility-tag-${i}`}
@@ -112,9 +110,6 @@ export function ReviewItem({
                   >
                     {row.map((item, index) => {
                       const tag = FacilityRatingTag[item]
-
-                      console.log(`tag`, tag)
-
                       if (!tag) {
                         return (
                           <View

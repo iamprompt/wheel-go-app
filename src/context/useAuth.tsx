@@ -93,14 +93,12 @@ function useAuthProvider() {
   }, [])
 
   const signin = async (email: string, password: string) => {
-    const { data, errors } = await loginUser({
+    const { data } = await loginUser({
       variables: {
         email,
         password,
       },
     })
-
-    console.log(data, errors)
 
     if (!data) {
       throw new Error('Login failed')

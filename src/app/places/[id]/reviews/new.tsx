@@ -71,15 +71,11 @@ function Page() {
     })
 
     if (!result.canceled) {
-      console.log(JSON.stringify(result, null, 2))
       setSelectedImages((prev) => [...prev, result.assets[0]])
     }
   }
 
-  console.log('selectedImages', selectedImages.length)
-
   const handleSubmit = async () => {
-    console.log('submit')
     const images = selectedImages.map((image) => {
       return new ReactNativeFile({
         uri: image.uri,
@@ -97,8 +93,6 @@ function Page() {
             },
           })
 
-          console.log('result', result)
-
           return result.data
         } catch (error) {
           console.log('error', error)
@@ -107,12 +101,6 @@ function Page() {
       })
     )
 
-    // console.log(
-    //   'uploadResults',
-    //   uploadResults.map((result) => result.doc.id)
-    // )
-
-    // TODO: Implement Submit Review
     const payloadResult = await createReview({
       variables: {
         input: {
@@ -130,7 +118,6 @@ function Page() {
         },
       },
     })
-    console.log('payloadResult', payloadResult)
 
     router.replace(`/places/${placeId}`)
   }

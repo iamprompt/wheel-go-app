@@ -27,7 +27,6 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
     >
       <Pressable
         onPress={() => {
-          console.log('close')
           onClose()
         }}
         style={{

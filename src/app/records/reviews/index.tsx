@@ -104,7 +104,6 @@ export default function Page() {
                 category={review.place!.type!}
                 date={review.createdAt}
                 onPress={() => {
-                  console.log('onPress')
                   router.push(`/records/reviews/${review.id}`)
                 }}
                 borderTop={i === 0}

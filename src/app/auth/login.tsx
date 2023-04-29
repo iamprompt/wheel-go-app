@@ -19,7 +19,6 @@ function Page() {
   const { control, handleSubmit } = useForm()
 
   const onSignIn: SubmitHandler<FieldValues> = (props) => {
-    console.log(props)
     signin(props.email, props.password)
   }
 

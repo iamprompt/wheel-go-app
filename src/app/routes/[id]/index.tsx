@@ -12,9 +12,6 @@ function Page() {
   const { id } = useSearchParams<{
     id: string
   }>()
-
-  console.log(id)
-
   const { data } = useGetRouteByIdQuery({
     variables: {
       id: id!,

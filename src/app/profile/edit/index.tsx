@@ -82,8 +82,6 @@ export default function Page() {
   }
 
   const handleFormSubmit = async () => {
-    console.log('FORM SUBMIT')
-
     try {
       const profile = {
         firstname: profileEdit?.firstname,

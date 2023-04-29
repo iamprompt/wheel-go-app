@@ -25,6 +25,8 @@ function Page() {
   const insets = useSafeAreaInsets()
   const router = useRouter()
 
+  const HeaderBackButtonElement = HeaderBackButton()
+
   const { q } = useSearchParams<{ q: string }>()
 
   const [query, setQuery] = useState<string>(q || '')
@@ -37,8 +39,6 @@ function Page() {
   ) => {
     router.setParams({ q: e.nativeEvent.text })
     setQuery(e.nativeEvent.text)
-
-    console.log(e.nativeEvent.text)
 
     searchOperation({
       variables: {
@@ -81,7 +81,7 @@ function Page() {
           zIndex: 1,
         }}
       >
-        <HeaderBackButton />
+        <HeaderBackButtonElement />
         <View
           style={{
             flex: 1,

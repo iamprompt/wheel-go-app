@@ -40,9 +40,6 @@ export default function App() {
 
   const { firstname, lastname, metadata, profileImage } = profileData.me
 
-  console.log('profileData', profileData)
-  console.log('profileSummary', profileSummary)
-
   return (
     <ScrollView
       style={[
@@ -137,7 +134,6 @@ export default function App() {
         >
           <Pressable
             onPress={() => {
-              console.log('Edit Profile')
               router.push('/profile/edit')
             }}
           >
@@ -176,7 +172,6 @@ export default function App() {
                     alignItems: 'center',
                   }}
                   onPress={() => {
-                    console.log('Badge Pressed')
                     if (badge.modal !== false) {
                       setBadgeToDisplay(badgeKey)
                       setIsBadgeModalVisible(true)

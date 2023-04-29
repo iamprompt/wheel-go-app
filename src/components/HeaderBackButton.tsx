@@ -5,7 +5,7 @@ import { Pressable } from 'react-native'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export function HeaderBackButton(props?: ComponentProps<typeof Pressable>) {
-  return (headerProps: HeaderBackButtonProps) => {
+  return (_headerProps: Partial<HeaderBackButtonProps>) => {
     const navigation = useNavigation()
 
     return (
