@@ -87,7 +87,6 @@ export const WGMapView = forwardRef<
           }}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
-          followsUserLocation={true}
           customMapStyle={MapStyle}
           rotateEnabled={false}
           pitchEnabled={false}
