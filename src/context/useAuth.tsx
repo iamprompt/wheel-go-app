@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import * as Burnt from 'burnt'
+import { toast } from 'burnt'
 import { useGetMyProfileLazyQuery, useLoginMutation } from '~/generated-types'
 import {
   getUserToken,
@@ -109,7 +109,7 @@ function useAuthProvider() {
     await setUserToken(accessToken, refreshToken)
     const u = await handleUserChange()
 
-    Burnt.toast({
+    toast({
       title: "You're logged in!", // required
       message: `Welcome back ${u?.firstName}!`,
       preset: 'custom',

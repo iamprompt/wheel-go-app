@@ -124,6 +124,9 @@ dependencies:
   react-native:
     specifier: 0.71.7
     version: 0.71.7(@babel/core@7.21.5)(@babel/preset-env@7.21.5)(react@18.2.0)
+  react-native-date-picker:
+    specifier: ^4.2.13
+    version: 4.2.13(react-native@0.71.7)(react@18.2.0)
   react-native-gesture-handler:
     specifier: ~2.9.0
     version: 2.9.0(react-native@0.71.7)(react@18.2.0)
@@ -9555,6 +9558,17 @@ packages:
     transitivePeerDependencies:
       - '@babel/preset-env'
       - supports-color
+    dev: false
+
+  /react-native-date-picker@4.2.13(react-native@0.71.7)(react@18.2.0):
+    resolution: {integrity: sha512-cQ3k+ExXggAnytomeNGNrtV/l2a7WzVUeWKo7Gs2pv/z3TCjjlmKn0ZBMPgcThrFAgFMxgYI0XzKVKT7TPsOmw==}
+    peerDependencies:
+      react: '>= 17.0.1'
+      react-native: '>= 0.64.3'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-native: 0.71.7(@babel/core@7.21.5)(@babel/preset-env@7.21.5)(react@18.2.0)
     dev: false
 
   /react-native-gesture-handler@2.9.0(react-native@0.71.7)(react@18.2.0):

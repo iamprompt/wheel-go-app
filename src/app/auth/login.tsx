@@ -1,17 +1,18 @@
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import type { FieldValues, SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Button from '~/components/Button'
-import { WGTextInput } from '~/components/form/TextInput'
+import { WGTextInputControl } from '~/components/form/TextInputControl'
 import { useAuth } from '~/context/useAuth'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 
 function Page() {
+  const router = useRouter()
   const { signin } = useAuth()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
@@ -67,7 +68,7 @@ function Page() {
           gap: 24,
         }}
       >
-        <WGTextInput
+        <WGTextInputControl
           control={control}
           name="email"
           label="auth.email"
@@ -75,7 +76,7 @@ function Page() {
           keyboardType="email-address"
           textContentType="emailAddress"
         />
-        <WGTextInput
+        <WGTextInputControl
           control={control}
           name="password"
           label="auth.password"
@@ -84,6 +85,41 @@ function Page() {
           textContentType="password"
         />
         <Button label="auth.login" onPress={handleSubmit(onSignIn)} />
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignContent: 'center',
+          marginTop: 24,
+          gap: 8,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: FONTS.LSTH_BOLD,
+            fontSize: 12,
+            color: COLORS['french-vanilla'][500],
+          }}
+        >
+          {t('auth.dont_have_account')}
+        </Text>
+        <Pressable
+          onPress={() => {
+            router.push('/auth/register')
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: FONTS.LSTH_BOLD,
+              fontSize: 12,
+              color: COLORS.info[400],
+            }}
+          >
+            {t('auth.register')}
+          </Text>
+        </Pressable>
       </View>
     </View>
   )

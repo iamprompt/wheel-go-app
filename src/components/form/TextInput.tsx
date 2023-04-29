@@ -1,51 +1,41 @@
 import type { ComponentProps } from 'react'
-import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
 import { FieldLabel } from './FieldLabel'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 
 type WGTextInputProps = {
-  control: ComponentProps<typeof Controller>['control']
-  name: ComponentProps<typeof Controller>['name']
+  name: string
   require?: boolean
   label?: string | null
   secureTextEntry?: boolean
-} & Omit<
-  ComponentProps<typeof TextInput>,
-  'name' | 'onBlur' | 'onChangeText' | 'value' | 'style'
->
+} & Omit<ComponentProps<typeof TextInput>, 'name' | 'onBlur' | 'style'>
 
 export function WGTextInput({
   name,
-  control,
   require,
   label,
+  onChange,
+  value,
   ...props
 }: WGTextInputProps) {
   return (
     <View>
       {label ? <FieldLabel label={label} /> : null}
-      <Controller
-        control={control}
-        name={name}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            autoCapitalize="none"
-            style={{
-              borderWidth: 1,
-              borderColor: COLORS['french-vanilla'][300],
-              borderRadius: 12,
-              paddingVertical: 12,
-              paddingHorizontal: 24,
-              fontFamily: FONTS.LSTH_REGULAR,
-            }}
-            {...props}
-          />
-        )}
+      <TextInput
+        onChange={onChange}
+        value={value}
+        autoCapitalize="none"
+        placeholderTextColor={COLORS['french-vanilla'][300]}
+        style={{
+          borderWidth: 1,
+          borderColor: COLORS['french-vanilla'][300],
+          borderRadius: 12,
+          paddingVertical: 12,
+          paddingHorizontal: 24,
+          fontFamily: FONTS.LSTH_REGULAR,
+        }}
+        {...props}
       />
     </View>
   )
