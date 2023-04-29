@@ -76,7 +76,7 @@ function Page() {
   const [isStopModalVisible, setIsStopModalVisible] = useState(false)
   const [isSaveModalVisible, setIsSaveModalVisible] = useState(false)
 
-  const [createRoute, { data }] = useCreateRoutesMutation({
+  const [createRoute] = useCreateRoutesMutation({
     refetchQueries: ['GetMyTracedRoutes'],
   })
 
