@@ -4,10 +4,9 @@ import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface SummaryDetail {
   label: string
-  value: string
   key: string
   icon: ComponentProps<typeof MaterialIcons>['name']
-  format?: (value: string) => string
+  format?: ((value: string) => string) | ((value: number) => string)
   unit?: string
 }
 
@@ -15,29 +14,26 @@ export const SUMMARY_DETAILS: Array<SummaryDetail> = [
   {
     key: 'distance',
     label: 'profile.summary_details.total_distance',
-    value: '10.5 กิโลเมตร',
     icon: 'accessible_forward',
     unit: 'kilometers',
+    format: (value: number) => `${(value / 1000).toFixed(2)}`,
   },
   {
     key: 'routes',
     label: 'profile.summary_details.total_routes',
-    value: '10 เส้นทาง',
     icon: 'draw',
     unit: 'routes',
   },
   {
     key: 'reviews',
     label: 'profile.summary_details.total_reviews',
-    value: '10 รีวิว',
     icon: 'rate_review',
     unit: 'reviews',
   },
   {
     key: 'joinedAt',
     label: 'profile.summary_details.joined_at',
-    value: '1 เม.ย. 2566',
     icon: 'access_time_filled',
-    format: (value) => format(value, [FormatEnum.DATE]),
+    format: (value: string) => format(value, [FormatEnum.DATE]),
   },
 ]
