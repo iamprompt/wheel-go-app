@@ -48,8 +48,8 @@ function useAuthProvider() {
   const router = useRouter()
   const [user, setUser] = useState<null | User>(null)
 
-  const [getProfile, { data: profileData }] = useGetMyProfileLazyQuery()
-  const [loginUser, { data: loginData }] = useLoginMutation()
+  const [getProfile] = useGetMyProfileLazyQuery()
+  const [loginUser] = useLoginMutation()
 
   const handleUserChange = async () => {
     const token = await getUserToken()
