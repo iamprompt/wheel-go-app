@@ -11,7 +11,11 @@ import { NotSignedIn } from '~/components/NotSignin'
 import { BADGES } from '~/const/badges'
 import { SUMMARY_DETAILS } from '~/const/profile'
 import { useAuth } from '~/context/useAuth'
-import { useGetMyProfileQuery } from '~/generated-types'
+import {
+  useGetMyProfileQuery,
+  useGetMyProfileSummaryQuery,
+} from '~/generated-types'
+import type { GetMyProfileSummaryQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -23,6 +27,7 @@ export default function App() {
   const { t } = useTranslation()
 
   const { data: profileData } = useGetMyProfileQuery()
+  const { data: profileSummary } = useGetMyProfileSummaryQuery()
 
   const router = useRouter()
 
@@ -36,6 +41,7 @@ export default function App() {
   const { firstname, lastname, metadata, profileImage } = profileData.me
 
   console.log('profileData', profileData)
+  console.log('profileSummary', profileSummary)
 
   return (
     <ScrollView
@@ -309,60 +315,71 @@ export default function App() {
         >
           {t('profile.my_summary')}
         </Text>
-        <View
-          style={{
-            gap: 16,
-          }}
-        >
-          {SUMMARY_DETAILS.map((detail) => {
-            return (
-              <View
-                key={detail.label}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: 16,
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: 12,
-                    flex: 1,
-                  }}
-                >
-                  <MaterialIcons
-                    name={detail.icon}
-                    size={24}
-                    color={COLORS.magenta[500]}
-                  />
-                  <Text
+        {profileSummary ? (
+          <View
+            style={{
+              gap: 16,
+            }}
+          >
+            {SUMMARY_DETAILS.map(
+              ({ label, icon, key, format = (val) => val, unit }) => {
+                return (
+                  <View
+                    key={label}
                     style={{
-                      fontFamily: FONTS.LSTH_BOLD,
-                      fontSize: 14,
-                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingHorizontal: 16,
                     }}
                   >
-                    {t(detail.label)}
-                  </Text>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      fontFamily: FONTS.LSTH_REGULAR,
-                      fontSize: 14,
-                      color: COLORS['french-vanilla'][500],
-                    }}
-                  >
-                    {detail.value}
-                  </Text>
-                </View>
-              </View>
-            )
-          })}
-        </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 12,
+                        flex: 1,
+                      }}
+                    >
+                      <MaterialIcons
+                        name={icon}
+                        size={24}
+                        color={COLORS.magenta[500]}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: FONTS.LSTH_BOLD,
+                          fontSize: 14,
+                          flex: 1,
+                        }}
+                      >
+                        {t(label)}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontFamily: FONTS.LSTH_REGULAR,
+                          fontSize: 14,
+                          color: COLORS['french-vanilla'][500],
+                        }}
+                      >
+                        {t(
+                          format(
+                            profileSummary.getMySummary[
+                              key as keyof GetMyProfileSummaryQuery['getMySummary']
+                            ]
+                          ) || ''
+                        )}
+                        {unit ? ` ${t(`units.${unit}`)}` : ''}
+                      </Text>
+                    </View>
+                  </View>
+                )
+              }
+            )}
+          </View>
+        ) : null}
       </View>
     </ScrollView>
   )

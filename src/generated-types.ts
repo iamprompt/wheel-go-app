@@ -490,6 +490,7 @@ export type Query = {
   getMedia: Array<Media>;
   getMediaById: Media;
   getMyReviews: Array<Review>;
+  getMySummary: UserSummary;
   getMyTracedRoutes: Array<Route>;
   getPlaceById: Place;
   getPlaces: Array<Place>;
@@ -711,6 +712,14 @@ export type UserMetadata = {
   impairmentLevel?: Maybe<Scalars['String']>;
 };
 
+export type UserSummary = {
+  __typename?: 'UserSummary';
+  distance: Scalars['Float'];
+  joinedAt?: Maybe<Scalars['DateTime']>;
+  reviews: Scalars['Int'];
+  routes: Scalars['Int'];
+};
+
 export type LanguageFieldsFragment = { __typename?: 'LanguageObject', th?: string | null, en?: string | null };
 
 export type LocationFieldsFragment = { __typename?: 'Location', lat: number, lng: number };
@@ -896,6 +905,11 @@ export type IsFavoritePlaceQueryVariables = Exact<{
 
 
 export type IsFavoritePlaceQuery = { __typename?: 'Query', isFavoritePlace: boolean };
+
+export type GetMyProfileSummaryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyProfileSummaryQuery = { __typename?: 'Query', getMySummary: { __typename?: 'UserSummary', distance: number, routes: number, reviews: number, joinedAt?: any | null } };
 
 export const LanguageFieldsFragmentDoc = gql`
     fragment LanguageFields on LanguageObject {
@@ -2022,3 +2036,40 @@ export function useIsFavoritePlaceLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type IsFavoritePlaceQueryHookResult = ReturnType<typeof useIsFavoritePlaceQuery>;
 export type IsFavoritePlaceLazyQueryHookResult = ReturnType<typeof useIsFavoritePlaceLazyQuery>;
 export type IsFavoritePlaceQueryResult = Apollo.QueryResult<IsFavoritePlaceQuery, IsFavoritePlaceQueryVariables>;
+export const GetMyProfileSummaryDocument = gql`
+    query GetMyProfileSummary {
+  getMySummary {
+    distance
+    routes
+    reviews
+    joinedAt
+  }
+}
+    `;
+
+/**
+ * __useGetMyProfileSummaryQuery__
+ *
+ * To run a query within a React component, call `useGetMyProfileSummaryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyProfileSummaryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyProfileSummaryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyProfileSummaryQuery(baseOptions?: Apollo.QueryHookOptions<GetMyProfileSummaryQuery, GetMyProfileSummaryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyProfileSummaryQuery, GetMyProfileSummaryQueryVariables>(GetMyProfileSummaryDocument, options);
+      }
+export function useGetMyProfileSummaryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyProfileSummaryQuery, GetMyProfileSummaryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyProfileSummaryQuery, GetMyProfileSummaryQueryVariables>(GetMyProfileSummaryDocument, options);
+        }
+export type GetMyProfileSummaryQueryHookResult = ReturnType<typeof useGetMyProfileSummaryQuery>;
+export type GetMyProfileSummaryLazyQueryHookResult = ReturnType<typeof useGetMyProfileSummaryLazyQuery>;
+export type GetMyProfileSummaryQueryResult = Apollo.QueryResult<GetMyProfileSummaryQuery, GetMyProfileSummaryQueryVariables>;

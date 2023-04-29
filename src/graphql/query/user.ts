@@ -64,3 +64,14 @@ export const IsFavoritePlace = gql`
     isFavoritePlace(placeId: $placeId)
   }
 `
+
+export const GetMyProfileSummary = gql`
+  query GetMyProfileSummary {
+    getMySummary {
+      distance
+      routes
+      reviews
+      joinedAt
+    }
+  }
+`

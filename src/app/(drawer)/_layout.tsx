@@ -1,7 +1,7 @@
 import type { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { Drawer } from 'expo-router/drawer'
 import type { FC } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
@@ -14,11 +14,20 @@ import COLORS from '~/styles/colors'
 import { useAuth } from '~/context/useAuth'
 import Button, { ButtonVariant } from '~/components/Button'
 import { Modal } from '~/components/Modal'
+import { useGetMyProfileLazyQuery } from '~/generated-types'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
   const router = useRouter()
   const { t } = useTranslation()
   const { user, signout } = useAuth()
+
+  const [getProfile, { data: userData }] = useGetMyProfileLazyQuery()
+
+  useEffect(() => {
+    if (user) {
+      getProfile()
+    }
+  }, [user])
 
   return (
     <SafeAreaView style={{ padding: 16, flex: 1 }}>
@@ -81,7 +90,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
           </Pressable>
         </View>
       ) : null}
-      {user ? (
+      {userData && userData.me ? (
         <View
           style={{
             paddingVertical: 16,
@@ -101,7 +110,9 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
           >
             <Image
               source={{
-                uri: user.image,
+                uri:
+                  userData.me.profileImage?.url ||
+                  'https://www.gravatar.com/avatar/?default=mp',
                 width: 48,
                 height: 48,
               }}
@@ -131,7 +142,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
               ellipsizeMode="tail"
               numberOfLines={1}
             >
-              {user.firstName} {user.lastName}
+              {userData.me.firstname} {userData.me.lastname}
             </Text>
           </View>
         </View>
