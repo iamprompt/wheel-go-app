@@ -13,7 +13,7 @@ export const FAQItems: Record<string, Array<FAQItem>> = {
     {
       question: 'แผนที่',
       answer:
-        'องค์ประกอบของแผนที่ประกอบด้วย\n1. แผนที่จะแสดงอยู่บนหน้าสำรวจ\n2. ในแผนที่จะมีองค์ประกอบประกอบด้วยหมุดของสถานที่ หมุดของวัตถุแวดล้อม และเส้นทางที่เข้าถึงได้\n3. โดยพื้นฐานข้อมูลการเข้าถึงอย่างย่อจะแสดงตามสถานที่ใกล้ตำแหน่งปัจจุบันของคุณที่สุด\n4. หมุดของสถานที่สามารถจำแนกได้ 8 ประเภท ประกอบไปด้วย อาคาร การขนส่ง คาเฟ่ อาหาร ที่จอดรถ ห้องน้ำ สวนสาธารณะ และที่พักอาศัย\n5. หมุดของวัตถุแวดล้อมจะประกอบไปด้วย ทางลาดขนาดย่อม และเหตุฉุกเฉิน\n6. สำหรับตำแหน่งทางลาดเข้าอาคารนั้นจะแสดงเป็นสัญลักษณ์ “ทางลาด” ที่ใช้สำหรับสิ่งอำนวยความสะดวกสำหรับผู้ใช้รถเข็นในแอปพลิเคชันนี้',
+        'องค์ประกอบของแผนที่ประกอบด้วย\n1. แผนที่จะแสดงอยู่บนหน้าสำรวจ\n2. ในแผนที่จะมีองค์ประกอบประกอบด้วยหมุดของสถานที่ หมุดของวัตถุแวดล้อม และเส้นทางที่เข้าถึงได้\n3. โดยพื้นฐานข้อมูลการเข้าถึงอย่างย่อจะแสดงตามสถานที่ใกล้ตำแหน่งปัจจุบันของคุณที่สุด\n4. หมุดของสถานที่สามารถจำแนกได้ 9 ประเภท ประกอบไปด้วย อาคาร การขนส่ง คาเฟ่ อาหาร ที่จอดรถ ห้องน้ำ สวนสาธารณะ ที่พักอาศัย และ กีฬา\n5. หมุดของวัตถุแวดล้อมจะประกอบไปด้วย ทางลาดขนาดย่อม และเหตุฉุกเฉิน\n6. สำหรับตำแหน่งทางลาดเข้าอาคารนั้นจะแสดงเป็นสัญลักษณ์ “ทางลาด” ที่ใช้สำหรับสิ่งอำนวยความสะดวกสำหรับผู้ใช้รถเข็นในแอปพลิเคชันนี้',
     },
     {
       question: 'การค้นหาสถานที่',
@@ -23,7 +23,7 @@ export const FAQItems: Record<string, Array<FAQItem>> = {
     {
       question: 'การค้นหาเส้นทางแนะนำ',
       answer:
-        'คุณสามารถค้นหาเส้นทางแนะนำได้โดย\n1. จากหน้าสำรวจ กดที่กล่อง “ไปที่ไหน?”\n2. ระบุสถานที่ ต้นทางและปลายทาง ที่คุณจะไป\n3. กดที่ผลลัพธ์เพื่อดูเส้นทางแนะนำที่เหมากับการเดินทางของคุณ',
+        'คุณสามารถค้นหาเส้นทางแนะนำได้โดย\n1. จากหน้าสำรวจ กดที่กล่อง “ค้นหาเส้นทางแนะนำ?”\n2. ระบุสถานที่ ต้นทางและปลายทาง ที่คุณจะไป\n3. กดที่ผลลัพธ์เพื่อดูเส้นทางแนะนำที่เหมากับการเดินทางของคุณ',
     },
     {
       question: 'การให้คะแนนและรีวิวสถานที่',
@@ -33,7 +33,7 @@ export const FAQItems: Record<string, Array<FAQItem>> = {
     {
       question: 'การบันทึกการเดินทาง',
       answer:
-        'คุณสามารถบันทึกการเดินทางของคุณได้โดย\n1. จากหน้าสำรวจ กดที่สัญลักษณ์ “การวาด” แล้วระบบจะเตรียมการบันทึก\n2. คุณสามารถเริ่มการบันทึกโดยกดที่ปุ่ม “เริ่มการบันทึก” จากนั้นระบบจะเริ่มบันทึกการเดินทางของคุณ\n3. ระหว่างการบันทึกการเดินทาง คุณสามารถหยุดพักโดยกดปุ่ม “พัก” และหยุดบันทึกโดยกดปุ่ม “หยุด”\n4. ถ้าคุณหยุดพัก ระบบจะหยุดการบันทึกชั่วคราว และคุณสามารถบันทึกการเดินทางของคุณต่อได้โดยกดปุ่ม “บันทึกต่อ”\n5. ถ้าคุณหยุดการบันทึก ระบบจะทำการบันทึกการเดินทางของคุณเข้าสู่ฐานข้อมูลโดยอัตโนมัติ',
+        'คุณสามารถบันทึกการเดินทางของคุณได้โดย\n1. จากหน้าสำรวจ กดที่ปุ่ม “บันทึกการเดินทาง” แล้วระบบจะเตรียมการบันทึก\n2. คุณสามารถเริ่มการบันทึกโดยกดที่ปุ่ม “เริ่มการบันทึก” จากนั้นระบบจะเริ่มบันทึกการเดินทางของคุณ\n3. ระหว่างการบันทึกการเดินทาง คุณสามารถหยุดพักโดยกดปุ่ม “พัก” และหยุดบันทึกโดยกดปุ่ม “หยุด”\n4. ถ้าคุณหยุดพัก ระบบจะหยุดการบันทึกชั่วคราว และคุณสามารถบันทึกการเดินทางของคุณต่อได้โดยกดปุ่ม “บันทึกต่อ”\n5. ถ้าคุณหยุดการบันทึก ระบบจะทำการบันทึกการเดินทางของคุณเข้าสู่ฐานข้อมูลโดยอัตโนมัติ',
     },
     {
       question: 'การดูบันทึกการมีส่วนร่วมของคุณ',
@@ -80,7 +80,7 @@ export const FAQItems: Record<string, Array<FAQItem>> = {
     {
       question: 'Map',
       answer:
-        'The elements of the map include:\n1. The map displays on the explore page.\n2. On the map there will be an element consisting of place pins. surrounding condition pins and accessible routes.\n3. The mini place details is basically displayed by location closest to your current location.\n4. Location pins consists of 8 categories, including building, transportation, cafe, food, parking, toilet, park and residence.\n5. Surrounding condition pins consist of curb cut and incedent.\n6. The location of the ramp to enter the building is indicated by the “Ramp” icon used for wheelchair accessible facilities in this application.',
+        'The elements of the map include:\n1. The map displays on the explore page.\n2. On the map there will be an element consisting of place pins. surrounding condition pins and accessible routes.\n3. The mini place details is basically displayed by location closest to your current location.\n4. Location pins consists of 9 categories, including building, transportation, cafe, food, parking, toilet, park, residence, and sports.\n5. Surrounding condition pins consist of curb cut and incedent.\n6. The location of the ramp to enter the building is indicated by the “Ramp” icon used for wheelchair accessible facilities in this application.',
     },
     {
       question: 'Search for a place',
@@ -90,7 +90,7 @@ export const FAQItems: Record<string, Array<FAQItem>> = {
     {
       question: 'Find the guideline path',
       answer:
-        'You can get path guidelines on how to travel as follows:\n1. On the explore page, tap on the “Where to?” box.\n2. Type in the place name that you’re traveling from and the place you would like to visit.\n3. Choose the suggested guideline path that matches your journey plan.',
+        'You can get path guidelines on how to travel as follows:\n1. On the explore page, tap on the “Find accessible route?” box.\n2. Type in the place name that you’re traveling from and the place you would like to visit.\n3. Choose the suggested guideline path that matches your journey plan.',
     },
     {
       question: 'Rate and review the place',
@@ -100,7 +100,7 @@ export const FAQItems: Record<string, Array<FAQItem>> = {
     {
       question: 'Record the journey',
       answer:
-        'You can record your journey by:\n1. On the explore page, tap on “Drawing” icon, and then system will prepare for recording.\n2. You can start recording by tap on “Start Tracing” button, and then system will record your journey.\n3. During your journey, you can take a break and pause the record by tap on “Pause” button, and stop the record by tap on “Stop” button.\n4. If you pause the record, the system will pause the recording progress, and you can continue record your journey by tap on “Continue” button.\n5. If you stop the record, your journey will be saved in the system automatically.',
+        'You can record your journey by:\n1. On the explore page, tap on “Trace your journey” button, and then system will prepare for recording.\n2. You can start recording by tap on “Start Tracing” button, and then system will record your journey.\n3. During your journey, you can take a break and pause the record by tap on “Pause” button, and stop the record by tap on “Stop” button.\n4. If you pause the record, the system will pause the recording progress, and you can continue record your journey by tap on “Continue” button.\n5. If you stop the record, your journey will be saved in the system automatically.',
     },
     {
       question: 'View your contribution record',
