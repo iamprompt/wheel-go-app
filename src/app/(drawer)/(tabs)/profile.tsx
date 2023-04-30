@@ -70,7 +70,7 @@ export default function App() {
         >
           <Image
             source={{
-              uri: profileImage?.url || user.image,
+              uri: profileImage?.url || '',
               width: 128,
               height: 128,
             }}
@@ -317,7 +317,12 @@ export default function App() {
             }}
           >
             {SUMMARY_DETAILS.map(
-              ({ label, icon, key, format = (val) => val, unit }) => {
+              ({ label, icon, key, format = (val: string) => val, unit }) => {
+                const value =
+                  profileSummary.getMySummary[
+                    key as keyof GetMyProfileSummaryQuery['getMySummary']
+                  ]
+
                 return (
                   <View
                     key={label}
@@ -359,13 +364,7 @@ export default function App() {
                           color: COLORS['french-vanilla'][500],
                         }}
                       >
-                        {t(
-                          format(
-                            profileSummary.getMySummary[
-                              key as keyof GetMyProfileSummaryQuery['getMySummary']
-                            ]
-                          ) || ''
-                        )}
+                        {t(format(value) || '')}
                         {unit ? ` ${t(`units.${unit}`)}` : ''}
                       </Text>
                     </View>

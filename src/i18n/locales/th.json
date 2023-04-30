@@ -94,7 +94,8 @@
     "RESIDENCE": "ที่พักอาศัย",
     "SPORT": "กีฬา",
     "TOILET": "ห้องน้ำ",
-    "TRANSPORT": "การขนส่ง"
+    "TRANSPORT": "การขนส่ง",
+    "RAMP": "ทางลาด"
   },
   "explore": {
     "search_route_placeholder": "ค้นหาเส้นทางแนะนำ ?",

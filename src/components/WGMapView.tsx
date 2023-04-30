@@ -12,6 +12,7 @@ import { Modal } from './Modal'
 import { MapPrefsModal } from './MapPrefsModal'
 import { WGMapMarker } from './WGMapMarker'
 import { WGMapControlButton } from './WGMapControlButton'
+import { WGPolyline } from './WGPolyline'
 import { MapCameraConfig, MapStyle } from '~/const/map'
 import {
   Place_Types,
@@ -110,6 +111,19 @@ export const WGMapView = forwardRef<
                 }}
                 type={place.type || Place_Types.Building}
                 isSelected={isPlaceSelected}
+              />
+            )
+          })}
+          {routesData?.getRoutes.map((route) => {
+            return (
+              <WGPolyline
+                key={route.id}
+                coordinates={
+                  route.paths?.map(({ lat, lng }) => ({
+                    latitude: lat,
+                    longitude: lng,
+                  })) || []
+                }
               />
             )
           })}

@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import type { UserLocationChangeEvent } from 'react-native-maps'
 import type MapView from 'react-native-maps'
-import { Polyline } from 'react-native-maps'
 import Animated, {
   FadeIn,
   FadeOut,
@@ -39,6 +38,7 @@ import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 import { LOCATION_TRACE_CONFIG, LOCATION_TRACE_TASK_NAME } from '~/tasks/trace'
+import { WGPolyline } from '~/components/WGPolyline'
 
 function Page() {
   const { trace, dispatch } = useStoreon('trace')
@@ -190,7 +190,7 @@ function Page() {
           headerBackVisible: false,
           headerTitle: HeaderLogo,
           headerLeft:
-            state === TRACING_STATES.READY ? HeaderBackButton : () => null,
+            state === TRACING_STATES.READY ? HeaderBackButton() : () => null,
         }}
       />
 
@@ -201,7 +201,7 @@ function Page() {
         onUserLocationChange={handleLocationChange}
         mapElements={
           <>
-            <Polyline coordinates={coordinates} />
+            <WGPolyline coordinates={coordinates} />
           </>
         }
       >

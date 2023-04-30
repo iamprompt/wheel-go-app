@@ -71,7 +71,8 @@
     "RESIDENCE": "Residence",
     "SPORT": "Sport",
     "TOILET": "Toilet",
-    "TRANSPORT": "Transport"
+    "TRANSPORT": "Transport",
+    "RAMP": "Ramp"
   },
   "explore": {
     "search_route_placeholder": "Find accessible routes?",

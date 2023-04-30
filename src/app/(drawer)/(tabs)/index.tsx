@@ -26,8 +26,10 @@ import { Modal } from '~/components/Modal'
 import { TransportExploreModal } from '~/components/TransportExploreModal'
 import { PlaceExploreModal } from '~/components/PlaceExploreModal'
 import { CurbcutExploreModal } from '~/components/CurbcutExploreModal'
+import { useAuth } from '~/context/useAuth'
 
 export default function App() {
+  const { user } = useAuth()
   const { t } = useTranslation()
   const navigation = useNavigation()
   const router = useRouter()
@@ -152,18 +154,20 @@ export default function App() {
             marginHorizontal: 16,
           }}
         >
-          <View
-            style={{
-              alignSelf: 'center',
-              marginBottom: 16,
-            }}
-          >
-            <TraceCTAButton
-              onPress={() => {
-                router.push('/tracing')
+          {user ? (
+            <View
+              style={{
+                alignSelf: 'center',
+                marginBottom: 16,
               }}
-            />
-          </View>
+            >
+              <TraceCTAButton
+                onPress={() => {
+                  router.push('/tracing')
+                }}
+              />
+            </View>
+          ) : null}
 
           {selectedPlaceId !== null &&
           selectedPlaceType !== Place_Types.Curbcut ? (

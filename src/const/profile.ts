@@ -6,7 +6,7 @@ interface SummaryDetail {
   label: string
   key: string
   icon: ComponentProps<typeof MaterialIcons>['name']
-  format?: ((value: string) => string) | ((value: number) => string)
+  format?: (value: any) => string
   unit?: string
 }
 

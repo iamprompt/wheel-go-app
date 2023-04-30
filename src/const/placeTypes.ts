@@ -3,6 +3,12 @@ import { Place_Types } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
+export enum SURROUNDING_CONDITIONS {
+  Incident = 'INCIDENT',
+  Curbcut = 'CURBCUT',
+  Ramp = 'RAMP',
+}
+
 interface IMAP_ICON {
   file: any
   size: {
@@ -17,6 +23,7 @@ interface IMAP_ICON {
 
 interface IPLACE_TYPE_META {
   label: string
+  type: 'place' | 'condition'
   icon: ComponentProps<typeof MaterialIcons>['name']
   color: string
   mapIcon: {
@@ -25,11 +32,15 @@ interface IPLACE_TYPE_META {
   }
 }
 
-type IPLACE_TYPES = Record<Place_Types, IPLACE_TYPE_META>
+type IPLACE_TYPES = Record<
+  Place_Types | SURROUNDING_CONDITIONS,
+  IPLACE_TYPE_META
+>
 
 export const PLACE_TYPES_META: IPLACE_TYPES = {
   [Place_Types.Building]: {
     label: 'categories.BUILDING',
+    type: 'place',
     icon: 'apartment',
     color: COLORS.info[400],
     mapIcon: {
@@ -45,25 +56,27 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
       },
     },
   },
-  // [Place_Types.Incident]: {
-  //   label: 'categories.INCIDENT',
-  //   icon: 'warning',
-  //   color: COLORS.warning[400],
-  //   mapIcon: {
-  //     default: {
-  //       file: require('~/assets/places/incident-pin.png'),
-  //       size: { width: 24, height: 32 },
-  //       centerOffset: { x: 0.5, y: 1 },
-  //     },
-  //     selected: {
-  //       file: require('~/assets/places/incident-selected.png'),
-  //       size: { width: 40, height: 46 },
-  //       centerOffset: { x: 0.5, y: 1 },
-  //     },
-  //   },
-  // },
+  [SURROUNDING_CONDITIONS.Incident]: {
+    label: 'categories.INCIDENT',
+    type: 'condition',
+    icon: 'warning',
+    color: COLORS.warning[400],
+    mapIcon: {
+      default: {
+        file: require('~/assets/places/incident-pin.png'),
+        size: { width: 24, height: 32 },
+        centerOffset: { x: 0.5, y: 1 },
+      },
+      selected: {
+        file: require('~/assets/places/incident-selected.png'),
+        size: { width: 40, height: 46 },
+        centerOffset: { x: 0.5, y: 1 },
+      },
+    },
+  },
   [Place_Types.Transport]: {
     label: 'categories.TRANSPORT',
+    type: 'place',
     icon: 'directions_bus',
     color: COLORS.indigo[500],
     mapIcon: {
@@ -81,6 +94,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   },
   [Place_Types.Cafe]: {
     label: 'categories.CAFE',
+    type: 'place',
     icon: 'coffee',
     color: COLORS.toast[500],
     mapIcon: {
@@ -98,6 +112,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   },
   [Place_Types.Food]: {
     label: 'categories.FOOD',
+    type: 'place',
     icon: 'restaurant_menu',
     color: COLORS.pomegranate[400],
     mapIcon: {
@@ -115,6 +130,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   },
   [Place_Types.Toilet]: {
     label: 'categories.TOILET',
+    type: 'place',
     icon: 'wc',
     color: COLORS['fruit-punch'][400],
     mapIcon: {
@@ -132,6 +148,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   },
   [Place_Types.Park]: {
     label: 'categories.PARK',
+    type: 'place',
     icon: 'park',
     color: COLORS.lime[400],
     mapIcon: {
@@ -149,6 +166,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   },
   [Place_Types.Residence]: {
     label: 'categories.RESIDENCE',
+    type: 'place',
     icon: 'cottage',
     color: COLORS.mint[600],
     mapIcon: {
@@ -164,8 +182,9 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
       },
     },
   },
-  [Place_Types.Curbcut]: {
+  [SURROUNDING_CONDITIONS.Curbcut]: {
     label: 'categories.CURBCUT',
+    type: 'condition',
     icon: 'accessible',
     color: COLORS.magenta[400],
     mapIcon: {
@@ -183,6 +202,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   },
   [Place_Types.Parking]: {
     label: 'categories.PARKING',
+    type: 'place',
     icon: 'local_parking',
     color: COLORS.jewel[600],
     mapIcon: {
@@ -200,6 +220,7 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
   },
   [Place_Types.Sport]: {
     label: 'categories.SPORT',
+    type: 'place',
     icon: 'sports_basketball',
     color: COLORS.cantaloupe[500],
     mapIcon: {
@@ -211,6 +232,24 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
       selected: {
         file: require('~/assets/places/sport-selected.png'),
         size: { width: 40, height: 40 },
+        centerOffset: { x: 0.5, y: 0.5 },
+      },
+    },
+  },
+  [SURROUNDING_CONDITIONS.Ramp]: {
+    label: 'categories.RAMP',
+    type: 'condition',
+    icon: 'signal_cellular_4_bar',
+    color: COLORS.magenta[400],
+    mapIcon: {
+      default: {
+        file: require('~/assets/places/ramp-pin.png'),
+        size: { width: 24, height: 24 },
+        centerOffset: { x: 0.5, y: 0.5 },
+      },
+      selected: {
+        file: require('~/assets/places/ramp-pin.png'),
+        size: { width: 24, height: 24 },
         centerOffset: { x: 0.5, y: 0.5 },
       },
     },

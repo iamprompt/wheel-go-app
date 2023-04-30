@@ -4,10 +4,10 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import type MapView from 'react-native-maps'
-import { Polyline } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { WGMapView } from '~/components/WGMapView'
+import { WGPolyline } from '~/components/WGPolyline'
 import { useGetRouteByIdQuery } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -78,11 +78,7 @@ function Page() {
           ref={mapRef}
           mapElements={
             <>
-              <Polyline
-                coordinates={routePoints}
-                strokeWidth={5}
-                strokeColor={'rgba(67, 196, 99, 0.8)'}
-              />
+              <WGPolyline coordinates={routePoints} />
             </>
           }
         />

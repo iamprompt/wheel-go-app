@@ -2,7 +2,8 @@ import { Stack, useSearchParams } from 'expo-router'
 import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { WGPolyline } from '~/components/WGPolyline'
 import { MapCameraConfig } from '~/const/map'
 import { useGetRouteByIdQuery } from '~/generated-types'
 
@@ -64,7 +65,7 @@ function Page() {
           showsUserLocation
           {...MapCameraConfig}
         >
-          <Polyline coordinates={routes} strokeWidth={2.5} />
+          <WGPolyline coordinates={routes} />
         </MapView>
       </View>
     </View>
