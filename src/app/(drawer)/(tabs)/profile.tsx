@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Image, Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { BadgeModal } from '~/components/BadgeModal'
+import { ExpProgressBar } from '~/components/ExpProgressBar'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { Modal } from '~/components/Modal'
 import { NotSignedIn } from '~/components/NotSignin'
@@ -12,6 +13,7 @@ import { BADGES } from '~/const/badges'
 import { SUMMARY_DETAILS } from '~/const/profile'
 import { useAuth } from '~/context/useAuth'
 import {
+  useGetMyExpQuery,
   useGetMyProfileQuery,
   useGetMyProfileSummaryQuery,
 } from '~/generated-types'
@@ -28,6 +30,11 @@ export default function App() {
 
   const { data: profileData } = useGetMyProfileQuery()
   const { data: profileSummary } = useGetMyProfileSummaryQuery()
+  const { data: expData } = useGetMyExpQuery({
+    fetchPolicy: 'no-cache',
+  })
+
+  console.log(expData)
 
   const router = useRouter()
 
@@ -218,81 +225,15 @@ export default function App() {
         onClose={() => setIsBadgeModalVisible(false)}
         badge={BADGES[badgeToDisplay!] || BADGES.coming_soon}
       />
-      <HorizontalDivider />
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingVertical: 24,
-        }}
-      >
-        <MaterialIcons
-          name="accessible_forward"
-          size={32}
-          color={COLORS.magenta[500]}
-          style={{
-            left: '50%',
-            marginLeft: -28,
-            marginBottom: -1,
-          }}
-        />
-        <View
-          style={{
-            height: 8,
-            backgroundColor: COLORS.soap[100],
-            borderRadius: 96,
-            overflow: 'hidden',
-          }}
-        >
-          <View
-            style={{
-              height: 8,
-              width: '50%',
-              backgroundColor: COLORS.magenta[500],
-            }}
+      {expData?.getMyExperiencePoint ? (
+        <>
+          <HorizontalDivider />
+          <ExpProgressBar
+            currentExp={expData.getMyExperiencePoint.point}
+            nextLevelExp={expData.getMyExperiencePoint.nextLevelPoint}
           />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: 8,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 12,
-              color: COLORS['french-vanilla'][500],
-            }}
-          >
-            <Text
-              style={{
-                color: COLORS.magenta[500],
-              }}
-            >
-              XP 1,000
-            </Text>
-            /2,000
-          </Text>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 12,
-              color: COLORS['french-vanilla'][500],
-            }}
-          >
-            <Text
-              style={{
-                color: COLORS.magenta[500],
-              }}
-            >
-              1,000 XP
-            </Text>{' '}
-            เพื่ออัปเลเวล
-          </Text>
-        </View>
-      </View>
+        </>
+      ) : null}
       <HorizontalDivider height={12} />
       <View
         style={{

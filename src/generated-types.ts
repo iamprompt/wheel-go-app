@@ -134,6 +134,13 @@ export type CreateUserInput = {
   username?: InputMaybe<Scalars['String']>;
 };
 
+export type ExperiencePoint = {
+  __typename?: 'ExperiencePoint';
+  level: Scalars['Float'];
+  nextLevelPoint: Scalars['Float'];
+  point: Scalars['Float'];
+};
+
 export enum Facility_Status {
   Available = 'AVAILABLE',
   Unavailable = 'UNAVAILABLE',
@@ -495,6 +502,7 @@ export type Query = {
   getFacilityById: Facility;
   getMedia: Array<Media>;
   getMediaById: Media;
+  getMyExperiencePoint: ExperiencePoint;
   getMyReviews: Array<Review>;
   getMySummary: UserSummary;
   getMyTracedRoutes: Array<Route>;
@@ -939,6 +947,11 @@ export type GetMyProfileSummaryQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type GetMyProfileSummaryQuery = { __typename?: 'Query', getMySummary: { __typename?: 'UserSummary', distance: number, routes: number, reviews: number, joinedAt?: any | null } };
+
+export type GetMyExpQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyExpQuery = { __typename?: 'Query', getMyExperiencePoint: { __typename?: 'ExperiencePoint', level: number, point: number, nextLevelPoint: number } };
 
 export const LanguageFieldsFragmentDoc = gql`
     fragment LanguageFields on LanguageObject {
@@ -2180,3 +2193,39 @@ export function useGetMyProfileSummaryLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetMyProfileSummaryQueryHookResult = ReturnType<typeof useGetMyProfileSummaryQuery>;
 export type GetMyProfileSummaryLazyQueryHookResult = ReturnType<typeof useGetMyProfileSummaryLazyQuery>;
 export type GetMyProfileSummaryQueryResult = Apollo.QueryResult<GetMyProfileSummaryQuery, GetMyProfileSummaryQueryVariables>;
+export const GetMyExpDocument = gql`
+    query GetMyExp {
+  getMyExperiencePoint {
+    level
+    point
+    nextLevelPoint
+  }
+}
+    `;
+
+/**
+ * __useGetMyExpQuery__
+ *
+ * To run a query within a React component, call `useGetMyExpQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyExpQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyExpQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyExpQuery(baseOptions?: Apollo.QueryHookOptions<GetMyExpQuery, GetMyExpQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyExpQuery, GetMyExpQueryVariables>(GetMyExpDocument, options);
+      }
+export function useGetMyExpLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyExpQuery, GetMyExpQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyExpQuery, GetMyExpQueryVariables>(GetMyExpDocument, options);
+        }
+export type GetMyExpQueryHookResult = ReturnType<typeof useGetMyExpQuery>;
+export type GetMyExpLazyQueryHookResult = ReturnType<typeof useGetMyExpLazyQuery>;
+export type GetMyExpQueryResult = Apollo.QueryResult<GetMyExpQuery, GetMyExpQueryVariables>;

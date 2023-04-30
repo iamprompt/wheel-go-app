@@ -75,3 +75,13 @@ export const GetMyProfileSummary = gql`
     }
   }
 `
+
+export const GetMyExp = gql`
+  query GetMyExp {
+    getMyExperiencePoint {
+      level
+      point
+      nextLevelPoint
+    }
+  }
+`
