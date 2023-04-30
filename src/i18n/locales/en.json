@@ -41,7 +41,7 @@
     "navigator_description": "Award for your contribution on accessible route tracing",
     "novice_navigator": "Novice Navigator",
     "novice_reviewer": "Novice Reviewer",
-    "reviewer_description": "รางวัลสำหรับการมีส่วนร่วมของคุณในการรีวิวสถานที่",
+    "reviewer_description": "Award for your contribution on reviewing the places",
     "reviews_mission": "Reviews",
     "reviews_mission_description": "Contribute {{count}} reviews",
     "routes_mission": "Routes",
@@ -77,17 +77,17 @@
     "search_route_placeholder": "Find accessible routes?",
     "trace_cta_button": "Trace your journey",
     "transport_modal": {
-      "accessible_label": "จุดรอรถนี้สามารถเข้าถึงได้",
-      "inaccessible_label": "จุดรอรถนี้ไม่สามารถเข้าถึงได้",
+      "accessible_label": "This stop is accessible",
+      "inaccessible_label": "This stop is inaccessible",
       "bus_lines": {
-        "title": "สายรถโดยสารประจำทาง"
+        "title": "Accessible Bus Lines"
       },
       "tram_lines": {
-        "title": "สายรถราง",
-        "red": "สีแดง",
-        "blue": "สีน้ำเงิน",
-        "green": "สีเขียว",
-        "yellow": "สีเหลือง"
+        "title": "Accessible Tram Lines",
+        "red": "Red",
+        "blue": "Blue",
+        "green": "Green",
+        "yellow": "Yellow"
       }
     },
     "curbcut_modal": {
@@ -196,15 +196,15 @@
       "rating_5": "This place can access without any help"
     },
     "add_more_images": "Add more images",
-    "additional_official_comment": "ข้อมูลเพิ่มเติมจากเจ้าหน้าที่",
-    "details": "รายละเอียด",
-    "details_placeholder": "คิดอย่างไรกับสถานที่แห่งนี้ เจอปัญหาการเข้าถึงบ้างหรือไม่?",
-    "facility": "สิ่งอำนวยความสะดวก",
+    "additional_official_comment": "Additional information from official",
+    "details": "Description",
+    "details_placeholder": "What do you think about this place. Is there any accessibility related problem?",
+    "facility": "Facilities",
     "facility_tags": {
-      "cleanliness": "ถูกสุขลักษณะ",
-      "good_service": "บริการดี",
-      "nice_facilities": "สิ่งอำนวยความสะดวกดี",
-      "safety": "ปลอดภัย"
+      "cleanliness": "Cleanliness",
+      "good_service": "Great service mind",
+      "nice_facilities": "Nice facilities",
+      "safety": "Safety"
     },
     "images": "Images",
     "images_limit_description": "Maximum 3 images.",
@@ -236,15 +236,15 @@
   },
   "trace": {
     "finish_popup": {
-      "description": "คุณต้องการบันทึกการเดินทางหรือไม่?",
-      "overall_distance": "ระยะทางทั้งหมด",
-      "overall_time": "เวลาทั้งหมด",
-      "title": "เสร็จสิ้นการเดินทาง"
+      "description": "Do you want to record your journey",
+      "overall_distance": "Total Distance",
+      "overall_time": "Total Time",
+      "title": "Finish your journey"
     },
     "pause": "Pause",
     "pause_popup": {
-      "description": "บันทึกต่อเมื่อคุณพร้อม",
-      "title": "หยุดพัก"
+      "description": "continue when you’re ready",
+      "title": "Take a break"
     },
     "resume": "Resume",
     "save": "Save Journey",
