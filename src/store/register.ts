@@ -6,6 +6,8 @@ interface Register {
   lastname: string
   email: string
   username: string
+  password: string
+  passwordConfirmation: string
   impairmentLevel: string
   equipment: string
 }

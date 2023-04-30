@@ -117,7 +117,7 @@ function Page() {
               color: COLORS.info[400],
             }}
           >
-            {t('auth.register')}
+            {t('auth.register_cta')}
           </Text>
         </Pressable>
       </View>

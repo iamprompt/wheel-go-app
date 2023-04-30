@@ -17,3 +17,12 @@ export const RefreshToken = gql`
     }
   }
 `
+
+export const Register = gql`
+  mutation Register($data: RegisterInput!) {
+    register(data: $data) {
+      accessToken
+      refreshToken
+    }
+  }
+`

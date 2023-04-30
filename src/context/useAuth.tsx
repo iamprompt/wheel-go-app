@@ -1,8 +1,13 @@
 import { useRouter } from 'expo-router'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { toast } from 'burnt'
-import { useGetMyProfileLazyQuery, useLoginMutation } from '~/generated-types'
+import { alert, toast } from 'burnt'
+import type { RegisterMutationVariables, User } from '~/generated-types'
+import {
+  useGetMyProfileLazyQuery,
+  useLoginMutation,
+  useRegisterMutation,
+} from '~/generated-types'
 import {
   getUserToken,
   removeUserToken,
@@ -14,19 +19,20 @@ import COLORS from '~/styles/colors'
 interface AuthContextData {
   signin: (email: string, password: string) => Promise<void>
   signout: () => void
+  register: (data: RegisterMutationVariables['data']) => Promise<void>
   user: null | User
 }
 
-interface User {
-  id: string
-  username: string
-  firstName: string
-  lastName: string
-  email: string
-  image: string
-  impairmentLevel: string
-  equipment?: string
-}
+// interface User {
+//   id: string
+//   username: string
+//   firstName: string
+//   lastName: string
+//   email: string
+//   image: string
+//   impairmentLevel: string
+//   equipment?: string
+// }
 
 const DefaultAuthContextData = {
   signin: () => {
@@ -36,6 +42,9 @@ const DefaultAuthContextData = {
     throw new Error('signout is not implemented')
   },
   user: null,
+  register: (_) => {
+    throw new Error('register is not implemented')
+  },
 } satisfies AuthContextData
 
 const authContext = createContext<AuthContextData>(DefaultAuthContextData)
@@ -50,11 +59,12 @@ function useAuthProvider() {
 
   const [getProfile] = useGetMyProfileLazyQuery()
   const [loginUser] = useLoginMutation()
+  const [registerUser] = useRegisterMutation()
 
   const handleUserChange = async () => {
-    const token = await getUserToken()
+    const { accessToken, refreshToken } = await getUserToken()
 
-    if (!token) {
+    if (!accessToken || !refreshToken) {
       setUser(null)
       return
     }
@@ -128,9 +138,40 @@ function useAuthProvider() {
     setUser(null)
   }
 
+  const register = async (data: RegisterMutationVariables['data']) => {
+    try {
+      const { data: registerData } = await registerUser({
+        variables: {
+          data,
+        },
+      })
+
+      if (!registerData) {
+        throw new Error('Register failed')
+      }
+
+      const { accessToken, refreshToken } = registerData.register
+
+      await setUserToken(accessToken, refreshToken)
+      const u = await handleUserChange()
+
+      alert({
+        title: 'Register Successful!', // required
+        preset: 'custom',
+        duration: 2,
+        icon: {
+          ios: { name: 'person.fill', color: COLORS.magenta[500] },
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     signin,
     signout,
+    register,
     user,
   }
 }

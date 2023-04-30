@@ -30,7 +30,9 @@
     "page_not_signed_in": "You are not signed in",
     "password": "Password",
     "password_placeholder": "********",
-    "sign_in": "Sign in"
+    "sign_in": "Sign in",
+    "dont_have_account": "Don't have an account?",
+    "register": "Register"
   },
   "badges": {
     "coming_soon": "Coming Soon",

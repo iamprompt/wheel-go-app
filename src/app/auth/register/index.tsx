@@ -1,6 +1,5 @@
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
 import { StackActions } from '@react-navigation/native'
-import { alert } from 'burnt'
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
@@ -18,25 +17,34 @@ import FONTS from '~/styles/fonts'
 function Page() {
   const navigation = useNavigation()
   const router = useRouter()
-  const { signin } = useAuth()
+  const { register } = useAuth()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
 
   const { register: registerState, dispatch } = useStoreon('register')
 
   const handleRegiser = async () => {
-    navigation.dispatch(StackActions.popToTop())
-    router.replace('/')
-    dispatch('register/reset')
+    console.log(registerState)
 
-    alert({
-      title: "You're logged in!", // required
-      preset: 'custom',
-      duration: 2,
-      icon: {
-        ios: { name: 'person.fill', color: COLORS.magenta[500] },
-      },
-    })
+    try {
+      await register({
+        username: registerState.username,
+        firstname: registerState.firstname,
+        lastname: registerState.lastname,
+        email: registerState.email,
+        password: registerState.password,
+        metadata: {
+          impairmentLevel: registerState.impairmentLevel,
+          equipment: registerState.equipment,
+        },
+      })
+
+      navigation.dispatch(StackActions.popToTop())
+      router.replace('/')
+      dispatch('register/reset')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -71,7 +79,7 @@ function Page() {
               marginBottom: 12,
             }}
           >
-            {t('auth.register_title')}
+            {t('auth.register.register_title')}
           </Text>
           <Text
             style={{
@@ -80,7 +88,7 @@ function Page() {
               color: COLORS['french-vanilla'][500],
             }}
           >
-            {t('auth.register_description')}
+            {t('auth.register.register_description')}
           </Text>
         </View>
 

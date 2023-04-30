@@ -30,7 +30,30 @@
     "page_not_signed_in": "คุณยังไม่ได้ลงชื่อเข้าใช้",
     "password": "รหัสผ่าน",
     "password_placeholder": "********",
-    "sign_in": "ลงชื่อเข้าใช้"
+    "sign_in": "ลงชื่อเข้าใช้",
+    "dont_have_account": "ยังไม่มีบัญชี?",
+    "register_cta": "ลงทะเบียน",
+    "register": {
+      "register_title": "ลงทะเบียน",
+      "register_description": "เพื่อสร้างสิ่งแวดล้อมเพื่อคนทุกคนร่วมกัน",
+      "username": "ชื่อผู้ใช้",
+      "username_placeholder": "ชื่อผู้ใช้ของคุณ",
+      "email": "อีเมล",
+      "email_placeholder": "อีเมลของคุณ",
+      "password": "รหัสผ่าน",
+      "password_placeholder": "********",
+      "confirm_password": "ยืนยันรหัสผ่าน",
+      "confirm_password_placeholder": "********",
+      "firstname": "ชื่อ",
+      "firstname_placeholder": "ชื่อของคุณ",
+      "lastname": "นามสกุล",
+      "lastname_placeholder": "นามสกุลของคุณ",
+      "impairment_level": "ระดับความบกพร่อง",
+      "impairment_level_placeholder": "ระดับความบกพร่องของคุณ",
+      "equipment": "อุปกรณ์ช่วยเหลือ",
+      "equipment_placeholder": "อุปกรณ์ช่วยเหลือที่คุณใช้",
+      "register_button": "ลงทะเบียน"
+    }
   },
   "badges": {
     "coming_soon": "เร็ว ๆ นี้",

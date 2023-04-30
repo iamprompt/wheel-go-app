@@ -295,6 +295,7 @@ export type Mutation = {
   deleteRoute: Scalars['Boolean'];
   login: AuthResponse;
   refresh: AuthResponse;
+  register: AuthResponse;
   removeFavoritePlace: User;
   updateAnnouncement: Announcement;
   updateFacility: Facility;
@@ -374,6 +375,11 @@ export type MutationLoginArgs = {
 
 export type MutationRefreshArgs = {
   refreshToken: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  data: RegisterInput;
 };
 
 
@@ -638,6 +644,15 @@ export type RatingTagCount = {
   tag: Scalars['String'];
 };
 
+export type RegisterInput = {
+  email: Scalars['String'];
+  firstname: Scalars['String'];
+  lastname: Scalars['String'];
+  metadata?: InputMaybe<UserMetaInput>;
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type Review = {
   __typename?: 'Review';
   comment?: Maybe<Scalars['String']>;
@@ -746,6 +761,13 @@ export type RefreshTokenMutationVariables = Exact<{
 
 
 export type RefreshTokenMutation = { __typename?: 'Mutation', refresh: { __typename?: 'AuthResponse', accessToken: string, refreshToken: string } };
+
+export type RegisterMutationVariables = Exact<{
+  data: RegisterInput;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'AuthResponse', accessToken: string, refreshToken: string } };
 
 export type UploadMediaMutationVariables = Exact<{
   file: Scalars['Upload'];
@@ -1035,6 +1057,40 @@ export function useRefreshTokenMutation(baseOptions?: Apollo.MutationHookOptions
 export type RefreshTokenMutationHookResult = ReturnType<typeof useRefreshTokenMutation>;
 export type RefreshTokenMutationResult = Apollo.MutationResult<RefreshTokenMutation>;
 export type RefreshTokenMutationOptions = Apollo.BaseMutationOptions<RefreshTokenMutation, RefreshTokenMutationVariables>;
+export const RegisterDocument = gql`
+    mutation Register($data: RegisterInput!) {
+  register(data: $data) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const UploadMediaDocument = gql`
     mutation UploadMedia($file: Upload!) {
   uploadMedia(file: $file) {

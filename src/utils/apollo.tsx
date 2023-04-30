@@ -58,7 +58,14 @@ async function refreshToken() {
 
 const errorLink = onError(
   ({ graphQLErrors, networkError, forward, operation }) => {
-    if (graphQLErrors) {
+    // console.log('errorLink')
+    console.log(
+      JSON.stringify(graphQLErrors?.[0].message),
+      operation.query.definitions
+    )
+    // console.log(JSON.stringify(networkError))
+
+    if (graphQLErrors?.[0]?.message === 'Unauthorized') {
       const observable = new Observable<FetchResult<Record<string, any>>>(
         (observer) => {
           // used an annonymous function for using an async function
