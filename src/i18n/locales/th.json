@@ -97,7 +97,7 @@
     "TRANSPORT": "การขนส่ง"
   },
   "explore": {
-    "search_route_placeholder": "ไปที่ไหน ?",
+    "search_route_placeholder": "ค้นหาเส้นทางแนะนำ ?",
     "trace_cta_button": "บันทึกการเดินทาง",
     "transport_modal": {
       "accessible_label": "จุดรอรถนี้สามารถเข้าถึงได้",
