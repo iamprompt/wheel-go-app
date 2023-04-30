@@ -15,13 +15,13 @@ export const HOW_TO: Record<
     {
       title: 'ดูสถานที่ใกล้เคียงและสิ่งแวดล้อม',
       description:
-        'ดูสถานที่ที่อยู่ใกล้คุณที่สุด สิ่งแวดล้อมสำหรับผู้ใช้เก้าอี้รถเข็น และเส้นทางที่เข้าถึงได้',
+        'ดูสถานที่ที่อยู่ใกล้คุณที่สุด สิ่งแวดล้อมสำหรับผู้ใช้วีลแชร์และเส้นทางที่เข้าถึงได้',
       image: require('~/assets/howto/nearby-places-th.png'),
     },
     {
       title: 'แสดงข้อมูลเกี่ยวกับการเข้าถึง',
       description:
-        'กดเพื่อดูข้อมูลของสถานที่ ตรวจสอบสิ่งอำนวยความสะดวกสำหรับผู้ใช้รถเข็น และดูสถานที่ใกล้เคียงอื่นๆ',
+        'กดเพื่อดูข้อมูลของสถานที่ ตรวจสอบสิ่งอำนวยความสะดวกสำหรับผู้ใช้วีลแชร์และดูสถานที่ใกล้เคียงอื่นๆ',
       image: require('~/assets/howto/places-accessibility-th.png'),
     },
     {
@@ -33,13 +33,13 @@ export const HOW_TO: Record<
     {
       title: 'ให้คะแนนและรีวิว',
       description:
-        'ให้คะแนนภาพรวมระดับความเข้าถึง สิ่งอำนวยความสะดวกสำหรับผู้ใช้เก้าอี้รถเข็น และเขียนรีวิวให้กับสถานที่ที่คุณเคยไป',
+        'ให้คะแนนภาพรวมระดับความเข้าถึง สิ่งอำนวยความสะดวกสำหรับผู้ใช้วีลแชร์และเขียนรีวิวให้กับสถานที่ที่คุณเคยไป',
       image: require('~/assets/howto/rate-reviews-th.png'),
     },
     {
       title: 'บันทึกการเดินทางของคุณ',
       description:
-        'มีส่วนร่วมในการมอบสิ่งดีๆกลับสู่สังคมผ่านการบันทึกการเดินทางของคุณ',
+        'มีส่วนร่วมในการมอบสิ่งดีๆกลับสู่สังคมผ่านการบันทึกเส้นทางการเดินทางของคุณ',
       image: require('~/assets/howto/trace-th.png'),
     },
     {
@@ -49,9 +49,9 @@ export const HOW_TO: Record<
       image: require('~/assets/howto/records-th.png'),
     },
     {
-      title: 'ได้รับการเชิดชู !',
+      title: 'สะสมความสำเร็จ !',
       description:
-        'ดูความสำเร็จและภาพรวมบนหน้าโปรไฟล์และได้รับการเชิดชูจากการมีส่วนร่วมของคุณผ่านระบบการสะสมเหรียญตรา',
+        'ดูความสำเร็จและภาพรวมบนหน้าโปรไฟล์และได้รับการคำขอบคุณจากการมีส่วนร่วมของคุณผ่านระบบการสะสมเหรียญตรา',
       image: require('~/assets/howto/badge-th.png'),
     },
   ],
@@ -70,7 +70,7 @@ export const HOW_TO: Record<
     {
       title: "Check Place's Accessibility",
       description:
-        'Tap to see place info, check the wheelchair-accessible facilities, and see the nearby places',
+        'Tap to see place info, check the wheelchair-accessible facilities, and seethe nearby places',
       image: require('~/assets/howto/places-accessibility.png'),
     },
     {
