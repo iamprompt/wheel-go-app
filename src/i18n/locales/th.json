@@ -95,7 +95,8 @@
     "SPORT": "กีฬา",
     "TOILET": "ห้องน้ำ",
     "TRANSPORT": "การขนส่ง",
-    "RAMP": "ทางลาด"
+    "RAMP": "ทางลาด",
+    "ROUTE": "เส้นทาง"
   },
   "explore": {
     "search_route_placeholder": "ค้นหาเส้นทางแนะนำ ?",

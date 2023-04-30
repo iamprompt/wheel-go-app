@@ -21,7 +21,7 @@ interface IMAP_ICON {
   }
 }
 
-interface IPLACE_TYPE_META {
+export interface IPLACE_TYPE_META {
   label: string
   type: 'place' | 'condition'
   icon: ComponentProps<typeof MaterialIcons>['name']

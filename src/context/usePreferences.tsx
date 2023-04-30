@@ -2,13 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getLocales } from 'expo-localization'
 import type { FC, ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { Place_Types } from '~/generated-types'
+import { MapPreferences } from '~/const/mapPref'
 
 import * as AsyncStorageUtils from '~/utils/asyncStorage'
 
 interface MapViewPreferences {
-  places: Place_Types[]
-  coditions: string[]
+  places: string[]
+  conditions: string[]
 }
 
 interface Preferences {
@@ -30,19 +30,8 @@ const DefaultPreferences = {
     throw new Error('setTutorialShown is not implemented')
   },
   mapViewPreferences: {
-    places: [
-      Place_Types.Building,
-      Place_Types.Cafe,
-      Place_Types.Curbcut,
-      Place_Types.Food,
-      Place_Types.Park,
-      Place_Types.Parking,
-      Place_Types.Residence,
-      Place_Types.Sport,
-      Place_Types.Toilet,
-      Place_Types.Transport,
-    ],
-    coditions: [],
+    conditions: MapPreferences[0].items.map((item) => item.key),
+    places: MapPreferences[1].items.map((item) => item.key),
   },
   setMapViewPreferences: async (_mapViewPreferences: MapViewPreferences) => {
     throw new Error('setMapViewPreferences is not implemented')
@@ -59,21 +48,7 @@ function usePreferencesProvider(): Preferences {
   const [appLanguage, setAppLanguage] = useState(DefaultPreferences.appLanguage)
   const [tutorialShown, setTutorialShown] = useState(false)
   const [mapViewPreferences, setMapViewPreferences] =
-    useState<MapViewPreferences>({
-      places: [
-        Place_Types.Building,
-        Place_Types.Cafe,
-        Place_Types.Curbcut,
-        Place_Types.Food,
-        Place_Types.Park,
-        Place_Types.Parking,
-        Place_Types.Residence,
-        Place_Types.Sport,
-        Place_Types.Toilet,
-        Place_Types.Transport,
-      ],
-      coditions: [],
-    })
+    useState<MapViewPreferences>(DefaultPreferences.mapViewPreferences)
 
   const setLanguage = async (lang: string) => {
     await AsyncStorageUtils.setAppLanguage(lang)

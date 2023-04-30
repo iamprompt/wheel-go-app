@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import type { ComponentProps, FC } from 'react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Switch, Text, View } from 'react-native'
@@ -7,9 +7,8 @@ import { HorizontalDivider } from './HorizontalDivider'
 import { Tag } from './common/Tag'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { PLACE_TYPES_META } from '~/const/placeTypes'
 import { usePreferences } from '~/context/usePreferences'
-import type { Place_Types } from '~/generated-types'
+import { MapPreferences } from '~/const/mapPref'
 
 interface MapPrefsModalProps {
   onClose: () => void
@@ -20,28 +19,47 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
   const { mapViewPreferences, setMapViewPreferences } = usePreferences()
   const { t } = useTranslation()
 
-  const [selectedPlaceTypes, setSelectedPlaceTypes] = useState<string[]>(
-    mapViewPreferences.places
-  )
+  const MapPrefsKey = useMemo(() => {
+    return {
+      conditions: MapPreferences[0].items.map((item) => item.key),
+      places: MapPreferences[1].items.map((item) => item.key),
+    }
+  }, [MapPreferences])
+
+  const [selectedOptions, setSelectedOptions] = useState<
+    Record<string, string[]>
+  >({
+    conditions: mapViewPreferences.conditions,
+    places: mapViewPreferences.places,
+  })
 
   const isSelectAll = useMemo(() => {
-    return Object.keys(PLACE_TYPES_META).every((key) =>
-      selectedPlaceTypes.includes(key)
+    return (
+      MapPrefsKey.conditions.every((key) =>
+        selectedOptions.conditions.includes(key)
+      ) &&
+      MapPrefsKey.places.every((key) => selectedOptions.places.includes(key))
     )
-  }, [selectedPlaceTypes])
+  }, [selectedOptions])
 
   const handleSelectAll = (value: boolean) => {
     if (value) {
-      setSelectedPlaceTypes(Object.keys(PLACE_TYPES_META))
+      setSelectedOptions({
+        conditions: MapPrefsKey.conditions,
+        places: MapPrefsKey.places,
+      })
     } else {
-      setSelectedPlaceTypes([])
+      setSelectedOptions({
+        conditions: [],
+        places: [],
+      })
     }
   }
 
   const handleSave = () => {
     setMapViewPreferences({
-      ...mapViewPreferences,
-      places: selectedPlaceTypes as Place_Types[],
+      places: selectedOptions.places,
+      conditions: selectedOptions.conditions,
     })
     onClose()
   }
@@ -93,62 +111,70 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
           gap: 24,
         }}
       >
-        <View>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 14,
-            }}
-          >
-            {t('map_prefs_modal.conditions')}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 14,
-            }}
-          >
-            {t('map_prefs_modal.places')}
-          </Text>
-          <View
-            style={{
-              alignItems: 'flex-start',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              gap: 12,
-              marginTop: 12,
-            }}
-          >
-            {Object.entries(PLACE_TYPES_META).map(([key, value]) => (
-              <Pressable
-                key={`map-prefs-place-type-${key}`}
-                onPress={() => {
-                  if (selectedPlaceTypes.includes(key as Place_Types)) {
-                    setSelectedPlaceTypes(
-                      selectedPlaceTypes.filter((type) => type !== key)
+        <View
+          style={{
+            gap: 24,
+          }}
+        >
+          {MapPreferences.map((pref) => {
+            return (
+              <View key={`map-pref-${pref.name}`}>
+                <Text
+                  style={{
+                    fontFamily: FONTS.LSTH_BOLD,
+                    fontSize: 14,
+                  }}
+                >
+                  {t(pref.label)}
+                </Text>
+                <View
+                  style={{
+                    alignItems: 'flex-start',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    gap: 12,
+                    marginTop: 12,
+                  }}
+                >
+                  {pref.items?.map(({ key, icon, label, color }) => {
+                    const isSelected = selectedOptions[pref.name].includes(key)
+
+                    return (
+                      <Pressable
+                        key={`map-prefs-place-type-${key}`}
+                        onPress={() => {
+                          if (isSelected) {
+                            setSelectedOptions((prev) => ({
+                              ...prev,
+                              [pref.name]: prev[pref.name].filter(
+                                (type) => type !== key
+                              ),
+                            }))
+                          } else {
+                            setSelectedOptions((prev) => ({
+                              ...prev,
+                              [pref.name]: [...prev[pref.name], key],
+                            }))
+                          }
+                        }}
+                      >
+                        <Tag
+                          label={label}
+                          height={32}
+                          icon={icon as ComponentProps<typeof Tag>['icon']}
+                          iconPosition="left"
+                          iconSize={24}
+                          textColor={
+                            isSelected ? color : COLORS['french-vanilla'][300]
+                          }
+                        />
+                      </Pressable>
                     )
-                  } else {
-                    setSelectedPlaceTypes([...selectedPlaceTypes, key])
-                  }
-                }}
-              >
-                <Tag
-                  label={value.label}
-                  height={32}
-                  icon={value.icon}
-                  iconPosition="left"
-                  iconSize={24}
-                  textColor={
-                    selectedPlaceTypes.includes(key)
-                      ? value.color
-                      : COLORS['french-vanilla'][300]
-                  }
-                />
-              </Pressable>
-            ))}
-          </View>
+                  })}
+                </View>
+              </View>
+            )
+          })}
         </View>
         <View
           style={{

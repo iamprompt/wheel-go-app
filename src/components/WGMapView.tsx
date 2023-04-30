@@ -22,6 +22,7 @@ import {
 import { getCurrentPosition } from '~/utils/location'
 import COLORS from '~/styles/colors'
 import { usePreferences } from '~/context/usePreferences'
+import { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
 
 export const WGMapView = forwardRef<
   MapView,
@@ -67,10 +68,17 @@ export const WGMapView = forwardRef<
     useEffect(() => {
       getPlaces({
         variables: {
-          type: mapViewPreferences.places,
+          type: [
+            ...mapViewPreferences.places,
+            ...(mapViewPreferences.conditions.includes(
+              SURROUNDING_CONDITIONS.Curbcut
+            )
+              ? [SURROUNDING_CONDITIONS.Curbcut]
+              : []),
+          ] as Place_Types[],
         },
       })
-    }, [mapViewPreferences.places])
+    }, [mapViewPreferences.places, mapViewPreferences.conditions])
 
     return (
       <View
@@ -114,19 +122,20 @@ export const WGMapView = forwardRef<
               />
             )
           })}
-          {routesData?.getRoutes.map((route) => {
-            return (
-              <WGPolyline
-                key={route.id}
-                coordinates={
-                  route.paths?.map(({ lat, lng }) => ({
-                    latitude: lat,
-                    longitude: lng,
-                  })) || []
-                }
-              />
-            )
-          })}
+          {mapViewPreferences.conditions.includes('ROUTE') &&
+            routesData?.getRoutes.map((route) => {
+              return (
+                <WGPolyline
+                  key={route.id}
+                  coordinates={
+                    route.paths?.map(({ lat, lng }) => ({
+                      latitude: lat,
+                      longitude: lng,
+                    })) || []
+                  }
+                />
+              )
+            })}
           {mapElements}
         </MapView>
 
