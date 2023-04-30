@@ -10,10 +10,9 @@ export const ListCategoryIcon = {
   [Place_Types.Cafe]: require('~/assets/places/cafe-icon.png'),
   [Place_Types.Curbcut]: require('~/assets/places/curbcut-icon.png'),
   [Place_Types.Food]: require('~/assets/places/food-icon.png'),
-  [Place_Types.Incident]: require('~/assets/places/incident-icon.png'),
   [Place_Types.Park]: require('~/assets/places/park-icon.png'),
   [Place_Types.Parking]: require('~/assets/places/parking-icon.png'),
   [Place_Types.Residence]: require('~/assets/places/residence-icon.png'),
   [Place_Types.Toilet]: require('~/assets/places/toilet-icon.png'),
-  [Place_Types.Sport]: require('~/assets/places/building-icon.png'),
+  [Place_Types.Sport]: require('~/assets/places/sport-icon.png'),
 } satisfies CategoryIcon

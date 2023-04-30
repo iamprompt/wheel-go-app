@@ -1,5 +1,6 @@
 import { Image } from 'expo-image'
 import { Marker } from 'react-native-maps'
+import type { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
 import type { Place_Types } from '~/generated-types'
 
@@ -13,15 +14,15 @@ export function WGMapMarker({
     lat: number
     lng: number
   }
-  onPress: () => void
-  type?: Place_Types
+  onPress?: () => void
+  type?: Place_Types | SURROUNDING_CONDITIONS
   isSelected?: boolean
 }) {
   if (!lat || !lng) {
     return null
   }
 
-  const typeMeta = type ? PLACE_TYPES_META[type] : PLACE_TYPES_META.BUILDING
+  const typeMeta = type ? PLACE_TYPES_META[type] : PLACE_TYPES_META.RAMP
 
   const stateIcon = isSelected
     ? typeMeta.mapIcon.selected

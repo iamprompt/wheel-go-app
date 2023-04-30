@@ -15,7 +15,10 @@ import { WGMapControlButton } from './WGMapControlButton'
 import { WGPolyline } from './WGPolyline'
 import { MapCameraConfig, MapStyle } from '~/const/map'
 import {
+  Facility_Types,
   Place_Types,
+  useGetAnnouncementsQuery,
+  useGetFacilitiesQuery,
   useGetPlacesLazyQuery,
   useGetPreDefinedRoutesQuery,
 } from '~/generated-types'
@@ -43,6 +46,14 @@ export const WGMapView = forwardRef<
 
     const [getPlaces, { data: placesData }] = useGetPlacesLazyQuery()
     const { data: routesData } = useGetPreDefinedRoutesQuery()
+    const { data: facilitiesData } = useGetFacilitiesQuery({
+      variables: {
+        options: {
+          types: [Facility_Types.Ramp],
+        },
+      },
+    })
+    const { data: announcementsData } = useGetAnnouncementsQuery()
 
     useImperativeHandle(ref, () => mapRef.current!)
 
@@ -122,6 +133,41 @@ export const WGMapView = forwardRef<
               />
             )
           })}
+          {mapViewPreferences.conditions.includes(
+            SURROUNDING_CONDITIONS.Ramp
+          ) &&
+            facilitiesData?.getFacilities.map((facility) => {
+              if (!facility || !facility.location) {
+                return null
+              }
+
+              return (
+                <WGMapMarker
+                  key={facility.id}
+                  coordinate={facility.location}
+                  type={
+                    (facility.type as unknown as SURROUNDING_CONDITIONS) ||
+                    SURROUNDING_CONDITIONS.Ramp
+                  }
+                />
+              )
+            })}
+          {mapViewPreferences.conditions.includes(
+            SURROUNDING_CONDITIONS.Incident
+          ) &&
+            announcementsData?.getAnnouncements.map((announcement) => {
+              if (!announcement || !announcement.location) {
+                return null
+              }
+
+              return (
+                <WGMapMarker
+                  key={announcement.id}
+                  coordinate={announcement.location}
+                  type={SURROUNDING_CONDITIONS.Incident}
+                />
+              )
+            })}
           {mapViewPreferences.conditions.includes('ROUTE') &&
             routesData?.getRoutes.map((route) => {
               return (

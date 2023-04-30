@@ -20,6 +20,10 @@ export const GetAnnouncements = gql`
           en
         }
       }
+      location {
+        lat
+        lng
+      }
       createdAt
     }
   }

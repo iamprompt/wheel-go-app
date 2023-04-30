@@ -800,7 +800,7 @@ export type UpdateProfileMutation = { __typename?: 'Mutation', updateUser: { __t
 export type GetAnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAnnouncementsQuery = { __typename?: 'Query', getAnnouncements: Array<{ __typename?: 'Announcement', id: string, tags?: Array<string> | null, createdAt?: any | null, title?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, content?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, place?: { __typename?: 'Place', id: string, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null } | null }> };
+export type GetAnnouncementsQuery = { __typename?: 'Query', getAnnouncements: Array<{ __typename?: 'Announcement', id: string, tags?: Array<string> | null, createdAt?: any | null, title?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, content?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, place?: { __typename?: 'Place', id: string, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null }> };
 
 export type GetAnnouncementByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -808,6 +808,13 @@ export type GetAnnouncementByIdQueryVariables = Exact<{
 
 
 export type GetAnnouncementByIdQuery = { __typename?: 'Query', getAnnouncementById: { __typename?: 'Announcement', id: string, tags?: Array<string> | null, createdAt?: any | null, title?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, content?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'AnnouncementMetadata', phone?: string | null, email?: string | null, line?: string | null } | null, place?: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null } | null } };
+
+export type GetFacilitiesQueryVariables = Exact<{
+  options?: GetFacilitiesInput;
+}>;
+
+
+export type GetFacilitiesQuery = { __typename?: 'Query', getFacilities: Array<{ __typename?: 'Facility', id: string, type?: Facility_Types | null, location?: { __typename?: 'Location', lat: number, lng: number } | null }> };
 
 export type GetFacilitiesByPlaceIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1244,6 +1251,10 @@ export const GetAnnouncementsDocument = gql`
         en
       }
     }
+    location {
+      lat
+      lng
+    }
     createdAt
   }
 }
@@ -1339,6 +1350,46 @@ export function useGetAnnouncementByIdLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetAnnouncementByIdQueryHookResult = ReturnType<typeof useGetAnnouncementByIdQuery>;
 export type GetAnnouncementByIdLazyQueryHookResult = ReturnType<typeof useGetAnnouncementByIdLazyQuery>;
 export type GetAnnouncementByIdQueryResult = Apollo.QueryResult<GetAnnouncementByIdQuery, GetAnnouncementByIdQueryVariables>;
+export const GetFacilitiesDocument = gql`
+    query GetFacilities($options: GetFacilitiesInput! = {}) {
+  getFacilities(options: $options) {
+    id
+    type
+    location {
+      lat
+      lng
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFacilitiesQuery__
+ *
+ * To run a query within a React component, call `useGetFacilitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFacilitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFacilitiesQuery({
+ *   variables: {
+ *      options: // value for 'options'
+ *   },
+ * });
+ */
+export function useGetFacilitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetFacilitiesQuery, GetFacilitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFacilitiesQuery, GetFacilitiesQueryVariables>(GetFacilitiesDocument, options);
+      }
+export function useGetFacilitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFacilitiesQuery, GetFacilitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFacilitiesQuery, GetFacilitiesQueryVariables>(GetFacilitiesDocument, options);
+        }
+export type GetFacilitiesQueryHookResult = ReturnType<typeof useGetFacilitiesQuery>;
+export type GetFacilitiesLazyQueryHookResult = ReturnType<typeof useGetFacilitiesLazyQuery>;
+export type GetFacilitiesQueryResult = Apollo.QueryResult<GetFacilitiesQuery, GetFacilitiesQueryVariables>;
 export const GetFacilitiesByPlaceIdDocument = gql`
     query GetFacilitiesByPlaceId($id: String!) {
   getFacilitiesByPlaceId(placeId: $id) {

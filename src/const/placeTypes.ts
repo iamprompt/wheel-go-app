@@ -226,13 +226,13 @@ export const PLACE_TYPES_META: IPLACE_TYPES = {
     mapIcon: {
       default: {
         file: require('~/assets/places/sport-pin.png'),
-        size: { width: 24, height: 24 },
-        centerOffset: { x: 0.5, y: 0.5 },
+        size: { width: 24, height: 32 },
+        centerOffset: { x: 0.5, y: 1 },
       },
       selected: {
         file: require('~/assets/places/sport-selected.png'),
-        size: { width: 40, height: 40 },
-        centerOffset: { x: 0.5, y: 0.5 },
+        size: { width: 40, height: 46 },
+        centerOffset: { x: 0.5, y: 1 },
       },
     },
   },
