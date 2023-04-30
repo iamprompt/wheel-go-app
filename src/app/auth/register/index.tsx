@@ -135,45 +135,47 @@ function Page() {
             )
           })}
 
-          <Button
-            label="auth.register.register_button"
-            onPress={handleRegiser}
-          />
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignContent: 'center',
-            marginTop: 24,
-            gap: 8,
-          }}
-        >
-          <Text
+          <View
             style={{
-              fontFamily: FONTS.LSTH_BOLD,
-              fontSize: 12,
-              color: COLORS['french-vanilla'][500],
-            }}
-          >
-            {t('auth.dont_have_account')}
-          </Text>
-          <Pressable
-            onPress={() => {
-              router.push('/auth/register')
+              // flexDirection: 'row',
+              justifyContent: 'center',
+              alignContent: 'center',
+              marginTop: 24,
+              gap: 8,
             }}
           >
             <Text
               style={{
                 fontFamily: FONTS.LSTH_BOLD,
                 fontSize: 12,
-                color: COLORS.info[400],
+                color: COLORS['french-vanilla'][500],
+                textAlign: 'center',
               }}
             >
-              {t('auth.register')}
+              {t('auth.register.consent_predescription')}
             </Text>
-          </Pressable>
+            <Pressable
+              onPress={() => {
+                router.push('/policy')
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  fontSize: 12,
+                  color: COLORS.info[400],
+                  textAlign: 'center',
+                }}
+              >
+                {t('auth.register.consent')}
+              </Text>
+            </Pressable>
+          </View>
+
+          <Button
+            label="auth.register.register_button"
+            onPress={handleRegiser}
+          />
         </View>
       </View>
     </KeyboardAwareScrollView>

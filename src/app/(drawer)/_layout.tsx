@@ -90,7 +90,7 @@ const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {
           </Pressable>
         </View>
       ) : null}
-      {userData && userData.me ? (
+      {user && userData && userData.me ? (
         <View
           style={{
             paddingVertical: 16,

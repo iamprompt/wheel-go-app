@@ -3,7 +3,7 @@ import { Stack, useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, Pressable, Text, TextInput, View } from 'react-native'
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'burnt'
 import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker'
 import { ReactNativeFile } from 'apollo-upload-client'
@@ -46,16 +46,6 @@ export default function Page() {
   })
   const [uploadImage] = useUploadMediaMutation({
     refetchQueries: ['GetMyProfile'],
-  })
-
-  const [profileForm, setProfileForm] = useState<ProfileForm>({
-    firstname: '',
-    lastname: '',
-    email: '',
-    username: '',
-    impairmentLevel: '',
-    equipment: '',
-    profileImage: '',
   })
 
   // Initialize profile edit session
@@ -237,7 +227,7 @@ export default function Page() {
         >
           <Image
             source={{
-              uri: profileEdit.profileImage || user.image || '',
+              uri: profileEdit.profileImage || '',
               width: 128,
               height: 128,
             }}
@@ -369,26 +359,6 @@ export default function Page() {
                               editable={editable}
                             />
                           )}
-                          {/* {item.value ? (
-                            <Text
-                              style={{
-                                fontFamily: FONTS.LSTH_BOLD,
-                                color: COLORS['french-vanilla'][500],
-                              }}
-                            >
-                              {t(item.value)}
-                            </Text>
-                          ) : null} */}
-                          {/* {!!item.href || !!item.action ? (
-                            <MaterialIcons
-                              name="chevron_right"
-                              size={24}
-                              color={COLORS['french-vanilla'][300]}
-                              style={{
-                                marginLeft: 12,
-                              }}
-                            />
-                          ) : null} */}
                         </View>
                       </Pressable>
                     )

@@ -15,6 +15,7 @@ import {
 } from '~/utils/asyncStorage'
 import { getGravatarUrl } from '~/utils/gravatar'
 import COLORS from '~/styles/colors'
+import { client } from '~/utils/apollo'
 
 interface AuthContextData {
   signin: (email: string, password: string) => Promise<void>
@@ -62,40 +63,45 @@ function useAuthProvider() {
   const [registerUser] = useRegisterMutation()
 
   const handleUserChange = async () => {
-    const { accessToken, refreshToken } = await getUserToken()
+    try {
+      const { accessToken, refreshToken } = await getUserToken()
 
-    if (!accessToken || !refreshToken) {
+      if (!accessToken || !refreshToken) {
+        setUser(null)
+        return
+      }
+
+      const { data, error } = await getProfile()
+
+      if (!data) {
+        throw new Error(error?.message || 'Get User Profile Failed')
+      }
+
+      const { me } = data
+
+      if (!me) {
+        setUser(null)
+        return
+      }
+
+      const userFormat = {
+        id: me.id || '',
+        username: me.username || '',
+        firstName: me.firstname || '',
+        lastName: me.lastname || '',
+        email: '',
+        image: getGravatarUrl(''),
+        impairmentLevel: '',
+        equipment: '',
+      }
+
+      setUser(userFormat)
+
+      return userFormat
+    } catch (error) {
+      console.log(error)
       setUser(null)
-      return
     }
-
-    const result = await getProfile()
-
-    if (!result || !result.data?.me) {
-      throw new Error('Get User Profile Failed')
-    }
-
-    const { me } = result.data
-
-    if (!me) {
-      setUser(null)
-      return
-    }
-
-    const userFormat = {
-      id: me.id || '',
-      username: me.username || '',
-      firstName: me.firstname || '',
-      lastName: me.lastname || '',
-      email: '',
-      image: getGravatarUrl(''),
-      impairmentLevel: '',
-      equipment: '',
-    }
-
-    setUser(userFormat)
-
-    return userFormat
   }
 
   useEffect(() => {
@@ -136,6 +142,9 @@ function useAuthProvider() {
   const signout = async () => {
     await removeUserToken()
     setUser(null)
+    client.refetchQueries({
+      include: ['GetMyProfile'],
+    })
   }
 
   const register = async (data: RegisterMutationVariables['data']) => {

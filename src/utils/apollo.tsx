@@ -12,9 +12,9 @@ import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 
 import type { ReactNode } from 'react'
-import { GraphQLError } from 'graphql'
 import { getUserToken, setUserToken } from './asyncStorage'
 import { RefreshToken } from '~/graphql/mutation/auth'
+import type { RefreshTokenMutation } from '~/generated-types'
 
 const uploadLink = createUploadLink({
   uri: `${Constant.expoConfig?.extra?.WHEELGO_API}/graphql`,
@@ -39,56 +39,69 @@ const authLink = setContext(async (_, { headers }) => {
 async function refreshToken() {
   const { refreshToken } = await getUserToken()
 
-  const { data } = await client.mutate({
-    mutation: RefreshToken,
-    variables: {
-      refreshToken,
-    },
-  })
+  if (!refreshToken) {
+    throw new Error('Empty RefreshToken')
+  }
 
-  if (
-    data?.refresh &&
-    data?.refresh?.accessToken &&
-    data?.refresh?.refreshToken
-  ) {
+  try {
+    const { data } = await client.mutate<RefreshTokenMutation>({
+      mutation: RefreshToken,
+      variables: {
+        refreshToken,
+      },
+    })
+
+    if (!data || !data.refresh) {
+      throw new Error('Cannot refresh token')
+    }
+
     await setUserToken(data.refresh.accessToken, data.refresh.refreshToken)
     return data.refresh
+  } catch (error) {
+    console.error(error)
   }
 }
 
 const errorLink = onError(
   ({ graphQLErrors, networkError, forward, operation }) => {
-    // console.log('errorLink')
-    console.log(
-      JSON.stringify(graphQLErrors?.[0].message),
-      operation.query.definitions
-    )
-    // console.log(JSON.stringify(networkError))
-
-    if (graphQLErrors?.[0]?.message === 'Unauthorized') {
+    if (graphQLErrors) {
       const observable = new Observable<FetchResult<Record<string, any>>>(
         (observer) => {
-          // used an annonymous function for using an async function
-          ;(async () => {
-            try {
-              const accessToken = await refreshToken()
+          for (const error of graphQLErrors) {
+            if (error.extensions?.code === 'UNAUTHENTICATED') {
+              ;(async () => {
+                try {
+                  const context = operation.getContext()
+                  const retryHeaderCount = Number(
+                    context.headers['x-wheel-go-retry'] || 0
+                  )
 
-              if (!accessToken) {
-                throw new GraphQLError('Empty AccessToken')
-              }
+                  if (retryHeaderCount >= 3) {
+                    return observer.error(error)
+                  }
 
-              // Retry the failed request
-              const subscriber = {
-                next: observer.next.bind(observer),
-                error: observer.error.bind(observer),
-                complete: observer.complete.bind(observer),
-              }
+                  const accessToken = await refreshToken()
+                  operation.setContext(({ headers = {} }) => ({
+                    headers: {
+                      ...headers,
+                      'x-wheel-go-retry': retryHeaderCount + 1,
+                    },
+                  }))
 
-              forward(operation).subscribe(subscriber)
-            } catch (err) {
-              observer.error(err)
+                  // Retry the failed request
+                  const subscriber = {
+                    next: observer.next.bind(observer),
+                    error: observer.error.bind(observer),
+                    complete: observer.complete.bind(observer),
+                  }
+
+                  forward(operation).subscribe(subscriber)
+                } catch (err) {
+                  observer.error(err)
+                }
+              })()
             }
-          })()
+          }
         }
       )
 
@@ -107,3 +120,5 @@ client.setLink(apolloLinks)
 export function WheelGoApolloProvider({ children }: { children: ReactNode }) {
   return <ApolloProvider client={client}>{children}</ApolloProvider>
 }
+
+export { client }

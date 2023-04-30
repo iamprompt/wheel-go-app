@@ -52,7 +52,9 @@
       "impairment_level_placeholder": "ระดับความบกพร่องของคุณ",
       "equipment": "อุปกรณ์ช่วยเหลือ",
       "equipment_placeholder": "อุปกรณ์ช่วยเหลือที่คุณใช้",
-      "register_button": "ลงทะเบียน"
+      "register_button": "ลงทะเบียน",
+      "consent_predescription": "โดยการลงทะเบียน คุณยินยอมที่จะปฏิบัติตาม",
+      "consent": "ข้อกำหนดและเงื่อนไข"
     }
   },
   "badges": {
