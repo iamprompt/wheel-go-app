@@ -76,11 +76,9 @@ function Page() {
       >
         <WGMapView
           ref={mapRef}
-          mapElements={
-            <>
-              <WGPolyline coordinates={routePoints} />
-            </>
-          }
+          mapElements={<WGPolyline coordinates={routePoints} />}
+          showCurrentLocation
+          routes={false}
         />
 
         <View

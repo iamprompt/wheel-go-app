@@ -33,11 +33,25 @@ export const WGMapView = forwardRef<
     selectedPlaceId?: string | null
     onSelectPlace?: (placeId: string) => void
     mapElements?: React.ReactNode
+    showPreferences?: boolean
+    showCurrentLocation?: boolean
+    paddingControl?: number
+    routes?: boolean
     children?: React.ReactNode
   } & ComponentProps<typeof MapView>
 >(
   (
-    { selectedPlaceId, onSelectPlace, children, mapElements, ...mapViewProps },
+    {
+      selectedPlaceId,
+      onSelectPlace,
+      children,
+      mapElements,
+      showPreferences,
+      showCurrentLocation,
+      paddingControl,
+      routes = true,
+      ...mapViewProps
+    },
     ref
   ) => {
     const mapRef = useRef<MapView>(null)
@@ -168,7 +182,8 @@ export const WGMapView = forwardRef<
                 />
               )
             })}
-          {mapViewPreferences.conditions.includes('ROUTE') &&
+          {routes &&
+            mapViewPreferences.conditions.includes('ROUTE') &&
             routesData?.getRoutes.map((route) => {
               return (
                 <WGPolyline
@@ -189,22 +204,26 @@ export const WGMapView = forwardRef<
           style={{
             position: 'absolute',
             right: 0,
-            top: 72,
+            top: paddingControl || 0,
             gap: 8,
             marginHorizontal: 16,
             marginVertical: 16,
           }}
         >
-          <WGMapControlButton
-            icon="tune"
-            iconColor={COLORS.magenta[500]}
-            onPress={() => setPrefsModalVisible(true)}
-          />
-          <WGMapControlButton
-            icon="near_me"
-            iconColor={COLORS.info[400]}
-            onPress={() => handleCurrentLocation()}
-          />
+          {showPreferences ? (
+            <WGMapControlButton
+              icon="tune"
+              iconColor={COLORS.magenta[500]}
+              onPress={() => setPrefsModalVisible(true)}
+            />
+          ) : null}
+          {showCurrentLocation ? (
+            <WGMapControlButton
+              icon="near_me"
+              iconColor={COLORS.info[400]}
+              onPress={() => handleCurrentLocation()}
+            />
+          ) : null}
         </View>
         {children}
         <Modal

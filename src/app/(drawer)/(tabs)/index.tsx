@@ -148,6 +148,9 @@ export default function App() {
         ref={mapRef}
         selectedPlaceId={selectedPlaceId}
         onSelectPlace={handleSelectPlace}
+        paddingControl={72}
+        showCurrentLocation
+        showPreferences
       >
         <View
           style={{

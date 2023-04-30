@@ -1,9 +1,12 @@
 import { Stack, useRouter, useSearchParams } from 'expo-router'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { VerticalDivider } from '~/components/VerticalDivider'
-import { useGetPlaceByIdQuery, useSearchRoutesQuery } from '~/generated-types'
+import {
+  useGetPlaceByIdQuery,
+  useSearchRoutesLazyQuery,
+} from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -31,12 +34,18 @@ function Page() {
     },
   })
 
-  const { data: availableRoutes } = useSearchRoutesQuery({
-    variables: {
-      from: params.from!,
-      to: params.to!,
-    },
-  })
+  const [searchRoute, { data: availableRoutes }] = useSearchRoutesLazyQuery()
+
+  useEffect(() => {
+    if (params.from && params.to) {
+      searchRoute({
+        variables: {
+          from: params.from,
+          to: params.to,
+        },
+      })
+    }
+  }, [params.from, params.to])
 
   const originPlaceName = useMemo(() => {
     return getDisplayTextFromCurrentLanguage({

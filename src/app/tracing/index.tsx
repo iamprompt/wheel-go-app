@@ -199,11 +199,10 @@ function Page() {
       <WGMapView
         ref={mapRef}
         onUserLocationChange={handleLocationChange}
-        mapElements={
-          <>
-            <WGPolyline coordinates={coordinates} />
-          </>
-        }
+        mapElements={<WGPolyline coordinates={coordinates} />}
+        showCurrentLocation
+        showPreferences
+        paddingControl={72}
       >
         {/* Status Indicator */}
         <TracingStatusIndicator

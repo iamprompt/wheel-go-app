@@ -21,6 +21,8 @@ function Page() {
   const router = useRouter()
   const navigation = useNavigation()
 
+  const HeaderBackButtonElem = HeaderBackButton()
+
   const { q, field, ...params } = useSearchParams<{
     q?: string
     field: string
@@ -80,7 +82,7 @@ function Page() {
           zIndex: 1,
         }}
       >
-        <HeaderBackButton />
+        <HeaderBackButtonElem />
         <View
           style={{
             flex: 1,
