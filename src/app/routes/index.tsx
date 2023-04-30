@@ -1,5 +1,6 @@
 import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { useGetPlaceByIdQuery, useSearchRoutesQuery } from '~/generated-types'
@@ -10,6 +11,7 @@ import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
+  const { t } = useTranslation()
   const router = useRouter()
 
   const params = useSearchParams<{
@@ -55,7 +57,7 @@ function Page() {
       <Stack.Screen
         options={{
           headerShown: true,
-          headerTitle: 'Route Suggestions',
+          headerTitle: t('routes_search.title') || 'Routes Search',
         }}
       />
 
@@ -113,7 +115,9 @@ function Page() {
               ellipsizeMode="tail"
               numberOfLines={1}
             >
-              {originPlaceName || 'Where are you going from?'}
+              {originPlaceName ||
+                t('routes_search.from_placeholder') ||
+                'Where are you going from?'}
             </Text>
             <View
               style={{
@@ -133,7 +137,7 @@ function Page() {
                   color: COLORS['french-vanilla'][500],
                 }}
               >
-                From
+                {t('routes_search.from') || 'From'}
               </Text>
             </View>
           </Pressable>
@@ -213,7 +217,9 @@ function Page() {
                 ellipsizeMode="tail"
                 numberOfLines={1}
               >
-                {destinationPlaceName || 'Where are you going to?'}
+                {destinationPlaceName ||
+                  t('routes_search.to_placeholder') ||
+                  'Where are you going to?'}
               </Text>
               <View
                 style={{
@@ -233,7 +239,7 @@ function Page() {
                     color: COLORS['french-vanilla'][500],
                   }}
                 >
-                  To
+                  {t('routes_search.to') || 'To'}
                 </Text>
               </View>
             </View>

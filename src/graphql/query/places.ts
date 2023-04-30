@@ -94,8 +94,8 @@ export const GetNearbyPlaces = gql`
   ${LOCATION_FIELDS}
 
   query GetNearbyPlaces(
-    $lat: Float!
-    $lng: Float!
+    $lat: String!
+    $lng: String!
     $radius: Float!
     $limit: Float = 100
     $type: [PLACE_TYPES!]

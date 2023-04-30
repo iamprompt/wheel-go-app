@@ -17,6 +17,7 @@ import {
   useGetNearbyPlacesLazyQuery,
   useGetPlaceByIdQuery,
 } from '~/generated-types'
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 
 interface PlaceExploreModalProps {
   onClose: () => void
@@ -46,8 +47,8 @@ export function PlaceExploreModal({
 
     getNearbyPlaces({
       variables: {
-        lat: placeData.getPlaceById.location.lat,
-        lng: placeData.getPlaceById.location.lng,
+        lat: placeData.getPlaceById.location.lat.toString(),
+        lng: placeData.getPlaceById.location.lng.toString(),
         radius: 1000,
         limit: 3,
         exclude: [placeId],
@@ -140,7 +141,10 @@ export function PlaceExploreModal({
               color: COLORS.white,
             }}
           >
-            {placeData.getPlaceById.name?.th}
+            {getDisplayTextFromCurrentLanguage({
+              en: placeData.getPlaceById.name?.en,
+              th: placeData.getPlaceById.name?.th,
+            })}
           </Text>
         </View>
         <View
@@ -290,7 +294,10 @@ export function PlaceExploreModal({
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {place.name?.th}
+                    {getDisplayTextFromCurrentLanguage({
+                      en: place.name?.en,
+                      th: place.name?.th,
+                    })}
                   </Text>
                 </View>
                 <View>

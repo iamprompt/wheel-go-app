@@ -160,8 +160,8 @@ function Page() {
       variables: {
         input: {
           paths: trace.paths.map((rec) => ({
-            lat: rec.lat,
-            lng: rec.lng,
+            lat: rec.lat.toString(),
+            lng: rec.lng.toString(),
           })),
           duration,
           distance,

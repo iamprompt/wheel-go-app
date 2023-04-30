@@ -274,6 +274,11 @@ export default function Page() {
                 </Text>
                 <View>
                   {section.items.map(({ editable = true, ...item }, index) => {
+                    let value = profileEdit[item.key]
+                    if (item.i18nPrefix && value) {
+                      value = t(`${item.i18nPrefix}${value}`) || value
+                    }
+
                     return (
                       <Pressable
                         key={`setting-sections-${sectionIndex}-${section.name}-item-${item.name}`}
@@ -322,13 +327,7 @@ export default function Page() {
                                 numberOfLines={1}
                                 ellipsizeMode="tail"
                               >
-                                {t(
-                                  item.i18nPrefix
-                                    ? `${item.i18nPrefix}${
-                                        profileEdit[item.key]
-                                      }`
-                                    : profileEdit[item.key] || ''
-                                )}
+                                {value}
                               </Text>
                               <MaterialIcons
                                 name="chevron_right"

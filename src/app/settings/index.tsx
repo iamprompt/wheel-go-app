@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
 import { Alert, Image, Pressable, ScrollView, Text, View } from 'react-native'
 import * as Linking from 'expo-linking'
+import * as Application from 'expo-application'
 import { useTranslation } from 'react-i18next'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -10,6 +11,7 @@ import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { usePreferences } from '~/context/usePreferences'
 import Button, { ButtonVariant } from '~/components/Button'
+import { useAuth } from '~/context/useAuth'
 
 interface SettingItem {
   name: string
@@ -26,6 +28,7 @@ interface SettingSection {
 }
 
 export default function App() {
+  const { user } = useAuth()
   const { t } = useTranslation()
   const { appLanguage } = usePreferences()
   const router = useRouter()
@@ -69,7 +72,7 @@ export default function App() {
           {
             name: 'version',
             label: 'settings.version',
-            value: '0.0.1',
+            value: `${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`,
           },
           {
             name: 'copyright',
@@ -223,20 +226,22 @@ export default function App() {
         </View>
       </View>
 
-      <View
-        style={{
-          padding: 16,
-          marginTop: 32,
-        }}
-      >
-        <Button
-          label={t('settings.delete_account_cta')}
-          variant={ButtonVariant.Secondary}
-          onPress={() => {
-            Alert.alert(t('settings.delete_account_cta')!)
+      {user ? (
+        <View
+          style={{
+            padding: 16,
+            marginTop: 32,
           }}
-        />
-      </View>
+        >
+          <Button
+            label={t('settings.delete_account_cta')}
+            variant={ButtonVariant.Secondary}
+            onPress={() => {
+              Alert.alert(t('settings.delete_account_cta')!)
+            }}
+          />
+        </View>
+      ) : null}
     </ScrollView>
   )
 }

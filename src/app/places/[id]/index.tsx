@@ -43,8 +43,10 @@ import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { chunk } from '~/utils/array'
 import { FacilityRatingTag } from '~/const/reviews'
 import { Tag } from '~/components/common/Tag'
+import { useAuth } from '~/context/useAuth'
 
 function Page() {
+  const { user } = useAuth()
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
   const { id } = useSearchParams<{ id: string }>()
@@ -131,32 +133,38 @@ function Page() {
           headerStyle: {
             backgroundColor: headerColor,
           },
-          headerRight: () => (
-            <Pressable
-              onPress={async () => {
-                setIsFavorite(!isFavorite)
-                if (isFavorite) {
-                  await removeFavorites({
-                    variables: {
-                      placeId: id!,
-                    },
-                  })
-                } else {
-                  await addFavorites({
-                    variables: {
-                      placeId: id!,
-                    },
-                  })
-                }
-              }}
-            >
-              <MaterialIcons
-                name={isFavorite ? 'favorite' : 'favorite_border'}
-                size={24}
-                color={COLORS.black}
-              />
-            </Pressable>
-          ),
+          headerRight: () => {
+            if (!user) {
+              return null
+            }
+
+            return (
+              <Pressable
+                onPress={async () => {
+                  setIsFavorite(!isFavorite)
+                  if (isFavorite) {
+                    await removeFavorites({
+                      variables: {
+                        placeId: id!,
+                      },
+                    })
+                  } else {
+                    await addFavorites({
+                      variables: {
+                        placeId: id!,
+                      },
+                    })
+                  }
+                }}
+              >
+                <MaterialIcons
+                  name={isFavorite ? 'favorite' : 'favorite_border'}
+                  size={24}
+                  color={COLORS.black}
+                />
+              </Pressable>
+            )
+          },
         }}
       />
 
@@ -451,6 +459,7 @@ function Page() {
                     {row.map(([key, value]) => {
                       return (
                         <Tag
+                          key={`accessibility-rating-tag-${key}`}
                           fullWidth
                           textSize={12}
                           height={32}
@@ -483,9 +492,12 @@ function Page() {
               })}
             </View>
           )}
-          <HorizontalDivider />
-
-          <ReviewHereButton placeId={id} />
+          {user ? (
+            <>
+              <HorizontalDivider />
+              <ReviewHereButton placeId={id} />
+            </>
+          ) : null}
         </View>
 
         <HorizontalDivider height={12} />

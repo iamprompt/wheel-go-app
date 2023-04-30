@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
+import type { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
 import type { Place_Types } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface CategoryLabelProps {
-  name?: Place_Types
+  name?: Place_Types | SURROUNDING_CONDITIONS
 }
 
 export function CategoryLabel({ name }: CategoryLabelProps) {

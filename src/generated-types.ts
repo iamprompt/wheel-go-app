@@ -262,8 +262,8 @@ export type Location = {
 };
 
 export type LocationInput = {
-  lat?: InputMaybe<Scalars['Float']>;
-  lng?: InputMaybe<Scalars['Float']>;
+  lat?: InputMaybe<Scalars['String']>;
+  lng?: InputMaybe<Scalars['String']>;
 };
 
 export type Media = {
@@ -838,8 +838,8 @@ export type GetPlaceByIdQueryVariables = Exact<{
 export type GetPlaceByIdQuery = { __typename?: 'Query', getPlaceById: { __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, address?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, location?: { __typename?: 'Location', lat: number, lng: number } | null, images?: Array<{ __typename?: 'Media', id: string, url?: string | null, width?: number | null, height?: number | null }> | null, metadata?: { __typename?: 'PlaceMetadata', phone?: string | null, website?: string | null, busLines?: Array<string> | null, tramLines?: Array<string> | null, accessibility?: Accessibility_Status | null } | null }, getRatingSummaryByPlaceId: { __typename?: 'RatingSummary', id: string, overall: number, reviewCount: number, tags: Array<{ __typename?: 'RatingTagCount', tag: string, count: number }>, facilities: { __typename?: 'FacilitiesAvailability', RAMP?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ASSISTANCE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, TOILET?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, ELEVATOR?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, PARKING?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null, SURFACE?: { __typename?: 'FacilityAvailability', status: Facility_Status, rating: number } | null } } };
 
 export type GetNearbyPlacesQueryVariables = Exact<{
-  lat: Scalars['Float'];
-  lng: Scalars['Float'];
+  lat: Scalars['String'];
+  lng: Scalars['String'];
   radius: Scalars['Float'];
   limit?: InputMaybe<Scalars['Float']>;
   type?: InputMaybe<Array<Place_Types> | Place_Types>;
@@ -1566,7 +1566,7 @@ export type GetPlaceByIdQueryHookResult = ReturnType<typeof useGetPlaceByIdQuery
 export type GetPlaceByIdLazyQueryHookResult = ReturnType<typeof useGetPlaceByIdLazyQuery>;
 export type GetPlaceByIdQueryResult = Apollo.QueryResult<GetPlaceByIdQuery, GetPlaceByIdQueryVariables>;
 export const GetNearbyPlacesDocument = gql`
-    query GetNearbyPlaces($lat: Float!, $lng: Float!, $radius: Float!, $limit: Float = 100, $type: [PLACE_TYPES!], $exclude: [String!]) {
+    query GetNearbyPlaces($lat: String!, $lng: String!, $radius: Float!, $limit: Float = 100, $type: [PLACE_TYPES!], $exclude: [String!]) {
   getPlaces(
     options: {location: {lat: $lat, lng: $lng}, radius: $radius, limit: $limit, types: $type, exclude: $exclude}
   ) {

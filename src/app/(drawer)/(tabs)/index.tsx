@@ -27,6 +27,7 @@ import { TransportExploreModal } from '~/components/TransportExploreModal'
 import { PlaceExploreModal } from '~/components/PlaceExploreModal'
 import { CurbcutExploreModal } from '~/components/CurbcutExploreModal'
 import { useAuth } from '~/context/useAuth'
+import { NonTraceUserModal } from '~/components/NonUserTraceModal'
 
 export default function App() {
   const { user } = useAuth()
@@ -37,6 +38,9 @@ export default function App() {
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
   const [selectedPlaceType, setSelectedPlaceType] = useState<Place_Types>()
   const [isModalVisible, setModalVisible] = useState(false)
+
+  const [isNonUserTraceModalVisible, setIsNonUserTraceModalVisible] =
+    useState(false)
 
   const [getSelectedPlace, { data: place }] = useGetPlaceByIdLazyQuery()
 
@@ -84,8 +88,8 @@ export default function App() {
 
       const { data } = await getNearbyPlaces({
         variables: {
-          lat: latitude,
-          lng: longitude,
+          lat: latitude.toString(),
+          lng: longitude.toString(),
           radius: 2000,
           limit: 1,
           type: [Place_Types.Building, Place_Types.Food, Place_Types.Cafe],
@@ -154,20 +158,29 @@ export default function App() {
             marginHorizontal: 16,
           }}
         >
-          {user ? (
-            <View
-              style={{
-                alignSelf: 'center',
-                marginBottom: 16,
+          <View
+            style={{
+              alignSelf: 'center',
+              marginBottom: 16,
+            }}
+          >
+            <TraceCTAButton
+              onPress={() => {
+                user
+                  ? router.push('/trace')
+                  : setIsNonUserTraceModalVisible(true)
               }}
-            >
-              <TraceCTAButton
-                onPress={() => {
-                  router.push('/tracing')
+            />
+            {!user ? (
+              <Modal
+                modal={NonTraceUserModal}
+                isVisible={isNonUserTraceModalVisible}
+                onClose={() => {
+                  setIsNonUserTraceModalVisible(false)
                 }}
               />
-            </View>
-          ) : null}
+            ) : null}
+          </View>
 
           {selectedPlaceId !== null &&
           selectedPlaceType !== Place_Types.Curbcut ? (

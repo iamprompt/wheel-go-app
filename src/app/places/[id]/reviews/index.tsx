@@ -7,6 +7,7 @@ import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { ReviewItem } from '~/components/ReviewItem'
 import { FACILITIES } from '~/const/facility'
+import { useAuth } from '~/context/useAuth'
 import { useGetReviewsByPlaceIdQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
@@ -14,6 +15,7 @@ import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
+  const { user } = useAuth()
   const router = useRouter()
   const { t } = useTranslation()
   const insets = useSafeAreaInsets()
@@ -31,28 +33,33 @@ function Page() {
         options={{
           title: t('places.all_reviews') || '',
           headerShown: true,
-          headerRight: () => (
-            <Pressable
-              onPress={() => {
-                router.push(`/places/${placeId}/reviews/new`)
-              }}
-            >
-              <MaterialIcons name="add" size={24} />
-            </Pressable>
-          ),
+          headerRight: () =>
+            user ? (
+              <Pressable
+                onPress={() => {
+                  router.push(`/places/${placeId}/reviews/new`)
+                }}
+              >
+                <MaterialIcons name="add" size={24} />
+              </Pressable>
+            ) : null,
         }}
       />
 
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingVertical: 24,
-        }}
-      >
-        <ReviewHereButton placeId={placeId!} />
-      </View>
+      {user ? (
+        <>
+          <View
+            style={{
+              paddingHorizontal: 16,
+              paddingVertical: 24,
+            }}
+          >
+            <ReviewHereButton placeId={placeId!} />
+          </View>
 
-      <HorizontalDivider height={12} />
+          <HorizontalDivider height={12} />
+        </>
+      ) : null}
 
       <View
         style={{

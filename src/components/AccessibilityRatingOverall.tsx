@@ -67,7 +67,11 @@ export function AccessibilityRatingOverall({
         ) : null}
       </View>
       <VerticalDivider height={reviews ? 40 : 24} />
-      <View>
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
         <Text
           style={{
             fontFamily: FONTS.LSTH_REGULAR,

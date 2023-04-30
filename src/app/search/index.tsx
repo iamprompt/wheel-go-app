@@ -12,6 +12,7 @@ import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { NearbyPlaces } from '~/components/NearbyPlaces'
 import { PlaceItem } from '~/components/PlaceItem'
+import type { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
 import { Place_Types, useSearchPlacesLazyQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
@@ -145,16 +146,21 @@ function Page() {
                 gap: 12,
               }}
             >
-              {Object.keys(PLACE_TYPES_META).map((key) => (
-                <Pressable
-                  key={key}
-                  onPress={() => {
-                    console.log(key)
-                  }}
-                >
-                  <CategoryLabel name={key as keyof typeof PLACE_TYPES_META} />
-                </Pressable>
-              ))}
+              {Object.entries(PLACE_TYPES_META)
+                .filter(([, { type }]) => type === 'place')
+                .map(([key]) => (
+                  <Pressable
+                    key={key}
+                    onPress={() => {
+                      console.log(key)
+                      router.push(`/search/category/${key}`)
+                    }}
+                  >
+                    <CategoryLabel
+                      name={key as Place_Types | SURROUNDING_CONDITIONS}
+                    />
+                  </Pressable>
+                ))}
             </View>
           </View>
           <HorizontalDivider />
