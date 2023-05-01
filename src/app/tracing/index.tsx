@@ -203,6 +203,7 @@ function Page() {
         showCurrentLocation
         showPreferences
         paddingControl={72}
+        routes={false}
       >
         {/* Status Indicator */}
         <TracingStatusIndicator

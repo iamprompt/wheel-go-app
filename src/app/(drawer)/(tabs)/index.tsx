@@ -170,7 +170,7 @@ export default function App() {
             <TraceCTAButton
               onPress={() => {
                 user
-                  ? router.push('/trace')
+                  ? router.push('/tracing')
                   : setIsNonUserTraceModalVisible(true)
               }}
             />
