@@ -158,6 +158,13 @@
     "facilities_details": "Facilities Details",
     "all_reviews": "Reviews"
   },
+  "routes_search": {
+    "title": "Route Suggestion",
+    "from": "From",
+    "to": "To",
+    "from_placeholder": "Where are you from?",
+    "to_placeholder": "Where are you going to?"
+  },
   "profile": {
     "edit_profile": "Edit Profile",
     "my_summary": "Total Activity",
