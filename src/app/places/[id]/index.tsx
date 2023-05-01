@@ -285,7 +285,8 @@ function Page() {
               label={t('places.contact')}
               icon="call"
               onPress={() => {
-                metadata?.phone && Linking.openURL(`tel:${metadata.phone}`)
+                metadata?.phone &&
+                  Linking.openURL(`tel:${metadata.phone.replace(/-\(\)/g, '')}`)
               }}
             />
             <IconActionButton

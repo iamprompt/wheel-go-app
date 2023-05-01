@@ -20,6 +20,7 @@
     "details": "Detail"
   },
   "auth": {
+    "dont_have_account": "Don't have an account?",
     "email": "Email",
     "email_placeholder": "Your email",
     "login": "Sign in",
@@ -30,9 +31,31 @@
     "page_not_signed_in": "You are not signed in",
     "password": "Password",
     "password_placeholder": "********",
-    "sign_in": "Sign in",
-    "dont_have_account": "Don't have an account?",
-    "register": "Register"
+    "register": {
+      "confirm_password": "Confirm Password",
+      "confirm_password_placeholder": "********",
+      "consent": "Terms and Conditions",
+      "consent_predescription": "By clicking Register, you agree to our",
+      "email": "Email",
+      "email_placeholder": "Your email",
+      "equipment": "Equipment Type",
+      "equipment_placeholder": "Your equipment type",
+      "firstname": "First name",
+      "firstname_placeholder": "Your first name",
+      "impairment_level": "Impairment Level",
+      "impairment_level_placeholder": "Your impairment level",
+      "lastname": "Last name",
+      "lastname_placeholder": "Your last name",
+      "password": "Password",
+      "password_placeholder": "********",
+      "register_button": "Register",
+      "register_description": "To create more universal environment together",
+      "register_title": "Register",
+      "username": "Username",
+      "username_placeholder": "Your username"
+    },
+    "register_cta": "Register",
+    "sign_in": "Sign in"
   },
   "badges": {
     "coming_soon": "Coming Soon",
@@ -51,14 +74,15 @@
   },
   "button": {
     "cancel": "Cancel",
+    "close": "Close",
     "confirm": "Confirm",
     "done": "Done",
     "go": "Go",
     "ok": "OK",
     "save": "Save",
+    "sign_in": "Sign in",
     "skip": "Skip",
-    "stop": "Stop",
-    "close": "Close"
+    "stop": "Stop"
   },
   "categories": {
     "BUILDING": "Building",
@@ -68,33 +92,39 @@
     "INCIDENT": "Incident",
     "PARK": "Park",
     "PARKING": "Parking",
+    "RAMP": "Ramp",
     "RESIDENCE": "Residence",
+    "ROUTE": "Route",
     "SPORT": "Sport",
     "TOILET": "Toilet",
-    "TRANSPORT": "Transport",
-    "RAMP": "Ramp"
+    "TRANSPORT": "Transport"
+  },
+  "equipment": {
+    "electric_wheelchair": "Electric Wheelchair",
+    "manual_wheelchair": "Manual Wheelchair",
+    "none": "None"
   },
   "explore": {
+    "curbcut_modal": {
+      "accessible_label": "This curb cut is easy to access",
+      "broken_label": "This curb cut is broken",
+      "need_assistance_label": "You need help to use this curb cut"
+    },
     "search_route_placeholder": "Find accessible routes?",
     "trace_cta_button": "Trace your journey",
     "transport_modal": {
       "accessible_label": "This stop is accessible",
-      "inaccessible_label": "This stop is inaccessible",
       "bus_lines": {
         "title": "Accessible Bus Lines"
       },
+      "inaccessible_label": "This stop is inaccessible",
       "tram_lines": {
-        "title": "Accessible Tram Lines",
-        "red": "Red",
         "blue": "Blue",
         "green": "Green",
+        "red": "Red",
+        "title": "Accessible Tram Lines",
         "yellow": "Yellow"
       }
-    },
-    "curbcut_modal": {
-      "accessible_label": "This curb cut is easy to access",
-      "need_assistance_label": "You need help to use this curb cut",
-      "broken_label": "This curb cut is broken"
     }
   },
   "facilities": {
@@ -102,25 +132,24 @@
     "elevator": "Elevator",
     "parking": "Parking",
     "ramp": "Ramp",
+    "spot_no": "Spot {{number}}:",
     "surface": "Surface",
-    "toilet": "Toilet",
-    "spot_no": "Spot {{number}}:"
+    "toilet": "Toilet"
+  },
+  "faq": {
+    "contact_us": "Can't find an answer to your questions? Feel free to contact us at",
+    "contact_us_email": "wheelgo.ict.mahidol@gmail.com"
   },
   "helpModal": {
     "description": "You will be redirected to Mahidol Disability Service Support",
     "title": "Need a help?"
   },
   "impairment_level": {
+    "dependent": "4 - Completely dependent",
     "independent": "0 - Completely independent",
-    "require_equipment": "1 - Requires use of equipment or device",
     "require_assistance": "2 - Requires assistance from another person",
-    "require_equipment_and_assistance": "3 - Requires help from person/equipment",
-    "dependent": "4 - Completely dependent"
-  },
-  "equipment": {
-    "none": "None",
-    "manual_wheelchair": "Manual Wheelchair",
-    "electric_wheelchair": "Electric Wheelchair"
+    "require_equipment": "1 - Requires use of equipment or device",
+    "require_equipment_and_assistance": "3 - Requires help from person/equipment"
   },
   "map_prefs_modal": {
     "conditions": "Surrounding Conditions",
@@ -128,6 +157,10 @@
     "places": "Places",
     "show_all": "Show All",
     "title": "Display Setting"
+  },
+  "non_user_trace_modal": {
+    "description": "คุณสามารถใช้ฟีเจอร์การบันทึกการเดินทางได้\nเมื่อคุณเข้าสู่ระบบแล้วเท่านั้น",
+    "title": "ต้องการบันทึกการเดินทาง?"
   },
   "page": {
     "announcements": "Announcements",
@@ -144,7 +177,9 @@
   "places": {
     "accessibility_rating_title": "Accessibility Rating",
     "address": "Address",
+    "all_reviews": "Reviews",
     "contact": "Contact",
+    "facilities_details": "Facilities Details",
     "facilities_title": "Facilities",
     "nearby_places": "Nearby Places",
     "review_here": "Review Here",
@@ -154,18 +189,22 @@
     "see_reviews": "See Reviews",
     "share": "Share",
     "show_on_map": "Show on Map",
-    "website": "Website",
-    "facilities_details": "Facilities Details",
-    "all_reviews": "Reviews"
-  },
-  "routes_search": {
-    "title": "Route Suggestion",
-    "from": "From",
-    "to": "To",
-    "from_placeholder": "Where are you from?",
-    "to_placeholder": "Where are you going to?"
+    "website": "Website"
   },
   "profile": {
+    "edit": {
+      "account": "Account",
+      "basic_info": "Basic Information",
+      "birthdate": "Birthdate",
+      "email": "Email",
+      "equipment": "Equipment",
+      "firstname": "Name",
+      "impairment_level": "Impairment Level",
+      "lastname": "Lastname",
+      "success": "Successfully updated your profile!",
+      "title": "Edit Profile",
+      "username": "Username"
+    },
     "edit_profile": "Edit Profile",
     "my_summary": "Total Activity",
     "summary_details": {
@@ -174,9 +213,6 @@
       "total_places": "Places Visited",
       "total_reviews": "Reviews",
       "total_routes": "Contributed Routes"
-    },
-    "edit": {
-      "title": "Edit Profile"
     }
   },
   "records": {
@@ -216,14 +252,21 @@
     },
     "images": "Images",
     "images_limit_description": "Maximum 3 images.",
+    "no_reviews": "This place has no reviews yet.",
     "rate_this_place": "Rate this place",
     "see_all_reviews": "See all reviews",
     "submit_review": "Submit",
-    "upload_images": "Upload images",
-    "no_reviews": "This place has no reviews yet."
+    "upload_images": "Upload images"
   },
   "routes": {
     "route_title": "Route {{id}}"
+  },
+  "routes_search": {
+    "from": "From",
+    "from_placeholder": "Where are you from?",
+    "title": "Route Suggestion",
+    "to": "To",
+    "to_placeholder": "Where are you going to?"
   },
   "search": {
     "categories": "Categories",
@@ -251,7 +294,7 @@
     },
     "pause": "Pause",
     "pause_popup": {
-      "description": "continue when you’re ready",
+      "description": "continue when you're ready",
       "title": "Take a break"
     },
     "resume": "Resume",
@@ -286,9 +329,5 @@
     "route": "Route",
     "routes": "Routes",
     "seconds": "Seconds"
-  },
-  "faq": {
-    "contact_us": "Can't find an answer to your questions? Feel free to contact us at",
-    "contact_us_email": "wheelgo.ict.mahidol@gmail.com"
   }
 }

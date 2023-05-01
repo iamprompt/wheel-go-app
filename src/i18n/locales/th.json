@@ -20,6 +20,7 @@
     "details": "รายละเอียด"
   },
   "auth": {
+    "dont_have_account": "ยังไม่มีบัญชี?",
     "email": "อีเมล",
     "email_placeholder": "อีเมลของคุณ",
     "login": "ลงชื่อเข้าใช้",
@@ -30,32 +31,31 @@
     "page_not_signed_in": "คุณยังไม่ได้ลงชื่อเข้าใช้",
     "password": "รหัสผ่าน",
     "password_placeholder": "********",
-    "sign_in": "ลงชื่อเข้าใช้",
-    "dont_have_account": "ยังไม่มีบัญชี?",
-    "register_cta": "ลงทะเบียน",
     "register": {
-      "register_title": "ลงทะเบียน",
-      "register_description": "เพื่อสร้างสิ่งแวดล้อมเพื่อคนทุกคนร่วมกัน",
-      "username": "ชื่อผู้ใช้",
-      "username_placeholder": "ชื่อผู้ใช้ของคุณ",
-      "email": "อีเมล",
-      "email_placeholder": "อีเมลของคุณ",
-      "password": "รหัสผ่าน",
-      "password_placeholder": "********",
       "confirm_password": "ยืนยันรหัสผ่าน",
       "confirm_password_placeholder": "********",
-      "firstname": "ชื่อ",
-      "firstname_placeholder": "ชื่อของคุณ",
-      "lastname": "นามสกุล",
-      "lastname_placeholder": "นามสกุลของคุณ",
-      "impairment_level": "ระดับความบกพร่อง",
-      "impairment_level_placeholder": "ระดับความบกพร่องของคุณ",
+      "consent": "ข้อกำหนดและเงื่อนไข",
+      "consent_predescription": "โดยการลงทะเบียน คุณยินยอมที่จะปฏิบัติตาม",
+      "email": "อีเมล",
+      "email_placeholder": "อีเมลของคุณ",
       "equipment": "อุปกรณ์ช่วยเหลือ",
       "equipment_placeholder": "อุปกรณ์ช่วยเหลือที่คุณใช้",
+      "firstname": "ชื่อ",
+      "firstname_placeholder": "ชื่อของคุณ",
+      "impairment_level": "ระดับความบกพร่อง",
+      "impairment_level_placeholder": "ระดับความบกพร่องของคุณ",
+      "lastname": "นามสกุล",
+      "lastname_placeholder": "นามสกุลของคุณ",
+      "password": "รหัสผ่าน",
+      "password_placeholder": "********",
       "register_button": "ลงทะเบียน",
-      "consent_predescription": "โดยการลงทะเบียน คุณยินยอมที่จะปฏิบัติตาม",
-      "consent": "ข้อกำหนดและเงื่อนไข"
-    }
+      "register_description": "เพื่อสร้างสิ่งแวดล้อมเพื่อคนทุกคนร่วมกัน",
+      "register_title": "ลงทะเบียน",
+      "username": "ชื่อผู้ใช้",
+      "username_placeholder": "ชื่อผู้ใช้ของคุณ"
+    },
+    "register_cta": "ลงทะเบียน",
+    "sign_in": "ลงชื่อเข้าใช้"
   },
   "badges": {
     "coming_soon": "เร็ว ๆ นี้",
@@ -74,26 +74,15 @@
   },
   "button": {
     "cancel": "ยกเลิก",
+    "close": "ปิด",
     "confirm": "ยืนยัน",
     "done": "เสร็จสิ้น",
     "go": "ไป",
     "ok": "ตกลง",
     "save": "บันทึก",
+    "sign_in": "ลงชื่อเข้าใช้",
     "skip": "ข้าม",
-    "stop": "หยุด",
-    "close": "ปิด",
-    "sign_in": "ลงชื่อเข้าใช้"
-  },
-  "non_user_trace_modal": {
-    "title": "ต้องการบันทึกการเดินทาง?",
-    "description": "คุณสามารถใช้ฟีเจอร์การบันทึกการเดินทางได้\nเมื่อคุณเข้าสู่ระบบแล้วเท่านั้น"
-  },
-  "routes_search": {
-    "title": "เส้นทางที่แนะนำ",
-    "from": "จาก",
-    "to": "ถึง",
-    "from_placeholder": "จุดเริ่มต้นของคุณ",
-    "to_placeholder": "สถานที่ที่คุณกำลังจะไป?"
+    "stop": "หยุด"
   },
   "categories": {
     "BUILDING": "อาคาร",
@@ -103,34 +92,39 @@
     "INCIDENT": "เหตุฉุกเฉิน",
     "PARK": "สวนสาธารณะ",
     "PARKING": "ที่จอดรถ",
+    "RAMP": "ทางลาด",
     "RESIDENCE": "ที่พักอาศัย",
+    "ROUTE": "เส้นทาง",
     "SPORT": "กีฬา",
     "TOILET": "ห้องน้ำ",
-    "TRANSPORT": "การขนส่ง",
-    "RAMP": "ทางลาด",
-    "ROUTE": "เส้นทาง"
+    "TRANSPORT": "การขนส่ง"
+  },
+  "equipment": {
+    "electric_wheelchair": "รถเข็นไฟฟ้า",
+    "manual_wheelchair": "รถเข็น",
+    "none": "ไม่มี"
   },
   "explore": {
+    "curbcut_modal": {
+      "accessible_label": "ทางลาดขนาดย่อมนี้สามารถเข้าถึงได้อย่างง่ายดาย",
+      "broken_label": "ทางลาดขนาดย่อมนี้ชำรุดโปรดระมัดระวังในการใช้งาน",
+      "need_assistance_label": "ต้องอาศัยความช่วยเหลือเพื่อที่จะใช้ทางลาดขนาดย่อมนี้"
+    },
     "search_route_placeholder": "ค้นหาเส้นทางแนะนำ ?",
     "trace_cta_button": "บันทึกการเดินทาง",
     "transport_modal": {
       "accessible_label": "จุดรอรถนี้สามารถเข้าถึงได้",
-      "inaccessible_label": "จุดรอรถนี้ไม่สามารถเข้าถึงได้",
       "bus_lines": {
         "title": "สายรถโดยสารประจำทาง"
       },
+      "inaccessible_label": "จุดรอรถนี้ไม่สามารถเข้าถึงได้",
       "tram_lines": {
-        "title": "สายรถราง",
-        "red": "สีแดง",
         "blue": "สีน้ำเงิน",
         "green": "สีเขียว",
+        "red": "สีแดง",
+        "title": "สายรถราง",
         "yellow": "สีเหลือง"
       }
-    },
-    "curbcut_modal": {
-      "accessible_label": "ทางลาดขนาดย่อมนี้สามารถเข้าถึงได้อย่างง่ายดาย",
-      "need_assistance_label": "ต้องอาศัยความช่วยเหลือเพื่อที่จะใช้ทางลาดขนาดย่อมนี้",
-      "broken_label": "ทางลาดขนาดย่อมนี้ชำรุดโปรดระมัดระวังในการใช้งาน"
     }
   },
   "facilities": {
@@ -138,25 +132,24 @@
     "elevator": "ลิฟต์โดยสาร",
     "parking": "ที่จอดรถ",
     "ramp": "ทางลาด",
+    "spot_no": "จุดที่ {{number}}:",
     "surface": "พื้นผิว",
-    "toilet": "ห้องน้ำ",
-    "spot_no": "จุดที่ {{number}}:"
+    "toilet": "ห้องน้ำ"
+  },
+  "faq": {
+    "contact_us": "ถ้าไม่เจอคำตอบสำหรับคำถามของคุณ? สามารถติดต่อผู้ดูแลได้ที่",
+    "contact_us_email": "wheelgo.ict.mahidol@gmail.com"
   },
   "helpModal": {
     "description": "คุณจะถูกนำไปที่หน่วยบริการสนับสนุนสำหรับนักศึกษาพิการ",
     "title": "ต้องการความช่วยเหลือ?"
   },
   "impairment_level": {
+    "dependent": "4 - ไม่สามารถช่วยเหลือตัวเองได้",
     "independent": "0 - สามารถช่วยเหลือตัวเองได้",
-    "require_equipment": "1 - ต้องอาศัยอุปกรณ์ในการช่วยเหลือ",
     "require_assistance": "2 - ต้องการความช่วยเหลือจากผู้อื่น",
-    "require_equipment_and_assistance": "3 - ต้องการความช่วยเหลือจากผู้อื่น/อุปกรณ์",
-    "dependent": "4 - ไม่สามารถช่วยเหลือตัวเองได้"
-  },
-  "equipment": {
-    "none": "ไม่มี",
-    "manual_wheelchair": "รถเข็น",
-    "electric_wheelchair": "รถเข็นไฟฟ้า"
+    "require_equipment": "1 - ต้องอาศัยอุปกรณ์ในการช่วยเหลือ",
+    "require_equipment_and_assistance": "3 - ต้องการความช่วยเหลือจากผู้อื่น/อุปกรณ์"
   },
   "map_prefs_modal": {
     "conditions": "วัตถุแวดล้อม",
@@ -164,6 +157,10 @@
     "places": "สถานที่",
     "show_all": "แสดงทั้งหมด",
     "title": "การตั้งค่าการแสดงผลแผนที่"
+  },
+  "non_user_trace_modal": {
+    "description": "This trace feature is available for the member only.\nPlease sign in to Wheel Go.",
+    "title": "Want to trace?"
   },
   "page": {
     "announcements": "ประกาศ",
@@ -180,7 +177,9 @@
   "places": {
     "accessibility_rating_title": "ระดับความเข้าถึง",
     "address": "ที่อยู่",
+    "all_reviews": "รีวิวทั้งหมด",
     "contact": "ติดต่อ",
+    "facilities_details": "ข้อมูลสิ่งอำนวยความสะดวก",
     "facilities_title": "สิ่งอำนวยความสะดวก",
     "nearby_places": "สถานที่ใกล้เคียง",
     "review_here": "ให้คะแนนที่นี่",
@@ -190,11 +189,22 @@
     "see_reviews": "ดูรีวิว",
     "share": "แชร์",
     "show_on_map": "โชว์บนแผนที่",
-    "website": "เว็บไซต์",
-    "facilities_details": "ข้อมูลสิ่งอำนวยความสะดวก",
-    "all_reviews": "รีวิวทั้งหมด"
+    "website": "เว็บไซต์"
   },
   "profile": {
+    "edit": {
+      "account": "บัญชี",
+      "basic_info": "ข้อมูลพื้นฐาน",
+      "birthdate": "วันเกิด",
+      "email": "อีเมล",
+      "equipment": "อุปกรณ์ช่วยเหลือ",
+      "firstname": "ชื่อ",
+      "impairment_level": "ระดับความบกพร่อง",
+      "lastname": "นามสกุล",
+      "success": "แก้ไขโปรไฟล์สำเร็จ",
+      "title": "แก้ไขโปรไฟล์",
+      "username": "ชื่อผู้ใช้"
+    },
     "edit_profile": "แก้ไขโปรไฟล์",
     "my_summary": "ภาพรวมของฉัน",
     "summary_details": {
@@ -203,19 +213,6 @@
       "total_places": "ไปเยี่ยมชมมาแล้ว",
       "total_reviews": "รีวิวมาแล้ว",
       "total_routes": "บันทึกการเดินทาง"
-    },
-    "edit": {
-      "title": "แก้ไขโปรไฟล์",
-      "username": "ชื่อผู้ใช้",
-      "email": "อีเมล",
-      "firstname": "ชื่อ",
-      "lastname": "นามสกุล",
-      "impairment_level": "ระดับความบกพร่อง",
-      "equipment": "อุปกรณ์ช่วยเหลือ",
-      "birthdate": "วันเกิด",
-      "basic_info": "ข้อมูลพื้นฐาน",
-      "account": "บัญชี",
-      "success": "แก้ไขโปรไฟล์สำเร็จ"
     }
   },
   "records": {
@@ -255,14 +252,21 @@
     },
     "images": "รูปภาพ",
     "images_limit_description": "สามารถอัพโหลดได้มากที่สุด 3 ภาพ",
+    "no_reviews": "ยังไม่มีรีวิว",
     "rate_this_place": "ให้คะแนนที่นี่",
     "see_all_reviews": "ดูรีวิวทั้งหมด",
     "submit_review": "ส่งรีวิว",
-    "upload_images": "อัปโหลดรูปภาพ",
-    "no_reviews": "ยังไม่มีรีวิว"
+    "upload_images": "อัปโหลดรูปภาพ"
   },
   "routes": {
     "route_title": "เส้นทาง {{id}}"
+  },
+  "routes_search": {
+    "from": "จาก",
+    "from_placeholder": "จุดเริ่มต้นของคุณ",
+    "title": "เส้นทางที่แนะนำ",
+    "to": "ถึง",
+    "to_placeholder": "สถานที่ที่คุณกำลังจะไป?"
   },
   "search": {
     "categories": "ประเภทสถานที่",
@@ -325,9 +329,5 @@
     "route": "เส้นทาง",
     "routes": "เส้นทาง",
     "seconds": "วินาที"
-  },
-  "faq": {
-    "contact_us": "ถ้าไม่เจอคำตอบสำหรับคำถามของคุณ? สามารถติดต่อผู้ดูแลได้ที่",
-    "contact_us_email": "wheelgo.ict.mahidol@gmail.com"
   }
 }

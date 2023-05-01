@@ -127,7 +127,7 @@ function Page() {
               fontSize: 16,
             }}
             returnKeyType="search"
-            placeholder="Explore new places"
+            placeholder={t('search.placeholder') || ''}
             onSubmitEditing={handleSearch}
             value={searchText}
             onChangeText={setSearchText}

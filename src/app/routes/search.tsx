@@ -1,6 +1,7 @@
 import { StackActions } from '@react-navigation/native'
 import { useNavigation, useRouter, useSearchParams } from 'expo-router'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type {
   NativeSyntheticEvent,
   TextInputSubmitEditingEventData,
@@ -20,6 +21,7 @@ import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
+  const { t } = useTranslation()
   const insets = useSafeAreaInsets()
   const router = useRouter()
   const navigation = useNavigation()
@@ -126,7 +128,7 @@ function Page() {
               fontSize: 16,
             }}
             returnKeyType="search"
-            placeholder="Explore new places"
+            placeholder={t('routes.search.placeholder') || ''}
             onSubmitEditing={handleSearch}
             value={searchText}
             onChangeText={setSearchText}
