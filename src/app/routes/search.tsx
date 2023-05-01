@@ -1,6 +1,6 @@
 import { StackActions } from '@react-navigation/native'
 import { useNavigation, useRouter, useSearchParams } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type {
   NativeSyntheticEvent,
   TextInputSubmitEditingEventData,
@@ -9,7 +9,10 @@ import { ScrollView, TextInput, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { PlaceItem } from '~/components/PlaceItem'
-import { useSearchPlacesQuery } from '~/generated-types'
+import {
+  useGetRatingSummaryLazyQuery,
+  useSearchPlacesQuery,
+} from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -54,6 +57,28 @@ function Page() {
       setQuery(searchText)
     }
   }, [searchText])
+
+  const [getRatings, { data: ratingData }] = useGetRatingSummaryLazyQuery()
+
+  const ratings = useMemo(() => {
+    return ratingData?.getRatingSummaryByPlaceIds.reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr.id]: curr.overall,
+      }),
+      {} as Record<string, number>
+    )
+  }, [data])
+
+  useEffect(() => {
+    if (data) {
+      getRatings({
+        variables: {
+          placeIds: [...new Set(data.getPlaces.map((p) => p.id))],
+        },
+      })
+    }
+  }, [data])
 
   useEffect(() => {
     if (q) {
@@ -145,9 +170,8 @@ function Page() {
                     th: place.name?.th,
                     en: place.name?.en,
                   })}
-                  rating={4.5}
+                  rating={ratings?.[place.id] || 0}
                   category={place.type!}
-                  date="2021-08-01"
                   onPress={() => {
                     navigation.dispatch(StackActions.pop(1))
                     router.replace({

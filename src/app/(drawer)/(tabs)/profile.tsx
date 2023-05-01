@@ -1,6 +1,7 @@
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { useState } from 'react'
+import type { ComponentProps } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -9,10 +10,10 @@ import { ExpProgressBar } from '~/components/ExpProgressBar'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { Modal } from '~/components/Modal'
 import { NotSignedIn } from '~/components/NotSignin'
-import { BADGES } from '~/const/badges'
 import { SUMMARY_DETAILS } from '~/const/profile'
 import { useAuth } from '~/context/useAuth'
 import {
+  useGetMyBadgesQuery,
   useGetMyExpQuery,
   useGetMyProfileQuery,
   useGetMyProfileSummaryQuery,
@@ -21,6 +22,7 @@ import type { GetMyProfileSummaryQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export default function App() {
@@ -34,12 +36,15 @@ export default function App() {
     fetchPolicy: 'no-cache',
   })
 
-  console.log(expData)
+  const { data: BadgeData } = useGetMyBadgesQuery()
+
+  const badges = useMemo(() => BadgeData?.getMyBadges || [], [BadgeData])
 
   const router = useRouter()
 
   const [isBadgeModalVisible, setIsBadgeModalVisible] = useState(false)
-  const [badgeToDisplay, setBadgeToDisplay] = useState<keyof typeof BADGES>()
+  const [badgeToDisplay, setBadgeToDisplay] =
+    useState<ComponentProps<typeof BadgeModal>['badge']>()
 
   if (!user || !profileData || (profileData && !profileData.me)) {
     return <NotSignedIn />
@@ -166,66 +171,93 @@ export default function App() {
             justifyContent: 'center',
           }}
         >
-          {['novice_navigator', 'master_reviewer', 'coming_soon'].map(
-            (badgeKey, index) => {
-              const badge = BADGES[badgeKey]
+          {badges.map((badge, index) => {
+            if (!badge) {
+              return null
+            }
 
-              if (!badge) {
-                return null
-              }
-
-              return (
-                <Pressable
-                  key={index}
+            return (
+              <Pressable
+                key={index}
+                style={{
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  setBadgeToDisplay({
+                    name: getDisplayTextFromCurrentLanguage({
+                      en: badge.badge.name.en,
+                      th: badge.badge.name.th,
+                    }),
+                    description: getDisplayTextFromCurrentLanguage({
+                      en: badge.badge.description.en,
+                      th: badge.badge.description.th,
+                    }),
+                    icon: badge.badge.icon || 'help-outline',
+                    color: badge.badge.color || COLORS.magenta[500],
+                    conditions:
+                      badge.badge.conditions?.map((condition) => {
+                        return {
+                          name: getDisplayTextFromCurrentLanguage({
+                            en: condition.name!.en,
+                            th: condition.name!.th,
+                          }),
+                          description: getDisplayTextFromCurrentLanguage({
+                            en: condition.description!.en,
+                            th: condition.description!.th,
+                          }),
+                          icon: condition.icon || 'help-outline',
+                          color: condition.color || COLORS.magenta[500],
+                        }
+                      }) || [],
+                  })
+                  setIsBadgeModalVisible(true)
+                }}
+              >
+                <View
                   style={{
-                    alignItems: 'center',
-                  }}
-                  onPress={() => {
-                    if (badge.modal !== false) {
-                      setBadgeToDisplay(badgeKey)
-                      setIsBadgeModalVisible(true)
-                    }
+                    borderColor: badge.badge.color || COLORS.magenta[500],
+                    borderWidth: 2,
+                    borderRadius: 28,
+                    padding: 8,
+                    width: 52,
+                    height: 52,
+                    marginBottom: 8,
                   }}
                 >
-                  <View
-                    style={{
-                      borderColor: badge.color,
-                      borderWidth: 2,
-                      borderRadius: 28,
-                      padding: 8,
-                      width: 52,
-                      height: 52,
-                      marginBottom: 8,
-                    }}
-                  >
-                    <MaterialIcons
-                      name={badge.icon}
-                      size={32}
-                      color={badge.color}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      fontFamily: FONTS.LSTH_BOLD,
-                      fontSize: 12,
-                      width: 80,
-                      textAlign: 'center',
-                      color: badge.color,
-                    }}
-                  >
-                    {t(`badges.${badgeKey}`)}
-                  </Text>
-                </Pressable>
-              )
-            }
-          )}
+                  <MaterialIcons
+                    name={
+                      (badge.badge.icon as ComponentProps<
+                        typeof MaterialIcons
+                      >['name']) || 'help-outline'
+                    }
+                    size={32}
+                    color={badge.badge.color || COLORS.magenta[500]}
+                  />
+                </View>
+                <Text
+                  style={{
+                    fontFamily: FONTS.LSTH_BOLD,
+                    fontSize: 12,
+                    width: 80,
+                    textAlign: 'center',
+                    color: badge.badge.color || COLORS.magenta[500],
+                  }}
+                >
+                  {getDisplayTextFromCurrentLanguage({
+                    en: badge.badge.name.en,
+                    th: badge.badge.name.th,
+                  })}
+                </Text>
+              </Pressable>
+            )
+          })}
         </View>
       </View>
       <Modal
         modal={BadgeModal}
         isVisible={isBadgeModalVisible}
         onClose={() => setIsBadgeModalVisible(false)}
-        badge={BADGES[badgeToDisplay!] || BADGES.coming_soon}
+        badge={badgeToDisplay}
       />
       {expData?.getMyExperiencePoint ? (
         <>

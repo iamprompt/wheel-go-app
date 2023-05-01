@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from 'expo-router'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ScrollView, Text, View } from 'react-native'
@@ -7,7 +7,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { PlaceItem } from '~/components/PlaceItem'
 import type { Place_Types } from '~/generated-types'
-import { useGetPlacesLazyQuery } from '~/generated-types'
+import {
+  useGetPlacesLazyQuery,
+  useGetRatingSummaryLazyQuery,
+} from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -23,6 +26,28 @@ function Page() {
   const { category } = useSearchParams<{ category: string }>()
 
   const [getPlaces, { data: placesData }] = useGetPlacesLazyQuery()
+
+  const [getRatings, { data: ratingData }] = useGetRatingSummaryLazyQuery()
+
+  const ratings = useMemo(() => {
+    return ratingData?.getRatingSummaryByPlaceIds.reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr.id]: curr.overall,
+      }),
+      {} as Record<string, number>
+    )
+  }, [ratingData])
+
+  useEffect(() => {
+    if (placesData) {
+      getRatings({
+        variables: {
+          placeIds: [...new Set(placesData.getPlaces.map((p) => p.id))],
+        },
+      })
+    }
+  }, [placesData])
 
   useEffect(() => {
     if (category) {
@@ -96,9 +121,8 @@ function Page() {
                   th: place.name?.th,
                   en: place.name?.en,
                 })}
-                rating={4.5}
+                rating={ratings?.[place.id] || 0}
                 category={place.type!}
-                date="2021-08-01"
                 onPress={() => {
                   router.push(`/places/${place.id}`)
                 }}

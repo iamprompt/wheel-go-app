@@ -60,6 +60,27 @@ export type AuthResponse = {
   refreshToken: Scalars['String'];
 };
 
+export type Badge = {
+  __typename?: 'Badge';
+  color?: Maybe<Scalars['String']>;
+  conditions?: Maybe<Array<BadgeCondition>>;
+  description: LanguageObject;
+  icon?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name: LanguageObject;
+};
+
+export type BadgeCondition = {
+  __typename?: 'BadgeCondition';
+  color?: Maybe<Scalars['String']>;
+  description?: Maybe<LanguageObject>;
+  filter?: Maybe<Array<Scalars['String']>>;
+  icon?: Maybe<Scalars['String']>;
+  name?: Maybe<LanguageObject>;
+  requiredCount?: Maybe<Scalars['Float']>;
+  type?: Maybe<Scalars['String']>;
+};
+
 export enum Concern_Types {
   Accessible = 'ACCESSIBLE',
   Hazard = 'HAZARD',
@@ -77,6 +98,24 @@ export type CreateAnnouncementInput = {
   tags?: InputMaybe<Array<Scalars['String']>>;
   title?: InputMaybe<LanguageObjectInput>;
   user?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateBadgeConditionInput = {
+  color?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<LanguageObjectInput>;
+  filter?: InputMaybe<Array<Scalars['String']>>;
+  icon?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<LanguageObjectInput>;
+  requiredCount?: InputMaybe<Scalars['Float']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateBadgeInput = {
+  color?: InputMaybe<Scalars['String']>;
+  conditions?: InputMaybe<Array<CreateBadgeConditionInput>>;
+  description: LanguageObjectInput;
+  icon?: InputMaybe<Scalars['String']>;
+  name: LanguageObjectInput;
 };
 
 export type CreateFacilityInput = {
@@ -290,12 +329,14 @@ export type Mutation = {
   __typename?: 'Mutation';
   addFavoritePlace: User;
   createAnnouncement: Announcement;
+  createBadge: Badge;
   createFacility: Facility;
   createPlace: Place;
   createReview: Review;
   createRoute: Route;
   createUser: User;
   deleteAnnouncement: Scalars['Boolean'];
+  deleteBadge: Badge;
   deleteFacility: Scalars['Boolean'];
   deletePlace: Scalars['Boolean'];
   deleteReview: Scalars['Boolean'];
@@ -305,6 +346,7 @@ export type Mutation = {
   register: AuthResponse;
   removeFavoritePlace: User;
   updateAnnouncement: Announcement;
+  updateBadge: Badge;
   updateFacility: Facility;
   updatePlace: Place;
   updateReview: Review;
@@ -321,6 +363,11 @@ export type MutationAddFavoritePlaceArgs = {
 
 export type MutationCreateAnnouncementArgs = {
   data: CreateAnnouncementInput;
+};
+
+
+export type MutationCreateBadgeArgs = {
+  data: CreateBadgeInput;
 };
 
 
@@ -350,6 +397,11 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationDeleteAnnouncementArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteBadgeArgs = {
   id: Scalars['String'];
 };
 
@@ -397,6 +449,12 @@ export type MutationRemoveFavoritePlaceArgs = {
 
 export type MutationUpdateAnnouncementArgs = {
   data: CreateAnnouncementInput;
+  id: Scalars['String'];
+};
+
+
+export type MutationUpdateBadgeArgs = {
+  data: CreateBadgeInput;
   id: Scalars['String'];
 };
 
@@ -471,6 +529,7 @@ export type Place = {
   location?: Maybe<Location>;
   metadata?: Maybe<PlaceMetadata>;
   name?: Maybe<LanguageObject>;
+  rating?: Maybe<Scalars['Float']>;
   status?: Maybe<Status>;
   type?: Maybe<Place_Types>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -497,11 +556,14 @@ export type Query = {
   __typename?: 'Query';
   getAnnouncementById: Announcement;
   getAnnouncements: Array<Announcement>;
+  getBadgeById: Badge;
+  getBadges: Array<Badge>;
   getFacilities: Array<Facility>;
   getFacilitiesByPlaceId: Array<Facility>;
   getFacilityById: Facility;
   getMedia: Array<Media>;
   getMediaById: Media;
+  getMyBadges: Array<UserBadge>;
   getMyExperiencePoint: ExperiencePoint;
   getMyReviews: Array<Review>;
   getMySummary: UserSummary;
@@ -509,6 +571,7 @@ export type Query = {
   getPlaceById: Place;
   getPlaces: Array<Place>;
   getRatingSummaryByPlaceId: RatingSummary;
+  getRatingSummaryByPlaceIds: Array<RatingSummary>;
   getReviewById: Review;
   getReviews: Array<Review>;
   getReviewsByPlaceId: Array<Review>;
@@ -563,6 +626,11 @@ export type QueryGetPlacesArgs = {
 
 export type QueryGetRatingSummaryByPlaceIdArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryGetRatingSummaryByPlaceIdsArgs = {
+  ids: Array<Scalars['String']>;
 };
 
 
@@ -710,6 +778,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
+  badges?: Maybe<Array<UserBadge>>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   firstname?: Maybe<Scalars['String']>;
@@ -720,6 +789,13 @@ export type User = {
   role?: Maybe<Roles>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   username?: Maybe<Scalars['String']>;
+};
+
+export type UserBadge = {
+  __typename?: 'UserBadge';
+  badge: Badge;
+  isSeen: Scalars['Boolean'];
+  timestamp: Scalars['DateTime'];
 };
 
 export type UserMetaInput = {
@@ -868,6 +944,13 @@ export type SearchPlacesQueryVariables = Exact<{
 
 export type SearchPlacesQuery = { __typename?: 'Query', getPlaces: Array<{ __typename?: 'Place', id: string, type?: Place_Types | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null }> };
 
+export type GetRatingSummaryQueryVariables = Exact<{
+  placeIds: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetRatingSummaryQuery = { __typename?: 'Query', getRatingSummaryByPlaceIds: Array<{ __typename?: 'RatingSummary', id: string, overall: number }> };
+
 export type GetMyReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -952,6 +1035,11 @@ export type GetMyExpQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetMyExpQuery = { __typename?: 'Query', getMyExperiencePoint: { __typename?: 'ExperiencePoint', level: number, point: number, nextLevelPoint: number } };
+
+export type GetMyBadgesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyBadgesQuery = { __typename?: 'Query', getMyBadges: Array<{ __typename?: 'UserBadge', badge: { __typename?: 'Badge', id: string, color?: string | null, icon?: string | null, name: { __typename?: 'LanguageObject', th?: string | null, en?: string | null }, description: { __typename?: 'LanguageObject', th?: string | null, en?: string | null }, conditions?: Array<{ __typename?: 'BadgeCondition', icon?: string | null, color?: string | null, name?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null, description?: { __typename?: 'LanguageObject', th?: string | null, en?: string | null } | null }> | null } }> };
 
 export const LanguageFieldsFragmentDoc = gql`
     fragment LanguageFields on LanguageObject {
@@ -1673,6 +1761,42 @@ export function useSearchPlacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type SearchPlacesQueryHookResult = ReturnType<typeof useSearchPlacesQuery>;
 export type SearchPlacesLazyQueryHookResult = ReturnType<typeof useSearchPlacesLazyQuery>;
 export type SearchPlacesQueryResult = Apollo.QueryResult<SearchPlacesQuery, SearchPlacesQueryVariables>;
+export const GetRatingSummaryDocument = gql`
+    query GetRatingSummary($placeIds: [String!]!) {
+  getRatingSummaryByPlaceIds(ids: $placeIds) {
+    id
+    overall
+  }
+}
+    `;
+
+/**
+ * __useGetRatingSummaryQuery__
+ *
+ * To run a query within a React component, call `useGetRatingSummaryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRatingSummaryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRatingSummaryQuery({
+ *   variables: {
+ *      placeIds: // value for 'placeIds'
+ *   },
+ * });
+ */
+export function useGetRatingSummaryQuery(baseOptions: Apollo.QueryHookOptions<GetRatingSummaryQuery, GetRatingSummaryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRatingSummaryQuery, GetRatingSummaryQueryVariables>(GetRatingSummaryDocument, options);
+      }
+export function useGetRatingSummaryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRatingSummaryQuery, GetRatingSummaryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRatingSummaryQuery, GetRatingSummaryQueryVariables>(GetRatingSummaryDocument, options);
+        }
+export type GetRatingSummaryQueryHookResult = ReturnType<typeof useGetRatingSummaryQuery>;
+export type GetRatingSummaryLazyQueryHookResult = ReturnType<typeof useGetRatingSummaryLazyQuery>;
+export type GetRatingSummaryQueryResult = Apollo.QueryResult<GetRatingSummaryQuery, GetRatingSummaryQueryVariables>;
 export const GetMyReviewsDocument = gql`
     query GetMyReviews {
   getMyReviews {
@@ -2229,3 +2353,57 @@ export function useGetMyExpLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetMyExpQueryHookResult = ReturnType<typeof useGetMyExpQuery>;
 export type GetMyExpLazyQueryHookResult = ReturnType<typeof useGetMyExpLazyQuery>;
 export type GetMyExpQueryResult = Apollo.QueryResult<GetMyExpQuery, GetMyExpQueryVariables>;
+export const GetMyBadgesDocument = gql`
+    query GetMyBadges {
+  getMyBadges {
+    badge {
+      id
+      name {
+        ...LanguageFields
+      }
+      description {
+        ...LanguageFields
+      }
+      color
+      icon
+      conditions {
+        name {
+          ...LanguageFields
+        }
+        description {
+          ...LanguageFields
+        }
+        icon
+        color
+      }
+    }
+  }
+}
+    ${LanguageFieldsFragmentDoc}`;
+
+/**
+ * __useGetMyBadgesQuery__
+ *
+ * To run a query within a React component, call `useGetMyBadgesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyBadgesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyBadgesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyBadgesQuery(baseOptions?: Apollo.QueryHookOptions<GetMyBadgesQuery, GetMyBadgesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyBadgesQuery, GetMyBadgesQueryVariables>(GetMyBadgesDocument, options);
+      }
+export function useGetMyBadgesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyBadgesQuery, GetMyBadgesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyBadgesQuery, GetMyBadgesQueryVariables>(GetMyBadgesDocument, options);
+        }
+export type GetMyBadgesQueryHookResult = ReturnType<typeof useGetMyBadgesQuery>;
+export type GetMyBadgesLazyQueryHookResult = ReturnType<typeof useGetMyBadgesLazyQuery>;
+export type GetMyBadgesQueryResult = Apollo.QueryResult<GetMyBadgesQuery, GetMyBadgesQueryVariables>;

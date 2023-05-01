@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type {
   NativeSyntheticEvent,
@@ -14,7 +14,11 @@ import { NearbyPlaces } from '~/components/NearbyPlaces'
 import { PlaceItem } from '~/components/PlaceItem'
 import type { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
-import { Place_Types, useSearchPlacesLazyQuery } from '~/generated-types'
+import {
+  Place_Types,
+  useGetRatingSummaryLazyQuery,
+  useSearchPlacesLazyQuery,
+} from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -34,6 +38,28 @@ function Page() {
   const [searchText, setSearchText] = useState<string>(q || '')
 
   const [searchOperation, { data }] = useSearchPlacesLazyQuery()
+
+  const [getRatings, { data: ratingData }] = useGetRatingSummaryLazyQuery()
+
+  const ratings = useMemo(() => {
+    return ratingData?.getRatingSummaryByPlaceIds.reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr.id]: curr.overall,
+      }),
+      {} as Record<string, number>
+    )
+  }, [ratingData])
+
+  useEffect(() => {
+    if (data) {
+      getRatings({
+        variables: {
+          placeIds: [...new Set(data.getPlaces.map((p) => p.id))],
+        },
+      })
+    }
+  }, [data])
 
   const handleSearch = async (
     e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
@@ -187,9 +213,8 @@ function Page() {
                     th: place.name?.th,
                     en: place.name?.en,
                   })}
-                  rating={4.5}
+                  rating={ratings?.[place.id] || 0}
                   category={place.type!}
-                  date="2021-08-01"
                   onPress={() => {
                     router.push(`/places/${place.id}`)
                   }}

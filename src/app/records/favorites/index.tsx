@@ -1,9 +1,13 @@
 import { Stack, useRouter } from 'expo-router'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { PlaceItem } from '~/components/PlaceItem'
-import { useGetMyFavoritePlacesQuery } from '~/generated-types'
+import {
+  useGetMyFavoritePlacesQuery,
+  useGetRatingSummaryLazyQuery,
+} from '~/generated-types'
 import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
@@ -15,6 +19,34 @@ export default function Page() {
   const { t } = useTranslation()
 
   const { data } = useGetMyFavoritePlacesQuery()
+
+  const [getRatings, { data: ratingData }] = useGetRatingSummaryLazyQuery()
+
+  const ratings = useMemo(() => {
+    return ratingData?.getRatingSummaryByPlaceIds.reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr.id]: curr.overall,
+      }),
+      {} as Record<string, number>
+    )
+  }, [ratingData])
+
+  useEffect(() => {
+    if (data) {
+      getRatings({
+        variables: {
+          placeIds: [
+            ...new Set(
+              data.me.metadata?.favorites
+                ?.filter((place) => place.place)
+                .map((p) => p.place!.id) || []
+            ),
+          ],
+        },
+      })
+    }
+  }, [data])
 
   return (
     <ScrollView style={[GlobalStyle.container]}>

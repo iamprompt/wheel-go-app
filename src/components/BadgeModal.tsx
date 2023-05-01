@@ -1,18 +1,33 @@
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
+import type { ComponentProps } from 'react'
 import { HorizontalDivider } from './HorizontalDivider'
-import type { BADGES } from '~/const/badges'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
-interface BadgeModalProps {
+export interface BadgeModalProps {
   onClose: () => void
-  badge: (typeof BADGES)[keyof typeof BADGES]
+  badge?: {
+    name: string
+    description: string
+    color: string
+    icon: string
+    conditions: {
+      name: string
+      description: string
+      icon: string
+      color: string
+    }[]
+  }
 }
 
 export function BadgeModal({ onClose, badge }: BadgeModalProps) {
   const { t } = useTranslation()
+
+  if (!badge) {
+    return null
+  }
 
   return (
     <View
@@ -61,7 +76,11 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
               alignItems: 'center',
             }}
           >
-            <MaterialIcons name={badge.icon} size={52} color={badge.color} />
+            <MaterialIcons
+              name={badge.icon as ComponentProps<typeof MaterialIcons>['name']}
+              size={52}
+              color={badge.color}
+            />
           </View>
           <Text
             style={{
@@ -72,7 +91,7 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
               color: badge.color,
             }}
           >
-            {t(badge.label)}
+            {badge.name}
           </Text>
           <Text
             style={{
@@ -85,7 +104,7 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
             {t(badge.description)}
           </Text>
         </View>
-        {badge.missions && badge.missions.length > 0 ? (
+        {badge.conditions && badge.conditions.length > 0 ? (
           <>
             <HorizontalDivider />
             <View
@@ -93,10 +112,10 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
                 paddingVertical: 12,
               }}
             >
-              {badge.missions?.map((mission) => {
+              {badge.conditions?.map((condition) => {
                 return (
                   <View
-                    key={mission.title}
+                    key={condition.name}
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
@@ -119,7 +138,11 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
                         }}
                       >
                         <MaterialIcons
-                          name={mission.icon}
+                          name={
+                            condition.icon as ComponentProps<
+                              typeof MaterialIcons
+                            >['name']
+                          }
                           size={24}
                           color={COLORS.magenta[500]}
                         />
@@ -131,7 +154,7 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
                             fontSize: 14,
                           }}
                         >
-                          {t(`badges.${mission.title}`)}
+                          {condition.name}
                         </Text>
                         <Text
                           style={{
@@ -140,13 +163,11 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
                             color: COLORS['french-vanilla'][500],
                           }}
                         >
-                          {t(`${mission.description}`, {
-                            count: mission.total || 0,
-                          })}
+                          {condition.description}
                         </Text>
                       </View>
                     </View>
-                    <View>
+                    {/* <View>
                       <Text
                         style={{
                           fontFamily: FONTS.LSTH_REGULAR,
@@ -154,7 +175,7 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
                           color: COLORS.magenta[500],
                         }}
                       >
-                        {mission.progress}
+                        {condition.progress}
                       </Text>
                       <HorizontalDivider />
                       <Text
@@ -164,9 +185,9 @@ export function BadgeModal({ onClose, badge }: BadgeModalProps) {
                           color: COLORS['french-vanilla'][500],
                         }}
                       >
-                        {mission.total}
+                        {condition.total}
                       </Text>
-                    </View>
+                    </View> */}
                   </View>
                 )
               })}

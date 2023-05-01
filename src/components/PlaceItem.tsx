@@ -20,7 +20,7 @@ export function PlaceItem({
   name: LanguageObject | string
   rating: number
   category: Place_Types
-  date: string
+  date?: string
   onPress: () => void
   borderTop?: boolean
   borderBottom?: boolean
@@ -88,16 +88,20 @@ export function PlaceItem({
             </Text>
             <MaterialIcons name="star" size={24} color={COLORS.warning[300]} />
           </View>
-          <VerticalDivider />
-          <Text
-            style={{
-              fontFamily: FONTS.LSTH_REGULAR,
-              fontSize: 10,
-              color: COLORS['french-vanilla'][500],
-            }}
-          >
-            {dayjs(date).format('DD MMMM YYYY')}
-          </Text>
+          {date ? (
+            <>
+              <VerticalDivider />
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_REGULAR,
+                  fontSize: 10,
+                  color: COLORS['french-vanilla'][500],
+                }}
+              >
+                {dayjs(date).format('DD MMMM YYYY')}
+              </Text>
+            </>
+          ) : null}
         </View>
       </View>
       <MaterialIcons

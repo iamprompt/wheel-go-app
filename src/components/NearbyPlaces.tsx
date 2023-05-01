@@ -1,15 +1,31 @@
 import { useRouter } from 'expo-router'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { PlaceItem } from './PlaceItem'
 import FONTS from '~/styles/fonts'
-import { Place_Types, useGetNearbyPlacesLazyQuery } from '~/generated-types'
+import {
+  Place_Types,
+  useGetNearbyPlacesLazyQuery,
+  useGetRatingSummaryLazyQuery,
+} from '~/generated-types'
 import { getCurrentPosition } from '~/utils/location'
 
 export function NearbyPlaces() {
   const { t } = useTranslation()
   const router = useRouter()
+
+  const [getRatings, { data: ratingData }] = useGetRatingSummaryLazyQuery()
+
+  const ratings = useMemo(() => {
+    return ratingData?.getRatingSummaryByPlaceIds.reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr.id]: curr.overall,
+      }),
+      {} as Record<string, number>
+    )
+  }, [ratingData])
 
   const [getNearbyPlaces, { data: nearbyPlacesData }] =
     useGetNearbyPlacesLazyQuery()
@@ -35,6 +51,14 @@ export function NearbyPlaces() {
       console.error(e)
     }
   }
+
+  useEffect(() => {
+    getRatings({
+      variables: {
+        placeIds: [...new Set(nearbyPlacesData?.getPlaces.map((p) => p.id))],
+      },
+    })
+  }, [nearbyPlacesData?.getPlaces])
 
   useEffect(() => {
     locateCurrentPosition()
@@ -65,9 +89,8 @@ export function NearbyPlaces() {
           <PlaceItem
             key={`nearby-${place.id}`}
             name={place.name!}
-            rating={4.5}
+            rating={ratings?.[place.id] || 0}
             category={place.type!}
-            date="2021-08-01"
             onPress={() => {
               router.push(`/places/${place.id}`)
             }}
