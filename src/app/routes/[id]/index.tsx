@@ -3,12 +3,14 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import type MapView from 'react-native-maps'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { WGMapView } from '~/components/WGMapView'
 import { WGPolyline } from '~/components/WGPolyline'
 import { useGetRouteByIdQuery } from '~/generated-types'
 
 function Page() {
   const { t } = useTranslation()
+  const inset = useSafeAreaInsets()
   const mapRef = useRef<MapView>(null)
   const { id } = useSearchParams<{
     id: string
@@ -59,6 +61,7 @@ function Page() {
         <WGMapView
           ref={mapRef}
           routes={false}
+          paddingControl={inset.top}
           showCurrentLocation
           mapElements={<WGPolyline coordinates={routes} />}
         />

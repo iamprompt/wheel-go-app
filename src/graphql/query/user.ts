@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 import { MEDIA_FIELDS } from '../fragment/media'
+import { LANGUAGE_FIELDS } from '../fragment/language'
 
 export const GetMyProfile = gql`
   ${MEDIA_FIELDS}
@@ -82,6 +83,36 @@ export const GetMyExp = gql`
       level
       point
       nextLevelPoint
+    }
+  }
+`
+
+export const GetMyBadges = gql`
+  ${LANGUAGE_FIELDS}
+
+  query GetMyBadges {
+    getMyBadges {
+      badge {
+        id
+        name {
+          ...LanguageFields
+        }
+        description {
+          ...LanguageFields
+        }
+        color
+        icon
+        conditions {
+          name {
+            ...LanguageFields
+          }
+          description {
+            ...LanguageFields
+          }
+          icon
+          color
+        }
+      }
     }
   }
 `

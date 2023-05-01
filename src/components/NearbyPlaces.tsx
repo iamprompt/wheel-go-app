@@ -11,7 +11,7 @@ export function NearbyPlaces() {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const [getNearbyPlaces, { data: { getPlaces: places = [] } = {} }] =
+  const [getNearbyPlaces, { data: nearbyPlacesData }] =
     useGetNearbyPlacesLazyQuery()
 
   const locateCurrentPosition = async () => {
@@ -19,8 +19,8 @@ export function NearbyPlaces() {
       const location = await getCurrentPosition()
       getNearbyPlaces({
         variables: {
-          lat: location.coords.latitude,
-          lng: location.coords.longitude,
+          lat: location.coords.latitude.toString(),
+          lng: location.coords.longitude.toString(),
           radius: 2000,
           type: [
             Place_Types.Building,
@@ -28,6 +28,7 @@ export function NearbyPlaces() {
             Place_Types.Cafe,
             Place_Types.Park,
           ],
+          limit: 3,
         },
       })
     } catch (e) {
@@ -39,7 +40,7 @@ export function NearbyPlaces() {
     locateCurrentPosition()
   }, [])
 
-  if (places.length === 0) {
+  if (!nearbyPlacesData || nearbyPlacesData?.getPlaces.length === 0) {
     return null
   }
 
@@ -60,7 +61,7 @@ export function NearbyPlaces() {
       </Text>
 
       <View>
-        {places.map((place) => (
+        {nearbyPlacesData?.getPlaces.map((place) => (
           <PlaceItem
             key={`nearby-${place.id}`}
             name={place.name!}

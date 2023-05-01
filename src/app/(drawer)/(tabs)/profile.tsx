@@ -87,28 +87,30 @@ export default function App() {
               borderWidth: 4,
             }}
           />
-          <View
-            style={{
-              position: 'absolute',
-              bottom: -10,
-              paddingHorizontal: 12,
-              paddingVertical: 4,
-              backgroundColor: COLORS.magenta[500],
-              borderRadius: 12,
-              borderColor: COLORS['french-vanilla'][300],
-              borderWidth: 1,
-            }}
-          >
-            <Text
+          {expData?.getMyExperiencePoint.level ? (
+            <View
               style={{
-                fontFamily: FONTS.LSTH_BOLD,
-                color: COLORS.white,
-                fontSize: 14,
+                position: 'absolute',
+                bottom: -10,
+                paddingHorizontal: 12,
+                paddingVertical: 4,
+                backgroundColor: COLORS.magenta[500],
+                borderRadius: 12,
+                borderColor: COLORS['french-vanilla'][300],
+                borderWidth: 1,
               }}
             >
-              Lvl.10
-            </Text>
-          </View>
+              <Text
+                style={{
+                  fontFamily: FONTS.LSTH_BOLD,
+                  color: COLORS.white,
+                  fontSize: 14,
+                }}
+              >
+                Lvl.{expData?.getMyExperiencePoint.level}
+              </Text>
+            </View>
+          ) : null}
         </View>
         <Text
           style={{
