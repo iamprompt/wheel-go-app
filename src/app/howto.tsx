@@ -30,10 +30,14 @@ function HowToPage({
   image,
   title,
   description,
+  width,
+  height,
 }: {
   image: ImageSourcePropType
   title: string
   description: string
+  width?: number
+  height?: number
 }) {
   return (
     <View
@@ -45,7 +49,13 @@ function HowToPage({
         paddingHorizontal: 16,
       }}
     >
-      <Image source={image} />
+      <Image
+        source={image}
+        style={{
+          width,
+          height,
+        }}
+      />
       <View
         style={{
           marginTop: 32,
@@ -161,6 +171,8 @@ function Page() {
             image={item.image}
             title={item.title}
             description={item.description}
+            width={item.width}
+            height={item.height}
           />
         ))}
       </ScrollView>

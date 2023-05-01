@@ -259,7 +259,10 @@
     "upload_images": "อัปโหลดรูปภาพ"
   },
   "routes": {
-    "route_title": "เส้นทาง {{id}}"
+    "route_title": "เส้นทาง {{id}}",
+    "search": {
+      "placeholder": "ค้นหาสถานที่"
+    }
   },
   "routes_search": {
     "from": "จาก",
@@ -270,7 +273,8 @@
   },
   "search": {
     "categories": "ประเภทสถานที่",
-    "near_me": "สถานที่ใกล้ฉัน"
+    "near_me": "สถานที่ใกล้ฉัน",
+    "placeholder": "หาสถานที่ใหม่ ๆ"
   },
   "settings": {
     "about": "เกี่ยวกับ",

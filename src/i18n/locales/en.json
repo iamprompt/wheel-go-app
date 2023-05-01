@@ -259,7 +259,10 @@
     "upload_images": "Upload images"
   },
   "routes": {
-    "route_title": "Route {{id}}"
+    "route_title": "Route {{id}}",
+    "search": {
+      "placeholder": "Search for a place"
+    }
   },
   "routes_search": {
     "from": "From",
@@ -270,7 +273,8 @@
   },
   "search": {
     "categories": "Categories",
-    "near_me": "Near Me"
+    "near_me": "Near Me",
+    "placeholder": "Explore new place"
   },
   "settings": {
     "about": "About",
