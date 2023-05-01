@@ -8,6 +8,7 @@ import {
 } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { View } from 'react-native'
+import { useRouter } from 'expo-router'
 import { Modal } from './Modal'
 import { MapPrefsModal } from './MapPrefsModal'
 import { WGMapMarker } from './WGMapMarker'
@@ -54,6 +55,7 @@ export const WGMapView = forwardRef<
     },
     ref
   ) => {
+    const router = useRouter()
     const mapRef = useRef<MapView>(null)
     const { mapViewPreferences } = usePreferences()
     const [isPrefsModalVisible, setPrefsModalVisible] = useState(false)
@@ -179,6 +181,9 @@ export const WGMapView = forwardRef<
                   key={announcement.id}
                   coordinate={announcement.location}
                   type={SURROUNDING_CONDITIONS.Incident}
+                  onPress={() => {
+                    router.push(`/announcements/${announcement.id}`)
+                  }}
                 />
               )
             })}
