@@ -193,6 +193,7 @@ export const WGMapView = forwardRef<
               return (
                 <WGPolyline
                   key={route.id}
+                  color={route.type === 'PRE_DEFINED' ? 'info' : 'success'}
                   coordinates={
                     route.paths?.map(({ lat, lng }) => ({
                       latitude: lat,
