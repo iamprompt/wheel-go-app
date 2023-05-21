@@ -18,7 +18,7 @@
 - [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) (for iOS)
 - [Android Studio](https://developer.android.com/studio)
 
-## Installation
+## Getting Started
 
 1. Clone the repository
 
@@ -38,13 +38,13 @@ pnpm install
 cp .env.example .env
 ```
 
+Copy the contents of `.env.example` into `.env` and fill in the values.
+
 4. Update environment variables in system variables
 
 ```bash
 direnv allow
 ```
-
-Copy the contents of `.env.example` into `.env` and fill in the values.
 
 5. Install the EAS CLI and log in (see [EAS CLI docs](https://docs.expo.dev/build/setup/)) (if you haven't already)
 
