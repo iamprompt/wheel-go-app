@@ -38,9 +38,15 @@ pnpm install
 cp .env.example .env
 ```
 
+4. Update environment variables in system variables
+
+```bash
+direnv allow
+```
+
 Copy the contents of `.env.example` into `.env` and fill in the values.
 
-4. Install the EAS CLI and log in (see [EAS CLI docs](https://docs.expo.dev/build/setup/)) (if you haven't already)
+5. Install the EAS CLI and log in (see [EAS CLI docs](https://docs.expo.dev/build/setup/)) (if you haven't already)
 
 ```bash
 npm install -g eas-cli
@@ -48,20 +54,20 @@ npm install -g eas-cli
 eas login
 ```
 
-5. Build the development build for development
+6. Build the development build for development
 
 ```bash
 pnpm run build:dev-phys-ios # iOS
 pnpm run build:dev-android # Android
 ```
 
-6. Run the development build
+7. Run the development build
 
 ```bash
 pnpm run start
 ```
 
-7. Build the production build
+8. Build the production build
 
 ```bash
 pnpm run build:ios # iOS
