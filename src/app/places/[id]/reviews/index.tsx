@@ -2,17 +2,18 @@ import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { HeaderLogo } from '~/components/HeaderLogo'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { ReviewHereButton } from '~/components/ReviewHereButton'
 import { ReviewItem } from '~/components/ReviewItem'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { FACILITIES } from '~/const/facility'
 import { useAuth } from '~/context/useAuth'
 import { useGetReviewsByPlaceIdQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const { user } = useAuth()
@@ -104,7 +105,7 @@ function Page() {
 
               const Facilities = Object.keys(FACILITIES)
               const isFacilityRating = Facilities.some(
-                (facility) => rating?.[facility as keyof typeof rating]
+                (facility) => rating?.[facility as keyof typeof rating],
               )
 
               const facilityRatings = isFacilityRating

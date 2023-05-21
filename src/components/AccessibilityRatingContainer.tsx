@@ -1,11 +1,12 @@
-import { Text, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import type { ComponentProps } from 'react'
-import { AccessibilityRatingItem } from './AccessibilityRatingItem'
-import { FACILITIES } from '~/const/facility'
+import { useTranslation } from 'react-i18next'
+import { Text, View } from 'react-native'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { FACILITIES } from '~/const/facility'
+import { AccessibilityRatingItem } from './AccessibilityRatingItem'
 
 type AccessibilityRatingContainerProps = Omit<
   ComponentProps<typeof View>,

@@ -1,9 +1,11 @@
 import dayjs from 'dayjs'
+
 import 'dayjs/locale/th'
 import 'dayjs/locale/en'
+import { CalendarIdentifier, getCalendars } from 'expo-localization'
+
 import buddhistEra from 'dayjs/plugin/buddhistEra'
 import duration from 'dayjs/plugin/duration'
-import { CalendarIdentifier, getCalendars } from 'expo-localization'
 
 dayjs.extend(buddhistEra)
 dayjs.extend(duration)
@@ -23,7 +25,7 @@ export enum FormatEnum {
 
 export function format(
   date: string,
-  formatOptions: FormatEnum[] = [FormatEnum.DATE]
+  formatOptions: FormatEnum[] = [FormatEnum.DATE],
 ) {
   const [calendarPreferences] = getCalendars()
 

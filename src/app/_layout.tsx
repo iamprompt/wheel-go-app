@@ -1,20 +1,19 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect, useState } from 'react'
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // import * as SplashScreen from 'expo-splash-screen'
 
 import '~/i18n'
 import '~/utils/dayjs'
 import '~/utils/network'
-import FONTS, { loadFonts } from '~/styles/fonts'
-import { PreferencesProvider } from '~/context/usePreferences'
-import { HeaderBackButton } from '~/components/HeaderBackButton'
-import { AuthProvider } from '~/context/useAuth'
 import { WheelGoApolloProvider } from '~/utils/apollo'
+import { HeaderBackButton } from '~/components/HeaderBackButton'
+import FONTS, { loadFonts } from '~/styles/fonts'
+import { AuthProvider } from '~/context/useAuth'
+import { PreferencesProvider } from '~/context/usePreferences'
 import { StoreonProvider } from '~/context/useStoreon'
-
-// TaskManager
 import '~/tasks'
 
 // SplashScreen.preventAutoHideAsync()

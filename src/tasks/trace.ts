@@ -5,6 +5,7 @@ import type {
   TaskManagerTaskExecutor,
 } from 'expo-task-manager'
 import { defineTask } from 'expo-task-manager'
+
 import { store } from '~/store/storeon'
 
 export const LOCATION_TRACE_TASK_NAME = 'LOCATION_WATCH_TRACE'

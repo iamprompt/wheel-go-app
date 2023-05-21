@@ -1,10 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getLocales } from 'expo-localization'
 import type { FC, ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { MapPreferences } from '~/const/mapPref'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import * as AsyncStorageUtils from '~/utils/asyncStorage'
+import { MapPreferences } from '~/const/mapPref'
 
 interface MapViewPreferences {
   places: string[]
@@ -83,7 +84,7 @@ function usePreferencesProvider(): Preferences {
   const setMapPreferences = async (mapViewPreferences: MapViewPreferences) => {
     await AsyncStorage.setItem(
       'mapViewPreferences',
-      JSON.stringify(mapViewPreferences)
+      JSON.stringify(mapViewPreferences),
     )
     setMapViewPreferences(mapViewPreferences)
   }
@@ -95,7 +96,7 @@ function usePreferencesProvider(): Preferences {
     } else {
       await AsyncStorage.setItem(
         'mapViewPreferences',
-        JSON.stringify(mapViewPreferences)
+        JSON.stringify(mapViewPreferences),
       )
     }
   }

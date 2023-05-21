@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
-import { MEDIA_FIELDS } from '../fragment/media'
+
 import { LANGUAGE_FIELDS } from '../fragment/language'
+import { MEDIA_FIELDS } from '../fragment/media'
 
 export const GetMyProfile = gql`
   ${MEDIA_FIELDS}

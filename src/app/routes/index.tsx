@@ -2,16 +2,17 @@ import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { VerticalDivider } from '~/components/VerticalDivider'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import {
   useGetPlaceByIdQuery,
   useSearchRoutesLazyQuery,
 } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const { t } = useTranslation()

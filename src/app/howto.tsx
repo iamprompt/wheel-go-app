@@ -1,4 +1,3 @@
-import { StackActions } from '@react-navigation/native'
 import { useNavigation, useRouter } from 'expo-router'
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,13 +15,16 @@ import {
   View,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { StackActions } from '@react-navigation/native'
+
+import { getDisplayLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { HOW_TO } from '~/const/howto'
 import { usePreferences } from '~/context/usePreferences'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { getDisplayLanguage } from '~/utils/i18n'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 const { width: screenWidth } = Dimensions.get('window')
 

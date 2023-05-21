@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+
 import { LOCATION_FIELDS } from './location'
 
 export const ROUTE_FIELDS = gql`

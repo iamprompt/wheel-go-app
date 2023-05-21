@@ -177,6 +177,9 @@ devDependencies:
   '@graphql-codegen/typescript-react-apollo':
     specifier: ^3.3.7
     version: 3.3.7(graphql-tag@2.12.6)(graphql@16.6.0)
+  '@ianvs/prettier-plugin-sort-imports':
+    specifier: 4.0.0-alpha.7
+    version: 4.0.0-alpha.7(prettier@2.8.8)
   '@types/apollo-upload-client':
     specifier: ^17.0.2
     version: 17.0.2(react-dom@18.2.0)(react@18.2.0)
@@ -2797,6 +2800,26 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@ianvs/prettier-plugin-sort-imports@4.0.0-alpha.7(prettier@2.8.8):
+    resolution: {integrity: sha512-i62nUzWh/pRyO0fvOaSU+SSNR9ctgrA2uVgYUQ8R1zuG6B7aprrDBtQ2S46xN/36ohtQan6c1SNANn+OuDND0A==}
+    peerDependencies:
+      '@vue/compiler-sfc': '>=3.0.0'
+      prettier: 2.x
+    peerDependenciesMeta:
+      '@vue/compiler-sfc':
+        optional: true
+    dependencies:
+      '@babel/core': 7.21.8
+      '@babel/generator': 7.21.5
+      '@babel/parser': 7.21.8
+      '@babel/traverse': 7.21.5
+      '@babel/types': 7.21.5
+      prettier: 2.8.8
+      semver: 7.5.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@jest/create-cache-key-function@29.5.0:

@@ -2,13 +2,14 @@ import type { ComponentProps, FC } from 'react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Switch, Text, View } from 'react-native'
-import Button, { ButtonVariant } from './Button'
-import { HorizontalDivider } from './HorizontalDivider'
-import { Tag } from './common/Tag'
+
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { usePreferences } from '~/context/usePreferences'
 import { MapPreferences } from '~/const/mapPref'
+import { usePreferences } from '~/context/usePreferences'
+import Button, { ButtonVariant } from './Button'
+import { Tag } from './common/Tag'
+import { HorizontalDivider } from './HorizontalDivider'
 
 interface MapPrefsModalProps {
   onClose: () => void
@@ -36,7 +37,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
   const isSelectAll = useMemo(() => {
     return (
       MapPrefsKey.conditions.every((key) =>
-        selectedOptions.conditions.includes(key)
+        selectedOptions.conditions.includes(key),
       ) &&
       MapPrefsKey.places.every((key) => selectedOptions.places.includes(key))
     )
@@ -147,7 +148,7 @@ export const MapPrefsModal: FC<MapPrefsModalProps> = ({ onClose }) => {
                             setSelectedOptions((prev) => ({
                               ...prev,
                               [pref.name]: prev[pref.name].filter(
-                                (type) => type !== key
+                                (type) => type !== key,
                               ),
                             }))
                           } else {

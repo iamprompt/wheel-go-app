@@ -1,4 +1,7 @@
+import { Image } from 'expo-image'
+import * as Linking from 'expo-linking'
 import { Stack, useRouter, useSearchParams } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
@@ -11,24 +14,28 @@ import {
   View,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import * as Linking from 'expo-linking'
-import { Image } from 'expo-image'
-import { StatusBar } from 'expo-status-bar'
-import { GlobalStyle } from '~/styles'
+
+import { chunk } from '~/utils/array'
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { AccessibilityRatingContainer } from '~/components/AccessibilityRatingContainer'
+import { AccessibilityRatingOverall } from '~/components/AccessibilityRatingOverall'
+import { BrandGradient } from '~/components/BrandGradient'
+import Button, { ButtonVariant } from '~/components/Button'
+import { Tag } from '~/components/common/Tag'
+import { FacilitiesAvailabilityStatus } from '~/components/FacilitiesAvailabilityStatus'
+import { HeaderLogo } from '~/components/HeaderLogo'
+import { HorizontalDivider } from '~/components/HorizontalDivider'
+import { IconActionButton } from '~/components/IconActionButton'
+import { ImageWithFallback } from '~/components/ImageWithFallback'
+import { ReviewHereButton } from '~/components/ReviewHereButton'
+import { ReviewItem } from '~/components/ReviewItem'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { IconActionButton } from '~/components/IconActionButton'
 import { ListCategoryIcon } from '~/const/category'
-import { BrandGradient } from '~/components/BrandGradient'
-import { FacilitiesAvailabilityStatus } from '~/components/FacilitiesAvailabilityStatus'
-import { AccessibilityRatingOverall } from '~/components/AccessibilityRatingOverall'
-import { HorizontalDivider } from '~/components/HorizontalDivider'
-import { AccessibilityRatingContainer } from '~/components/AccessibilityRatingContainer'
-import { ReviewHereButton } from '~/components/ReviewHereButton'
-import { HeaderLogo } from '~/components/HeaderLogo'
-import Button, { ButtonVariant } from '~/components/Button'
-import { ImageWithFallback } from '~/components/ImageWithFallback'
+import { FACILITIES } from '~/const/facility'
+import { FacilityRatingTag } from '~/const/reviews'
+import { useAuth } from '~/context/useAuth'
 import {
   Place_Types,
   useAddPlaceToFavoritesMutation,
@@ -37,13 +44,7 @@ import {
   useIsFavoritePlaceLazyQuery,
   useRemovePlaceFromFavoritesMutation,
 } from '~/generated-types'
-import { FACILITIES } from '~/const/facility'
-import { ReviewItem } from '~/components/ReviewItem'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { chunk } from '~/utils/array'
-import { FacilityRatingTag } from '~/const/reviews'
-import { Tag } from '~/components/common/Tag'
-import { useAuth } from '~/context/useAuth'
+import { GlobalStyle } from '~/styles'
 
 function Page() {
   const { user } = useAuth()
@@ -544,7 +545,7 @@ function Page() {
 
                 const Facilities = Object.keys(FACILITIES)
                 const isFacilityRating = Facilities.some(
-                  (facility) => rating?.[facility as keyof typeof rating]
+                  (facility) => rating?.[facility as keyof typeof rating],
                 )
 
                 const facilityRatings = isFacilityRating

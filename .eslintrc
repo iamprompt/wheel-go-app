@@ -3,6 +3,8 @@
   "ignorePatterns": ["src/graphql/gql/**/*", "src/generated-types.ts"],
   "rules": {
     "no-console": "off",
-    "@typescript-eslint/no-require-imports": "off"
+    "@typescript-eslint/no-require-imports": "off",
+    "import/order": "off",
+    "sort-imports": "off"
   }
 }

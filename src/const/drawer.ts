@@ -1,7 +1,8 @@
 import type { ComponentProps, FC } from 'react'
+
+import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { HelpModal } from '~/components/HelpModal'
 import COLORS from '~/styles/colors'
-import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface ModalProps {
   isVisible: boolean

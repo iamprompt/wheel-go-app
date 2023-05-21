@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
+
 import dayjs from 'dayjs'
-import { VerticalDivider } from './VerticalDivider'
-import COLORS from '~/styles/colors'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { VerticalDivider } from './VerticalDivider'
 
 export function RouteItem({
   date,

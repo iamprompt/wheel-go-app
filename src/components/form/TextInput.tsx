@@ -1,8 +1,9 @@
 import type { ComponentProps } from 'react'
 import { TextInput, View } from 'react-native'
-import { FieldLabel } from './FieldLabel'
+
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { FieldLabel } from './FieldLabel'
 
 type WGTextInputProps = {
   name: string

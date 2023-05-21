@@ -1,17 +1,19 @@
-import dayjs from 'dayjs'
 import { Stack, useSearchParams } from 'expo-router'
 import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import type MapView from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import dayjs from 'dayjs'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { VerticalDivider } from '~/components/VerticalDivider'
 import { WGMapView } from '~/components/WGMapView'
 import { WGPolyline } from '~/components/WGPolyline'
-import { useGetRouteByIdQuery } from '~/generated-types'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useGetRouteByIdQuery } from '~/generated-types'
 
 function Page() {
   const insets = useSafeAreaInsets()
@@ -37,7 +39,7 @@ function Page() {
           longitude: lng,
         }
       }) || [],
-    [route]
+    [route],
   )
 
   useEffect(() => {

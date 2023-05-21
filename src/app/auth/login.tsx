@@ -4,12 +4,13 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
 import Button from '~/components/Button'
 import { WGTextInputControl } from '~/components/form/TextInputControl'
-import { useAuth } from '~/context/useAuth'
-import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { useAuth } from '~/context/useAuth'
+import { GlobalStyle } from '~/styles'
 
 function Page() {
   const router = useRouter()

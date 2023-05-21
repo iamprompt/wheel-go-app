@@ -1,6 +1,6 @@
-import { Tag } from './common/Tag'
 import COLORS from '~/styles/colors'
 import { FACILITIES } from '~/const/facility'
+import { Tag } from './common/Tag'
 
 interface AccessibilityRatingTagProps {
   type: keyof typeof FACILITIES

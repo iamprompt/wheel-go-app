@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+
 import { LANGUAGE_FIELDS } from '../fragment/language'
 import { LOCATION_FIELDS } from '../fragment/location'
 import { MEDIA_FIELDS } from '../fragment/media'

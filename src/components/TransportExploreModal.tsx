@@ -1,15 +1,16 @@
-import { Text, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
+import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import { useMemo } from 'react'
-import { Image } from 'expo-image'
-import { HorizontalDivider } from './HorizontalDivider'
-import Button, { ButtonVariant } from './Button'
-import { Tag } from './common/Tag'
+import { useTranslation } from 'react-i18next'
+import { Text, View } from 'react-native'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { Accessibility_Status, useGetPlaceByIdQuery } from '~/generated-types'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import Button, { ButtonVariant } from './Button'
+import { Tag } from './common/Tag'
+import { HorizontalDivider } from './HorizontalDivider'
 
 interface TransportExploreModalProps {
   onClose: () => void
@@ -97,7 +98,7 @@ export function TransportExploreModal({
             {t(
               isAccessible
                 ? 'explore.transport_modal.accessible_label'
-                : 'explore.transport_modal.inaccessible_label'
+                : 'explore.transport_modal.inaccessible_label',
             )}
           </Text>
         </View>
@@ -164,7 +165,7 @@ export function TransportExploreModal({
                     <Tag
                       key={`tram-${line}`}
                       label={t(
-                        `explore.transport_modal.tram_lines.${line.toLowerCase()}`
+                        `explore.transport_modal.tram_lines.${line.toLowerCase()}`,
                       )}
                       height={28}
                       textColor={COLORS.black}

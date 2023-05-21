@@ -1,5 +1,7 @@
 import { createContext } from 'react'
+
 import { customContext } from 'storeon/react'
+
 import { store } from '~/store/storeon'
 
 const StoreonContext = createContext(store)

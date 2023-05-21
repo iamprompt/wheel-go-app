@@ -1,7 +1,7 @@
 import {
+  getCurrentPositionAsync,
   LocationAccuracy,
   PermissionStatus,
-  getCurrentPositionAsync,
   requestForegroundPermissionsAsync,
 } from 'expo-location'
 

@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+
 import { ROUTE_FIELDS } from '../fragment/route'
 
 export const SearchRoutes = gql`

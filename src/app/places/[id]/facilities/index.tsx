@@ -3,14 +3,15 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { FACILITIES } from '~/const/facility'
 import { useGetFacilitiesByPlaceIdQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const router = useRouter()

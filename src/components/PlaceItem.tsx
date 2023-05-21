@@ -1,12 +1,14 @@
-import dayjs from 'dayjs'
 import { Image, Pressable, Text, View } from 'react-native'
-import { VerticalDivider } from './VerticalDivider'
-import { ListCategoryIcon } from '~/const/category'
+
+import dayjs from 'dayjs'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { ListCategoryIcon } from '~/const/category'
 import type { LanguageObject, Place_Types } from '~/generated-types'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { VerticalDivider } from './VerticalDivider'
 
 export function PlaceItem({
   name,

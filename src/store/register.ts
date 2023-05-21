@@ -23,7 +23,7 @@ export interface RegisterEvent {
 }
 
 export const registerModule: StoreonModule<RegisterState, RegisterEvent> = (
-  store
+  store,
 ) => {
   store.on('@init', () => undefined)
 

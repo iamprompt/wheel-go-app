@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react'
-import COLORS from '~/styles/colors'
+
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
 
 export enum TRACING_STATES {
   READY = 'READY',

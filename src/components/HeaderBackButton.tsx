@@ -1,7 +1,9 @@
-import type { HeaderBackButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types'
 import { useNavigation } from 'expo-router'
 import type { ComponentProps } from 'react'
 import { Pressable } from 'react-native'
+
+import type { HeaderBackButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export function HeaderBackButton(props?: ComponentProps<typeof Pressable>) {

@@ -7,11 +7,16 @@ import type {
 } from 'react-native'
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { CategoryLabel } from '~/components/CategoryLabel'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { NearbyPlaces } from '~/components/NearbyPlaces'
 import { PlaceItem } from '~/components/PlaceItem'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import type { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
 import {
@@ -20,10 +25,6 @@ import {
   useSearchPlacesLazyQuery,
 } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const { t } = useTranslation()
@@ -47,7 +48,7 @@ function Page() {
         ...acc,
         [curr.id]: curr.overall,
       }),
-      {} as Record<string, number>
+      {} as Record<string, number>,
     )
   }, [ratingData])
 
@@ -62,7 +63,7 @@ function Page() {
   }, [data])
 
   const handleSearch = async (
-    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
   ) => {
     router.setParams({ q: e.nativeEvent.text })
     setQuery(e.nativeEvent.text)

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Text, View } from 'react-native'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export function ExpProgressBar({
   currentExp,

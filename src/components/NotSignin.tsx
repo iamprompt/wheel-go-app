@@ -1,10 +1,11 @@
-import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
 import { useRouter } from 'expo-router'
 import type { ReactNode } from 'react'
-import Button from './Button'
+import { useTranslation } from 'react-i18next'
+import { Text, View } from 'react-native'
+
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import Button from './Button'
 
 export function NotSignedIn({ children }: { children?: ReactNode }) {
   const { t } = useTranslation()

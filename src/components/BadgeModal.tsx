@@ -1,10 +1,11 @@
+import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
-import type { ComponentProps } from 'react'
-import { HorizontalDivider } from './HorizontalDivider'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { HorizontalDivider } from './HorizontalDivider'
 
 export interface BadgeModalProps {
   onClose: () => void

@@ -3,12 +3,13 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { RouteItem } from '~/components/RouteItem'
-import { useGetMyTracedRoutesQuery } from '~/generated-types'
-import { GlobalStyle } from '~/styles'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { useGetMyTracedRoutesQuery } from '~/generated-types'
+import { GlobalStyle } from '~/styles'
 
 export default function Page() {
   const insets = useSafeAreaInsets()

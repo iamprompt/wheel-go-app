@@ -1,6 +1,6 @@
+import COLORS from '~/styles/colors'
 import type { IPLACE_TYPE_META } from './placeTypes'
 import { PLACE_TYPES_META } from './placeTypes'
-import COLORS from '~/styles/colors'
 
 function PlaceMetaToMapPref(key: string, data: IPLACE_TYPE_META) {
   return {

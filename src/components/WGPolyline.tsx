@@ -22,5 +22,5 @@ export const WGPolyline = forwardRef<MapPolyline, WGPolylineProps>(
         strokeColor={WGPolylineColors[color]}
       />
     )
-  }
+  },
 )

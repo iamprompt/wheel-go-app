@@ -2,14 +2,15 @@ import { useRouter } from 'expo-router'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
-import { PlaceItem } from './PlaceItem'
+
+import { getCurrentPosition } from '~/utils/location'
 import FONTS from '~/styles/fonts'
 import {
   Place_Types,
   useGetNearbyPlacesLazyQuery,
   useGetRatingSummaryLazyQuery,
 } from '~/generated-types'
-import { getCurrentPosition } from '~/utils/location'
+import { PlaceItem } from './PlaceItem'
 
 export function NearbyPlaces() {
   const { t } = useTranslation()
@@ -23,7 +24,7 @@ export function NearbyPlaces() {
         ...acc,
         [curr.id]: curr.overall,
       }),
-      {} as Record<string, number>
+      {} as Record<string, number>,
     )
   }, [ratingData])
 

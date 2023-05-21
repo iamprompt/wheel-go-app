@@ -5,12 +5,13 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { FAQItems } from '~/const/faq'
-import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
+
 import { getDisplayLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
+import { FAQItems } from '~/const/faq'
+import { GlobalStyle } from '~/styles'
 
 interface QuestionItemProps {
   question: string
@@ -110,7 +111,7 @@ function Page() {
                   answer={item.answer}
                 />
               )
-            }
+            },
           )}
         </View>
         <View>

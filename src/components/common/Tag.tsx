@@ -2,9 +2,10 @@ import type { ComponentProps, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ViewStyle } from 'react-native'
 import { Text, View } from 'react-native'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface TagProps {
   label?: string | null

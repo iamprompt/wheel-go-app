@@ -1,8 +1,9 @@
-import { Pressable, View } from 'react-native'
 import type { ComponentProps } from 'react'
-import { VerticalDivider } from './VerticalDivider'
-import COLORS from '~/styles/colors'
+import { Pressable, View } from 'react-native'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
+import { VerticalDivider } from './VerticalDivider'
 
 interface AccessibilityRatingItemProps {
   name: string

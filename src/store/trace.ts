@@ -18,7 +18,7 @@ export interface TracingEvent {
 }
 
 export const tracingModule: StoreonModule<TracingState, TracingEvent> = (
-  store
+  store,
 ) => {
   store.on('@init', () => ({ trace: { paths: [] } }))
 

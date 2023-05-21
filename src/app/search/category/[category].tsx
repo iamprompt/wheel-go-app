@@ -1,20 +1,20 @@
 import { useRouter, useSearchParams } from 'expo-router'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { PlaceItem } from '~/components/PlaceItem'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import type { Place_Types } from '~/generated-types'
 import {
   useGetPlacesLazyQuery,
   useGetRatingSummaryLazyQuery,
 } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 
 function Page() {
   const { t } = useTranslation()
@@ -35,7 +35,7 @@ function Page() {
         ...acc,
         [curr.id]: curr.overall,
       }),
-      {} as Record<string, number>
+      {} as Record<string, number>,
     )
   }, [ratingData])
 

@@ -1,11 +1,12 @@
+import * as Linking from 'expo-linking'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
-import * as Linking from 'expo-linking'
-import Button, { ButtonVariant } from './Button'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import Button, { ButtonVariant } from './Button'
 
 interface HelpModalProps {
   onClose: () => void

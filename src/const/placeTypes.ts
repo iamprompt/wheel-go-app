@@ -1,7 +1,8 @@
 import type { ComponentProps } from 'react'
-import { Place_Types } from '~/generated-types'
-import COLORS from '~/styles/colors'
+
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
+import { Place_Types } from '~/generated-types'
 
 export enum SURROUNDING_CONDITIONS {
   Incident = 'INCIDENT',

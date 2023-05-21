@@ -1,12 +1,13 @@
 import { Stack } from 'expo-router'
-import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { GlobalStyle } from '~/styles'
+import { Pressable, ScrollView, Text, View } from 'react-native'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { usePreferences } from '~/context/usePreferences'
 import { languageOptions } from '~/const/languageOptions'
+import { usePreferences } from '~/context/usePreferences'
+import { GlobalStyle } from '~/styles'
 
 function Page() {
   const { t } = useTranslation()

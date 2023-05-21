@@ -1,19 +1,21 @@
-import dayjs from 'dayjs'
+import * as Linking from 'expo-linking'
 import { Stack, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import * as Linking from 'expo-linking'
-import { TagsLabel } from '~/const/tags'
-import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
+
+import dayjs from 'dayjs'
+
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { ImageWithFallback } from '~/components/ImageWithFallback'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
+import { TagsLabel } from '~/const/tags'
 import { useGetAnnouncementByIdQuery } from '~/generated-types'
+import { GlobalStyle } from '~/styles'
 
 function Page() {
   const { t } = useTranslation()
@@ -180,7 +182,7 @@ function Page() {
               }}
             >
               {dayjs(data.getAnnouncementById?.createdAt).format(
-                'DD MMMM YYYY'
+                'DD MMMM YYYY',
               )}
             </Text>
             <View

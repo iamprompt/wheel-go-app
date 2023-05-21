@@ -1,4 +1,5 @@
 import * as Localization from 'expo-localization'
+
 import type { LanguageDetectorAsyncModule } from 'i18next'
 
 const languageDetector: LanguageDetectorAsyncModule = {

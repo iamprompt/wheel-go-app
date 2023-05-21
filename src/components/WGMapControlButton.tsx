@@ -1,7 +1,8 @@
 import type { ComponentProps } from 'react'
 import { Pressable } from 'react-native'
-import { GlobalStyle } from '~/styles'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { GlobalStyle } from '~/styles'
 
 export function WGMapControlButton({
   onPress,

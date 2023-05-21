@@ -1,13 +1,10 @@
 import { useRouter } from 'expo-router'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
+
 import { alert, toast } from 'burnt'
-import type { RegisterMutationVariables, User } from '~/generated-types'
-import {
-  useGetMyProfileLazyQuery,
-  useLoginMutation,
-  useRegisterMutation,
-} from '~/generated-types'
+
+import { client } from '~/utils/apollo'
 import {
   getUserToken,
   removeUserToken,
@@ -15,7 +12,12 @@ import {
 } from '~/utils/asyncStorage'
 import { getGravatarUrl } from '~/utils/gravatar'
 import COLORS from '~/styles/colors'
-import { client } from '~/utils/apollo'
+import type { RegisterMutationVariables, User } from '~/generated-types'
+import {
+  useGetMyProfileLazyQuery,
+  useLoginMutation,
+  useRegisterMutation,
+} from '~/generated-types'
 
 interface AuthContextData {
   signin: (email: string, password: string) => Promise<void>

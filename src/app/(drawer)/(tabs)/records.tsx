@@ -1,20 +1,21 @@
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { Pressable, ScrollView, Text, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Pressable, ScrollView, Text, View } from 'react-native'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { RecordListItems } from '~/const/records'
-import { GlobalStyle } from '~/styles'
-import FONTS from '~/styles/fonts'
-import COLORS from '~/styles/colors'
-import { useAuth } from '~/context/useAuth'
 import { NotSignedIn } from '~/components/NotSignin'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
+import { RecordListItems } from '~/const/records'
+import { useAuth } from '~/context/useAuth'
 import {
   useGetMyFavoritePlacesQuery,
   useGetMyReviewsQuery,
   useGetMyTracedRoutesQuery,
 } from '~/generated-types'
+import { GlobalStyle } from '~/styles'
 
 export default function App() {
   const { user } = useAuth()

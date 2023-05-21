@@ -1,11 +1,11 @@
 import { Tabs } from 'expo-router'
-
 import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function HomeLayout() {
   const { t } = useTranslation()

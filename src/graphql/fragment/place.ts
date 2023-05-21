@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+
 import { LANGUAGE_FIELDS } from './language'
 import { MEDIA_FIELDS } from './media'
 

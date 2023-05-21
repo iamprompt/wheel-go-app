@@ -1,9 +1,10 @@
 import type { ComponentProps } from 'react'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
-import { FieldLabel } from './FieldLabel'
+
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { FieldLabel } from './FieldLabel'
 
 type WGTextInputProps = {
   control: ComponentProps<typeof Controller>['control']

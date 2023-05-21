@@ -1,23 +1,25 @@
-import { useTranslation } from 'react-i18next'
-import { Image, Pressable, Text, View } from 'react-native'
 import { useRouter } from 'expo-router'
 import { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Image, Pressable, Text, View } from 'react-native'
+
 import { getDistance } from 'geolib'
-import { BrandGradient } from './BrandGradient'
-import { HorizontalDivider } from './HorizontalDivider'
-import Button, { ButtonVariant } from './Button'
-import { FacilitiesAvailabilityStatus } from './FacilitiesAvailabilityStatus'
-import { AccessibilityRatingOverall } from './AccessibilityRatingOverall'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { ListCategoryIcon } from '~/const/category'
 import {
   Place_Types,
   useGetNearbyPlacesLazyQuery,
   useGetPlaceByIdQuery,
 } from '~/generated-types'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { AccessibilityRatingOverall } from './AccessibilityRatingOverall'
+import { BrandGradient } from './BrandGradient'
+import Button, { ButtonVariant } from './Button'
+import { FacilitiesAvailabilityStatus } from './FacilitiesAvailabilityStatus'
+import { HorizontalDivider } from './HorizontalDivider'
 
 interface PlaceExploreModalProps {
   onClose: () => void
@@ -75,7 +77,7 @@ export function PlaceExploreModal({
           latitude: placeData!.getPlaceById.location!.lat!,
           longitude: placeData!.getPlaceById.location!.lng!,
         },
-        { latitude: place.location!.lat!, longitude: place.location!.lng! }
+        { latitude: place.location!.lat!, longitude: place.location!.lng! },
       ),
     }))
   }, [nearbyPlacesData])

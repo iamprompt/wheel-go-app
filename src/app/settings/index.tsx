@@ -1,17 +1,18 @@
+import * as Application from 'expo-application'
+import * as Linking from 'expo-linking'
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
-import { Alert, Image, Pressable, ScrollView, Text, View } from 'react-native'
-import * as Linking from 'expo-linking'
-import * as Application from 'expo-application'
 import { useTranslation } from 'react-i18next'
-import { GlobalStyle } from '~/styles'
+import { Alert, Image, Pressable, ScrollView, Text, View } from 'react-native'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import Button, { ButtonVariant } from '~/components/Button'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { usePreferences } from '~/context/usePreferences'
-import Button, { ButtonVariant } from '~/components/Button'
 import { useAuth } from '~/context/useAuth'
+import { usePreferences } from '~/context/usePreferences'
+import { GlobalStyle } from '~/styles'
 
 interface SettingItem {
   name: string

@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react'
-import { FormatEnum, format } from '~/utils/dayjs'
+
+import { format, FormatEnum } from '~/utils/dayjs'
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface SummaryDetail {

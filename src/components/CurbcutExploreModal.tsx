@@ -1,11 +1,12 @@
-import { Text, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { Image } from 'expo-image'
 import { useMemo } from 'react'
-import Button, { ButtonVariant } from './Button'
+import { useTranslation } from 'react-i18next'
+import { Text, View } from 'react-native'
+
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
 import { Accessibility_Status, useGetPlaceByIdQuery } from '~/generated-types'
+import Button, { ButtonVariant } from './Button'
 
 interface CurbcutExploreModalProps {
   onClose: () => void
@@ -82,7 +83,7 @@ export function CurbcutExploreModal({
                 ? 'explore.curbcut_modal.accessible_label'
                 : CURBCUT_STATUS === Accessibility_Status.NeedAssistance
                 ? 'explore.curbcut_modal.need_assistance_label'
-                : 'explore.curbcut_modal.broken_label'
+                : 'explore.curbcut_modal.broken_label',
             )}
           </Text>
         </View>

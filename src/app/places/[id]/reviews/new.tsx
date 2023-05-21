@@ -1,32 +1,34 @@
+import type { ImagePickerAsset } from 'expo-image-picker'
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Pressable, Text, TextInput, View } from 'react-native'
-import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import type { ImagePickerAsset } from 'expo-image-picker'
-import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker'
+
+import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
 import { ReactNativeFile } from 'apollo-upload-client'
+
+import { chunk } from '~/utils/array'
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { AccessibilityRatingItemSelect } from '~/components/AccessibilityRatingItemSelect'
+import Button from '~/components/Button'
+import { Tag } from '~/components/common/Tag'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { VerticalDivider } from '~/components/VerticalDivider'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { ListCategoryIcon } from '~/const/category'
 import { FACILITIES } from '~/const/facility'
 import { AccessibilityRating, FacilityRatingTag } from '~/const/reviews'
-import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import Button from '~/components/Button'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
 import {
   Place_Types,
   useCreateReviewMutation,
   useGetPlaceByIdQuery,
   useUploadMediaMutation,
 } from '~/generated-types'
-import { Tag } from '~/components/common/Tag'
-import { chunk } from '~/utils/array'
+import { GlobalStyle } from '~/styles'
 
 function Page() {
   const { t } = useTranslation()
@@ -55,7 +57,7 @@ function Page() {
   }, [overallRating])
 
   const [facilityRating, setFacilityRating] = useState<Record<string, number>>(
-    {}
+    {},
   )
 
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -98,7 +100,7 @@ function Page() {
           console.log('error', error)
           throw error
         }
-      })
+      }),
     )
 
     const payloadResult = await createReview({
@@ -298,7 +300,7 @@ function Page() {
                     </Text>
                   </View>
                 )
-              }
+              },
             )}
           </View>
         </View>
@@ -399,7 +401,7 @@ function Page() {
                         onPress={() => {
                           if (isSelected) {
                             setSelectedTags((prev) =>
-                              prev.filter((tag) => tag !== key)
+                              prev.filter((tag) => tag !== key),
                             )
                             return
                           }
@@ -557,7 +559,7 @@ function Page() {
                     <Pressable
                       onPress={() => {
                         setSelectedImages((prev) =>
-                          prev.filter((_, i) => i !== index)
+                          prev.filter((_, i) => i !== index),
                         )
                       }}
                     >

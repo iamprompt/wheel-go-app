@@ -2,10 +2,11 @@ import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
+
+import { getDisplayLanguage } from '~/utils/i18n'
+import FONTS from '~/styles/fonts'
 import { Policy } from '~/const/policy'
 import { GlobalStyle } from '~/styles'
-import FONTS from '~/styles/fonts'
-import { getDisplayLanguage } from '~/utils/i18n'
 
 function Page() {
   const { t } = useTranslation()

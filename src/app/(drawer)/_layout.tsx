@@ -1,19 +1,21 @@
-import type { DrawerContentComponentProps } from '@react-navigation/drawer'
+import { useRouter } from 'expo-router'
 import { Drawer } from 'expo-router/drawer'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useRouter } from 'expo-router'
-import { useTranslation } from 'react-i18next'
-import { DrawerItems } from '~/const/drawer'
+
+import type { DrawerContentComponentProps } from '@react-navigation/drawer'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import FONTS from '~/styles/fonts'
 import { BrandGradient } from '~/components/BrandGradient'
-import COLORS from '~/styles/colors'
-import { useAuth } from '~/context/useAuth'
 import Button, { ButtonVariant } from '~/components/Button'
 import { Modal } from '~/components/Modal'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
+import { DrawerItems } from '~/const/drawer'
+import { useAuth } from '~/context/useAuth'
 import { useGetMyProfileLazyQuery } from '~/generated-types'
 
 const WheelGoDrawer: FC<DrawerContentComponentProps> = (_props) => {

@@ -1,15 +1,16 @@
-import { Text, View } from 'react-native'
 import { Image } from 'expo-image'
-import { AccessibilityRatingOverall } from './AccessibilityRatingOverall'
-import { ReviewOfficialComment } from './ReviewOfficialComment'
-import { Tag } from './common/Tag'
-import { AccessibilityRatingTag } from './AccessibilityRatingTag'
+import { Text, View } from 'react-native'
+
+import { chunk } from '~/utils/array'
+import { format, FormatEnum } from '~/utils/dayjs'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { FormatEnum, format } from '~/utils/dayjs'
 import { FACILITIES } from '~/const/facility'
-import { chunk } from '~/utils/array'
 import { FacilityRatingTag } from '~/const/reviews'
+import { AccessibilityRatingOverall } from './AccessibilityRatingOverall'
+import { AccessibilityRatingTag } from './AccessibilityRatingTag'
+import { Tag } from './common/Tag'
+import { ReviewOfficialComment } from './ReviewOfficialComment'
 
 interface ReviewItemProps {
   reviewer: string

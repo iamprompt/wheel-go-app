@@ -1,25 +1,27 @@
 import { Image } from 'expo-image'
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
 import { Stack, useRouter } from 'expo-router'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, Pressable, Text, TextInput, View } from 'react-native'
+
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
-import { useEffect } from 'react'
-import { toast } from 'burnt'
-import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker'
 import { ReactNativeFile } from 'apollo-upload-client'
-import { ProfileEditSection } from '../../../const/editSection'
+import { toast } from 'burnt'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { HeaderBackButton } from '~/components/HeaderBackButton'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { useAuth } from '~/context/useAuth'
+import { useStoreon } from '~/context/useStoreon'
 import {
   useGetMyProfileLazyQuery,
   useUpdateProfileMutation,
   useUploadMediaMutation,
 } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { useStoreon } from '~/context/useStoreon'
-import { HeaderBackButton } from '~/components/HeaderBackButton'
+import { ProfileEditSection } from '../../../const/editSection'
 
 interface ProfileForm {
   [key: string]: string | undefined

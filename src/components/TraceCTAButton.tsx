@@ -1,7 +1,8 @@
-import { useTranslation } from 'react-i18next'
 import type { ComponentProps } from 'react'
-import Button from './Button'
+import { useTranslation } from 'react-i18next'
+
 import COLORS from '~/styles/colors'
+import Button from './Button'
 
 type Props = Omit<
   ComponentProps<typeof Button>,

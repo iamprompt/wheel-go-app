@@ -1,13 +1,14 @@
-import { Image, Pressable, Text, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Image, Pressable, Text, View } from 'react-native'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
-import { BrandGradient } from './BrandGradient'
-import { ListCategoryIcon } from '~/const/category'
-import FONTS from '~/styles/fonts'
-import COLORS from '~/styles/colors'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import type { LanguageObject, Place_Types } from '~/generated-types'
+
 import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
+import { ListCategoryIcon } from '~/const/category'
+import type { LanguageObject, Place_Types } from '~/generated-types'
+import { BrandGradient } from './BrandGradient'
 
 interface NearbyPlaceBlockProps {
   onPress?: () => void

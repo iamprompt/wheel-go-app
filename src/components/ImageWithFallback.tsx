@@ -2,6 +2,7 @@ import type { ImageStyle } from 'expo-image'
 import { Image } from 'expo-image'
 import type { ComponentProps } from 'react'
 import { View } from 'react-native'
+
 import COLORS from '~/styles/colors'
 
 type ImageWithFallbackProps = Omit<

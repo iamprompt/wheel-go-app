@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react'
 import type MapView from 'react-native-maps'
+
 import { Place_Types } from '~/generated-types'
 
 export const MapStyle = [

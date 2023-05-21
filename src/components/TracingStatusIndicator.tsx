@@ -2,11 +2,12 @@ import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ViewStyle } from 'react-native'
 import { Text, View } from 'react-native'
-import type { TRACING_STATES } from '~/const/trace'
-import { TRACING_STATUS_BADGES } from '~/const/trace'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import type { TRACING_STATES } from '~/const/trace'
+import { TRACING_STATUS_BADGES } from '~/const/trace'
 
 type TracingStatusIndicatorProps = Omit<
   ComponentProps<typeof View>,

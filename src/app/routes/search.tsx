@@ -1,4 +1,3 @@
-import { StackActions } from '@react-navigation/native'
 import { useNavigation, useRouter, useSearchParams } from 'expo-router'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,17 +7,20 @@ import type {
 } from 'react-native'
 import { ScrollView, TextInput, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { StackActions } from '@react-navigation/native'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { PlaceItem } from '~/components/PlaceItem'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import {
   useGetRatingSummaryLazyQuery,
   useSearchPlacesQuery,
 } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 function Page() {
   const { t } = useTranslation()
@@ -38,7 +40,7 @@ function Page() {
   const [searchText, setSearchText] = useState<string>(q || '')
 
   const handleSearch = async (
-    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
   ) => {
     router.setParams({ q: e.nativeEvent.text })
     setQuery(e.nativeEvent.text)
@@ -68,7 +70,7 @@ function Page() {
         ...acc,
         [curr.id]: curr.overall,
       }),
-      {} as Record<string, number>
+      {} as Record<string, number>,
     )
   }, [data])
 

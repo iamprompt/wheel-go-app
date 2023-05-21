@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import type { ComponentProps } from 'react'
 import {
   forwardRef,
@@ -6,15 +7,14 @@ import {
   useRef,
   useState,
 } from 'react'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { View } from 'react-native'
-import { useRouter } from 'expo-router'
-import { Modal } from './Modal'
-import { MapPrefsModal } from './MapPrefsModal'
-import { WGMapMarker } from './WGMapMarker'
-import { WGMapControlButton } from './WGMapControlButton'
-import { WGPolyline } from './WGPolyline'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+
+import { getCurrentPosition } from '~/utils/location'
+import COLORS from '~/styles/colors'
 import { MapCameraConfig, MapStyle } from '~/const/map'
+import { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
+import { usePreferences } from '~/context/usePreferences'
 import {
   Facility_Types,
   Place_Types,
@@ -23,10 +23,11 @@ import {
   useGetPlacesLazyQuery,
   useGetPreDefinedRoutesQuery,
 } from '~/generated-types'
-import { getCurrentPosition } from '~/utils/location'
-import COLORS from '~/styles/colors'
-import { usePreferences } from '~/context/usePreferences'
-import { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
+import { MapPrefsModal } from './MapPrefsModal'
+import { Modal } from './Modal'
+import { WGMapControlButton } from './WGMapControlButton'
+import { WGMapMarker } from './WGMapMarker'
+import { WGPolyline } from './WGPolyline'
 
 export const WGMapView = forwardRef<
   MapView,
@@ -53,7 +54,7 @@ export const WGMapView = forwardRef<
       routes = true,
       ...mapViewProps
     },
-    ref
+    ref,
   ) => {
     const router = useRouter()
     const mapRef = useRef<MapView>(null)
@@ -98,7 +99,7 @@ export const WGMapView = forwardRef<
           type: [
             ...mapViewPreferences.places,
             ...(mapViewPreferences.conditions.includes(
-              SURROUNDING_CONDITIONS.Curbcut
+              SURROUNDING_CONDITIONS.Curbcut,
             )
               ? [SURROUNDING_CONDITIONS.Curbcut]
               : []),
@@ -150,7 +151,7 @@ export const WGMapView = forwardRef<
             )
           })}
           {mapViewPreferences.conditions.includes(
-            SURROUNDING_CONDITIONS.Ramp
+            SURROUNDING_CONDITIONS.Ramp,
           ) &&
             facilitiesData?.getFacilities.map((facility) => {
               if (!facility || !facility.location) {
@@ -169,7 +170,7 @@ export const WGMapView = forwardRef<
               )
             })}
           {mapViewPreferences.conditions.includes(
-            SURROUNDING_CONDITIONS.Incident
+            SURROUNDING_CONDITIONS.Incident,
           ) &&
             announcementsData?.getAnnouncements.map((announcement) => {
               if (!announcement || !announcement.location) {
@@ -241,5 +242,5 @@ export const WGMapView = forwardRef<
         />
       </View>
     )
-  }
+  },
 )

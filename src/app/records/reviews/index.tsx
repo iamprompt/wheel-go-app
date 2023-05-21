@@ -3,13 +3,14 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { PlaceItem } from '~/components/PlaceItem'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { useAuth } from '~/context/useAuth'
 import { useGetMyReviewsQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export default function Page() {
   const { user } = useAuth()

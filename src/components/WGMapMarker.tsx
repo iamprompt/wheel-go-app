@@ -1,5 +1,6 @@
 import { Image } from 'expo-image'
 import { Marker } from 'react-native-maps'
+
 import type { SURROUNDING_CONDITIONS } from '~/const/placeTypes'
 import { PLACE_TYPES_META } from '~/const/placeTypes'
 import type { Place_Types } from '~/generated-types'

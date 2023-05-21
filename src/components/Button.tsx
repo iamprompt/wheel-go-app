@@ -2,9 +2,10 @@ import type { ComponentProps, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { PressableProps } from 'react-native'
 import { Pressable, Text } from 'react-native'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export enum ButtonVariant {
   Primary = 'primary',

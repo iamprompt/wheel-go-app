@@ -5,11 +5,16 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Pressable, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import { BadgeModal } from '~/components/BadgeModal'
 import { ExpProgressBar } from '~/components/ExpProgressBar'
 import { HorizontalDivider } from '~/components/HorizontalDivider'
 import { Modal } from '~/components/Modal'
 import { NotSignedIn } from '~/components/NotSignin'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { SUMMARY_DETAILS } from '~/const/profile'
 import { useAuth } from '~/context/useAuth'
 import {
@@ -20,10 +25,6 @@ import {
 } from '~/generated-types'
 import type { GetMyProfileSummaryQuery } from '~/generated-types'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { getDisplayTextFromCurrentLanguage } from '~/utils/i18n'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export default function App() {
   const insets = useSafeAreaInsets()
@@ -345,7 +346,7 @@ export default function App() {
                     </View>
                   </View>
                 )
-              }
+              },
             )}
           </View>
         ) : null}

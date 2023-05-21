@@ -1,11 +1,12 @@
-import type { ComponentProps } from 'react'
-import { Pressable, Text, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { useRouter } from 'expo-router'
-import { FieldLabel } from './FieldLabel'
+import type { ComponentProps } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Pressable, Text, View } from 'react-native'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import { FieldLabel } from './FieldLabel'
 
 type WGInputLinkProps = {
   name: string

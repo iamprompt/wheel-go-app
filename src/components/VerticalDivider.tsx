@@ -1,4 +1,5 @@
 import { View } from 'react-native'
+
 import COLORS from '~/styles/colors'
 
 interface VerticalDividerProps {

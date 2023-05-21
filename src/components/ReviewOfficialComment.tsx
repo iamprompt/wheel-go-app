@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
+
 import { format } from '~/utils/dayjs'
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 
 interface ReviewOfficialCommentProps {
   date: string

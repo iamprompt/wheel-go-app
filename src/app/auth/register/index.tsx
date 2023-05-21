@@ -1,18 +1,20 @@
-import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
-import { StackActions } from '@react-navigation/native'
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
+import { StackActions } from '@react-navigation/native'
+
 import Button from '~/components/Button'
 import { WGInputLink } from '~/components/form/PressableInputLink'
 import { WGTextInput } from '~/components/form/TextInput'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { RegistrationForm } from '~/const/register'
 import { useAuth } from '~/context/useAuth'
 import { useStoreon } from '~/context/useStoreon'
 import { GlobalStyle } from '~/styles'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
 
 function Page() {
   const navigation = useNavigation()

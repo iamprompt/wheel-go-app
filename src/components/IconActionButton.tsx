@@ -1,8 +1,9 @@
 import type { ComponentProps } from 'react'
 import { Pressable, Text, View } from 'react-native'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 interface IconActionButtonProps {
   icon: ComponentProps<typeof MaterialIcons>['name']

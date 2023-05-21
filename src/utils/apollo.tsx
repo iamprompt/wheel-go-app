@@ -1,20 +1,21 @@
 import Constant from 'expo-constants'
+import type { ReactNode } from 'react'
+
 import type { FetchResult } from '@apollo/client'
 import {
   ApolloClient,
   ApolloProvider,
+  from,
   InMemoryCache,
   Observable,
-  from,
 } from '@apollo/client'
-import { createUploadLink } from 'apollo-upload-client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
+import { createUploadLink } from 'apollo-upload-client'
 
-import type { ReactNode } from 'react'
-import { getUserToken, setUserToken } from './asyncStorage'
-import { RefreshToken } from '~/graphql/mutation/auth'
 import type { RefreshTokenMutation } from '~/generated-types'
+import { RefreshToken } from '~/graphql/mutation/auth'
+import { getUserToken, setUserToken } from './asyncStorage'
 
 const uploadLink = createUploadLink({
   uri: `${Constant.expoConfig?.extra?.WHEELGO_API}/graphql`,
@@ -83,7 +84,7 @@ const errorLink = onError(
                 try {
                   const context = operation.getContext()
                   const retryHeaderCount = Number(
-                    context.headers['x-wheel-go-retry'] || 0
+                    context.headers['x-wheel-go-retry'] || 0,
                   )
 
                   if (retryHeaderCount >= 3) {
@@ -112,7 +113,7 @@ const errorLink = onError(
               })()
             }
           }
-        }
+        },
       )
 
       return observable
@@ -121,7 +122,7 @@ const errorLink = onError(
     if (networkError) {
       console.log(`[Network error]: ${networkError}`)
     }
-  }
+  },
 )
 
 const apolloLinks = from([errorLink, authLink, uploadLink])

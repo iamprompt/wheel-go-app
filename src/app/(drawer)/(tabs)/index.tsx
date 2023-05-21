@@ -1,33 +1,33 @@
+// import ClusterMapView from 'react-native-map-clustering'
 import { Stack, useNavigation, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
 import type MapView from 'react-native-maps'
-import { DrawerActions } from '@react-navigation/routers'
-import { useTranslation } from 'react-i18next'
 
-// import ClusterMapView from 'react-native-map-clustering'
-import { useEffect, useRef, useState } from 'react'
+import { DrawerActions } from '@react-navigation/routers'
 
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-import { GlobalStyle } from '~/styles'
-import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
+import { getCurrentPosition } from '~/utils/location'
+import { CurbcutExploreModal } from '~/components/CurbcutExploreModal'
 import { HeaderLogo } from '~/components/HeaderLogo'
+import { Modal } from '~/components/Modal'
+import { NearbyPlaceBlock } from '~/components/NearbyPlaceBlock'
+import { NonTraceUserModal } from '~/components/NonUserTraceModal'
+import { PlaceExploreModal } from '~/components/PlaceExploreModal'
+import { TraceCTAButton } from '~/components/TraceCTAButton'
+import { TransportExploreModal } from '~/components/TransportExploreModal'
+import { WGMapView } from '~/components/WGMapView'
 import COLORS from '~/styles/colors'
 import FONTS from '~/styles/fonts'
+import { useAuth } from '~/context/useAuth'
 import {
   Place_Types,
   useGetNearbyPlacesLazyQuery,
   useGetPlaceByIdLazyQuery,
 } from '~/generated-types'
-import { TraceCTAButton } from '~/components/TraceCTAButton'
-import { getCurrentPosition } from '~/utils/location'
-import { WGMapView } from '~/components/WGMapView'
-import { Modal } from '~/components/Modal'
-import { TransportExploreModal } from '~/components/TransportExploreModal'
-import { PlaceExploreModal } from '~/components/PlaceExploreModal'
-import { CurbcutExploreModal } from '~/components/CurbcutExploreModal'
-import { useAuth } from '~/context/useAuth'
-import { NonTraceUserModal } from '~/components/NonUserTraceModal'
+import { GlobalStyle } from '~/styles'
 
 export default function App() {
   const { user } = useAuth()
@@ -72,7 +72,7 @@ export default function App() {
             },
             zoom: 18,
           },
-          { duration: 250 }
+          { duration: 250 },
         )
       }
     } catch (error) {

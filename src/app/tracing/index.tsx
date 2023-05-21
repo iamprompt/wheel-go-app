@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import {
   requestBackgroundPermissionsAsync,
   startLocationUpdatesAsync,
@@ -6,9 +5,7 @@ import {
 } from 'expo-location'
 import { Stack, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-
 import { isTaskRegisteredAsync } from 'expo-task-manager'
-import { getPathLength } from 'geolib'
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
@@ -21,6 +18,11 @@ import Animated, {
   SlideOutDown,
 } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import dayjs from 'dayjs'
+import { getPathLength } from 'geolib'
+
+import { MaterialIcons } from '~/utils/icons/MaterialIcons'
 import Button, { ButtonVariant } from '~/components/Button'
 import { HeaderBackButton } from '~/components/HeaderBackButton'
 import { HeaderLogo } from '~/components/HeaderLogo'
@@ -30,15 +32,13 @@ import { TracingSaveModal } from '~/components/TracingSaveModal'
 import { TracingStatusIndicator } from '~/components/TracingStatusIndicator'
 import { TracingStopModal } from '~/components/TracingStopModal'
 import { WGMapView } from '~/components/WGMapView'
+import { WGPolyline } from '~/components/WGPolyline'
+import COLORS from '~/styles/colors'
+import FONTS from '~/styles/fonts'
 import { TRACING_STATES } from '~/const/trace'
 import { useStoreon } from '~/context/useStoreon'
 import { Route_Types, useCreateRoutesMutation } from '~/generated-types'
-import COLORS from '~/styles/colors'
-import FONTS from '~/styles/fonts'
-import { MaterialIcons } from '~/utils/icons/MaterialIcons'
-
 import { LOCATION_TRACE_CONFIG, LOCATION_TRACE_TASK_NAME } from '~/tasks/trace'
-import { WGPolyline } from '~/components/WGPolyline'
 
 function Page() {
   const { trace, dispatch } = useStoreon('trace')
@@ -51,7 +51,7 @@ function Page() {
         latitude: rec.lat,
         longitude: rec.lng,
       })),
-    [trace.paths]
+    [trace.paths],
   )
   const duration = useMemo(() => {
     if (trace.paths.length < 2) {
@@ -102,7 +102,7 @@ function Page() {
   const startTask = async () => {
     await startLocationUpdatesAsync(
       LOCATION_TRACE_TASK_NAME,
-      LOCATION_TRACE_CONFIG
+      LOCATION_TRACE_CONFIG,
     )
   }
 

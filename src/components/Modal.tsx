@@ -1,4 +1,5 @@
 import { Modal as RNModal, View } from 'react-native'
+
 import COLORS from '~/styles/colors'
 
 type ModalProps<TModal> = {

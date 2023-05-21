@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+
 import type { MaterialIcons } from '~/utils/icons/MaterialIcons'
 
 export type FacilitiesKey = Record<

@@ -1,4 +1,5 @@
 import type { ConfigContext, ExpoConfig } from 'expo/config'
+
 import 'dotenv/config'
 
 // React Native Maps: https://docs.expo.dev/versions/latest/sdk/map-view/

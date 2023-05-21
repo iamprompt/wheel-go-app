@@ -1,9 +1,10 @@
 import { View } from 'react-native'
-import { HorizontalDivider } from './HorizontalDivider'
-import COLORS from '~/styles/colors'
+
 import { MaterialIcons } from '~/utils/icons/MaterialIcons'
+import COLORS from '~/styles/colors'
 import { FACILITIES } from '~/const/facility'
 import type { Facility_Status } from '~/generated-types'
+import { HorizontalDivider } from './HorizontalDivider'
 
 export enum AvailabilityStatus {
   AVAILABLE = 'AVAILABLE',
